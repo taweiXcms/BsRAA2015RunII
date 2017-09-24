@@ -1,7 +1,7 @@
 #include "uti.h"
 #include "parameters.h"
 #include "TF1.h"
-
+using namespace std;
 double setparam0=100.;
 double setparam1=5.36682;
 double setparam2=0.02;
@@ -364,6 +364,8 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 
 	Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
 	Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
+cout << "Yield = " << yield << endl;
+cout << "YieldErr = " << yieldErr << endl;
 
 	//TLegend* leg = new TLegend(0.62,0.58,0.82,0.88,NULL,"brNDC");
     TLegend *leg = new TLegend(0.525,0.38,0.85,0.70,NULL,"brNDC");//paper
@@ -405,7 +407,7 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	texcms->Draw();
 
     //TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
-    TLatex* texB = new TLatex(0.22,0.73,"B^{+}+B^{-}");
+    TLatex* texB = new TLatex(0.22,0.73,"B_{s}");
     texB->SetNDC();
     texB->SetTextFont(42);
     texB->SetTextSize(0.07);

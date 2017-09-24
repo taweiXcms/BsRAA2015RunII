@@ -3,19 +3,19 @@
 CENTPbPbMIN=0
 CENTPbPbMAX=100
 
-DOANALYSISPP_FONLL=0
+DOANALYSISPP_FONLL=1
 DOANALYSISPP_FITNP=0
-DOANALYSISPP_FIT=0
+DOANALYSISPP_FIT=1
 DOANALYSISPP_FITONSAVED=0
-DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=0
+DOANALYSISPP_MCSTUDY=1
+DOANALYSISPP_CROSS=1
 
-DOANALYSISPbPb_FONLL=0
+DOANALYSISPbPb_FONLL=1
 DOANALYSISPbPb_FITNP=0
-DOANALYSISPbPb_FIT=0
+DOANALYSISPbPb_FIT=1
 DOANALYSISPbPb_FITONSAVED=0
-DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=0
+DOANALYSISPbPb_MCSTUDY=1
+DOANALYSISPbPb_CROSS=1
 DORAA=1
 
 #systematic section
@@ -27,12 +27,12 @@ PLOTMVA=0
 
 ## PP MONTE CARLO
 #INPUTMCPP="/data/BmesonMCPbPb/loop_Bs0_pp_MC_25072017_pthat5.root"
-INPUTMCPP="/data/BmesonMCPbPb/loop_Bs0_pthat5_bstojpsiphi_pp.root"
+INPUTMCPP="/data/cdzn/Bsmeson2017/MC/Bntuple/pp/loop_Bs0_pthat5_bstojpsiphi_pp.root"
 ## PP DATA 
 INPUTDATAPP="/data/wangj/Data2015/Bntuple/pp/ntB_EvtBase_20160420_BfinderData_pp_20160419_bPt0jpsiPt0tkPt0p5.root"
 
 ## PbPb MONTE CARLO
-INPUTMCPbPb="/data/BmesonMCPbPb/loop_Bs0_PbPb_MC_25072017_pthat10.root"
+INPUTMCPbPb="/data/cdzn/Bsmeson2017/MC/Bntuple/PbPb/loop_Bs0_PbPb_MC_25072017_pthat10.root"
 ## PbPb DATA 
 INPUTDATAPbPb="/data/wangj/Data2015/Bntuple/PbPb/Bntuple_BfinderData_PbPb_20160406_bPt5jpsiPt0tkPt0p8_BpB0BsX_skimhlt.root"
 
@@ -49,7 +49,8 @@ ISDOWEIGHTPP=0
 SELGENPP="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0"
 SELGENPPACCPP="TMath::Abs(Gy)<2.4 && abs(GpdgId)==531 && GisSignal>0 && ((TMath::Abs(Gmu1eta)<1.2 && Gmu1pt>3.5) || (TMath::Abs(Gmu1eta)>1.2 && TMath::Abs(Gmu1eta)<2.1 && Gmu1pt>(5.77-1.8*TMath::Abs(Gmu1eta))) || (TMath::Abs(Gmu1eta)>2.1 && TMath::Abs(Gmu1eta)<2.4 && Gmu1pt>1.8)) && ((TMath::Abs(Gmu2eta)<1.2 && Gmu2pt>3.5) || (TMath::Abs(Gmu2eta)>1.2 && TMath::Abs(Gmu2eta)<2.1 && Gmu2pt>(5.77-1.8*TMath::Abs(Gmu2eta))) || (TMath::Abs(Gmu2eta)>2.1 && TMath::Abs(Gmu2eta)<2.4 && Gmu2pt>1.8)) && Gtk1pt>0.7 && Gtk2pt>0.7 && TMath::Abs(Gtk1eta)<2.4 && TMath::Abs(Gtk2eta)<2.4"
 ##"abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
-CUTPP="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1highPurity && Btrk2highPurity && Bmass>5 && Bmass<6 && Btrk1Pt>0.7 && Btrk2Pt>0.7 && Bchi2cl>1.32e-02 && (Bd0/Bd0Err)>2. && cos(Bdtheta)>2.60e-01 && Bmu1pt>1.5 && Bmu2pt>1.5 && Blxy>0.025 && abs(Btktkmass-1.019455)<1.55e-02"
+#CUTPP="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1highPurity && Btrk2highPurity && Bmass>5 && Bmass<6 && Btrk1Pt>0.7 && Btrk2Pt>0.7 && Bchi2cl>1.32e-02 && (Bd0/Bd0Err)>2. && cos(Bdtheta)>2.60e-01 && Bmu1pt>1.5 && Bmu2pt>1.5 && Blxy>0.025 && abs(Btktkmass-1.019455)<1.55e-02"
+CUTPP="TMath::Abs(By)<2.4&&TMath::Abs(Bmumumass-3.096916)<0.15&&Bmass>5&&Bmass<6&&Btrk1Pt>1.5&&Btrk2Pt>1.5&&Bchi2cl>.0132&&BsvpvDistance/BsvpvDisErr>3.05&&Bd0/Bd0Err>2&&cos(Bdtheta)>.26&&Bmu1pt>1.5&&Bmu2pt>1.5&&Bpt>5.75&&abs(Btktkmass-1.019455)<.0155&&Blxy>.025"
 RECOONLYPP=$CUTPP
 TRGPP="(HLT_HIL1DoubleMu0_v1)"
 #TRGPPMC="(HLT_HIL1DoubleMu0ForPPRef_v1)"
@@ -118,7 +119,8 @@ RECOONLYPbPb="1"
 #GA
 #"pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3&&abs(PVz)<15"
 #CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1highPurity && Btrk2highPurity && Bmass>5 && Bmass<6 && Btrk1Pt>1.5 && Btrk2Pt>1.5 && Bchi2cl>0.1 && (Bd0/Bd0Err)>5. && cos(Bdtheta)>0.8 && Bmu1pt>1.5 && Bmu2pt>1.5 && TMath::Abs(Btktkmass-1.019455)<0.05 && Blxy>0.1"
-CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1highPurity && Btrk2highPurity && Bmass>5 && Bmass<6 && Btrk1Pt>1.63 && Btrk2Pt>1.63 && Bchi2cl>0.0057 && (Bd0/Bd0Err)>5. && cos(Bdtheta)>0.993 && Bmu1pt>1.5 && Bmu2pt>1.5 && TMath::Abs(Btktkmass-1.019455)<0.05 && Blxy>0.0337"
+#CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1highPurity && Btrk2highPurity && Bmass>5 && Bmass<6 && Btrk1Pt>1.63 && Btrk2Pt>1.63 && Bchi2cl>0.0057 && (Bd0/Bd0Err)>5. && cos(Bdtheta)>0.993 && Bmu1pt>1.5 && Bmu2pt>1.5 && TMath::Abs(Btktkmass-1.019455)<0.05 && Blxy>0.0337"
+CUTPbPb="TMath::Abs(By)<2.4&&abs(Bmumumass-3.096916)<0.15&&Bmass>5.&&Bmass<6.&&Btrk1Pt>1.5&&Btrk2Pt>1.5&&Bchi2cl>0.1&&(Bd0/Bd0Err)>5.&&cos(Bdtheta)>0.8&&Bmu1pt>1.5&&Bmu2pt>1.5&&Bpt>15.0&&TMath::Abs(Btktkmass-1.019455)<0.05&&Blxy>0.1"
 #CUTPbPb="TMath::Abs(By)<2.4&&abs(Bmumumass-3.09691 6)<0.15&&Bmass>5.&&Bmass<6.&&Btrk1Pt>1.5&&Btrk2Pt>1.5&& Bchi2cl>0.1&&(Bd0/Bd0Err)>5.&&cos(Bdtheta)>0.8&&Bmu1pt>1.5&&Bmu2pt>1.5&&TMath::Abs(Btktkmass-1.019455)<0.05&&Blxy>0.1"
 #CUTPbPb="TMath::Abs(By)<2.4&&abs(Bmumumass-3.096916)<0.15&&Bmass>5.&&Bmass<6.&&Btrk1Pt>1.63&&Btrk2Pt>1.63&& Bchi2cl>0.0057&&(Bd0/Bd0Err)>5.&&cos(Bdtheta)>0.993&&Bmu1pt>1.5&&Bmu2pt>1.5&&TMath::Abs(Btktkmass-1.019455)<0.05&&Blxy>0.0337"
 TRGPbPb="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)"
