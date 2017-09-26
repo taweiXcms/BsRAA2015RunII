@@ -47,7 +47,6 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
       cut_recoonly=cut_recoonly+Form("&&hiBin>=%f&&hiBin<=%f",hiBinMin,hiBinMax);
       cut=cut+Form("&&hiBin>=%f&&hiBin<=%f",hiBinMin,hiBinMax);
     }
-
      std::cout<<"selmcgen="<<selmcgen<<std::endl;
      std::cout<<"selmcgenacceptance="<<selmcgenacceptance<<std::endl;
      std::cout<<"cut_recoonly="<<cut_recoonly<<std::endl;
