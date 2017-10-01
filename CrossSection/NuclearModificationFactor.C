@@ -199,7 +199,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	texlumi->Draw();
 
 	//TLatex* texB = new TLatex(0.77,0.21,"B^{#plus}+B^{#minus}");
-	TLatex* texB = new TLatex(0.81,0.21,"B^{#pm}");
+	TLatex* texB = new TLatex(0.81,0.21,"B_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.08);

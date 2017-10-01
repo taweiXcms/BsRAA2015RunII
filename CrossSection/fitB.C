@@ -11,8 +11,8 @@ double fixparam1=5.36682;
 //Double_t minhisto=5.0;
 //Double_t maxhisto=6.0;
 //Double_t nbinsmasshisto=50;
-Double_t minhisto=5.03;
-Double_t maxhisto=5.99;
+Double_t minhisto=5.00;
+Double_t maxhisto=6.00;
 Double_t nbinsmasshisto=24;
 Double_t binwidthmass=(maxhisto-minhisto)/nbinsmasshisto;
 
@@ -29,7 +29,11 @@ double _ErrCor=1;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
-
+double BmassAve=5.36682;
+double width = 0.05;
+	double BmassH = BmassAve+ width;
+	double BmassL = BmassAve - width;
+using namespace std;
 void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_EvtBase_20160420_BfinderData_pp_20160419_bPt0jpsiPt0tkPt0p5.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20160606_pp_Pythia8_BuToJpsiK_Bpt5p0_Pthat5.root", TString trgselection="1",  TString cut="TMath::Abs(By)<2.4&&TMath::Abs(Bmumumass-3.096916)<0.15&&Bmass>5&&Bmass<6&&Btrk1Pt>0.9&&Bchi2cl>1.32e-02&&(Bd0/Bd0Err)>3.41&&cos(Bdtheta)>-3.46e-01&&Bmu1pt>1.5&&Bmu2pt>1.5&&Blxy>0.025", TString cutmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==521&&GisSignal==1", int isMC=0, Double_t luminosity=1., int doweight=0, TString collsyst="PbPb", TString outputfile="", TString npfit="0", int doDataCor = 0, Float_t centmin=0., Float_t centmax=100.)
 {
 	collisionsystem=collsyst;
@@ -364,6 +368,12 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 
 	Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
 	Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
+	Double_t bkgd = background->Integral(BmassL,BmassH)/binwidthmass;
+	Double_t SB = yield/bkgd;
+	Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
+	cout << "yield = " << yield << endl;
+	cout << "yieldErr = " << yieldErr << endl;
+
 
 	//TLegend* leg = new TLegend(0.62,0.58,0.82,0.88,NULL,"brNDC");
     TLegend *leg = new TLegend(0.525,0.38,0.85,0.70,NULL,"brNDC");//paper
@@ -380,6 +390,8 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	leg->AddEntry(background,"Combinatorial","l");
 	leg->AddEntry(Bkpi,"B #rightarrow J/#psi X","f");
 	leg->Draw("same");
+	
+
 
 	TLatex* texChi = new TLatex(0.58,0.55, Form("#chi^{2}/nDOF: %.2f/%d = %.2f", f->GetChisquare(), f->GetNDF(), f->GetChisquare()/f->GetNDF()));
 	texChi->SetNDC();
@@ -405,7 +417,7 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	texcms->Draw();
 
     //TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
-    TLatex* texB = new TLatex(0.22,0.73,"B^{+}+B^{-}");
+    TLatex* texB = new TLatex(0.22,0.73,"B_{s}");
     texB->SetNDC();
     texB->SetTextFont(42);
     texB->SetTextSize(0.07);
@@ -460,6 +472,12 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	tex->Draw();
 
 	total=f;
+		tex = new TLatex(0.725,0.33,Form("Significance = %.3f",Significance));
+	tex->SetNDC();
+	tex->SetTextFont(42);
+	tex->SetTextSize(0.04);
+	tex->SetLineWidth(2);
+	tex->Draw("SAME");
 
     TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
 	h->GetFunction(Form("f%d",count))->Delete();

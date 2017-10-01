@@ -29,6 +29,10 @@ double _ErrCor=1;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
+double BmassAve=5.36682;
+double width = 0.05;
+	double BmassH = BmassAve+ width;
+	double BmassL = BmassAve - width;
 
 void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_EvtBase_20160420_BfinderData_pp_20160419_bPt0jpsiPt0tkPt0p5.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20160606_pp_Pythia8_BuToJpsiK_Bpt5p0_Pthat5.root", TString trgselection="1",  TString cut="TMath::Abs(By)<2.4&&TMath::Abs(Bmumumass-3.096916)<0.15&&Bmass>5&&Bmass<6&&Btrk1Pt>0.9&&Bchi2cl>1.32e-02&&(Bd0/Bd0Err)>3.41&&cos(Bdtheta)>-3.46e-01&&Bmu1pt>1.5&&Bmu2pt>1.5&&Blxy>0.025", TString cutmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==521&&GisSignal==1", int isMC=0, Double_t luminosity=1., int doweight=0, TString collsyst="PbPb", TString outputfile="", TString npfit="0", int doDataCor = 0, Float_t centmin=0., Float_t centmax=100.)
 {
@@ -172,7 +176,8 @@ void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_
 	hPtCor->Divide(hEff);
 	TCanvas* cPtCor=  new TCanvas("cCorResult","",600,600);
 	cPtCor->SetLogy();
-	hPtCor->Draw();
+	
+
 	if(isMC==1)
 	{
 		hPtGen->Draw("same hist");
@@ -366,6 +371,9 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
 cout << "Yield = " << yield << endl;
 cout << "YieldErr = " << yieldErr << endl;
+	Double_t bkgd = background->Integral(BmassL,BmassH)/binwidthmass;
+	Double_t SB = yield/bkgd;
+	Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
 
 	//TLegend* leg = new TLegend(0.62,0.58,0.82,0.88,NULL,"brNDC");
     TLegend *leg = new TLegend(0.525,0.38,0.85,0.70,NULL,"brNDC");//paper
@@ -460,6 +468,13 @@ cout << "YieldErr = " << yieldErr << endl;
 	tex->SetTextSize(0.06);
 	tex->SetLineWidth(2);
 	tex->Draw();
+	
+	tex = new TLatex(0.22,0.68,Form("Significance = %.3f",Significance));
+	tex->SetNDC();
+	tex->SetTextFont(42);
+	tex->SetTextSize(0.04);
+	tex->SetLineWidth(2);
+	tex->Draw("SAME");
 
 	total=f;
 

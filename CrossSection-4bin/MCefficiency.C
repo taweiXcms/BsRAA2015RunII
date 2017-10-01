@@ -320,7 +320,7 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   //hemptyEff->SetYTitle("hPtMC / hPtGen");
   hemptyEff->SetMaximum(0.6);
   hemptyEff->SetYTitle("#alpha x #epsilon");
-  hemptyEff->GetXaxis()->SetTitle("p_{T} GeV^{-1}c)");
+  hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
   hemptyEff->Draw();
   hEff->SetLineColor(2);
   hEff->SetMarkerColor(2);
