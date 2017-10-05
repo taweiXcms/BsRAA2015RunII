@@ -5,6 +5,7 @@
 float tpadr = 0.7;
 bool addpbpb = 0;
 
+using namespace std;
 void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5TeV_y1.root", TString input="ROOTfiles/hPtSpectrumBplusPP.root", TString efficiency="test.root",TString outputplot="myplot.root",int usePbPb=1,TString label="PbPb",int doDataCor = 0,double lumi=1.,Float_t centMin=0.,Float_t centMax=100.)
 {
 	gStyle->SetOptTitle(0);
@@ -44,6 +45,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		xrlow[i] = gaeBplusReference->GetErrorXlow(i);
 		xrhigh[i] = gaeBplusReference->GetErrorXhigh(i);
 		ycross[i] = hPtSigma->GetBinContent(i+1);
+
+		cout << "pt Bin = " << i << "  Yield = "<< ycross[i] << endl;
 		ycrossstat[i] = hPtSigma->GetBinError(i+1);
 		double systematic=0.;
 //		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.);

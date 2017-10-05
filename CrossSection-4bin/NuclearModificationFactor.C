@@ -21,7 +21,7 @@ bool drawJpsi = 0;
 bool drawBRpA = 0;
 bool drawThm = 1;
 
-bool BSepSys = 1;
+bool BSepSys = 0;
 
 void adjustLegend(TLegend* l);
 void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", Float_t centMin=0., Float_t centMax=100.)
@@ -303,6 +303,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	}
 
 	TLegendEntry *ent_B;
+	TLegendEntry *ent_BP;
 	TLegendEntry *ent_uncCor;
 	TLegendEntry *ent_uncUncor;
 	TLegendEntry *ent_unc;
@@ -391,6 +392,17 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 		texlumi->SetLineWidth(2);
 		texlumi->Draw();
 	}
+		TFile *Bplus = new TFile("/afs/cern.ch/work/s/szhaozho/Bs/CMSSW_7_5_8_patch3/src/Bs-Ana/BplusRAA2015RunII/CrossSection/ROOTfiles/outputRAA.root");
+	TGraphAsymmErrors* gNuclearModificationBPlus = (TGraphAsymmErrors *) Bplus->Get("gNuclearModification_Cor");
+
+gNuclearModificationBPlus->Draw("same p");
+	ent_BP = legendSigma->AddEntry(gNuclearModificationBPlus,"B^{+} R_{AA}","pe");
+		ent_BP->SetTextFont(42);
+		ent_BP->SetLineColor(1);
+		ent_BP->SetMarkerColor(1);
+		ent_BP->SetTextSize(0.038);
+	legendSigma->Draw("same");
+
 
 	if(drawBRpA){
 		//DrawBRpAFONLL();
@@ -498,7 +510,6 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	if(drawBRpA){
 		AddOn = AddOn += "_RpA";
 	}
-
 
 	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,AddOn.Data()));
 	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,AddOn.Data()));
