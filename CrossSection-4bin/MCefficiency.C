@@ -16,6 +16,7 @@ Double_t binwidthmass=(maxhisto-minhisto)/nbinsmasshisto;
 TString weightfunctiongen = "1";
 TString weightfunctionreco = "1";
 Float_t hiBinMin,hiBinMax,centMin,centMax;
+using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
@@ -117,7 +118,6 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   TH1D* hPtGenAccWeighted = new TH1D("hPtGenAccWeighted","",_nBins,_ptBins);
   TH1D* hPthat = new TH1D("hPthat","",100,0,500);
   TH1D* hPthatweight = new TH1D("hPthatweight","",100,0,500);
-
   //ntMC->Project("hPtMC","Bpt",TCut(weightfunctionreco)*(TCut(cut.Data())&&"(Bgen==23333)"));
   ntMC->Project("hPtMC","Bpt",TCut(weighpthat)*TCut(weightBgenpt)*TCut(weightHiBin)*(TCut(cut.Data())&&"(Bgen==23333)"));
   //ntMC->Project("hPtMCrecoonly","Bpt",TCut(weightfunctionreco)*(TCut(cut_recoonly.Data())&&"(Bgen==23333)"));
@@ -174,6 +174,8 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   hEff->Sumw2();
   //hEff->Divide(hPtMC,hPtGen,1,1,"");
   hEff->Multiply(hEff,hEffAcc,1,1);
+
+
 
   TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.6);  
   hemptyEff->GetXaxis()->CenterTitle();
@@ -248,8 +250,8 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   hemptySpectra->GetYaxis()->SetLabelSize(0.035);  
 
   TH2F* hemptyPthatWeighted=(TH2F*)hemptyPthat->Clone("hemptyPthatWeighted");
-  hemptyPthatWeighted->GetXaxis()->SetTitle("pthat reweighted");
-  
+  hemptyPthatWeighted->GetXaxis()->SetTitle(Form("pthat reweighted_%s",Form(label.Data())));
+  hemptyPthatWeighted->GetYaxis()->SetTitle("Ratio");
   TCanvas*canvasPthat=new TCanvas("canvasPthat","canvasPthat",1000.,500);
   canvasPthat->Divide(2,1);
   canvasPthat->cd(1);
@@ -316,6 +318,35 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
 
   TCanvas*canvas1D=new TCanvas("canvas1D","",600,600);
   canvas1D->cd();
+
+    //Fractional Error of the Efficiency//
+
+//	const int N = 4;
+	double EffV[nBins];
+	double EffErr[nBins];
+	double Ferr[nBins];
+
+	TH1D *hFerr = new TH1D("hFerr",Form("Efficiency Fractional Error vs Bp_{T} Plot in %s",label.Data()),nBins,ptBins);
+	hFerr->GetXaxis()->SetTitle("Bp_{T} (GeV/c)");
+	hFerr->GetYaxis()->SetTitle("Efficiency Fractional Error");
+//	hFerr->SetTitle(Form("Efficiency Fractional Error vs Bp_{T} Plot in %s",label.Data()));
+
+	for(int i =1; i < nBins+1; i++) 
+	{
+	EffV[i] = hEff->GetBinContent(i);
+	EffErr[i] =  hEff->GetBinError(i);
+	Ferr[i] = EffErr[i]/EffV[i];
+	cout << "Bin = " << i << "  EffV = " <<	EffV[i] << endl;
+	cout << "Bin = " << i << "  EffErr = " <<	EffErr[i] << endl;
+	cout << "Bin = " << i << "  Ferr = " <<	Ferr[i] << endl;
+
+	hFerr->SetBinContent(i,Ferr[i]);
+	}
+
+	hFerr->Draw("p");
+	canvas1D->SaveAs(Form("plotEff/FractionalEff_%s.png",Form(label.Data())));
+
+   // Efficiency Error Finished//
   gPad->SetLogy(0);
   //hemptyEff->SetYTitle("hPtMC / hPtGen");
   hemptyEff->SetMaximum(0.6);
