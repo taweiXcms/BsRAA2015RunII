@@ -139,7 +139,7 @@ void fitBmva(TString collsyst="PbPb", TString inputfile ="", TString npfile="ROO
     std::cout<<"NP parameter 0: "<<NPpar[0]<<std::endl;
     std::cout<<"NP parameter 1: "<<NPpar[1]<<std::endl;
 
-    TString inputf = Form("%s.root",inputfile.Data());
+    TString inputf = Form("%s",inputfile.Data());
     TFile* data = new TFile(inputf.Data());
     TH1D* defYield = (TH1D*)data->Get("hPt");
     TH1D* defSignif = (TH1D*)data->Get("hSignif");

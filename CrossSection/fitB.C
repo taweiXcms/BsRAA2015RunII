@@ -102,7 +102,6 @@ void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_
 	nt->AddFriend("ntHlt");
 	nt->AddFriend("ntHi");
 	nt->AddFriend("ntSkim");
-//	nt->AddFriend("BDT_pt_15_60");
 	nt->AddFriend("BDTStage1_pt15to50");
 
 	TTree* ntGen = (TTree*)infMC->Get("ntGen");
@@ -113,7 +112,6 @@ void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_
 	ntMC->AddFriend("ntHlt");
 	ntMC->AddFriend("ntHi");
 	ntMC->AddFriend("ntSkim");
-//	ntMC->AddFriend("BDT_pt_15_60");
 	ntMC->AddFriend("BDTStage1_pt15to50");
 	ntMC->AddFriend(ntGen);
 

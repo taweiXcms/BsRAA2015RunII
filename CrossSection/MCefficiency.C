@@ -62,21 +62,18 @@ void MCefficiency(int isPbPb=0,TString inputmc="/data/wangj/MC2015/Dntuple/pp/re
   TFile* infMC = new TFile(inputmc.Data());
   TTree* ntMC = (TTree*)infMC->Get("ntphi");
   TTree* ntGen = (TTree*)infMC->Get("ntGen");
-  TTree* ntSkim = (TTree*)infMC->Get("ntSkim");
-  TTree* ntmvaTree = (TTree*)infMC->Get("mvaTree");
-  TTree* ntHlt = (TTree*)infMC->Get("ntHlt");
 
-  ntMC->AddFriend(ntmvaTree);
   ntMC->AddFriend(ntGen);
-  ntMC->AddFriend(ntSkim);
-  ntMC->AddFriend(ntHlt);
+  ntMC->AddFriend("ntSkim");
+  ntMC->AddFriend("ntHlt");
+  ntMC->AddFriend("ntHi");
+  ntMC->AddFriend("BDTStage1_pt15to50");
 
-  TTree* nthi = (TTree*)infMC->Get("ntHi");
-  ntGen->AddFriend(nthi);
-  ntGen->AddFriend(ntSkim);
-  ntGen->AddFriend(ntHlt);
-  nthi->AddFriend(ntMC);
-  ntMC->AddFriend(nthi);
+  ntGen->AddFriend(ntMC);
+  ntGen->AddFriend("ntSkim");
+  ntGen->AddFriend("ntHlt");
+  ntGen->AddFriend("ntHi");
+  ntGen->AddFriend("BDTStage1_pt15to50");
 
   // optimal weigths
   TCut weighpthat = "1";
