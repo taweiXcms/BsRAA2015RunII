@@ -5,12 +5,9 @@
 #include "theoryPrediction/drawTheory.h"
 #include "B_RpA/DrawBRpAFONLL.h"
 #include "B_RpA/DrawBRpA.h"
-//#include "ChargedHad/RAA_0_10.C"
-//#include "ChargedHad/RAA_0_100.C"
 #include "ChargedHad/RpPb_Final_20161207.h"
 #include "Dmeson/Draw_DRAA.h" //PAS
 #include "Dmeson/canvasRAA_0_100_20161207.h" //new
-//#include "NonPromptJpsi/expBeautyCMS_20161208.h"
 #include "NonPromptJpsi/nonPrompt_276raa_20170201.h"
 
 bool drawB = 1;
@@ -19,9 +16,9 @@ bool drawDRAA = 0;
 bool drawJpsi = 0;
 
 bool drawBRpA = 0;
-bool drawThm = 1;
+bool drawThm = 0;
 
-bool BSepSys = 1;
+bool BSepSys = 0;
 
 void adjustLegend(TLegend* l);
 void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", Float_t centMin=0., Float_t centMax=100.)
@@ -81,18 +78,18 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		double systematic=0;
 		double systematic_cor=0;
 		double systematic_uncor=0;
-//		systematic=0.01*systematicsForRAA(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
-//		systematic_cor=0.01*systematicsForRAA_Correlated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
-//		systematic_uncor=0.01*systematicsForRAA_UnCorrelated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
+		systematic=0.01*systematicsForRAA(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
+		systematic_cor=0.01*systematicsForRAA_Correlated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
+		systematic_uncor=0.01*systematicsForRAA_UnCorrelated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
 		//double systematic=0.;
 		yrlow[i] = hNuclearModification->GetBinContent(i+1)*systematic;
 		yrhigh[i] =hNuclearModification->GetBinContent(i+1)*systematic;
 		yrcor[i] = hNuclearModification->GetBinContent(i+1)*systematic_cor;
 		yruncor[i] = hNuclearModification->GetBinContent(i+1)*systematic_uncor;
 	}
-printf("%f %f %f %f %f\n",yrlow[0],yrlow[1],yrlow[2],yrlow[3],yrlow[4]);
-printf("%f %f %f %f %f\n",yrcor[0],yrcor[1],yrcor[2],yrcor[3],yrcor[4]);
-printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]);
+	printf("Sys tot: %f \n",yrlow[0]);
+	printf("Sys corr: %f \n",yrcor[0]);
+	printf("Sys uncorr: %f \n",yruncor[0]);
 
 	TGraphAsymmErrors* gNuclearModification = new TGraphAsymmErrors(nBins,apt,yr,aptl,aptl,yrlow,yrhigh);
 	gNuclearModification->SetName("gNuclearModification");
@@ -199,7 +196,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	texlumi->Draw();
 
 	//TLatex* texB = new TLatex(0.77,0.21,"B^{#plus}+B^{#minus}");
-	TLatex* texB = new TLatex(0.81,0.21,"B_{s}");
+	TLatex* texB = new TLatex(0.81,0.20,"B_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.08);
@@ -214,7 +211,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
-	texY = new TLatex(0.81,0.16,"|y| < 2.4");
+	texY = new TLatex(0.81,0.15,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
 	texY->SetTextSize(0.04);
@@ -229,8 +226,8 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	texpre->SetLineWidth(2);
 	//texpre->Draw();
 
-    TLegend *legendSigma=new TLegend(0.6036242,0.7474695,0.942953,0.8457592,"");
-	if(drawDRAA)legendSigma=new TLegend(0.3936242,0.6574695,0.812953,0.9157592,"");
+	TLegend *legendSigma=new TLegend(0.135,0.65,0.49,0.85,"");
+	if(drawDRAA)legendSigma=new TLegend(0.40,0.66,0.81,0.92,"");
 	if(drawThm)legendSigma=new TLegend(0.135,0.65,0.49,0.85,"");
 	adjustLegend(legendSigma);
 
@@ -308,7 +305,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 	TLegendEntry *ent_unc;
 	TLegendEntry *ent_uncGlo;
 	if(drawB) {
-		ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"R_{AA}","pe");
+		ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B_{s} R_{AA}","pe");
 		ent_B->SetTextFont(42);
 		ent_B->SetLineColor(4);
 		ent_B->SetMarkerColor(4);
@@ -384,12 +381,6 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 		bSystnorm->SetFillColor(kGray+2);
 		bSystnorm->SetFillColorAlpha(kGray+2, 0.5);
 		bSystnorm->Draw();
-		texlumi = new TLatex(0.13,0.936,"350.68 #mub^{-1} (5.02 TeV PbPb)");
-		texlumi->SetNDC();
-		texlumi->SetTextFont(42);
-		texlumi->SetTextSize(0.038);
-		texlumi->SetLineWidth(2);
-		texlumi->Draw();
 	}
 
 	if(drawBRpA){
@@ -449,7 +440,7 @@ printf("%f %f %f %f %f\n",yruncor[0],yruncor[1],yruncor[2],yruncor[3],yruncor[4]
 		else 
 			gNuclearModification->Draw("5same");
 		hNuclearModification->Draw("same");
-    	bSystnorm->Draw();
+		bSystnorm->Draw();
 	}
 
 	//DrawPoints at the very last again

@@ -31,8 +31,8 @@ int _nBins = nBins;
 double *_ptBins = ptBins;
 double BmassAve=5.36682;
 double width = 0.05;
-	double BmassH = BmassAve+ width;
-	double BmassL = BmassAve - width;
+double BmassH = BmassAve+ width;
+double BmassL = BmassAve - width;
 using namespace std;
 void fitB(int usePbPb=0, TString inputdata="/data/wangj/Data2015/Bntuple/pp/ntB_EvtBase_20160420_BfinderData_pp_20160419_bPt0jpsiPt0tkPt0p5.root" , TString inputmc="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20160606_pp_Pythia8_BuToJpsiK_Bpt5p0_Pthat5.root", TString trgselection="1",  TString cut="TMath::Abs(By)<2.4&&TMath::Abs(Bmumumass-3.096916)<0.15&&Bmass>5&&Bmass<6&&Btrk1Pt>0.9&&Bchi2cl>1.32e-02&&(Bd0/Bd0Err)>3.41&&cos(Bdtheta)>-3.46e-01&&Bmu1pt>1.5&&Bmu2pt>1.5&&Blxy>0.025", TString cutmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==521&&GisSignal==1", int isMC=0, Double_t luminosity=1., int doweight=0, TString collsyst="PbPb", TString outputfile="", TString npfit="0", int doDataCor = 0, Float_t centmin=0., Float_t centmax=100.)
 {
@@ -221,7 +221,7 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	TH1D* hMCSignal = new TH1D(Form("hMCSignal-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
 
 	TString iNP = npfit;
-    TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
+	TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
 	f->SetNpx(5000);
 	f->SetLineWidth(5);
 
@@ -284,10 +284,10 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 		//      h->Fit(Form("f%d",count),"m","",minhisto,maxhisto);
 	}
 
-    TF1 *background = new TF1(Form("background%d",count),"[0]+[1]*x+[2]*x*x");
+	TF1 *background = new TF1(Form("background%d",count),"[0]+[1]*x+[2]*x*x");
 	background->SetParameter(0,f->GetParameter(3));
 	background->SetParameter(1,f->GetParameter(4));
-    background->SetParameter(2,f->GetParameter(5));
+	background->SetParameter(2,f->GetParameter(5));
 	background->SetLineColor(4);
 	background->SetRange(minhisto,maxhisto);
 	//background->SetLineStyle(2);//PAS
@@ -374,13 +374,13 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	cout << "yield = " << yield << endl;
 	cout << "yieldErr = " << yieldErr << endl;
 
-    TH1D* htest = new TH1D(Form("htest-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+	TH1D* htest = new TH1D(Form("htest-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
 	TString sideband = "(abs(Bmass-5.367)>0.2&&abs(Bmass-5.367)<0.3";
-    nt->Project(Form("htest-%d",count),"Bmass",Form("%s&&%s&&Bpt>%f&&Bpt<%f)*(1/%s)",sideband.Data(),seldata.Data(),ptmin,ptmax,weightdata.Data()));
-    std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
+	nt->Project(Form("htest-%d",count),"Bmass",Form("%s&&%s&&Bpt>%f&&Bpt<%f)*(1/%s)",sideband.Data(),seldata.Data(),ptmin,ptmax,weightdata.Data()));
+	std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
 
 	//TLegend* leg = new TLegend(0.62,0.58,0.82,0.88,NULL,"brNDC");
-    TLegend *leg = new TLegend(0.525,0.38,0.85,0.70,NULL,"brNDC");//paper
+	TLegend *leg = new TLegend(0.525,0.38,0.85,0.70,NULL,"brNDC");//paper
 	leg->SetBorderSize(0);
 	//leg->SetTextSize(0.04);
 	leg->SetTextSize(0.06);
@@ -394,7 +394,7 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	leg->AddEntry(background,"Combinatorial","l");
 	leg->AddEntry(Bkpi,"B #rightarrow J/#psi X","f");
 	leg->Draw("same");
-	
+
 
 
 	TLatex* texChi = new TLatex(0.58,0.55, Form("#chi^{2}/nDOF: %.2f/%d = %.2f", f->GetChisquare(), f->GetNDF(), f->GetChisquare()/f->GetNDF()));
@@ -420,13 +420,13 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
-    //TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
-    TLatex* texB = new TLatex(0.22,0.73,"B_{s}");
-    texB->SetNDC();
-    texB->SetTextFont(42);
-    texB->SetTextSize(0.07);
-    texB->SetLineWidth(2);
-    texB->Draw();
+	//TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
+	TLatex* texB = new TLatex(0.22,0.73,"B_{s}");
+	texB->SetNDC();
+	texB->SetTextFont(42);
+	texB->SetTextSize(0.07);
+	texB->SetLineWidth(2);
+	texB->Draw();
 
 	TLatex* texCol;
 	//if(collisionsystem=="pp"||collisionsystem=="PP"||collisionsystem=="ppInc"||collisionsystem=="PbPbInc") texCol= new TLatex(0.96,0.93, Form("%s #sqrt{s} = 5.02 TeV","pp"));
@@ -476,16 +476,16 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
 	tex->Draw();
 
 	total=f;
-		tex = new TLatex(0.725,0.33,Form("Significance = %.3f",Significance));
+	tex = new TLatex(0.725,0.33,Form("Significance = %.3f",Significance));
 	tex->SetNDC();
 	tex->SetTextFont(42);
 	tex->SetTextSize(0.04);
 	tex->SetLineWidth(2);
 	tex->Draw("SAME");
 
-    TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
+	TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
 	h->GetFunction(Form("f%d",count))->Delete();
-    t->Draw("same");
+	t->Draw("same");
 	h->Draw("e same");
 	h->Write();
 	hMCSignal->Write();

@@ -74,12 +74,12 @@ void fitOnSavedB(int usePbPb=0, TString inputhist="ROOTfiles/hPtSpectrumSaveHist
 	void clean0 (TH1D* h);
 	TF1* fit (TFile* inf, double ptmin, double ptmax, int isMC,bool, TF1* &total,Float_t centmin, Float_t centmax, TString npfit);
 
-    weightgen="1";
-    weight="1";
-    weightdata="1";
-    if(doDataCor == 1){
-    	weightdata="0";
-    }
+	weightgen="1";
+	weight="1";
+	weightdata="1";
+	if(doDataCor == 1){
+		weightdata="0";
+	}
 
 	TFile* inf = new TFile(inputhist.Data());
 
@@ -136,7 +136,7 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	TH1D* hMCSignal = (TH1D*)inf->Get(Form("hMCSignal-%d",count));
 
 	TString iNP = npfit;
-    TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
+	TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
 	f->SetNpx(5000);
 	f->SetLineWidth(4);
 
@@ -198,17 +198,17 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	//printf("HESSE err: %f (%.2f%)\n" , fr->GetErrors()[0], fr->GetErrors()[0]/fr->GetParams()[0]*100);
 	//printf("Minos err: %f (%.2f%), %f (%.2f%)\n", fr->LowerError(0), -fr->LowerError(0)/fr->GetParams()[0]*100, fr->UpperError(0), fr->UpperError(0)/fr->GetParams()[0]*100);
 	//printf("diff in %: (%.2f%), (%.2f%)\n", -fr->LowerError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100, fr->UpperError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100);
-	
+
 	if(weightdata != "1"){
 		//      h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
 		//      h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
 		//      h->Fit(Form("f%d",count),"m","",minhisto,maxhisto);
 	}
 
-    TF1 *background = new TF1(Form("background%d",count),"[0]+[1]*x+[2]*x*x");
+	TF1 *background = new TF1(Form("background%d",count),"[0]+[1]*x+[2]*x*x");
 	background->SetParameter(0,f->GetParameter(3));
 	background->SetParameter(1,f->GetParameter(4));
-    background->SetParameter(2,f->GetParameter(5));
+	background->SetParameter(2,f->GetParameter(5));
 	background->SetLineColor(4);
 	background->SetRange(minhisto,maxhisto);
 	background->SetLineStyle(7);//paper
@@ -271,7 +271,7 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
 	Double_t yieldErr = mass->Integral(minhisto,maxhisto)/binwidthmass*mass->GetParError(0)/mass->GetParameter(0);
 
-    TLegend *leg = new TLegend(0.525,0.46,0.85,0.75,NULL,"brNDC");//paper
+	TLegend *leg = new TLegend(0.525,0.46,0.85,0.75,NULL,"brNDC");//paper
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
 	leg->SetTextFont(42);
@@ -316,13 +316,13 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
-    //TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
-    TLatex* texB = new TLatex(0.225,0.74,"B^{#plus}+B^{#minus}");
-    texB->SetNDC();
-    texB->SetTextFont(42);
-    texB->SetTextSize(0.055);
-    texB->SetLineWidth(2);
-    texB->Draw();
+	//TLatex* texB = new TLatex(0.81,0.30,"B^{+}");
+	TLatex* texB = new TLatex(0.225,0.74,"B^{#plus}+B^{#minus}");
+	texB->SetNDC();
+	texB->SetTextFont(42);
+	texB->SetTextSize(0.055);
+	texB->SetLineWidth(2);
+	texB->Draw();
 
 	TLatex* texCol;
 	//if(collisionsystem=="pp"||collisionsystem=="PP"||collisionsystem=="ppInc"||collisionsystem=="PbPbInc") texCol= new TLatex(0.96,0.93, Form("%s #sqrt{s} = 5.02 TeV","pp"));
@@ -366,9 +366,9 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 
 	total=f;
 
-    TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
+	TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
 	h->GetFunction(Form("f%d",count))->Delete();
-    t->Draw("same");
+	t->Draw("same");
 	h->Draw("e same");
 	h->Write();
 
