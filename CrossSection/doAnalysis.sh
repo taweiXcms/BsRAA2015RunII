@@ -18,6 +18,9 @@ DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
 DORAA=0
 
+#do reweighting
+DOPTREWEIGHT=1
+
 #systematic section
 DOCOMPARE=0
 DOClosure=0
@@ -43,6 +46,7 @@ INPUTDATAPbPb="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/sa
 ## ANALYSIS PP TRIGGERED
 FONLLDATINPUT="pp_Bplus_5p03TeV_y2p4"
 FONLLOUTPUTFILE="ROOTfiles/fonllOutput_pp_Bplus_5p03TeV_y2p4.root"
+FONLLOUTPUTFILEREWEIGHT="ROOTfiles/fonllOutput_pp_Bplus_5p03TeV_y2p4_reweightBin.root"
 OUTPUTFILERAA="ROOTfiles/outputRAA.root"
 
 LABELPP="pp"
@@ -173,8 +177,20 @@ rm NuclearModificationFactor.exe
 fi
 
 ###
-### below are mostly related to cross checks
+### below are unrelated 
 ###
+
+### pt reweighting
+
+if [ $DOPTREWEIGHT -eq 1 ]; then
+#g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
+#./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
+#rm Bplusdsigmadpt.exe
+#root -b -q weightMCpp.C++
+#rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
+#root -b -q weightMCPbPb.C++
+#rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
+fi
 
 ### MEAN COMPARISON
 

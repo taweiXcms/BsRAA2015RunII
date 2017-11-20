@@ -3,12 +3,12 @@
 #include "TLegendEntry.h"
 #include "../Systematics/systematics.C"
 #include "theoryPrediction/drawTheory.h"
-#include "B_RpA/DrawBRpAFONLL.h"
-#include "B_RpA/DrawBRpA.h"
-#include "ChargedHad/RpPb_Final_20161207.h"
-#include "Dmeson/Draw_DRAA.h" //PAS
-#include "Dmeson/canvasRAA_0_100_20161207.h" //new
-#include "NonPromptJpsi/nonPrompt_276raa_20170201.h"
+#include "theoryPrediction/B_RpA/DrawBRpAFONLL.h"
+#include "theoryPrediction/B_RpA/DrawBRpA.h"
+#include "theoryPrediction/ChargedHad/RpPb_Final_20161207.h"
+#include "theoryPrediction/Dmeson/Draw_DRAA.h" //PAS
+#include "theoryPrediction/Dmeson/canvasRAA_0_100_20161207.h" //new
+#include "theoryPrediction/NonPromptJpsi/nonPrompt_276raa_20170201.h"
 
 bool drawB = 1;
 bool drawChHad = 0;

@@ -346,10 +346,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hEff->SetMarkerStyle(20);
 	hEff->SetMarkerSize(1.2);
 	hEff->Draw("same");
-	if(!isPbPb) cEff->SaveAs(Form("plotOthers/efficiency%s%s.pdf",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotOthers/efficiency%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
-	if(!isPbPb) cEff->SaveAs(Form("plotOthers/efficiency%s%s.png",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotOthers/efficiency%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.pdf",label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.png",label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,_postfix.Data()));
 
 	TFile *outputfile=new TFile(outputplot.Data(),"recreate");
 	outputfile->cd();

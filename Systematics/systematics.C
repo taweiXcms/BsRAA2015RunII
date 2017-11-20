@@ -13,7 +13,7 @@ double AnaPtBins[AnaBins+1] = {15.,50.};
 // =============================================================================================================
 // B meson decay
 // =============================================================================================================
-double BtomumuKBRUncertainty	= 3.07;// from PDG
+double BRUncertainty	= 7.57;// from PDG sqrt((0.08/1.07)^2+(0.033/5.961)^2+(0.5/48.9)^2) = 0.07566508149
 
 // =============================================================================================================
 // pp uncertainty
@@ -272,7 +272,7 @@ float systematicsForRAA_UnCorrelated(double pt,double centL=0,double centH=100, 
 // =============================================================================================================
 float normalizationUncertaintyForPP()
 {
-	return sqrt((BtomumuKBRUncertainty*BtomumuKBRUncertainty)+(ppLumiUncertainty*ppLumiUncertainty));
+	return sqrt((BRUncertainty*BRUncertainty)+(ppLumiUncertainty*ppLumiUncertainty));
 }
 
 float systematicsPP(double pt, double HLT=0,int stage=0)
@@ -347,7 +347,7 @@ float systematicsPP_UnCorrelated(double pt, double HLT=0,int stage=0)
 // =============================================================================================================
 float normalizationUncertaintyForPbPb(bool TAAhi = 1, double centL=0,double centH=100)
 {
-	double sys = ((BtomumuKBRUncertainty*BtomumuKBRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
+	double sys = ((BRUncertainty*BRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
 	if (centL==0&&centH==10) {
 		// 0-10%
 		sys+=TAAUncertainty0to10*TAAUncertainty0to10;

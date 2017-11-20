@@ -11,17 +11,20 @@
 #include <TROOT.h>
 #include <TStyle.h>
 #include <TFile.h>
-
 #include "parameters.h"
-
 using namespace std;
+int _nBins = nBins;
+double *_ptBins = ptBins;
 
-//void Bplusdsigmadpt(TString inputFONLLdat, TString outputFONLL,TString label)
 void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4", 
-		TString outputFONLL = "fonllOutput_pp_Bplus_5p03TeV_y2p4.root",
-		TString label = "pp")
-{
-	//double norm=0.401;           //FF of B->B+, i.e., B fraction
+	 TString outputFONLL = "fonllOutput_pp_Bplus_5p03TeV_y2p4.root",
+	 TString label = "pp",
+     int reweightBin = 0
+){
+	if(reweightBin == 1){
+		_nBins = nBinsReweight;
+		_ptBins = ptBinsReweight;	
+	}
 	double norm=0.103;           //FF of B->Bs, PDG 2016
 	gROOT->SetStyle("Plain");
 	gStyle->SetOptTitle(0);
@@ -76,35 +79,35 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	}
 	//Rebin Edge
 
-	TH1F* hpt_rebin = (TH1F*)hpt->Rebin(nBins,"hpt_rebin",ptBins);
-	TH1F* hminall_rebin = (TH1F*)hminsc->Rebin(nBins,"hminall_rebin",ptBins);
-	TH1F* hmaxall_rebin = (TH1F*)hmaxsc->Rebin(nBins,"hmaxall_rebin",ptBins);
-	TH1F* hminsc_rebin = (TH1F*)hminsc->Rebin(nBins,"hminsc_rebin",ptBins);
-	TH1F* hmaxsc_rebin = (TH1F*)hmaxsc->Rebin(nBins,"hmaxsc_rebin",ptBins);
-	TH1F* hminmass_rebin = (TH1F*)hminmass->Rebin(nBins,"hminmass_rebin",ptBins);
-	TH1F* hmaxmass_rebin = (TH1F*)hmaxmass->Rebin(nBins,"hmaxmass_rebin",ptBins);
-	TH1F* hminpdf_rebin = (TH1F*)hminpdf->Rebin(nBins,"hminpdf_rebin",ptBins);
-	TH1F* hmaxpdf_rebin = (TH1F*)hmaxpdf->Rebin(nBins,"hmaxpdf_rebin",ptBins);
+	TH1F* hpt_rebin = (TH1F*)hpt->Rebin(_nBins,"hpt_rebin",_ptBins);
+	TH1F* hminall_rebin = (TH1F*)hminsc->Rebin(_nBins,"hminall_rebin",_ptBins);
+	TH1F* hmaxall_rebin = (TH1F*)hmaxsc->Rebin(_nBins,"hmaxall_rebin",_ptBins);
+	TH1F* hminsc_rebin = (TH1F*)hminsc->Rebin(_nBins,"hminsc_rebin",_ptBins);
+	TH1F* hmaxsc_rebin = (TH1F*)hmaxsc->Rebin(_nBins,"hmaxsc_rebin",_ptBins);
+	TH1F* hminmass_rebin = (TH1F*)hminmass->Rebin(_nBins,"hminmass_rebin",_ptBins);
+	TH1F* hmaxmass_rebin = (TH1F*)hmaxmass->Rebin(_nBins,"hmaxmass_rebin",_ptBins);
+	TH1F* hminpdf_rebin = (TH1F*)hminpdf->Rebin(_nBins,"hminpdf_rebin",_ptBins);
+	TH1F* hmaxpdf_rebin = (TH1F*)hmaxpdf->Rebin(_nBins,"hmaxpdf_rebin",_ptBins);
 
-	double asigma[nBins],aminall[nBins],amaxall[nBins],aminsc[nBins],amaxsc[nBins],aminmass[nBins],amaxmass[nBins],aminpdf[nBins],amaxpdf[nBins],aerrorl[nBins],aerrorh[nBins]; 
+	double asigma[_nBins],aminall[_nBins],amaxall[_nBins],aminsc[_nBins],amaxsc[_nBins],aminmass[_nBins],amaxmass[_nBins],aminpdf[_nBins],amaxpdf[_nBins],aerrorl[_nBins],aerrorh[_nBins]; 
 
 	//bin middle
-	double apt[nBins];
+	double apt[_nBins];
 	//bin half width
-	double aptl[nBins];
+	double aptl[_nBins];
 	//number of every rebined bin
-	double bin_num[nBins];
+	double bin_num[_nBins];
 
 
-	for (int ibin=0; ibin<nBins; ibin++){
-		apt[ibin]=(ptBins[ibin+1]+ptBins[ibin])/2.;
-		aptl[ibin] = (ptBins[ibin+1]-ptBins[ibin])/2;
+	for (int ibin=0; ibin<_nBins; ibin++){
+		apt[ibin]=(_ptBins[ibin+1]+_ptBins[ibin])/2.;
+		aptl[ibin] = (_ptBins[ibin+1]-_ptBins[ibin])/2;
 		bin_num[ibin]=aptl[ibin]/binsize*2;
 	}
 
 	int j;
 
-	for(j=0;j<nBins;j++)
+	for(j=0;j<_nBins;j++)
 	{
 
 		tem = hpt_rebin->GetBinContent(j+1);
@@ -140,7 +143,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 
 	cout<<endl;
 
-	TGraphAsymmErrors* gaeSigma = new TGraphAsymmErrors(nBins, apt, asigma, aptl, aptl, aerrorl, aerrorh);
+	TGraphAsymmErrors* gaeSigma = new TGraphAsymmErrors(_nBins, apt, asigma, aptl, aptl, aerrorl, aerrorh);
 	gaeSigma->SetFillColor(2);
 	gaeSigma->SetFillStyle(3001);
 
@@ -148,7 +151,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	gaeSigmaBplus->SetName("gaeSigmaBplus");
 	gaeSigmaBplus->SetFillColor(2);
 	gaeSigmaBplus->SetFillStyle(3001); 
-	gaeSigmaBplus->SetTitle(";p_{T}(GeV/c);d#sigma/dp_{T} (D^{0}) (pb GeV-1c)");
+	gaeSigmaBplus->SetTitle(";p_{T}(GeV/c);d#sigma/dp_{T} (B^{s}) (pb GeV-1c)");
 
 	for (int i=0;i<gaeSigmaBplus->GetN();i++){
 		gaeSigmaBplus->GetY()[i] *= norm;
@@ -160,7 +163,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	cr->SetLogy();
 	TH2F* hempty=new TH2F("hempty","",10,0,100.,10.,10.,5000000000);  
 	hempty->GetXaxis()->SetTitle("p_{t} (GeV/c)");
-	hempty->GetYaxis()->SetTitle("d#sigma(D)/dp_{T}(pb GeV-1c)");
+	hempty->GetYaxis()->SetTitle("d#sigma(B)/dp_{T}(pb GeV-1c)");
 	hempty->GetXaxis()->SetTitleOffset(1.);
 	hempty->GetYaxis()->SetTitleOffset(.9);
 	hempty->GetXaxis()->SetTitleSize(0.045);
@@ -198,7 +201,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	tlatextotunc->SetTextSize(0.04);
 	tlatextotunc->Draw();
 
-	TLatex * tlatexD0=new TLatex(0.2,0.7,"B^{+},|y|<2.4, BR unc not shown");
+	TLatex * tlatexD0=new TLatex(0.2,0.7,"B^{s},|y|<2.4, BR unc not shown");
 	tlatexD0->SetNDC();
 	tlatexD0->SetTextColor(1);
 	tlatexD0->SetTextFont(42);
@@ -216,14 +219,20 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	leg->SetFillColor(0);
 	TLegendEntry* ent_gaeSigma=leg->AddEntry(gaeSigma,"Frag.Fraction=1.0 (pure FONLL)","PL");
 	ent_gaeSigma->SetTextColor(gaeSigma->GetMarkerColor());
-	TLegendEntry* ent_gaeSigmaBplus=leg->AddEntry(gaeSigmaBplus,"Multiplied by Frag. Fraction=0.401","PL");
+	TLegendEntry* ent_gaeSigmaBplus=leg->AddEntry(gaeSigmaBplus,"Multiplied by Frag. Fraction=0.103","PL");
 	ent_gaeSigmaBplus->SetTextColor(gaeSigmaBplus->GetMarkerColor());
 	leg->Draw();
 
 	gaeSigma->SetName("gaeSigma");
 	gaeSigmaBplus->SetName("gaeSigmaBplus");
-	cr->SaveAs(Form("plotFONLL/canvas_%s_%s.pdf",inputFONLLdat.Data(),label.Data()));
-	cr->SaveAs(Form("plotFONLL/canvas_%s_%s.eps",inputFONLLdat.Data(),label.Data()));
+	if(reweightBin == 1){
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_reweightBin.pdf",inputFONLLdat.Data(),label.Data()));
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_reweightBin.eps",inputFONLLdat.Data(),label.Data()));
+	}
+	else{
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s.pdf",inputFONLLdat.Data(),label.Data()));
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s.eps",inputFONLLdat.Data(),label.Data()));
+	}
 
 	TFile*foutput=new TFile(outputFONLL.Data(),"recreate");
 	foutput->cd();
@@ -232,14 +241,12 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	hpt->Write();
 	hminall->Write();
 	hmaxall->Write();
-
-
 }
 
 
 int main(int argc, char *argv[])
 {
-	if((argc != 4))
+	if((argc != 4 && argc != 5))
 	{
 		std::cout << "Wrong number of inputs" << std::endl;
 		return 1;
@@ -247,5 +254,7 @@ int main(int argc, char *argv[])
 
 	if(argc == 4)
 		Bplusdsigmadpt(argv[1],argv[2],argv[3]);
+	if(argc == 5)
+		Bplusdsigmadpt(argv[1],argv[2],argv[3],atoi(argv[4]));
 	return 0;
 }
