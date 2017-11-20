@@ -12,8 +12,6 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	gStyle->SetEndErrorSize(0);
 	gStyle->SetMarkerStyle(20);
 
-	std::cout<<"step1"<<std::endl;
-
 	TFile* fileReference = new TFile(inputFONLL.Data());  
 	TGraphAsymmErrors* gaeBplusReference = (TGraphAsymmErrors*)fileReference->Get("gaeSigmaBplus");
 
@@ -36,8 +34,6 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	Double_t yratiocrossFONLL[nBins], yratiocrossFONLLstat[nBins], yratiocrossFONLLsysthigh[nBins], yratiocrossFONLLsystlow[nBins];
 	Double_t yFONLLrelunclow[nBins], yFONLLrelunchigh[nBins], yunity[nBins];
 
-	std::cout<<"step2"<<std::endl;
-
 	for(int i=0;i<nBins;i++)
 	{
 		gaeBplusReference->GetPoint(i,xr[i],yFONLL[i]);
@@ -46,8 +42,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		ycross[i] = hPtSigma->GetBinContent(i+1);
 		ycrossstat[i] = hPtSigma->GetBinError(i+1);
 		double systematic=0.;
-//		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.);
-//		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.);     
+		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.);
+		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.);     
 
 		ycrosssysthigh[i]= hPtSigma->GetBinContent(i+1)*systematic;
 		ycrosssystlow[i]= hPtSigma->GetBinContent(i+1)*systematic;
@@ -59,8 +55,6 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		yFONLLrelunchigh[i] = gaeBplusReference->GetErrorYhigh(i)/yFONLL[i];
 		yunity[i] = yFONLL[i]/yFONLL[i];
 	}
-
-	std::cout<<"step3"<<std::endl;
 
 	TGraphAsymmErrors* gaeCrossSyst = new TGraphAsymmErrors(nBins,xr,ycross,xrlow,xrhigh,ycrosssystlow,ycrosssysthigh);
 	gaeCrossSyst->SetName("gaeCrossSyst");
@@ -125,7 +119,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hemptySigma->GetYaxis()->CenterTitle();
 	hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
 	if(isPbPb) hemptySigma->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
-    hemptySigma->GetXaxis()->SetTitle("p_{T} (GeV/c)");
+	hemptySigma->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptySigma->GetXaxis()->SetTitleOffset(1.);
 	hemptySigma->GetYaxis()->SetTitleOffset(1./tpadr);
 	hemptySigma->GetXaxis()->SetTitleSize(0.12*tpadpos);
@@ -231,44 +225,44 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	leg_CS->Draw("same");
 
 	if(addpbpb){
-	    TFile* filepbpb = new TFile("ROOTfiles/CrossSectionPbPb.root");
-	    TGraphAsymmErrors* gaeCrossSyst_PbPb = (TGraphAsymmErrors*)filepbpb->Get("gaeCrossSyst");
+		TFile* filepbpb = new TFile("ROOTfiles/CrossSectionPbPb.root");
+		TGraphAsymmErrors* gaeCrossSyst_PbPb = (TGraphAsymmErrors*)filepbpb->Get("gaeCrossSyst");
 		gaeCrossSyst_PbPb->SetLineColor(2);
 		gaeCrossSyst_PbPb->Draw("5same");
-	    TH1F* hPtSigma_PbPb = (TH1F*)filepbpb->Get("hPtSigma");
-	    hPtSigma_PbPb->SetLineColor(2);
-	    hPtSigma_PbPb->SetLineWidth(2);
-	    hPtSigma_PbPb->SetMarkerColor(2);
-	    hPtSigma_PbPb->SetMarkerStyle(21);
-	    hPtSigma_PbPb->SetMarkerSize(1.2*tpadr);
+		TH1F* hPtSigma_PbPb = (TH1F*)filepbpb->Get("hPtSigma");
+		hPtSigma_PbPb->SetLineColor(2);
+		hPtSigma_PbPb->SetLineWidth(2);
+		hPtSigma_PbPb->SetMarkerColor(2);
+		hPtSigma_PbPb->SetMarkerStyle(21);
+		hPtSigma_PbPb->SetMarkerSize(1.2*tpadr);
 		hPtSigma_PbPb->Draw("epsame");
-	    leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.85)*tpadr);
-	    leg_CS->SetBorderSize(0);
-	    leg_CS->SetFillStyle(0);
-	    leg_CS->SetTextSize(0.05*tpadr);
-	    leg_CS->AddEntry(hPtSigma,"Data pp","pf");
-	    leg_CS->AddEntry(hPtSigma_PbPb,"Data PbPb","pf");
-	    leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
-	    leg_CS->Draw("same");
-	    hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
+		leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.85)*tpadr);
+		leg_CS->SetBorderSize(0);
+		leg_CS->SetFillStyle(0);
+		leg_CS->SetTextSize(0.05*tpadr);
+		leg_CS->AddEntry(hPtSigma,"Data pp","pf");
+		leg_CS->AddEntry(hPtSigma_PbPb,"Data PbPb","pf");
+		leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
+		leg_CS->Draw("same");
+		hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
 		texGlobal = new TLatex(0.53,0.594,Form("Global uncert."));
 		TLatex* texGlobal_pp = new TLatex(0.53,0.55,Form("pp: %.1f%s",normalizationUncertaintyForPP(),texper.Data()));
 		TLatex* texGlobal_PbPb = new TLatex(0.53,0.50,Form("PbPb: #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data()));
-	    texGlobal->SetNDC();
-	    texGlobal->SetTextFont(42);
-	    texGlobal->SetTextSize(0.05*tpadr);
-	    texGlobal->SetLineWidth(2);
-	    texGlobal->Draw();
-	    texGlobal_pp->SetNDC();
-	    texGlobal_pp->SetTextFont(42);
-	    texGlobal_pp->SetTextSize(0.05*tpadr);
-	    texGlobal_pp->SetLineWidth(2);
-	    texGlobal_pp->Draw();
-	    texGlobal_PbPb->SetNDC();
-	    texGlobal_PbPb->SetTextFont(42);
-	    texGlobal_PbPb->SetTextSize(0.05*tpadr);
-	    texGlobal_PbPb->SetLineWidth(2);
-	    texGlobal_PbPb->Draw();
+		texGlobal->SetNDC();
+		texGlobal->SetTextFont(42);
+		texGlobal->SetTextSize(0.05*tpadr);
+		texGlobal->SetLineWidth(2);
+		texGlobal->Draw();
+		texGlobal_pp->SetNDC();
+		texGlobal_pp->SetTextFont(42);
+		texGlobal_pp->SetTextSize(0.05*tpadr);
+		texGlobal_pp->SetLineWidth(2);
+		texGlobal_pp->Draw();
+		texGlobal_PbPb->SetNDC();
+		texGlobal_PbPb->SetTextFont(42);
+		texGlobal_PbPb->SetTextSize(0.05*tpadr);
+		texGlobal_PbPb->SetLineWidth(2);
+		texGlobal_PbPb->Draw();
 	}
 
 	cSigma->cd();
@@ -312,8 +306,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		gaeRatioCrossFONLLsyst->Draw("5same");
 	}
 
-    if(addpbpb){
-	    hemptyRatio->GetYaxis()->SetTitle("pp / FONLL");
+	if(addpbpb){
+		hemptyRatio->GetYaxis()->SetTitle("pp / FONLL");
 	}
 
 	TString _postfix = "";
@@ -352,10 +346,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hEff->SetMarkerStyle(20);
 	hEff->SetMarkerSize(1.2);
 	hEff->Draw("same");
-	if(!isPbPb) cEff->SaveAs(Form("plotOthers/efficiency%s%s.pdf",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotOthers/efficiency%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
-	if(!isPbPb) cEff->SaveAs(Form("plotOthers/efficiency%s%s.png",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotOthers/efficiency%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.pdf",label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.png",label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,_postfix.Data()));
 
 	TFile *outputfile=new TFile(outputplot.Data(),"recreate");
 	outputfile->cd();
