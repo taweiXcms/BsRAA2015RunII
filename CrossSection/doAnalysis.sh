@@ -188,10 +188,10 @@ if [ $DOPTREWEIGHT -eq 1 ]; then
 #g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
 #./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
 #rm Bplusdsigmadpt.exe
-root -b -q weightMCpp.C++
-rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
-#root -b -q weightMCPbPb.C++
-#rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
+#root -b -q weightMCpp.C++
+#rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
+root -b -q weightMCPbPb.C++
+rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
 fi
 
 ### MEAN COMPARISON

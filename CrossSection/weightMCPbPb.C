@@ -4,7 +4,6 @@
 
 void weightPbPbvertex(){
     TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
-    //TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_PbPb_MC_25072017_pthat10.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -33,8 +32,8 @@ void weightPbPbvertex(){
     TString hlt="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)";
 
 	ntDkpiMC->Project("hpzMC","PVz",TCut(weighpthat)*TCut(cut.Data())*TCut(hlt.Data()));
-	ntDkpiData->Project("hpzData","PVz",(TCut(cut.Data())*TCut(hlt.Data())));
-	//ntDkpiData->Project("hpzData","PVz+0.516",(TCut(cut.Data())*TCut(hlt.Data())));// data PVz shift
+	//ntDkpiData->Project("hpzData","PVz",(TCut(cut.Data())*TCut(hlt.Data())));
+	ntDkpiData->Project("hpzData","PVz+0.516",(TCut(cut.Data())*TCut(hlt.Data())));// data PVz shift
 
 	hpzMC->Scale(1./hpzMC->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
 	hpzData->Scale(1./hpzData->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
@@ -67,9 +66,7 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	TString selmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0";
 	TString myweightfunctiongen,myweightfunctionreco;
 
-	//TCut weighpthat="1";
 	TCut weighpthat="pthatweight";
-	//TCut weighpthat="pow(10,-0.075415*Gpt+1.748668+Gpt*Gpt*0.000388)+pow(10,-0.166406*Gpt+2.887856+Gpt*Gpt*0.000105) +0.003157";
 	//TCut weighpthat="pthatweight*(pow(10,-0.107832+0.010248*Gpt+Gpt*Gpt*0.000079+Gpt*Gpt*Gpt*-0.000003+Gpt*Gpt*Gpt*Gpt*-0.000000+Gpt*Gpt*Gpt*Gpt*Gpt*0.000000))";//cross check
 
 	gStyle->SetOptTitle(1);
@@ -91,11 +88,6 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 
 	TH1D* hPtGen = new TH1D("hPtGen","",nBinsReweight,ptBinsReweight);
 	ntGen->Project("hPtGen","Gpt",(TCut(weighpthat)*TCut(selmcgen.Data())));
-
-	// Centrality reweighting
-	//TCut weightCentrality="6.08582+hiBin*(-0.155739)+hiBin*hiBin*(0.00149946)+hiBin*hiBin*hiBin*(-6.41629e-06)+hiBin*hiBin*hiBin*hiBin*(1.02726e-08)";
-	//ntGen->Project("hPtGen","Gpt",(TCut(weighpthat)*TCut(weightCentrality)*TCut(selmcgen.Data())));
-	
 	divideBinWidth(hPtGen);
 
 	TString fonll="ROOTfiles/fonllOutput_pp_Bplus_5p03TeV_y2p4_reweightBin.root";
@@ -108,21 +100,21 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 		gaeBplusReference->GetPoint(i,x,y);
 		hPtFONLL->SetBinContent(i+1,y);
 	}
+
 	TH1D* hPtFONLLOverGen=(TH1D*)hPtFONLL->Clone("hPtFONLLOverGen");
-	TH1D* hPtFONLLOverGenWeight=(TH1D*)hPtFONLL->Clone("hPtFONLLOverGenWeight");
 
 	hPtFONLL->Sumw2();
 	hPtGen->Sumw2();
 	hPtFONLLOverGen->Sumw2();
 	hPtFONLL->Scale(1/hPtFONLL->Integral());
-	hPtFONLLOverGen->Scale(1/hPtFONLLOverGen->Integral());
 	hPtGen->Scale(1/hPtGen->Integral());
+	hPtFONLLOverGen->Scale(1/hPtFONLLOverGen->Integral());
 	hPtFONLLOverGen->Divide(hPtGen);
 
-	//TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5]",0, 100);  
-	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2])+pow(10,[3]*x*x+[4]*x*x*x+x*[5])", 2, 100);
-	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);  
-	TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5])",0, 100);  
+    //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2])",0, 100);
+    TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);
+    //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4])",0, 100);
+    //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5])",0, 100);
 
 	TCanvas*c1=new TCanvas("c1","c1",1000.,600.);
 	c1->cd();
@@ -130,8 +122,9 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	gStyle->SetOptStat(111111111);
 	hPtFONLLOverGen->Fit("myfit","","",minfit,maxfit);
 	hPtFONLLOverGen->Fit("myfit","L m","",minfit,maxfit);
+    printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
 	TLegend* leg0 = myLegend(0.13,0.83,0.40,0.89);
-	leg0->AddEntry(hPtFONLLOverGen,"Pythia8 MC_2015 B^{+}","");
+	leg0->AddEntry(hPtFONLLOverGen,"Pythia8 MC_2015 B_{s}","");
 	leg0->Draw();
 	TLegend* leg1 = myLegend(0.15,0.75,0.40,0.88);
 	leg1->AddEntry(hPtFONLLOverGen,"PbPb #sqrt{s}= 5.02 TeV","");
@@ -145,13 +138,10 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	double par5=myfit->GetParameter(5);
 	//double par6=myfit->GetParameter(6);
 
-	//myweightfunctiongen=Form("pow(10,%f*Gpt+%f+Gpt*Gpt*%f)+pow(10,%f*Gpt+%f+Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
-	//myweightfunctiongen=Form("%f+%f*x+x*x*%f+x*x*x*%f+x*x*x*x*%f+x*x*x*x*x*%f",par0,par1,par2,par3,par4,par5);
-	myweightfunctiongen=Form("pow(10,%f+%f*x+x*x*%f+x*x*x*%f+x*x*x*x*%f+x*x*x*x*x*%f)",par0,par1,par2,par3,par4,par5);
-	std::cout<<"myweightfunctiongen="<<myweightfunctiongen<<std::endl;
-
-	//myweightfunctionreco=Form("pow(10,%f*Gpt+%f+Gpt*Gpt*%f)+pow(10,%f*Gpt+%f+Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
-	//std::cout<<"myweightfunctionreco="<<myweightfunctionreco<<std::endl;
+    myweightfunctiongen=Form("pow(10,%f+%f*Gpt+Gpt*Gpt*%f+Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
+    myweightfunctionreco=Form("pow(10,%f+%f*Bgenpt+Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f)",par0,par1,par2,par3,par4,par5);
+    std::cout<<"myweightfunctiongen="<<myweightfunctiongen<<std::endl;
+    std::cout<<"myweightfunctionreco="<<myweightfunctionreco<<std::endl;
 
 	TCanvas*canvasPtReweight=new TCanvas("canvasPtReweight","canvasPtReweight_PbPb_MC_Bs",1253.,494.); 
 	canvasPtReweight->Divide(3,1);
@@ -308,7 +298,7 @@ void weightPbPbCentrality(){
 	canvas->SaveAs("plotReweight/CentralityWeight.pdf");
 }
 void weightMCPbPb(){
-//	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
-	weightPbPbCentrality();
 //	weightPbPbvertex();
+	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
+//	weightPbPbCentrality();
 }

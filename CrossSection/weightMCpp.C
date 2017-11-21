@@ -3,8 +3,7 @@
 
 
 void weightPPvertex(){
-
-	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_pthat5_bstojpsiphi_pp.root");
+	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -13,7 +12,7 @@ void weightPPvertex(){
 	ntDkpiMC->AddFriend(ntHiMC);
     ntDkpiMC->AddFriend(ntHltMC);
 
-	TFile*fData=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/SkimBpt10/Bs_skim_pp_data.root");
+	TFile*fData=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs_BDT15to50.root");
 	TTree *ntDkpiData = (TTree*)fData->Get("ntphi");
 	TTree *ntSkimData = (TTree*)fData->Get("ntSkim");
 	TTree *ntHiData = (TTree*)fData->Get("ntHi");
@@ -27,13 +26,14 @@ void weightPPvertex(){
 	TH1F*hpzMC=new TH1F("hpzMC","hpzMC",200,-15,15);
     hpzMC->Sumw2();
 
-	TCut weighpthat="1";
-    //TCut weighpthat="pthatweight";
+    TCut weighpthat="pthatweight";
 	TString cut="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter";
-    TString hlt="HLT_HIL1DoubleMu0ForPPRef_v1";
+    TString hltMC="HLT_HIL1DoubleMu0ForPPRef_v1";
+    TString hltData="HLT_HIL1DoubleMu0_v1";
 
-	ntDkpiMC->Project("hpzMC","PVz",TCut(weighpthat)*TCut(cut.Data())*TCut(hlt.Data()));
-	ntDkpiData->Project("hpzData","PVz",(TCut(cut.Data())));
+	ntDkpiMC->Project("hpzMC","PVz",TCut(weighpthat)*TCut(cut.Data())*TCut(hltMC.Data()));
+	//ntDkpiData->Project("hpzData","PVz",TCut(cut.Data())*TCut(hltData.Data()));
+	ntDkpiData->Project("hpzData","PVz+0.516",TCut(cut.Data())*TCut(hltData.Data()));// data PVz shift
 
 	hpzMC->Scale(1./hpzMC->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
 	hpzData->Scale(1./hpzData->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
@@ -62,15 +62,12 @@ void weightPPvertex(){
 }
 
 void weightPPFONLLpthat(int minfit=2,int maxfit=100){
-
 	TString label;
 	TString selmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0";
 	TString myweightfunctiongen,myweightfunctionreco;
 
-	TCut weighpthat="1";
-	//TCut weighpthat="pthatweight";
-	//TCut weighpthat="pow(10,-0.075415*Gpt+1.748668+Gpt*Gpt*0.000388)+pow(10,-0.166406*Gpt+2.887856+Gpt*Gpt*0.000105) +0.003157";
-	//TCut weighpthat="pthatweight*(pow(10,-0.094152+0.008102*Gpt+Gpt*Gpt*0.000171+Gpt*Gpt*Gpt*-0.000005+Gpt*Gpt*Gpt*Gpt*-0.000000+Gpt*Gpt*Gpt*Gpt*Gpt*0.000000))";//cross check
+	TCut weighpthat="pthatweight";
+	//TCut weighpthat="pthatweight*pow(10,-0.365511+0.030289*Gpt+Gpt*Gpt*-0.000691+Gpt*Gpt*Gpt*0.000005+Gpt*Gpt*Gpt*Gpt*0.000000+Gpt*Gpt*Gpt*Gpt*Gpt*0.000000)";//cross check
 
 	gStyle->SetOptTitle(1);
 	//gStyle->SetOptStat(111111);
@@ -84,7 +81,7 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	gStyle->SetStatW(0.30);
 	gStyle->SetStatH(0.04);
 	gStyle->SetStatFontSize(0.03); 
-	TFile*infMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_pthat5_bstojpsiphi_pp.root");
+    TFile*infMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root");
 	TTree* ntGen = (TTree*)infMC->Get("ntGen");
 	TTree *ntHiMC = (TTree*)infMC->Get("ntHi");
 	ntGen->AddFriend(ntHiMC);
@@ -114,10 +111,10 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	hPtFONLLOverGen->Scale(1/hPtFONLLOverGen->Integral());
 	hPtFONLLOverGen->Divide(hPtGen);
 
-	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2])+pow(10,[3]*x*x+[4]*x*x*x+x*[5])", 2, 100);
-	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);  
-	//TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5]",0, 100);  
-	TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5])",0, 100);  
+	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2])",0, 100);  
+	TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);  
+	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4])",0, 100);  
+	//TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5])",0, 100);  
 
 	TCanvas*c1=new TCanvas("c1","c1",1000.,600.);
 	c1->cd();
@@ -125,8 +122,9 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	gStyle->SetOptStat(111111111);
 	hPtFONLLOverGen->Fit("myfit","","",minfit,maxfit);
 	hPtFONLLOverGen->Fit("myfit","L m","",minfit,maxfit);
+    printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
 	TLegend* leg0 = myLegend(0.13,0.83,0.40,0.89);
-	leg0->AddEntry(hPtFONLLOverGen,"Pythia8 MC_2015 B^{s}","");
+	leg0->AddEntry(hPtFONLLOverGen,"Pythia8 MC_2015 B_{s}","");
 	leg0->Draw();
 	TLegend* leg1 = myLegend(0.15,0.75,0.40,0.88);
 	leg1->AddEntry(hPtFONLLOverGen,"pp #sqrt{s}= 5.02 TeV","");
@@ -140,11 +138,9 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	double par5=myfit->GetParameter(5);
 	//double par6=myfit->GetParameter(6);
 
-	//myweightfunctiongen=Form("pow(10,%f*Gpt+%f+Gpt*Gpt*%f)+pow(10,%f*Gpt+%f+Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
-	//myweightfunctiongen=Form("%f+%f*x+x*x*%f+x*x*x*%f+x*x*x*x*%f+x*x*x*x*x*%f",par0,par1,par2,par3,par4,par5);
-	myweightfunctiongen=Form("pow(10,%f+%f*x+x*x*%f+x*x*x*%f+x*x*x*x*%f+x*x*x*x*x*%f)",par0,par1,par2,par3,par4,par5);
+	myweightfunctiongen=Form("pow(10,%f+%f*Gpt+Gpt*Gpt*%f+Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
+	myweightfunctionreco=Form("pow(10,%f+%f*Bgenpt+Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f)",par0,par1,par2,par3,par4,par5);
 	std::cout<<"myweightfunctiongen="<<myweightfunctiongen<<std::endl;
-	myweightfunctionreco=Form("pow(10,%f*Gpt+%f+Gpt*Gpt*%f)+pow(10,%f*Gpt+%f+Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
 	std::cout<<"myweightfunctionreco="<<myweightfunctionreco<<std::endl;
 
 	TCanvas*canvasPtReweight=new TCanvas("canvasPtReweight","canvasPtReweight_PbPb_MC_Bs",1253.,494.); 
@@ -184,7 +180,7 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 }
 
 void weightMCpp(){
-//	weightPPFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
     weightPPvertex();
+	weightPPFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
 }
 
