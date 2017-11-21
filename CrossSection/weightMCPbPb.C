@@ -27,13 +27,14 @@ void weightPbPbvertex(){
 	TH1F*hpzMC=new TH1F("hpzMC","hpzMC",200,-15,15);
 	hpzMC->Sumw2();
 
-	TCut weighpthat="1";
-	//TCut weighpthat="pthatweight";
+	//TCut weighpthat="1";
+	TCut weighpthat="pthatweight*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";//official weighting factor: https://twiki.cern.ch/twiki/pub/CMS/HiHighPt2017/170426_ZVertexWeightForMC.pdf
 	TString cut="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3";
     TString hlt="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)";
 
 	ntDkpiMC->Project("hpzMC","PVz",TCut(weighpthat)*TCut(cut.Data())*TCut(hlt.Data()));
 	ntDkpiData->Project("hpzData","PVz",(TCut(cut.Data())*TCut(hlt.Data())));
+	//ntDkpiData->Project("hpzData","PVz+0.516",(TCut(cut.Data())*TCut(hlt.Data())));// data PVz shift
 
 	hpzMC->Scale(1./hpzMC->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
 	hpzData->Scale(1./hpzData->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
@@ -190,7 +191,7 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 
 void weightPbPbCentrality(){
 	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
-    //TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_PbPb_MC_25072017_pthat10.root");
+//	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_PbPb_MC_25072017_pthat10.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -309,5 +310,5 @@ void weightPbPbCentrality(){
 void weightMCPbPb(){
 //	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
 	weightPbPbCentrality();
-	weightPbPbvertex();
+//	weightPbPbvertex();
 }
