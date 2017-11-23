@@ -12,7 +12,7 @@ OUTPUTDIR="test"
 ## The file specify here is for merging, not for TMVA training which are specify in prefilter.h
 inputMCs=(
 "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight.root"
-"/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight.root"
+"/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight.root"
 )
 inputDatas=(
 "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs.root"
@@ -24,7 +24,7 @@ fi
 
 # if working on several ptbins, BDT.C need to be changed
 PTBIN=(15 50)
-RAA=(1.)
+RAA=(1. 1.)
 COLSYST=('pp' 'PbPb')
 isPbPb=(0 1)
 #MVA=('CutsGA' 'BDT' 'MLP' 'DNN')
@@ -136,9 +136,9 @@ if [ $DOMERGE -eq 1 ]; then
 	    else
 	        hadd ../../$outputData $inputData *_${COLSYST[j]}_*_varStage*_DATA.root
 	    fi
-		cd -
 	    j=$(($j+1))
 	done
+	cd -
 fi
 
 # readxml.cc 

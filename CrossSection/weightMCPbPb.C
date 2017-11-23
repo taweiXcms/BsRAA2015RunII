@@ -3,7 +3,7 @@
 #include "TLegendEntry.h"
 
 void weightPbPbvertex(){
-    TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -26,7 +26,6 @@ void weightPbPbvertex(){
 	TH1F*hpzMC=new TH1F("hpzMC","hpzMC",200,-15,15);
 	hpzMC->Sumw2();
 
-	//TCut weighpthat="1";
 	TCut weighpthat="pthatweight*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";//official weighting factor: https://twiki.cern.ch/twiki/pub/CMS/HiHighPt2017/170426_ZVertexWeightForMC.pdf
 	TString cut="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3";
     TString hlt="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)";
@@ -81,7 +80,7 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	gStyle->SetStatW(0.30);
 	gStyle->SetStatH(0.04);
 	gStyle->SetStatFontSize(0.03); 
-    TFile*infMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    TFile*infMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
 	TTree* ntGen = (TTree*)infMC->Get("ntGen");
 	TTree *ntHiMC = (TTree*)infMC->Get("ntHi");
 	ntGen->AddFriend(ntHiMC);
@@ -180,8 +179,7 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 }
 
 void weightPbPbCentrality(){
-	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
-//	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_PbPb_MC_25072017_pthat10.root");
+	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -204,8 +202,7 @@ void weightPbPbCentrality(){
 	TH1F*hCenMC=new TH1F("hCenMC","hCenMC",200,0,200);
 	hCenMC->Sumw2();
 	
-	TCut weighpthat="1";
-	//TCut weighpthat="pthatweight";
+	TCut weighpthat="pthatweight";
 	//TCut weighpthat="6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09)";
 	TString cut="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3";
 	TString hlt="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)";
@@ -223,7 +220,7 @@ void weightPbPbCentrality(){
 	hempty1->GetYaxis()->SetTitle("Entries");
 	hempty1->GetXaxis()->SetTitle("Centrality (HiBin)");
 	hempty1->GetXaxis()->SetTitleOffset(0.9);
-	hempty1->GetYaxis()->SetTitleOffset(1.5);
+	hempty1->GetYaxis()->SetTitleOffset(1.3);
 	hempty1->GetXaxis()->SetTitleSize(0.05);
 	hempty1->GetYaxis()->SetTitleSize(0.05);
 	hempty1->GetXaxis()->SetTitleFont(42);
@@ -239,7 +236,7 @@ void weightPbPbCentrality(){
 	hempty2->GetYaxis()->SetTitle("Ratio Data/MC");
 	hempty2->GetXaxis()->SetTitle("Centrality (HiBin)");
 	hempty2->GetXaxis()->SetTitleOffset(0.9);
-	hempty2->GetYaxis()->SetTitleOffset(1.5);
+	hempty2->GetYaxis()->SetTitleOffset(1.3);
 	hempty2->GetXaxis()->SetTitleSize(0.05);
 	hempty2->GetYaxis()->SetTitleSize(0.05);
 	hempty2->GetXaxis()->SetTitleFont(42);
@@ -285,8 +282,11 @@ void weightPbPbCentrality(){
 	hempty2->Draw();
 	hRatio->Draw("same");
 
-	TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]", 0, 200);  
+	//TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]", 0, 200);  
+	//TF1 *myfit = new TF1("myfit","[0]*exp([1]*(x-[2]))", 0, 200);  
+	TF1 *myfit = new TF1("myfit","[0]*exp([1]*(x-[2])^2)", 0, 200);  
 	hRatio->Fit("myfit","","",0, 200);
+    printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
 	double par0=myfit->GetParameter(0);
 	double par1=myfit->GetParameter(1);
 	double par2=myfit->GetParameter(2);
@@ -299,6 +299,6 @@ void weightPbPbCentrality(){
 }
 void weightMCPbPb(){
 //	weightPbPbvertex();
-	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
-//	weightPbPbCentrality();
+//	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
+	weightPbPbCentrality();
 }

@@ -13,7 +13,7 @@
 #include <TGraphAsymmErrors.h>
 using namespace std;
 
-bool ispp = 0;
+bool ispp = 1;
 TString inputmc;
 
 int _nBins = nBins;
@@ -23,7 +23,7 @@ void converter(){
 	string label = "";
 	if(ispp){
 		label = "pp"; 
-		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/loop_Bs0_pthat5_bstojpsiphi_pp.root";
+		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root";
     }
 	else{
 		label = "pbpb";
@@ -70,7 +70,7 @@ void converter(){
 	TH1D* hAllUnc = new TH1D("hAllUnc","",_nBins,_ptBins);
 	TH1D* hSF = new TH1D("hSF","",_nBins,_ptBins);
     for(int entry=0; entry<nevents_total; entry++){
-//    for(int entry=111; entry<112; entry++){
+    //for(int entry=111; entry<112; entry++){
 	    //if ((entry%10000) == 0) printf("Loading event #%d of %d.\n",entry,nevents_total);
     	ntphi->GetEntry(entry);
     	ntHlt->GetEntry(entry);
@@ -96,13 +96,9 @@ void converter(){
 				&& Bmu1dxyPV[b]< 0.3 && Bmu2dxyPV[b]< 0.3 && Bmu1dzPV[b]<20 && Bmu2dzPV[b]<20 
 				&& Bmu1isGlobalMuon[b] && Bmu2isGlobalMuon[b] 
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
-				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 && Btrk1Pt[b]>0.5 && Bchi2cl[b]>0.005 
-				&& ((Bpt[b]<10 && (BsvpvDistance[b]/BsvpvDisErr[b])>5.5) || (Bpt[b]>10 && (BsvpvDistance[b]/BsvpvDisErr[b])>3.5)) 
-				&& ((Bpt[b]>7 && Bpt[b]<10 && Btrk1Pt[b]>0.748 && Bchi2cl[b]>0.0322 && (BsvpvDistance[b]/BsvpvDisErr[b])>0 && cos(Bdtheta[b])>0.989 && abs(Btrk1Eta[b])<2.4) 
-				|| (Bpt[b]>10 && Bpt[b]<15 && Btrk1Pt[b]>0.878 && Bchi2cl[b]>0.0014 && (BsvpvDistance[b]/BsvpvDisErr[b])>0 && cos(Bdtheta[b])>0.971 && abs(Btrk1Eta[b])<2.39) 
-				|| (Bpt[b]>15 && Bpt[b]<20 && Btrk1Pt[b]>0.818 && Bchi2cl[b]>0.00838 && (BsvpvDistance[b]/BsvpvDisErr[b])>0 && cos(Bdtheta[b])>0.959 && abs(Btrk1Eta[b])<2.42) 
-				|| (Bpt[b]>20 && Bpt[b]<30 && Btrk1Pt[b]>0.84 && Bchi2cl[b]>0.014 && (BsvpvDistance[b]/BsvpvDisErr[b])>0 && cos(Bdtheta[b])>0.603 && abs(Btrk1Eta[b])<2.38) 
-				|| (Bpt[b]>30 && Bpt[b]<50 && Btrk1Pt[b]>1.06 && Bchi2cl[b]>0.0155 && (BsvpvDistance[b]/BsvpvDisErr[b])>3.53 && cos(Bdtheta[b])>0.995 && abs(Btrk1Eta[b])<2.37))
+				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4  
+				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 
+				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.209775
 				) 
 				if(Bgen[b]==23333){
 					double _weight = pthatweight*((pow(10,-0.094152+0.008102*Bgenpt[b]+Bgenpt[b]*Bgenpt[b]*0.000171+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000005+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000000+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*0.000000)));
@@ -154,13 +150,9 @@ void converter(){
 				&& Bmu1dxyPV[b]< 0.3 && Bmu2dxyPV[b]< 0.3 && Bmu1dzPV[b]<20 && Bmu2dzPV[b]<20 
 				&& Bmu1isGlobalMuon[b] && Bmu2isGlobalMuon[b] 
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
-				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 && Btrk1Pt[b]>0.8 && Bchi2cl[b]>0.005 
-				&& ((Bpt[b]<10 && (BsvpvDistance[b]/BsvpvDisErr[b])>5.5) || (Bpt[b]>10 && (BsvpvDistance[b]/BsvpvDisErr[b])>3.5)) 
-				&& ((Bpt[b]>7 && Bpt[b]<10 && BDT[b]>0.08)
-				|| (Bpt[b]>10 && Bpt[b]<15 && Btrk1Pt[b]>1.38 && Bchi2cl[b]>0.0796 && (BsvpvDistance[b]/BsvpvDisErr[b])>7.48 && cos(Bdtheta[b])>-0.415 && abs(Btrk1Eta[b])<2.16) 
-				|| (Bpt[b]>15 && Bpt[b]<20 && Btrk1Pt[b]>1.7 && Bchi2cl[b]>0.0521 && (BsvpvDistance[b]/BsvpvDisErr[b])>4.96 && cos(Bdtheta[b])>-0.76 && abs(Btrk1Eta[b])<2.3) 
-				|| (Bpt[b]>20 && Bpt[b]<30 && Btrk1Pt[b]>2.02 && Bchi2cl[b]>0.00859 && (BsvpvDistance[b]/BsvpvDisErr[b])>2.03 && cos(Bdtheta[b])>-0.349 && abs(Btrk1Eta[b])<2.36) 
-				|| (Bpt[b]>30 && Bpt[b]<50 && Btrk1Pt[b]>1.94 && Bchi2cl[b]>0.0166 && (BsvpvDistance[b]/BsvpvDisErr[b])>4.25 && cos(Bdtheta[b])>0.99 && abs(Btrk1Eta[b])<2.33))
+				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 
+				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4  
+				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.303985
 				)	
                 if(Bgen[b]==23333){
 					double _weight = pthatweight*(pow(10,-0.107832+0.010248*Bgenpt[b]+Bgenpt[b]*Bgenpt[b]*0.000079+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000003+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000000+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*0.000000))*(6.08582+hiBin*(-0.155739)+hiBin*hiBin*(0.00149946)+hiBin*hiBin*hiBin*(-6.41629e-06)+hiBin*hiBin*hiBin*hiBin*(1.02726e-08));
