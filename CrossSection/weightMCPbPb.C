@@ -57,7 +57,9 @@ void weightPbPbvertex(){
 	double par2=myfit->GetParameter(2);
 	double par3=myfit->GetParameter(3);
 	double par4=myfit->GetParameter(4);
-	std::cout<<"weight="<<par0<<"+PVz*("<<par1<<")+PVz*PVz*("<<par2<<")+PVz*PVz*PVz*("<<par3<<")+PVz*PVz*PVz*PVz*("<<par4<<")"<<endl;
+    printf("#########################\n");
+    printf("(%f + %f*PVz + %f*PVz*PVz + %f*PVz*PVz*PVz + %f*PVz*PVz*PVz*PVz)\n", par0, par1, par2, par3, par4);
+    printf("#########################\n");
 }
 
 void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
@@ -65,8 +67,9 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	TString selmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0";
 	TString myweightfunctiongen,myweightfunctionreco;
 
-	TCut weighpthat="pthatweight";
-	//TCut weighpthat="pthatweight*(pow(10,-0.107832+0.010248*Gpt+Gpt*Gpt*0.000079+Gpt*Gpt*Gpt*-0.000003+Gpt*Gpt*Gpt*Gpt*-0.000000+Gpt*Gpt*Gpt*Gpt*Gpt*0.000000))";//cross check
+	//TCut weighpthat="pthatweight";
+	TCut weighpthat="pthatweight * (6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))";//add centrality weight
+	//TCut weighpthat="pthatweight * (6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917))) * (pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
 
 	gStyle->SetOptTitle(1);
 	//gStyle->SetOptStat(111111);
@@ -137,10 +140,10 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	double par5=myfit->GetParameter(5);
 	//double par6=myfit->GetParameter(6);
 
-    myweightfunctiongen=Form("pow(10,%f+%f*Gpt+Gpt*Gpt*%f+Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
-    myweightfunctionreco=Form("pow(10,%f+%f*Bgenpt+Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f)",par0,par1,par2,par3,par4,par5);
-    std::cout<<"myweightfunctiongen="<<myweightfunctiongen<<std::endl;
-    std::cout<<"myweightfunctionreco="<<myweightfunctionreco<<std::endl;
+    printf("#########################\n");
+    printf("(pow(10, %f + %f*Gpt + %f*Gpt*Gpt + %f*Gpt*Gpt*Gpt))\n", par0, par1, par2, par3);
+    printf("(pow(10, %f + %f*Bgenpt + %f*Bgenpt*Bgenpt + %f*Bgenpt*Bgenpt*Bgenpt))\n", par0, par1, par2, par3);
+    printf("#########################\n");
 
 	TCanvas*canvasPtReweight=new TCanvas("canvasPtReweight","canvasPtReweight_PbPb_MC_Bs",1253.,494.); 
 	canvasPtReweight->Divide(3,1);
@@ -203,11 +206,10 @@ void weightPbPbCentrality(){
 	hCenMC->Sumw2();
 	
 	TCut weighpthat="pthatweight";
-	//TCut weighpthat="6.14981+hiBin*(-0.156513)+hiBin*hiBin*(0.00149127)+hiBin*hiBin*hiBin*(-6.29087e-06)+hiBin*hiBin*hiBin*hiBin*(9.90029e-09)";
+	//TCut weighpthat="pthatweight*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))";//cross check
 	TString cut="abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3";
 	TString hlt="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)";
 
-	//ntDkpiMC->Project("hCenMC","hiBin",TCut(weighpthat)*(TCut(cut.Data())));
 	ntDkpiMC->Project("hCenMC","hiBin",TCut(weighpthat)*TCut(cut.Data())*TCut(hlt.Data()));
 	ntDkpiData->Project("hCenData","hiBin",(TCut(cut.Data())*TCut(hlt.Data())));
 
@@ -230,7 +232,7 @@ void weightPbPbCentrality(){
 	hempty1->GetXaxis()->SetLabelSize(0.035);
 	hempty1->GetYaxis()->SetLabelSize(0.035);  
 
-	TH2F* hempty2=new TH2F("hempty2","",50,0.,200.,10,0,20);  
+	TH2F* hempty2=new TH2F("hempty2","",50,0.,200.,10,0,10);  
 	hempty2->GetXaxis()->CenterTitle();
 	hempty2->GetYaxis()->CenterTitle();
 	hempty2->GetYaxis()->SetTitle("Ratio Data/MC");
@@ -282,23 +284,52 @@ void weightPbPbCentrality(){
 	hempty2->Draw();
 	hRatio->Draw("same");
 
-	//TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]", 0, 200);  
-	//TF1 *myfit = new TF1("myfit","[0]*exp([1]*(x-[2]))", 0, 200);  
-	TF1 *myfit = new TF1("myfit","[0]*exp([1]*(x-[2])^2)", 0, 200);  
-	hRatio->Fit("myfit","","",0, 200);
-    printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
+	TF1 *myfit = new TF1("myfit","[0]*exp([1]*pow(abs(x-[2]),[3]))", 0, 200);  
+	myfit->SetParameter(0,10);
+	myfit->SetParameter(1,-20);
+	myfit->SetParameter(2,0);
+	myfit->SetParameter(3,2);
+	hRatio->Fit("myfit","m","",0, 200);
+	hRatio->Fit("myfit","m","",0, 200);
+
+//	test
+//	TF1 *myfit = new TF1("myfit","[0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x+[5]*x*x*x*x*x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]+[1]*x+[2]*x*x+[3]*x*x*x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]+[1]/x+[2]/x/x+[3]/x/x/x+[4]/x/x/x/x+[5]/x/x/x/x/x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]+[1]/x+[2]/x/x+[3]/x/x/x+[4]/x/x/x/x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]+[1]/x+[2]/x/x+[3]/x/x/x", 0, 200);  
+//	hRatio->Fit("myfit","L q m","",0, 200);
+//	hRatio->Fit("myfit","L q m","",0, 200);
+//	hRatio->Fit("myfit","L m","",0, 200);
+//
+//	TF1 *myfit = new TF1("myfit","[0]+[1]*x+[2]*x*x+[3]*x*x*x", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","([0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x*x)*(x<50)+([0]+[1]*50+[2]*50*50+[3]*50*50*50+[4]*50*50*50*50)/([5]+[6]*50+[7]*50*50+[8]*50*50*50+[9]*50*50*50*50)*([5]+[6]*x+[7]*x*x+[8]*x*x*x+[9]*x*x*x*x)*(x>=50)", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","([0]+[1]*x+[2]*x*x+[3]*x*x*x+[4]*x*x*x*x*x)*(x<50)+([0]+[1]*50+[2]*50*50+[3]*50*50*50+[4]*50*50*50*50)/([5]+[6]/50+[7]/50/50+[8]/50/50/50+[9]/50/50/50/50)*([5]+[6]/x+[7]/x/x+[8]/x/x/x+[9]/x/x/x/x)*(x>=50)", 0, 200);  
+//	TF1 *myfit = new TF1("myfit","[0]*exp([1]*x)", 0, 200);  
+//	hRatio->Fit("myfit","m","",0, 50);
+//	hRatio->Fit("myfit","m","",0, 50);
+//	hRatio->Fit("myfit","m","",50, 200);
+//	hRatio->Fit("myfit","m","",50, 200);
+//	hRatio->Fit("myfit","m","",0, 200);
+//	hRatio->Fit("myfit","m","",0, 200);
+//	test
+
 	double par0=myfit->GetParameter(0);
 	double par1=myfit->GetParameter(1);
 	double par2=myfit->GetParameter(2);
 	double par3=myfit->GetParameter(3);
 	double par4=myfit->GetParameter(4);
-
-	TString myweight;
-	std::cout<<"weight="<<par0<<"+hiBin*("<<par1<<")+hiBin*hiBin*("<<par2<<")+hiBin*hiBin*hiBin*("<<par3<<")"<<"+hiBin*hiBin*hiBin*hiBin*("<<par4<<")"<<endl;
+	double par5=myfit->GetParameter(5);
+    printf("#########################\n");
+	printf("(%f*exp(%f*pow(abs(hiBin-%f),%f)))\n",par0, par1, par2, par3);
+//	printf("+(%f + %f*hiBin + %f*hiBin*hiBin + %f*hiBin*hiBin*hiBin + %f*hiBin*hiBin*hiBin*hiBin + %f*hiBin*hiBin*hiBin*hiBin*hiBin)\n", par0, par1, par2, par3, par4, par5);
+    printf("#########################\n");
+    printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
 	canvas->SaveAs("plotReweight/CentralityWeight.pdf");
 }
 void weightMCPbPb(){
-//	weightPbPbvertex();
-//	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
+	weightPbPbvertex();
+	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
 	weightPbPbCentrality();
 }

@@ -8,18 +8,18 @@ DOANALYSISPP_FITNP=0
 DOANALYSISPP_FIT=0
 DOANALYSISPP_FITONSAVED=0
 DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=0
+DOANALYSISPP_CROSS=1
 
 DOANALYSISPbPb_FONLL=0
 DOANALYSISPbPb_FITNP=0
 DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=0
-DORAA=0
+DOANALYSISPbPb_CROSS=1
+DORAA=1
 
 #do reweighting
-DOPTREWEIGHT=1
+DOPTREWEIGHT=0
 
 #systematic section
 DOCOMPARE=0
@@ -121,9 +121,9 @@ ISMCPbPb=0
 ISDOWEIGHTPbPb=1
 SELGENPbPb="TMath::Abs(Gy)<2.4&&TMath::Abs(GpdgId)==531&&GisSignal>0"
 SELGENPbPbACCPbPb="TMath::Abs(Gy)<2.4 && abs(GpdgId)==531 && GisSignal>0 && ((TMath::Abs(Gmu1eta)<1.2 && Gmu1pt>3.5) || (TMath::Abs(Gmu1eta)>1.2 && TMath::Abs(Gmu1eta)<2.1 && Gmu1pt>(5.77-1.8*TMath::Abs(Gmu1eta))) || (TMath::Abs(Gmu1eta)>2.1 && TMath::Abs(Gmu1eta)<2.4 && Gmu1pt>1.8)) && ((TMath::Abs(Gmu2eta)<1.2 && Gmu2pt>3.5) || (TMath::Abs(Gmu2eta)>1.2 && TMath::Abs(Gmu2eta)<2.1 && Gmu2pt>(5.77-1.8*TMath::Abs(Gmu2eta))) || (TMath::Abs(Gmu2eta)>2.1 && TMath::Abs(Gmu2eta)<2.4 && Gmu2pt>1.8)) && Gtk1pt>0.8 && Gtk2pt>0.8 && TMath::Abs(Gtk1eta)<2.4 && TMath::Abs(Gtk2eta)<2.4"
-RECOONLYPbPb="1"
 CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && BDTStage1_pt15to50 > 0.303985"
 CUTPbPb=${CUTPbPb=}" && abs(PVz)<15 && pclusterCompatibilityFilter && pprimaryVertexFilter && phfCoincFilter3"
+RECOONLYPbPb=$CUTPbPb
 TRGPbPb="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)"
 TRGPbPbMC="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)"
 OUTPUTFILEPbPbSAVEHIST="ROOTfiles/hPtSpectrumSaveHistBplusPbPb.root"
@@ -186,8 +186,8 @@ if [ $DOPTREWEIGHT -eq 1 ]; then
 #g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
 #./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
 #rm Bplusdsigmadpt.exe
-#root -b -q weightMCpp.C++
-#rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
+root -b -q weightMCpp.C++
+rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
 root -b -q weightMCPbPb.C++
 rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
 fi

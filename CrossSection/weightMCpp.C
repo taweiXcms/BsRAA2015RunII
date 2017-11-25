@@ -58,7 +58,9 @@ void weightPPvertex(){
 	double par2=myfit->GetParameter(2);
 	double par3=myfit->GetParameter(3);
 	double par4=myfit->GetParameter(4);
-	std::cout<<"weight="<<par0<<"+PVz*("<<par1<<")+PVz*PVz*("<<par2<<")+PVz*PVz*PVz*("<<par3<<")+PVz*PVz*PVz*PVz*("<<par4<<")"<<endl;
+	printf("#########################\n");
+	printf("(%f + %f*PVz + %f*PVz*PVz + %f*PVz*PVz*PVz + %f*PVz*PVz*PVz*PVz)\n", par0, par1, par2, par3, par4);
+	printf("#########################\n");
 }
 
 void weightPPFONLLpthat(int minfit=2,int maxfit=100){
@@ -67,7 +69,7 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	TString myweightfunctiongen,myweightfunctionreco;
 
 	TCut weighpthat="pthatweight";
-	//TCut weighpthat="pthatweight*pow(10,-0.365511+0.030289*Gpt+Gpt*Gpt*-0.000691+Gpt*Gpt*Gpt*0.000005+Gpt*Gpt*Gpt*Gpt*0.000000+Gpt*Gpt*Gpt*Gpt*Gpt*0.000000)";//cross check
+	//TCut weighpthat="pthatweight * (pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
 
 	gStyle->SetOptTitle(1);
 	//gStyle->SetOptStat(111111);
@@ -138,10 +140,10 @@ void weightPPFONLLpthat(int minfit=2,int maxfit=100){
 	double par5=myfit->GetParameter(5);
 	//double par6=myfit->GetParameter(6);
 
-	myweightfunctiongen=Form("pow(10,%f+%f*Gpt+Gpt*Gpt*%f+Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*%f+Gpt*Gpt*Gpt*Gpt*Gpt*%f)",par0,par1,par2,par3,par4,par5);
-	myweightfunctionreco=Form("pow(10,%f+%f*Bgenpt+Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f+Bgenpt*Bgenpt*Bgenpt*Bgenpt*Bgenpt*%f)",par0,par1,par2,par3,par4,par5);
-	std::cout<<"myweightfunctiongen="<<myweightfunctiongen<<std::endl;
-	std::cout<<"myweightfunctionreco="<<myweightfunctionreco<<std::endl;
+	printf("#########################\n");
+	printf("(pow(10, %f + %f*Gpt + %f*Gpt*Gpt + %f*Gpt*Gpt*Gpt))\n", par0, par1, par2, par3);
+	printf("(pow(10, %f + %f*Bgenpt + %f*Bgenpt*Bgenpt + %f*Bgenpt*Bgenpt*Bgenpt))\n", par0, par1, par2, par3);
+	printf("#########################\n");
 
 	TCanvas*canvasPtReweight=new TCanvas("canvasPtReweight","canvasPtReweight_PbPb_MC_Bs",1253.,494.); 
 	canvasPtReweight->Divide(3,1);
