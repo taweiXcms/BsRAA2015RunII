@@ -121,8 +121,10 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 	////// tag & probe scaling factor
 	for(int i = 0; i < 1; i++){printf("%.2f, ", hPtMC->GetBinContent(i+1));}printf("\n");//check entries
-	double sf_pp[5] = {227977.02/207901.56, 632864.53/606712.42, 408808.07/399583.96, 275911.15/272909.48, 85362.85/85846.52, };
-	double sf_pbpb[5] = {64266.93/59877.61, 189085.92/187577.36, 156249.18/158435.51, 138502.42/141744.96, 53617.98/55196.42, };
+	double sf_pp[1] = {127693.52/125760.88, };
+	//double sf_pp[1] = {126033.04/124022.37, }; // only pthatweight
+	double sf_pbpb[1] = {20506.70/20890.91, };
+	//double sf_pbpb[1] = {43815.89/44553.57, }; // only pthatweight
 	for(int i = 0; i < 1; i++){
 		if(label == "pp"){
 			hPtMC->SetBinContent(i+1, hPtMC->GetBinContent(i+1)*sf_pp[i]);
