@@ -19,7 +19,7 @@ double BRUncertainty	= 7.57;// from PDG sqrt((0.08/1.07)^2+(0.033/5.961)^2+(0.5/
 // pp uncertainty
 // =============================================================================================================
 // Normalization uncertainty
-double ppLumiUncertainty 	= 2.3;     // paper
+double ppLumiUncertainty 	= 2.3;     // B+ paper
 double ppTrackingEfficiency 	= 4*2; // single track systematics from D* studies
 double PbPbTrackingEfficiency 	= 6*2; // from charged particle analysis, paper
 double ppAlignment = 2.8;              // alignment systematic from pp 13 TeV analysis
@@ -38,12 +38,11 @@ TH1D* ppEff = (TH1D*)ppMCEfffile->Get("hEff");
 // PbPb uncertainty
 // =============================================================================================================
 // Normalization uncertainty
-double PbPbNMBUncertainty	= 2;		// uncertainty associated with minbias events,
-double TAAUncertainty0to100	= 8.9;	    // Updated number (4/7/2016)
-double TAAUncertainty0to100HI = 2.8;	// paper 20170223
-double TAAUncertainty0to100LO = 3.4;	// paper 
-double TAAUncertainty0to10	= 1.7;		// Updated number (4/7/2016)
-double PbPbLumiUncertainty	= 10;		// 10% for the moment, to be updated (from Daniel), NOT used
+double PbPbNMBUncertainty	= 2;		// B+ paper
+double TAAUncertainty0to100	= 8.9;	    // B+ paper
+double TAAUncertainty0to100HI = 2.8;	// B+ paper 
+double TAAUncertainty0to100LO = 3.4;	// B+ paper 
+double TAAUncertainty0to10	= 1.7;		// 
 TH1D*  PbPbSignalExtraction;			               
 TH1D*  PbPbMesonSelection;				               
 TH1D*  PbPbTagAndProbe;				                
@@ -64,9 +63,10 @@ void initializationPP()
 	ppSignalExtraction->SetBinContent(1,		2.9);// paper
 
 	ppTagAndProbe = new TH1D("ppTagAndProbe","",AnaBins,AnaPtBins); 
-	double tnpUnc_pp[AnaBins] = {3.235419};
+	double tnpUnc_pp[1] = {3.154493, };
+	//double tnpUnc_pp[1] = {3.172913, }; // only pthatweight
 	for(int i = 0; i < AnaBins; i++){
-		ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp[i]);// paper
+		ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp[i]);
 	}
 
 	ppAccUnc = new TH1D("ppAccUnc","",AnaBins,AnaPtBins);
@@ -87,9 +87,10 @@ void initializationPbPbCent0100()
 	PbPbSignalExtraction->SetBinContent(1,		2.6);// paper
 
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",AnaBins,AnaPtBins);
-	double tnpUnc_pbpb[AnaBins] = {3.889682};
+	double tnpUnc_pbpb[1] = {3.789687, };
+	//double tnpUnc_pbpb[1] = {3.818009, }; // only pthatweight
 	for(int i = 0; i < AnaBins; i++){
-		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);// paper 20170224
+		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);
 	}
 
 	PbPbAccUnc = new TH1D("PbPbAccUnc","",AnaBins,AnaPtBins);

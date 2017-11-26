@@ -27,7 +27,7 @@ void converter(){
     }
 	else{
 		label = "pbpb";
-		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171109_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root";
+		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root";
 		
 	}
     TFile* infMC = new TFile(inputmc.Data());
@@ -101,7 +101,8 @@ void converter(){
 				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.209775
 				) 
 				if(Bgen[b]==23333){
-					double _weight = pthatweight*((pow(10,-0.094152+0.008102*Bgenpt[b]+Bgenpt[b]*Bgenpt[b]*0.000171+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000005+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000000+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*0.000000)));
+                    //double _weight = pthatweight;
+					double _weight = pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt[b] + -0.000691*Bgenpt[b]*Bgenpt[b] + 0.000005*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]));
 					hNominal->Fill(Bpt[b], _weight);
 					//passed and fill
 					double scale = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], 0)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], 0)*tnp_weight_trk_pp(0);
@@ -155,7 +156,8 @@ void converter(){
 				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.303985
 				)	
                 if(Bgen[b]==23333){
-					double _weight = pthatweight*(pow(10,-0.107832+0.010248*Bgenpt[b]+Bgenpt[b]*Bgenpt[b]*0.000079+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000003+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*-0.000000+Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]*0.000000))*(6.08582+hiBin*(-0.155739)+hiBin*hiBin*(0.00149946)+hiBin*hiBin*hiBin*(-6.41629e-06)+hiBin*hiBin*hiBin*hiBin*(1.02726e-08));
+                    //double _weight = pthatweight;
+					double _weight = pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt[b] + -0.000199*Bgenpt[b]*Bgenpt[b] + 0.000000*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)*((PVz-0.44)/5.12)))/(0.08*exp(-0.5*((PVz-3.25)/5.23)*((PVz-3.25)/5.23)));
 					hNominal->Fill(Bpt[b], _weight);
 					//passed and fill
 					double scale = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], 0)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], 0)*tnp_weight_trk_pbpb(0);

@@ -9,13 +9,13 @@ int     HLT_HIL1DoubleMu0ForPPRef_v1;
 int     pclusterCompatibilityFilter;
 int     pprimaryVertexFilter;
 int     phfCoincFilter3;
-double  BDTStage1_pt15to50[MAX_XB]; 
 int     HLT_HIL1DoubleMu0_v1;
 int     HLT_HIL1DoubleMu0_part1_v1;
 int     HLT_HIL1DoubleMu0_part2_v1;
 int     HLT_HIL1DoubleMu0_part3_v1;
 int     hiBin;
 //common
+float   BDTStage1_pt15to50[MAX_XB]; 
 float   pthatweight;
 int     Gsize;
 float   Gpt[MAX_GEN];
@@ -71,13 +71,13 @@ void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree
 		ntSkim->SetBranchAddress("pclusterCompatibilityFilter",&pclusterCompatibilityFilter);
 		ntSkim->SetBranchAddress("pprimaryVertexFilter",&pprimaryVertexFilter);
 		ntSkim->SetBranchAddress("phfCoincFilter3",&phfCoincFilter3);
-		mvaTree->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
 		ntHlt->SetBranchAddress("HLT_HIL1DoubleMu0_v1",&HLT_HIL1DoubleMu0_v1);
 		ntHlt->SetBranchAddress("HLT_HIL1DoubleMu0_part1_v1",&HLT_HIL1DoubleMu0_part1_v1);
 		ntHlt->SetBranchAddress("HLT_HIL1DoubleMu0_part2_v1",&HLT_HIL1DoubleMu0_part2_v1);
 		ntHlt->SetBranchAddress("HLT_HIL1DoubleMu0_part3_v1",&HLT_HIL1DoubleMu0_part3_v1);
 		ntHi->SetBranchAddress("hiBin",&hiBin);
 	}
+	mvaTree->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
 	ntHi->SetBranchAddress("pthatweight",&pthatweight);
 	ntGen->SetBranchAddress("Gsize",&Gsize);
     ntGen->SetBranchAddress("Gpt",Gpt);
