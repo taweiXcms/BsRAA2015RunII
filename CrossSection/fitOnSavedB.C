@@ -136,7 +136,8 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	TH1D* hMCSignal = (TH1D*)inf->Get(Form("hMCSignal-%d",count));
 
 	TString iNP = npfit;
-	TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
+	//TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
+	TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
 	f->SetNpx(5000);
 	f->SetLineWidth(4);
 
@@ -260,8 +261,8 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	h->SetStats(0);
 	h->GetXaxis()->SetNdivisions(-50205);
 	h->Draw("e");
-	Bkpi->SetRange(5.00,5.60);
-	Bkpi->Draw("same");
+	//Bkpi->SetRange(5.00,5.60);
+	//Bkpi->Draw("same");
 	background->Draw("same");   
 	//mass->SetRange(5.16,5.40);
 	mass->Draw("same");
@@ -281,7 +282,7 @@ TF1 *fit(TFile *inf, Double_t ptmin, Double_t ptmax, int isMC,bool isPbPb,TF1* &
 	leg->AddEntry(f,"Fit","l");
 	leg->AddEntry(mass,"Signal","f");
 	leg->AddEntry(background,"Combinatorial","l");
-	leg->AddEntry(Bkpi,"B #rightarrow J/#psi X","f");
+	//leg->AddEntry(Bkpi,"B #rightarrow J/#psi X","f");
 	leg->Draw("same");
 
 	TLatex* texChi = new TLatex(0.58,0.55, Form("#chi^{2}/nDOF: %.2f/%d = %.2f", f->GetChisquare(), f->GetNDF(), f->GetChisquare()/f->GetNDF()));
