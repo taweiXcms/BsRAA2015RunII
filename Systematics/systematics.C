@@ -60,7 +60,7 @@ void initializationPP()
 	ppMesonSelection->SetBinContent(1,		3.8);// PAS
 
 	ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
-	ppSignalExtraction->SetBinContent(1,		2.9);// paper
+	ppSignalExtraction->SetBinContent(1,		0.75);// paper
 
 	ppTagAndProbe = new TH1D("ppTagAndProbe","",AnaBins,AnaPtBins); 
 	double tnpUnc_pp[1] = {3.154493, };
@@ -84,7 +84,7 @@ void initializationPbPbCent0100()
 	PbPbMesonSelection->SetBinContent(1,	12.0);// PAS
 
 	PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
-	PbPbSignalExtraction->SetBinContent(1,		2.6);// paper
+	PbPbSignalExtraction->SetBinContent(1,		2.4);// paper
 
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",AnaBins,AnaPtBins);
 	double tnpUnc_pbpb[1] = {3.789687, };

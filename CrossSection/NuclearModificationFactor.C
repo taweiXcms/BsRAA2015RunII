@@ -87,6 +87,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		yrcor[i] = hNuclearModification->GetBinContent(i+1)*systematic_cor;
 		yruncor[i] = hNuclearModification->GetBinContent(i+1)*systematic_uncor;
 	}
+	printf("RAA mean: %f \n", hNuclearModification->GetBinContent(1));
 	printf("Sys tot: %f \n",yrlow[0]);
 	printf("Sys corr: %f \n",yrcor[0]);
 	printf("Sys uncorr: %f \n",yruncor[0]);
