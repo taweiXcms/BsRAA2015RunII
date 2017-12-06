@@ -145,8 +145,8 @@ void fitB(int usePbPb=0, TString inputdata="" , TString inputmc="", TString trgs
 
 	TCanvas* cPt =  new TCanvas("cPt","",600,600);
 	cPt->SetLogy();
-	hPt->SetXTitle("D^{0} p_{T} (GeV/c)");
-	hPt->SetYTitle("Uncorrected dN(D^{0})/dp_{T}");
+	hPt->SetXTitle("B_{s} p_{T} (GeV/c)");
+	hPt->SetYTitle("Uncorrected dN(B^{s})/dp_{T}");
 	hPt->Draw();
 	if(isMC==1)
 	{

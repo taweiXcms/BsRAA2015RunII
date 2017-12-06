@@ -8,7 +8,11 @@ DOANALYSISPP_FITNP=0
 DOANALYSISPP_FIT=1
 DOANALYSISPP_FITONSAVED=1
 DOANALYSISPP_MCSTUDY=1
-DOANALYSISPP_CROSS=1
+DOANALYSISPP_CROSS=0
+
+DOANALYSISPP_FIT_Y=1
+DOANALYSISPP_FITONSAVED_Y=1
+DOANALYSISPP_MCSTUDY_Y=1
 
 DOANALYSISPbPb_FONLL=0
 DOANALYSISPbPb_FITNP=0
@@ -69,6 +73,10 @@ OUTPUTFILEPlotPP="ROOTfiles/CrossSectionPP.root"
 OUTPUTFILEPPDATA="ROOTfiles/data_pp.root"
 OUTPUTFILEPPMC="ROOTfiles/mc_pp.root"
 
+OUTPUTFILEPPSAVEHIST_Y="ROOTfiles/hPtSpectrumSaveHistBplusPP_Y.root"
+OUTPUTFILEPP_Y="ROOTfiles/hPtSpectrumBplusPP_Y.root"
+OUTPUTFILEMCSTUDYPP_Y="ROOTfiles/MCstudiesPP_Y.root"
+
 #SETTING for NP fit
 INPUTMCPP_NP="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20160618_BJpsiMM_5p02TeV_TuneCUETP8M1.root"
 CUTPP_NP="abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter&&TMath::Abs(By)<2.4&&TMath::Abs(Bmumumass-3.096916)<0.15&&Bmass>5&&Bmass<6&& ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Btrk1Pt>1. && abs(Beta) < 2.4 && Bchi2cl > 0.005 && Btrk1highPurity && abs(Btrk1Eta)<2.4 && cos(Bdtheta) > 0.2 && (BsvpvDistance/BsvpvDisErr)>4.&&Bgen!=23333"
@@ -109,6 +117,24 @@ if [ $DOANALYSISPP_CROSS -eq 1 ]; then
 g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
 ./CrossSectionRatio.exe "$FONLLOUTPUTFILE"  "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" 0 "$LABELPP" 0 "$LUMIPP"
 rm CrossSectionRatio.exe
+fi
+
+if [ $DOANALYSISPP_FIT_Y -eq 1 ]; then      
+g++ fitB_Y.C $(root-config --cflags --libs) -g -o fitB_Y.exe 
+./fitB_Y.exe 0 "$INPUTDATAPP"  "$INPUTMCPP"  "$TRGPP" "$CUTPP&&Bpt>10&&Bpt<50"   "$SELGENPP&&Gpt>10&&Gpt<50"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPSAVEHIST_Y" "$NPFIT_PP" 0
+rm fitB_Y.exe
+fi 
+
+if [ $DOANALYSISPP_FITONSAVED_Y -eq 1 ]; then      
+g++ fitOnSavedB_Y.C $(root-config --cflags --libs) -g -o fitOnSavedB_Y.exe 
+./fitOnSavedB_Y.exe 0 "$OUTPUTFILEPPSAVEHIST_Y"  "$INPUTMCPP"  "$TRGPP" "$CUTPP&&Bpt>10&&Bpt<50"   "$SELGENPP&&Gpt>10&&Gpt<50"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPP_Y" "$NPFIT_PP" 0
+rm fitOnSavedB_Y.exe
+fi 
+
+if [ $DOANALYSISPP_MCSTUDY_Y -eq 1 ]; then      
+g++ MCefficiency_Y.C $(root-config --cflags --libs) -g -o MCefficiency_Y.exe 
+./MCefficiency_Y.exe  0 "$INPUTMCPP"  "$SELGENPP&&Gpt>10&&Gpt<50" "$SELGENPPACCPP&&Gpt>10&&Gpt<50"  "$RECOONLYPP&&Bpt>10&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>10&&Bpt<50"  "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency_Y.exe
 fi
 
 LABELPbPb="PbPb"
