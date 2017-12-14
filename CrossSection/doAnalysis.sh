@@ -6,7 +6,7 @@ CENTPbPbMAX=100
 DOANALYSISPP_FONLL=0
 DOANALYSISPP_FITNP=0
 DOANALYSISPP_FIT=0
-DOANALYSISPP_FITONSAVED=1
+DOANALYSISPP_FITONSAVED=0
 DOANALYSISPP_MCSTUDY=0
 DOANALYSISPP_CROSS=0
 
@@ -18,15 +18,33 @@ DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
 DORAA=0
 
-#do reweighting
+### pp 4-bin result
+DOANALYSISPP_FONLL_1050=0
+DOANALYSISPP_FIT_1050=0
+DOANALYSISPP_FITONSAVED_1050=0
+DOANALYSISPP_MCSTUDY_1050=0
+DOANALYSISPP_CROSS_1050=0
+
+### Rapidity result
+DOANALYSISPP_FIT_Y=0
+DOANALYSISPP_FITONSAVED_Y=0
+DOANALYSISPP_MCSTUDY_Y=0
+
+### Reweighting
 DOPTREWEIGHT=0
 
-#systematic section
+### Cross checks
 DOCOMPARE=0
 DOClosure=0
 SAVEMVAPP=0
 SAVEMVAPbPb=0
 PLOTMVA=0
+
+### Data - MC comparison
+DOVARCOMPARE_PP=0
+
+### Checking prompt background structure
+CHECKPROMPT=1
 
 ## PP MONTE CARLO
 #INPUTMCPP="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root"
@@ -57,8 +75,8 @@ ISMCPP=0
 ISDOWEIGHTPP=0
 SELGENPP="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0"
 SELGENPPACCPP="TMath::Abs(Gy)<2.4 && abs(GpdgId)==531 && GisSignal>0 && ((TMath::Abs(Gmu1eta)<1.2 && Gmu1pt>3.5) || (TMath::Abs(Gmu1eta)>1.2 && TMath::Abs(Gmu1eta)<2.1 && Gmu1pt>(5.77-1.8*TMath::Abs(Gmu1eta))) || (TMath::Abs(Gmu1eta)>2.1 && TMath::Abs(Gmu1eta)<2.4 && Gmu1pt>1.8)) && ((TMath::Abs(Gmu2eta)<1.2 && Gmu2pt>3.5) || (TMath::Abs(Gmu2eta)>1.2 && TMath::Abs(Gmu2eta)<2.1 && Gmu2pt>(5.77-1.8*TMath::Abs(Gmu2eta))) || (TMath::Abs(Gmu2eta)>2.1 && TMath::Abs(Gmu2eta)<2.4 && Gmu2pt>1.8)) && Gtk1pt>0.5 && Gtk2pt>0.5 && TMath::Abs(Gtk1eta)<2.4 && TMath::Abs(Gtk2eta)<2.4"
-CUTPP="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && BDTStage1_pt15to50 > 0.209775"
-CUTPP=${CUTPP=}" && abs(PVz)<15 && pBeamScrapingFilter && pPAprimaryVertexFilter"
+CUTPP="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.5 && Btrk2Pt > 0.5 && BDTStage1_pt15to50 > 0.209775"
+CUTPP=${CUTPP}" && abs(PVz)<15 && pBeamScrapingFilter && pPAprimaryVertexFilter"
 RECOONLYPP=$CUTPP
 TRGPP="(HLT_HIL1DoubleMu0_v1)"
 TRGPPMC="(HLT_HIL1DoubleMu0ForPPRef_v1)"
@@ -77,37 +95,37 @@ NPFIT_PP="1"
 
 if [ $DOANALYSISPP_FONLL -eq 1 ]; then      
 g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
-./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILE" "$LABELPP"
+./Bplusdsigmadpt.exe "$FONLLDATINPUT" "$FONLLOUTPUTFILE" "$LABELPP"
 rm Bplusdsigmadpt.exe
 fi 
 
 if [ $DOANALYSISPP_FITNP -eq 1 ]; then      
 g++ fitNP.C $(root-config --cflags --libs) -g -o fitNP.exe 
-./fitNP.exe 0 "$INPUTMCPP_NP"  "$INPUTMCPP_NP"  "1" "$CUTPP_NP"   "$SELGENPP"   1   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPP_NP"
+./fitNP.exe 0 "$INPUTMCPP_NP" "$INPUTMCPP_NP" "1" "$CUTPP_NP" "$SELGENPP" 1 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP_NP"
 rm fitNP.exe
 fi 
 
 if [ $DOANALYSISPP_FIT -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 "$INPUTDATAPP"  "$INPUTMCPP"  "$TRGPP" "$CUTPP"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPSAVEHIST" "$NPFIT_PP" 0
+./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST" "plotFits" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPP_FITONSAVED -eq 1 ]; then      
-g++ fitOnSavedB.C $(root-config --cflags --libs) -g -o fitOnSavedB.exe 
-./fitOnSavedB.exe 0 "$OUTPUTFILEPPSAVEHIST"  "$INPUTMCPP"  "$TRGPP" "$CUTPP"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPP" "$NPFIT_PP" 0
-rm fitOnSavedB.exe
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST" "$OUTPUTFILEPPSAVEHIST" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP" "plotFitsOnSaved" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
 fi 
 
 if [ $DOANALYSISPP_MCSTUDY -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-./MCefficiency.exe  0 "$INPUTMCPP"  "$SELGENPP" "$SELGENPPACCPP"  "$RECOONLYPP" "$CUTPP&&$TRGPPMC"  "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm MCefficiency.exe
 fi
 
 if [ $DOANALYSISPP_CROSS -eq 1 ]; then      
 g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE"  "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" 0 "$LABELPP" 0 "$LUMIPP"
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100"
 rm CrossSectionRatio.exe
 fi
 
@@ -121,8 +139,8 @@ ISMCPbPb=0
 ISDOWEIGHTPbPb=1
 SELGENPbPb="TMath::Abs(Gy)<2.4&&TMath::Abs(GpdgId)==531&&GisSignal>0"
 SELGENPbPbACCPbPb="TMath::Abs(Gy)<2.4 && abs(GpdgId)==531 && GisSignal>0 && ((TMath::Abs(Gmu1eta)<1.2 && Gmu1pt>3.5) || (TMath::Abs(Gmu1eta)>1.2 && TMath::Abs(Gmu1eta)<2.1 && Gmu1pt>(5.77-1.8*TMath::Abs(Gmu1eta))) || (TMath::Abs(Gmu1eta)>2.1 && TMath::Abs(Gmu1eta)<2.4 && Gmu1pt>1.8)) && ((TMath::Abs(Gmu2eta)<1.2 && Gmu2pt>3.5) || (TMath::Abs(Gmu2eta)>1.2 && TMath::Abs(Gmu2eta)<2.1 && Gmu2pt>(5.77-1.8*TMath::Abs(Gmu2eta))) || (TMath::Abs(Gmu2eta)>2.1 && TMath::Abs(Gmu2eta)<2.4 && Gmu2pt>1.8)) && Gtk1pt>0.8 && Gtk2pt>0.8 && TMath::Abs(Gtk1eta)<2.4 && TMath::Abs(Gtk2eta)<2.4"
-CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && BDTStage1_pt15to50 > 0.303985"
-CUTPbPb=${CUTPbPb=}" && abs(PVz)<15 && pclusterCompatibilityFilter && pprimaryVertexFilter && phfCoincFilter3"
+CUTPbPb="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.8 && Btrk2Pt > 0.8 && BDTStage1_pt15to50 > 0.303985"
+CUTPbPb=${CUTPbPb}" && abs(PVz)<15 && pclusterCompatibilityFilter && pprimaryVertexFilter && phfCoincFilter3"
 RECOONLYPbPb=$CUTPbPb
 TRGPbPb="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)"
 TRGPbPbMC="(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)"
@@ -141,45 +159,106 @@ NPFIT_PbPb="1"
 
 if [ $DOANALYSISPbPb_FITNP -eq 1 ]; then      
 g++ fitNP.C $(root-config --cflags --libs) -g -o fitNP.exe 
-./fitNP.exe 0 "$INPUTMCPbPb_NP"  "$INPUTMCPbPb_NP"  "1" "$CUTPbPb_NP"   "$SELGENPbPb"   1   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPb_NP"
+./fitNP.exe 0 "$INPUTMCPbPb_NP" "$INPUTMCPbPb_NP" "1" "$CUTPbPb_NP" "$SELGENPbPb" 1 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPb_NP"
 rm fitNP.exe
 fi 
 
 if [ $DOANALYSISPbPb_FIT -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 "$INPUTDATAPbPb"  "$INPUTMCPbPb"  "$TRGPbPb" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPbSAVEHIST" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 1 0 "$INPUTDATAPbPb" "$INPUTMCPbPb" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPbSAVEHIST" "plotFits" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPbPb_FITONSAVED -eq 1 ]; then      
-g++ fitOnSavedB.C $(root-config --cflags --libs) -g -o fitOnSavedB.exe 
-./fitOnSavedB.exe 1 "$OUTPUTFILEPbPbSAVEHIST"  "$INPUTMCPbPb"  "$TRGPbPb" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPb" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
-rm fitOnSavedB.exe
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 1 1 "$OUTPUTFILEPbPbSAVEHIST" "$OUTPUTFILEPPSAVEHIST" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPb" "plotFitsOnSaved" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm fitB.exe
 fi 
 
 if [ $DOANALYSISPbPb_MCSTUDY -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-./MCefficiency.exe 1 "$INPUTMCPbPb"  "$SELGENPbPb" "$SELGENPbPbACCPbPb"  "$RECOONLYPbPb" "$CUTPbPb&&$TRGPbPbMC"  "$LABELPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 1 "$INPUTMCPbPb" "$SELGENPbPb" "$SELGENPbPbACCPbPb" "$RECOONLYPbPb" "$CUTPbPb&&$TRGPbPbMC" "Bpt" "Gpt" "$LABELPbPb" "$OUTPUTFILEMCSTUDYPbPb" "plotEff" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm MCefficiency.exe
 fi
 
 if [ $DOANALYSISPbPb_CROSS -eq 1 ]; then      
 g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE"  "$OUTPUTFILEPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" 1 "$LABELPbPb" 0 "$LUMIPbPb"
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "0" "100"
 rm CrossSectionRatio.exe
 fi
 
 if [ $DORAA -eq 1 ]; then
 g++ NuclearModificationFactor.C $(root-config --cflags --libs) -g -o NuclearModificationFactor.exe
-./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb"  "$LABELPbPb" "$OUTPUTFILERAA" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb" "$LABELPbPb" "$OUTPUTFILERAA" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm NuclearModificationFactor.exe
 fi
 
-###
-### below are unrelated 
-###
+#########################################
+### below are unrelated to main results
+#########################################
 
-### pt reweighting
+### pp 4-bin result
+
+FONLLOUTPUTFILE_1050="ROOTfiles/fonllOutput_pp_Bplus_5p03TeV_y2p4_1050.root"
+OUTPUTFILEPPSAVEHIST_1050="ROOTfiles/hPtSpectrumSaveHistBplusPP_1050.root"
+OUTPUTFILEPP_1050="ROOTfiles/hPtSpectrumBplusPP_1050.root"
+OUTPUTFILEMCSTUDYPP_1050="ROOTfiles/MCstudiesPP_1050.root"
+OUTPUTFILEPlotPP_1050="ROOTfiles/CrossSectionPP_1050.root"
+
+if [ $DOANALYSISPP_FONLL_1050 -eq 1 ]; then      
+g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
+./Bplusdsigmadpt.exe "$FONLLDATINPUT" "$FONLLOUTPUTFILE_1050" "$LABELPP" 2
+rm Bplusdsigmadpt.exe
+fi 
+
+if [ $DOANALYSISPP_FIT_1050 -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt1050" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_1050" "plotFits_1050" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_FITONSAVED_1050 -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST_1050" "$OUTPUTFILEPPSAVEHIST_1050" "Bpt1050" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP_1050" "plotFitsOnSaved_1050" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_MCSTUDY_1050 -eq 1 ]; then      
+g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
+./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt1050" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_1050" "plotEff_1050" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency.exe
+fi
+
+if [ $DOANALYSISPP_CROSS_1050 -eq 1 ]; then      
+g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE_1050" "$OUTPUTFILEPP_1050" "$OUTPUTFILEMCSTUDYPP_1050" "$OUTPUTFILEPlotPP_1050" "plotCrossSection_1050" 0 "$LABELPP" 2 0 "$LUMIPP" "0" "100"
+rm CrossSectionRatio.exe
+fi
+
+### Rapidity result
+
+OUTPUTFILEPPSAVEHIST_Y="ROOTfiles/hPtSpectrumSaveHistBplusPP_Y.root"
+OUTPUTFILEPP_Y="ROOTfiles/hPtSpectrumBplusPP_Y.root"
+OUTPUTFILEMCSTUDYPP_Y="ROOTfiles/MCstudiesPP_Y.root"
+if [ $DOANALYSISPP_FIT_Y -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "abs(By)" "$TRGPP" "$CUTPP&&Bpt>15&&Bpt<50" "$SELGENPP&&Gpt>15&&Gpt<50" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_Y" "plotFits_Y" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_FITONSAVED_Y -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST_Y" "$OUTPUTFILEPPSAVEHIST_Y" "abs(By)" "$TRGPP" "$CUTPP&&Bpt>15&&Bpt<50" "$SELGENPP&&Gpt>15&&Gpt<50" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP_Y" "plotFitsOnSaved_Y" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_MCSTUDY_Y -eq 1 ]; then      
+g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
+./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP&&Gpt>15&&Gpt<50" "$SELGENPPACCPP&&Gpt>15&&Gpt<50" "$RECOONLYPP&&Bpt>15&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>15&&Bpt<50" "abs(By)" "abs(Gy)" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "plotEff_Y" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency.exe
+fi
+
+### Reweighting
 
 if [ $DOPTREWEIGHT -eq 1 ]; then
 #g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
@@ -195,19 +274,19 @@ fi
 
 if [ $DOCOMPARE -eq 1 ]; then
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 "$INPUTDATAPbPb"  "$INPUTMCPbPb"  "$TRGPbPb" "$CUTPbPb"   "$SELGENPbPb"   0   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPbDATA" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUTPP"   "$SELGENPP"   0   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPDATA" "plotOthers" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "$TRGPbPbMC" "$CUTPbPb"   "$SELGENPbPb"   1   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPbMC" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 0 0 "$INPUTMCPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUTPP"   "$SELGENPP"   1   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPMC" "plotOthers" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 "$INPUTDATAPP"  "$INPUTMCPP"  "$TRGPP" "$CUTPP"   "$SELGENPP"   0   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPDATA" "$NPFIT_PP" 0
+./fitB.exe 1 0 "$INPUTDATAPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPb" "$CUTPbPb"   "$SELGENPbPb"   0   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPbDATA" "plotOthers" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 "$INPUTMCPP"  "$INPUTMCPP"  "$TRGPPMC" "$CUTPP"   "$SELGENPP"   1   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTFILEPPMC" "$NPFIT_PP" 0
+./fitB.exe 1 0 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMC" "$CUTPbPb"   "$SELGENPbPb"   1   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "$OUTPUTFILEPbPbMC" "plotOthers" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 
 g++ comparison.C $(root-config --cflags --libs) -g -o comparison.exe 
@@ -251,7 +330,7 @@ TRGPPMCClosure="1"
 LABELPPMCClosure="PPMCClosure"
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 "$INPUTMCPP"  "$INPUTMCPP"  "$TRGPPMCClosure" "$CUTPP"   "$SELGENPP"   "$ISMCPPMCClosure"   "$LUMIPPMCClosure"   "$ISDOWEIGHTPPMCClosure"   "$LABELPPMCClosure"  "$OUTPUTFILEPPMCClosure" "$NPFIT_PP" 0
+./fitB.exe 0 0 "$INPUTMCPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMCClosure" "$CUTPP"   "$SELGENPP"   "$ISMCPPMCClosure"   "$LUMIPPMCClosure"   "$ISDOWEIGHTPPMCClosure"   "$LABELPPMCClosure"  "$OUTPUTFILEPPMCClosure" "plotOthers" "$NPFIT_PP" 0 "0" "100"
 g++ ClosureTest.C $(root-config --cflags --libs) -g -o ClosureTest.exe 
 ./ClosureTest.exe "$OUTPUTFILEPPMCClosure" "$LABELPP"
 
@@ -263,8 +342,51 @@ TRGPbPbMCClosure="1"
 LABELPbPbMCClosure="PbPbMCClosure"
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "$TRGPbPbMCClosure" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPbMCClosure"   "$LUMIPbPbMCClosure"   "$ISDOWEIGHTPbPbMCClosure"   "$LABELPbPbMCClosure"  "$OUTPUTFILEPbPbMCClosure" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 1 0 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMCClosure" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPbMCClosure"   "$LUMIPbPbMCClosure"   "$ISDOWEIGHTPbPbMCClosure"   "$LABELPbPbMCClosure"  "$OUTPUTFILEPbPbMCClosure" "plotOthers" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 g++ ClosureTest.C $(root-config --cflags --libs) -g -o ClosureTest.exe 
 ./ClosureTest.exe "$OUTPUTFILEPbPbMCClosure" "$LABELPbPb"
 
 fi
+
+### Data - MC comparison
+
+OUTPUTVARCOMPARE=""
+if [ $DOVARCOMPARE_PP -eq 1 ]; then      
+rm plotFitsComp/*
+g++ fitVariables.C $(root-config --cflags --libs) -g -o fitVariables.exe 
+#CUT="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.5 && Btrk2Pt > 0.5"
+#CUT=${CUT}" && abs(PVz)<15 && pBeamScrapingFilter && pPAprimaryVertexFilter"
+#CUT=${CUT}" && BDTStage1_pt15to50 > 0.0"
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT"                   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 0
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 1
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 2
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 3
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 4
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 5
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 6
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 7
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 8
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 9
+./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 10
+rm fitVariables.exe
+fi 
+
+### Checking prompt background structure
+
+#INPUTPROMPTPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
+INPUTPROMPTPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
+if [ $CHECKPROMPT -eq 1 ]; then      
+g++ fitPrompt.C $(root-config --cflags --libs) -g -o fitPrompt.exe 
+CUT="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.5 && Btrk2Pt > 0.5"
+CUT=${CUT}" && abs(PVz)<15 && pBeamScrapingFilter && pPAprimaryVertexFilter"
+#./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.209775"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTd4.root" "$NPFIT_PP" 0 "0" "100" "BDTd4"
+#./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.1"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p1.root" "$NPFIT_PP" 0 "0" "100" "BDT0p1"
+#./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.0"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p0.root" "$NPFIT_PP" 0 "0" "100" "BDT0p0"
+#./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.1"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p1.root" "$NPFIT_PP" 0 "0" "100" "BDTm0p1"
+#./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.2"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p2.root" "$NPFIT_PP" 0 "0" "100" "BDTm0p2"
+INPUTPROMPTPbPb="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs_BDT15to50.root"
+CUT="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.8 && Btrk2Pt > 0.8"
+CUT=${CUT}" && abs(PVz)<15 && pclusterCompatibilityFilter && pprimaryVertexFilter && phfCoincFilter3"
+./fitPrompt.exe 1 0 "$INPUTPROMPTPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMC" "$CUT&&BDTStage1_pt15to50>0.303985"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPbPb_BDTd4.root" "$NPFIT_PbPb" 0 "0" "100" "BDTd4"
+rm fitPrompt.exe
+fi 

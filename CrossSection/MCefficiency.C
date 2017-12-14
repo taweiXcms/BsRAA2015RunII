@@ -1,5 +1,6 @@
 #include "uti.h"
 #include "parameters.h"
+using namespace std;
 
 Double_t setparam0=100.;
 Double_t setparam1=1.865;
@@ -20,8 +21,22 @@ Float_t hiBinMin,hiBinMax,centMin,centMax;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 
-void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString selmcgenacceptance="", TString cut_recoonly="", TString cut="", TString label="", TString outputfile="", int PbPbweight=1, Float_t centmin=0., Float_t centmax=100.)
-{ 
+double *_sf_pp = sf_pp;
+double *_sf_pbpb = sf_pbpb;
+
+void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString selmcgenacceptance="", TString cut_recoonly="", TString cut="", TString varExp = "", TString varGenExp = "", TString label="", TString outputfile="", TString outplotf="", int PbPbweight=0, Float_t centmin=0., Float_t centmax=100.)
+{    
+    if(varExp == "Bpt1050"){
+        _nBins = nBins1050;
+        _ptBins = ptBins1050;
+		_sf_pp = sf_pp_1050;
+        varExp = "Bpt";
+    }
+    if(varExp == "abs(By)"){
+        _nBins = nBinsY;
+        _ptBins = ptBinsY;
+		_sf_pp = sf_pp_Y;
+    } 
 	if(label=="ppInc"){
 		_nBins = nBinsInc;
 		_ptBins = ptBinsInc;
@@ -103,15 +118,15 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	TH1D* hPtGen = new TH1D("hPtGen","",_nBins,_ptBins);
 	TH1D* hPtGenAcc = new TH1D("hPtGenAcc","",_nBins,_ptBins);
 	TH1D* hPtGenAccWeighted = new TH1D("hPtGenAccWeighted","",_nBins,_ptBins);
-	ntMC->Project("hPtMC","Bpt",
+	ntMC->Project("hPtMC",varExp.Data(),
 		TCut(weighpthat)*TCut(weightBgenpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(cut.Data())&&"(Bgen==23333)"));
-	ntMC->Project("hPtMCrecoonly","Bpt",
+	ntMC->Project("hPtMCrecoonly",varExp.Data(),
 		TCut(weighpthat)*TCut(weightBgenpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(cut_recoonly.Data())&&"(Bgen==23333)"));
-	ntGen->Project("hPtGen","Gpt",
+	ntGen->Project("hPtGen",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgen.Data())));
-	ntGen->Project("hPtGenAcc","Gpt",
+	ntGen->Project("hPtGenAcc",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgenacceptance.Data())));
-	ntGen->Project("hPtGenAccWeighted","Gpt",
+	ntGen->Project("hPtGenAccWeighted",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(selmcgenacceptance.Data())));
 
 	TH1D* hPthat = new TH1D("hPthat","",100,0,500);
@@ -120,22 +135,18 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	ntMC->Project("hPthatweight","pthat",TCut("1"));
 
 	////// tag & probe scaling factor
-	for(int i = 0; i < 1; i++){printf("%.2f, ", hPtMC->GetBinContent(i+1));}printf("\n");//check entries
-	double sf_pp[1] = {127693.52/125760.88, };
-	//double sf_pp[1] = {126033.04/124022.37, }; // only pthatweight
-	double sf_pbpb[1] = {20506.70/20890.91, };
-	//double sf_pbpb[1] = {43815.89/44553.57, }; // only pthatweight
-	for(int i = 0; i < 1; i++){
+	for(int i = 0; i < _nBins; i++){printf("before muon sf: %.2f, ", hPtMC->GetBinContent(i+1));}printf("\n");//check entries
+	for(int i = 0; i < _nBins; i++){
 		if(label == "pp"){
-			hPtMC->SetBinContent(i+1, hPtMC->GetBinContent(i+1)*sf_pp[i]);
-			hPtMCrecoonly->SetBinContent(i+1, hPtMCrecoonly->GetBinContent(i+1)*sf_pp[i]);
+			hPtMC->SetBinContent(i+1, hPtMC->GetBinContent(i+1)*_sf_pp[i]);
+			hPtMCrecoonly->SetBinContent(i+1, hPtMCrecoonly->GetBinContent(i+1)*_sf_pp[i]);
 		}
 		if(label == "PbPb"){
-			hPtMC->SetBinContent(i+1, hPtMC->GetBinContent(i+1)*sf_pbpb[i]);
-			hPtMCrecoonly->SetBinContent(i+1, hPtMCrecoonly->GetBinContent(i+1)*sf_pbpb[i]);
+			hPtMC->SetBinContent(i+1, hPtMC->GetBinContent(i+1)*_sf_pbpb[i]);
+			hPtMCrecoonly->SetBinContent(i+1, hPtMCrecoonly->GetBinContent(i+1)*_sf_pbpb[i]);
 		}
 	}
-	for(int i = 0; i < 1; i++){printf("%.2f, ", hPtMC->GetBinContent(i+1));}printf("\n");//check entries
+	for(int i = 0; i < _nBins; i++){printf("after muon sf: %.2f, ", hPtMC->GetBinContent(i+1));}printf("\n");//check entries
 	////// tag & probe scaling factor
 
 	divideBinWidth(hPtMC);
@@ -168,6 +179,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 	////// Draw hEff, hEffAcc
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.6);  
+	if(varExp == "abs(By)") hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0],_ptBins[_nBins],10.,0,0.6);  
 	hemptyEff->GetXaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->SetTitle("#alpha x #epsilon");
@@ -196,7 +208,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	canvasEff->cd(2);
 	hemptyEff->Draw();
 	hEff->Draw("same");
-	canvasEff->SaveAs(Form("plotEff/canvasEff_study%s.pdf",Form(label.Data())));
+	canvasEff->SaveAs(Form("%s/canvasEff_study%s.pdf",outplotf.Data(),Form(label.Data())));
 
 	////// Draw hPthat, hPthatweight
 	TH2F* hemptyPthat=new TH2F("hemptyPthat","",50,0.,300.,10,1e-5,1e9);  
@@ -229,10 +241,11 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	gPad->SetLogy();
 	hemptyPthatWeighted->Draw();
 	hPthatweight->Draw("same");
-	canvasPthat->SaveAs(Form("plotEff/canvasPthat_%s.pdf",Form(label.Data())));
+	canvasPthat->SaveAs(Form("%s/canvasPthat_%s.pdf",outplotf.Data(),Form(label.Data())));
 
 	////// Draw hPtMC, hPtGen
 	TH2F* hemptySpectra=new TH2F("hemptySpectra","",50,0.,130.,10,1,1e5);  
+	if(varExp=="abs(By)") hemptySpectra=new TH2F("hemptySpectra","",50,_ptBins[0],_ptBins[_nBins],10,1,1e7);  
 	hemptySpectra->GetXaxis()->CenterTitle();
 	hemptySpectra->GetYaxis()->CenterTitle();
 	hemptySpectra->GetYaxis()->SetTitle("Entries");
@@ -258,7 +271,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	gPad->SetLogy();
 	hemptySpectra->Draw();
 	hPtGen->Draw("same");
-	canvasSpectra->SaveAs(Form("plotEff/canvasSpectra_%s.pdf",Form(label.Data())));
+	canvasSpectra->SaveAs(Form("%s/canvasSpectra_%s.pdf",outplotf.Data(),Form(label.Data())));
 
 	//### 1D histogram
 	//hEffAcc = hPtGenAcc / hPtGen
@@ -296,7 +309,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 	TCanvas*canvas1D=new TCanvas("canvas1D","",600,600);
 	canvas1D->cd();
-	gPad->SetLogy(0);
+	gPad->SetLogy(1);
 	hemptyEff->GetXaxis()->SetTitle("p_{T} GeV^{-1}c)");
 	hEff->SetLineColor(2);
 	hEff->SetMarkerColor(2);
@@ -306,7 +319,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hPtMC->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhPtMC_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhPtMC_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptySpectra->SetYTitle("Entries of hPtMCrecoonly");
@@ -314,7 +327,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hPtMCrecoonly->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhPtMCrecoonly_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhPtMCrecoonly_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptySpectra->SetYTitle("Entries of hPtGen");
@@ -322,7 +335,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hPtGen->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhPtGen_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhPtGen_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptySpectra->SetYTitle("Entries of hPtGenAcc");
@@ -330,15 +343,16 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hPtGenAcc->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhPtGenAcc_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhPtGenAcc_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
+	gPad->SetLogy(0);
 	hemptyEff->SetYTitle("hPtGenAcc/hPtGen");
 	hemptyEff->Draw(); 
 	hEffAcc->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhEffAcc_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhEffAcc_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptyEff->SetYTitle("hPtMC/hPtGenAccWeighted");
@@ -346,7 +360,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hEffSelection->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhEffSelection_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhEffSelection_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptyEff->SetYTitle("#alpha x #epsilon");
@@ -354,8 +368,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hEff->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhEff_%s.pdf",Form(label.Data())));
-	canvas1D->SaveAs(Form("plotEff/canvas1DhEff_%s.C",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhEff_%s.pdf",outplotf.Data(),Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhEff_%s.C",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	hemptyEff->SetYTitle("hPtMC/hPtGen");
@@ -363,7 +377,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hEffOneShot->Draw("same");
 	if(isPbPb) texCent->Draw();
 	texY->Draw(); texCms->Draw(); texlumi->Draw();
-	canvas1D->SaveAs(Form("plotEff/canvas1DhEffOneShot_%s.pdf",Form(label.Data())));
+	canvas1D->SaveAs(Form("%s/canvas1DhEffOneShot_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
 	TFile *fout=new TFile(outputfile.Data(),"recreate");
@@ -380,14 +394,13 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 int main(int argc, char *argv[])
 {
-	if((argc !=12))
+	if(argc == 15)
+		MCefficiency(atoi(argv[1]),argv[2],argv[3],argv[4],argv[5],argv[6],argv[7],argv[8],argv[9],argv[10],argv[11],atoi(argv[12]),atof(argv[13]),atof(argv[14]));
+	else
 	{
 		std::cout << "Wrong number of inputs" << std::endl;
 		return 1;
 	}
-
-	if(argc == 12)
-		MCefficiency(atoi(argv[1]),argv[2],argv[3],argv[4],argv[5],argv[6],argv[7],argv[8],atoi(argv[9]),atof(argv[10]),atof(argv[11]));
 	return 0;
 }
 

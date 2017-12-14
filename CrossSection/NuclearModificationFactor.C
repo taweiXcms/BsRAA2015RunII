@@ -21,7 +21,7 @@ bool drawThm = 0;
 bool BSepSys = 0;
 
 void adjustLegend(TLegend* l);
-void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", Float_t centMin=0., Float_t centMax=100.)
+void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", int binOpt=0, Float_t centMin=0., Float_t centMax=100.)
 {
 	float TAABarWid = 0.35;
 	float pti = ptBins[0]-2.;
@@ -78,9 +78,9 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		double systematic=0;
 		double systematic_cor=0;
 		double systematic_uncor=0;
-		systematic=0.01*systematicsForRAA(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
-		systematic_cor=0.01*systematicsForRAA_Correlated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
-		systematic_uncor=0.01*systematicsForRAA_UnCorrelated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.);
+		systematic=0.01*systematicsForRAA(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
+		systematic_cor=0.01*systematicsForRAA_Correlated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
+		systematic_uncor=0.01*systematicsForRAA_UnCorrelated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
 		//double systematic=0.;
 		yrlow[i] = hNuclearModification->GetBinContent(i+1)*systematic;
 		yrhigh[i] =hNuclearModification->GetBinContent(i+1)*systematic;
@@ -508,9 +508,9 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 
 int main(int argc, char *argv[])
 {
-	if(argc==7)
+	if(argc==8)
 	{
-		NuclearModificationFactor(argv[1], argv[2], argv[3], argv[4], atof(argv[5]), atof(argv[6]));
+		NuclearModificationFactor(argv[1], argv[2], argv[3], argv[4], atoi(argv[5]), atof(argv[6]), atof(argv[7]));
 		return 0;
 	}
 	else

@@ -5,7 +5,7 @@
 float tpadr = 0.7;
 bool addpbpb = 0;
 
-void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5TeV_y1.root", TString input="ROOTfiles/hPtSpectrumBplusPP.root", TString efficiency="test.root",TString outputplot="myplot.root",int usePbPb=1,TString label="PbPb",int doDataCor = 0,double lumi=1.,Float_t centMin=0.,Float_t centMax=100.)
+void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5TeV_y1.root", TString input="ROOTfiles/hPtSpectrumBplusPP.root", TString efficiency="test.root",TString outputplot="myplot.root",TString outplotf="",int usePbPb=0,TString label="pp",int binOpt=0,int doDataCor=0,double lumi=1.,Float_t centMin=0.,Float_t centMax=100.)
 {
 	gStyle->SetOptTitle(0);
 	gStyle->SetOptStat(0);
@@ -30,11 +30,22 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hPtSigma->Scale(1./(2*lumi*BRchain));
 	hPtSigma->SetName("hPtSigma");
 
-	Double_t xr[nBins], xrlow[nBins], xrhigh[nBins], ycross[nBins],ycrossstat[nBins],ycrosssysthigh[nBins],ycrosssystlow[nBins], yFONLL[nBins];
-	Double_t yratiocrossFONLL[nBins], yratiocrossFONLLstat[nBins], yratiocrossFONLLsysthigh[nBins], yratiocrossFONLLsystlow[nBins];
-	Double_t yFONLLrelunclow[nBins], yFONLLrelunchigh[nBins], yunity[nBins];
+	int _nBins = hPtSigma->GetNbinsX();
+	double _ptBins[1000];
+	if(_nBins > 1000){
+		printf("UPDATE BIN NUMBER BUFFER\n");
+		return;
+	}
+	for (int i = 0; i < _nBins; i++){
+		_ptBins[i] = hPtSigma->GetBinLowEdge(i+1);
+	}
+	_ptBins[_nBins] = hPtSigma->GetBinLowEdge(_nBins) + hPtSigma->GetBinWidth(_nBins);
 
-	for(int i=0;i<nBins;i++)
+	Double_t xr[_nBins], xrlow[_nBins], xrhigh[_nBins], ycross[_nBins],ycrossstat[_nBins],ycrosssysthigh[_nBins],ycrosssystlow[_nBins], yFONLL[_nBins];
+	Double_t yratiocrossFONLL[_nBins], yratiocrossFONLLstat[_nBins], yratiocrossFONLLsysthigh[_nBins], yratiocrossFONLLsystlow[_nBins];
+	Double_t yFONLLrelunclow[_nBins], yFONLLrelunchigh[_nBins], yunity[_nBins];
+
+	for(int i=0;i<_nBins;i++)
 	{
 		gaeBplusReference->GetPoint(i,xr[i],yFONLL[i]);
 		xrlow[i] = gaeBplusReference->GetErrorXlow(i);
@@ -42,8 +53,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		ycross[i] = hPtSigma->GetBinContent(i+1);
 		ycrossstat[i] = hPtSigma->GetBinError(i+1);
 		double systematic=0.;
-		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.);
-		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.);     
+		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.,0,binOpt);
+		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.,0,binOpt);     
 
 		ycrosssysthigh[i]= hPtSigma->GetBinContent(i+1)*systematic;
 		ycrosssystlow[i]= hPtSigma->GetBinContent(i+1)*systematic;
@@ -56,24 +67,24 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		yunity[i] = yFONLL[i]/yFONLL[i];
 	}
 
-	TGraphAsymmErrors* gaeCrossSyst = new TGraphAsymmErrors(nBins,xr,ycross,xrlow,xrhigh,ycrosssystlow,ycrosssysthigh);
+	TGraphAsymmErrors* gaeCrossSyst = new TGraphAsymmErrors(_nBins,xr,ycross,xrlow,xrhigh,ycrosssystlow,ycrosssysthigh);
 	gaeCrossSyst->SetName("gaeCrossSyst");
 	gaeCrossSyst->SetMarkerStyle(20);
 	gaeCrossSyst->SetMarkerSize(0.8);
 
-	TGraphAsymmErrors* gaeRatioCrossFONLLstat = new TGraphAsymmErrors(nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLstat,yratiocrossFONLLstat);
+	TGraphAsymmErrors* gaeRatioCrossFONLLstat = new TGraphAsymmErrors(_nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLstat,yratiocrossFONLLstat);
 	gaeRatioCrossFONLLstat->SetName("gaeRatioCrossFONLLstat");
 	gaeRatioCrossFONLLstat->SetMarkerStyle(20);
 	gaeRatioCrossFONLLstat->SetMarkerSize(0.8);
 
-	TGraphAsymmErrors* gaeRatioCrossFONLLsyst= new TGraphAsymmErrors(nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLsystlow,yratiocrossFONLLsysthigh);
+	TGraphAsymmErrors* gaeRatioCrossFONLLsyst= new TGraphAsymmErrors(_nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLsystlow,yratiocrossFONLLsysthigh);
 	gaeRatioCrossFONLLsyst->SetName("gaeRatioCrossFONLLsyst");
 	gaeRatioCrossFONLLsyst->SetLineWidth(2);
 	gaeRatioCrossFONLLsyst->SetLineColor(1);
 	gaeRatioCrossFONLLsyst->SetFillColor(5);
 	gaeRatioCrossFONLLsyst->SetFillStyle(0);
 
-	TGraphAsymmErrors* gaeRatioCrossFONLLunity = new TGraphAsymmErrors(nBins,xr,yunity,xrlow,xrhigh,yFONLLrelunclow,yFONLLrelunchigh);
+	TGraphAsymmErrors* gaeRatioCrossFONLLunity = new TGraphAsymmErrors(_nBins,xr,yunity,xrlow,xrhigh,yFONLLrelunclow,yFONLLrelunchigh);
 	gaeRatioCrossFONLLunity->SetName("gaeRatioCrossFONLLunity");
 	gaeRatioCrossFONLLunity->SetLineWidth(2);
 	gaeRatioCrossFONLLunity->SetLineColor(kOrange);
@@ -110,11 +121,11 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	}
 
 	//Float_t yaxisMin=1.1,yaxisMax=1.e+9;//PAS
-	Float_t yaxisMin=1.e3,yaxisMax=1.e+7;//paper 20170224
+	Float_t yaxisMin=1.e2,yaxisMax=1.e+7;//paper 20170224
 	if(isPbPb){
 		yaxisMin=1.e+2;
 	}
-	TH2F* hemptySigma=new TH2F("hemptySigma","",50,ptBins[0]-5.,ptBins[nBins]+5.,10.,yaxisMin,yaxisMax);  
+	TH2F* hemptySigma=new TH2F("hemptySigma","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,yaxisMin,yaxisMax);  
 	hemptySigma->GetXaxis()->CenterTitle();
 	hemptySigma->GetYaxis()->CenterTitle();
 	hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
@@ -272,9 +283,9 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	pRatio->SetTopMargin(0);
 	pRatio->SetBottomMargin(0.30);//0.25
 
-	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,ptBins[0]-5.,ptBins[nBins]+5.,10.,0.,3.1);//PAS
-	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,ptBins[0]-5.,ptBins[nBins]+5.,10.,0.,2.1);//
-	TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,ptBins[0]-5.,ptBins[nBins]+5.,10.,0.2,1.8);//paper
+	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.,3.1);//PAS
+	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.,2.1);//
+	TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.2,1.8);//paper
 	hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptyRatio->GetXaxis()->CenterTitle();
 	hemptyRatio->GetYaxis()->CenterTitle();
@@ -292,7 +303,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hemptyRatio->GetYaxis()->SetNdivisions(505);
 	hemptyRatio->GetXaxis()->SetTickLength(0.03/tpadpos);
 
-	TLine* l = new TLine(ptBins[0]-5.,1,ptBins[nBins]+5.,1);
+	TLine* l = new TLine(_ptBins[0]-5.,1,_ptBins[_nBins]+5.,1);
 	l->SetLineWidth(1);
 	l->SetLineStyle(2);
 
@@ -313,12 +324,12 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	TString _postfix = "";
 	if(doDataCor==1) _postfix += "_EFFCOR";
 	if(addpbpb) _postfix += "_AddPbPb";
-	if(!isPbPb) cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s%s.pdf",label.Data(),_postfix.Data()));
-	else cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
-	if(!isPbPb) cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s%s.png",label.Data(),_postfix.Data()));
-	else cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s_%.0f_%.0f%s.pgn",label.Data(),centMin,centMax,_postfix.Data()));
-	if(!isPbPb) cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s%s.C",label.Data(),_postfix.Data()));
-	else cSigma->SaveAs(Form("plotCrossSection/canvasSigmaBplusRatio%s_%.0f_%.0f%s.C",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s%s.pdf",outplotf.Data(),label.Data(),_postfix.Data()));
+	else cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s_%.0f_%.0f%s.pdf",outplotf.Data(),label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s%s.png",outplotf.Data(),label.Data(),_postfix.Data()));
+	else cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s_%.0f_%.0f%s.pgn",outplotf.Data(),label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s%s.C",outplotf.Data(),label.Data(),_postfix.Data()));
+	else cSigma->SaveAs(Form("%s/canvasSigmaBplusRatio%s_%.0f_%.0f%s.C",outplotf.Data(),label.Data(),centMin,centMax,_postfix.Data()));
 
 	TCanvas* cEff = new TCanvas("cEff","",550,500);
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,0.,110.,10.,0,1.);  
@@ -346,10 +357,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hEff->SetMarkerStyle(20);
 	hEff->SetMarkerSize(1.2);
 	hEff->Draw("same");
-	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.pdf",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,_postfix.Data()));
-	if(!isPbPb) cEff->SaveAs(Form("plotCrossSection/efficiency%s%s.png",label.Data(),_postfix.Data()));
-	else cEff->SaveAs(Form("plotCrossSection/efficiency%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("%s/efficiency%s%s.pdf",outplotf.Data(),label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("%s/efficiency%s_%.0f_%.0f%s.pdf",outplotf.Data(),label.Data(),centMin,centMax,_postfix.Data()));
+	if(!isPbPb) cEff->SaveAs(Form("%s/efficiency%s%s.png",outplotf.Data(),label.Data(),_postfix.Data()));
+	else cEff->SaveAs(Form("%s/efficiency%s_%.0f_%.0f%s.png",outplotf.Data(),label.Data(),centMin,centMax,_postfix.Data()));
 
 	TFile *outputfile=new TFile(outputplot.Data(),"recreate");
 	outputfile->cd();
@@ -363,17 +374,11 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hEff->Write();
 }
 
-
 int main(int argc, char *argv[])
 {
-	if(argc==11)
+	if(argc==13)
 	{
-		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],atoi(argv[5]),argv[6],atoi(argv[7]),atof(argv[8]),atof(argv[9]),atof(argv[10]));
-		return 0;
-	}
-	else if(argc==9)
-	{
-		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],atoi(argv[5]),argv[6],atoi(argv[7]),atof(argv[8]));
+		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],argv[5],atoi(argv[6]),argv[7],atoi(argv[8]),atoi(argv[9]),atof(argv[10]),atof(argv[11]),atof(argv[12]));
 		return 0;
 	}
 	else

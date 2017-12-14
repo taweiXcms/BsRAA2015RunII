@@ -19,12 +19,18 @@ double *_ptBins = ptBins;
 void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4", 
 	 TString outputFONLL = "fonllOutput_pp_Bplus_5p03TeV_y2p4.root",
 	 TString label = "pp",
-     int reweightBin = 0
+     int binOpt = 0
 ){
-	if(reweightBin == 1){
+
+	if(binOpt == 1){
 		_nBins = nBinsReweight;
 		_ptBins = ptBinsReweight;	
 	}
+	if(binOpt == 2){
+		_nBins = nBins1050;
+		_ptBins = ptBins1050;	
+	}
+
 	double norm=0.103;           //FF of B->Bs, PDG 2016
 	gROOT->SetStyle("Plain");
 	gStyle->SetOptTitle(0);
@@ -225,9 +231,13 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 
 	gaeSigma->SetName("gaeSigma");
 	gaeSigmaBplus->SetName("gaeSigmaBplus");
-	if(reweightBin == 1){
+	if(binOpt == 1){
 		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_reweightBin.pdf",inputFONLLdat.Data(),label.Data()));
 		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_reweightBin.eps",inputFONLLdat.Data(),label.Data()));
+	}
+	if(binOpt == 2){
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_1050.pdf",inputFONLLdat.Data(),label.Data()));
+		cr->SaveAs(Form("plotFONLL/canvas_%s_%s_1050.eps",inputFONLLdat.Data(),label.Data()));
 	}
 	else{
 		cr->SaveAs(Form("plotFONLL/canvas_%s_%s.pdf",inputFONLLdat.Data(),label.Data()));

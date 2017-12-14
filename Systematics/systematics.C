@@ -8,8 +8,8 @@
 #include <TFile.h>
 const int nPtBins=1;
 double PtBins[nPtBins+1] = {15.,50.};
-const int AnaBins=1;
-double AnaPtBins[AnaBins+1] = {15.,50.};
+const int nPtBinsOpt2=4;
+double PtBinsOpt2[nPtBinsOpt2+1] = {10.,15.,20.,30.,50.};
 // =============================================================================================================
 // B meson decay
 // =============================================================================================================
@@ -30,7 +30,7 @@ TH1D*  ppSignalExtraction;
 TH1D*  ppMesonSelection;
 TH1D*  ppTagAndProbe;
 TH1D*  ppAccUnc;
-TF1 *fPPPtShape = new TF1("fPPPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
+TH1D*  ppPtShape;
 TFile* ppMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPP.root");
 TH1D* ppEff = (TH1D*)ppMCEfffile->Get("hEff");
 
@@ -47,68 +47,71 @@ TH1D*  PbPbSignalExtraction;
 TH1D*  PbPbMesonSelection;				               
 TH1D*  PbPbTagAndProbe;				                
 TH1D*  PbPbAccUnc;
-TF1 *fPbPbPtShape= new TF1("fPbPbPtShapeSig","[0]+[1]/(x)+[2]/x/x+[3]*x");
+TH1D*  PbPbPtShape;
 TFile* PbPbMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPbPb.root");
 TH1D* PbPbEff = (TH1D*)PbPbMCEfffile->Get("hEff");
 // RAA uncertainty, for systematic that can cancel such as PDF variation
 TH1D*  RAASignalExtraction;
 
 bool initialized = 0;
-void initializationPP()
+void initializationPP(int SysOpt=0)
 {
 	ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
-	ppMesonSelection->SetBinContent(1, 3.8);
+	ppMesonSelection->SetBinContent(1, 12.4);
 
 	ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
 	ppSignalExtraction->SetBinContent(1, 0.75);
 
-	ppTagAndProbe = new TH1D("ppTagAndProbe","",AnaBins,AnaPtBins); 
+	ppTagAndProbe = new TH1D("ppTagAndProbe","",nPtBins,PtBins); 
+	ppAccUnc = new TH1D("ppAccUnc","",nPtBins,PtBins);
+	ppPtShape = new TH1D("ppPtShape","",nPtBins,PtBins);
 	double tnpUnc_pp[1] = {3.154493, };
 	//double tnpUnc_pp[1] = {3.172913, }; // only pthatweight
-	for(int i = 0; i < AnaBins; i++){
+	double AccUnc_pp[nPtBins] = {2.649775};
+	double ptshape_pp[1] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100};
+	for(int i = 0; i < nPtBins; i++){
 		ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp[i]);
-	}
-
-	ppAccUnc = new TH1D("ppAccUnc","",AnaBins,AnaPtBins);
-	double AccUnc_pp[AnaBins] = {2.649775};
-	for(int i = 0; i < AnaBins; i++){
 		ppAccUnc->SetBinContent(i+1,AccUnc_pp[i]);
+		ppPtShape->SetBinContent(i+1,ptshape_pp[i]);
 	}
-
-	fPPPtShape->SetParameters(0.999265,-0.0458006,-0.181359,0);
+	if(SysOpt==2){
+		ppTagAndProbe = new TH1D("ppTagAndProbeOpt2","",nPtBinsOpt2,PtBinsOpt2); 
+		double tnpUnc_ppOpt2[4] = {4.225170, 3.354476, 3.025281, 2.829637, };
+		for(int i = 0; i < nPtBinsOpt2; i++){
+			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt2[i]);
+		}
+	}
 }
 
-void initializationPbPbCent0100()
+void initializationPbPbCent0100(int SysOpt=0)
 {
 	PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
-	PbPbMesonSelection->SetBinContent(1, 12.0);
+	PbPbMesonSelection->SetBinContent(1, 31.1);
 
 	PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
 	PbPbSignalExtraction->SetBinContent(1, 2.4);
 
-	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",AnaBins,AnaPtBins);
+	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",nPtBins,PtBins);
+	PbPbAccUnc = new TH1D("PbPbAccUnc","",nPtBins,PtBins);
+	PbPbPtShape = new TH1D("PbPbPtShape","",nPtBins,PtBins);
 	double tnpUnc_pbpb[1] = {3.789687, };
 	//double tnpUnc_pbpb[1] = {3.818009, }; // only pthatweight
-	for(int i = 0; i < AnaBins; i++){
+	double AccUnc_PbPb[nPtBins] = {3.012407};
+    double ptshape_PbPb[1] = {(4.513338e-02-4.291407e-02)/4.513338e-02*100};
+	for(int i = 0; i < nPtBins; i++){
 		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);
-	}
-
-	PbPbAccUnc = new TH1D("PbPbAccUnc","",AnaBins,AnaPtBins);
-	double AccUnc_PbPb[AnaBins] = {3.012407};
-	for(int i = 0; i < AnaBins; i++){
 		PbPbAccUnc->SetBinContent(i+1,AccUnc_PbPb[i]);
+		PbPbPtShape->SetBinContent(i+1,ptshape_PbPb[i]);
 	}
-
-	fPbPbPtShape->SetParameters(0.984161,0.0593406,-0.3992,0.000271564);
 }
 
-void initializationRAA()
+void initializationRAA(int SysOpt=0)
 {
 	RAASignalExtraction = new TH1D("RAASignalExtraction","",nPtBins,PtBins);
 	RAASignalExtraction->SetBinContent(1,	0.5);
 }
 
-void initializationPbPbCent010()
+void initializationPbPbCent010(int SysOpt=0)
 {
 	PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
 	PbPbMesonSelection->SetBinContent(1,		0.);
@@ -118,15 +121,13 @@ void initializationPbPbCent010()
 
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",nPtBins,PtBins);
 	PbPbTagAndProbe->SetBinContent(1,		10.0);
-
-	fPbPbPtShape->SetParameters(0.984161,0.0593406,-0.3992,0.000271564);
 }
 
-void initialization(double centL=0,double centH=100){
-	initializationPP();
-	initializationRAA();
-	if (centL==0&&centH==100) initializationPbPbCent0100();
-	if (centL==0&&centH==10) initializationPbPbCent010();
+void initialization(double centL=0,double centH=100,int SysOpt=0){
+	initializationPP(SysOpt);
+	initializationRAA(SysOpt);
+	if (centL==0&&centH==100) initializationPbPbCent0100(SysOpt);
+	if (centL==0&&centH==10) initializationPbPbCent010(SysOpt);
 	initialized=1;
 }
 
@@ -151,10 +152,10 @@ float normalizationUncertaintyForRAA(bool TAAhi = 1, double centL=0,double centH
 	return sqrt(sys);
 }
 
-float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0, int stage=0)
+float systematicsForRAA(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -182,8 +183,10 @@ float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0,
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
 
-	sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
-	sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+	sys+= ppPtShape->GetBinContent(ppPtShape->FindBin(pt))*
+		ppPtShape->GetBinContent(ppPtShape->FindBin(pt));
+	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
+		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
 
 	sys+=(ppTrackingEfficiency)*(ppTrackingEfficiency);
 	sys+=(PbPbTrackingEfficiency)*(PbPbTrackingEfficiency);
@@ -207,10 +210,10 @@ float systematicsForRAA(double pt,double centL=0,double centH=100, double HLT=0,
 	return sqrt(sys);
 }
 
-float systematicsForRAA_Correlated(double pt,double centL=0,double centH=100, double HLT=0, int stage=0)
+float systematicsForRAA_Correlated(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -237,10 +240,10 @@ float systematicsForRAA_Correlated(double pt,double centL=0,double centH=100, do
 	return sqrt(sys);
 }
 
-float systematicsForRAA_UnCorrelated(double pt,double centL=0,double centH=100, double HLT=0, int stage=0)
+float systematicsForRAA_UnCorrelated(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -252,8 +255,10 @@ float systematicsForRAA_UnCorrelated(double pt,double centL=0,double centH=100, 
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
 
-	sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
-	sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+	sys+= ppPtShape->GetBinContent(ppPtShape->FindBin(pt))*
+		ppPtShape->GetBinContent(ppPtShape->FindBin(pt));
+	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
+		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
 
 	sys+= ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt))*
 		ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt));
@@ -276,9 +281,9 @@ float normalizationUncertaintyForPP()
 	return sqrt((BRUncertainty*BRUncertainty)+(ppLumiUncertainty*ppLumiUncertainty));
 }
 
-float systematicsPP(double pt, double HLT=0,int stage=0)
+float systematicsPP(double pt, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized) initialization();
+	if (!initialized) initialization(SysOpt);
 	double sys=0;
 
 	if (pt >= PtBins[1]) pt = PtBins[1]-0.1;
@@ -290,7 +295,6 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
 
 	if (stage==2) return sqrt(sys);
 
-	sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
 	sys+=(ppTrackingEfficiency)*(ppTrackingEfficiency);
 	sys+=ppAlignment*ppAlignment;
 	sys+=ppLifetime*ppLifetime;
@@ -298,6 +302,8 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
 		ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
 	sys+= ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100*
 		ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100;
+	sys+= ppPtShape->GetBinContent(ppPtShape->FindBin(pt))*
+		ppPtShape->GetBinContent(ppPtShape->FindBin(pt));
 
 	if (stage==3) return sqrt(sys);
 
@@ -309,9 +315,9 @@ float systematicsPP(double pt, double HLT=0,int stage=0)
 	return sqrt(sys);
 }
 
-float systematicsPP_Correlated(double pt, double HLT=0,int stage=0)
+float systematicsPP_Correlated(double pt, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized) initialization();
+	if (!initialized) initialization(SysOpt);
 	double sys=0;
 	if (pt >= PtBins[1]) pt = PtBins[1]-0.1;
 
@@ -326,15 +332,16 @@ float systematicsPP_Correlated(double pt, double HLT=0,int stage=0)
 	return sqrt(sys);
 }
 
-float systematicsPP_UnCorrelated(double pt, double HLT=0,int stage=0)
+float systematicsPP_UnCorrelated(double pt, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized) initialization();
+	if (!initialized) initialization(SysOpt);
 	double sys=0;
 	if (pt >= PtBins[1]) pt = PtBins[1]-0.1;
 
-	sys+=fPPPtShape->Eval(pt)*fPPPtShape->Eval(pt);
 	sys+= ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100*
 		ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100;
+	sys+= ppPtShape->GetBinContent(ppPtShape->FindBin(pt))*
+		ppPtShape->GetBinContent(ppPtShape->FindBin(pt));
 	sys+= ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt))*
 		ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt));
 	sys+= ppAccUnc->GetBinContent(ppAccUnc->FindBin(pt))*
@@ -346,7 +353,7 @@ float systematicsPP_UnCorrelated(double pt, double HLT=0,int stage=0)
 // =============================================================================================================
 // cross-section systematics for PbPb
 // =============================================================================================================
-float normalizationUncertaintyForPbPb(bool TAAhi = 1, double centL=0,double centH=100)
+float normalizationUncertaintyForPbPb(bool TAAhi=1, double centL=0,double centH=100)
 {
 	double sys = ((BRUncertainty*BRUncertainty)+(PbPbNMBUncertainty*PbPbNMBUncertainty));
 	if (centL==0&&centH==10) {
@@ -362,10 +369,10 @@ float normalizationUncertaintyForPbPb(bool TAAhi = 1, double centL=0,double cent
 	return sqrt(sys);
 }
 
-float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100, double HLT=0)
+float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -378,7 +385,8 @@ float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
 
-	sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
+		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
 
 	sys+=(PbPbTrackingEfficiency)*(PbPbTrackingEfficiency);
 	sys+=PbPbAlignment*PbPbAlignment;
@@ -393,10 +401,10 @@ float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100
 	return sqrt(sys);
 }
 
-float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0,double centH=100, double HLT=0)
+float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
 
 	sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
@@ -412,16 +420,17 @@ float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0,doubl
 	return sqrt(sys);
 }
 
-float systematicsPbPb_UnCorrelated(double pt, bool TAAhi = 1, double centL=0,double centH=100, double HLT=0)
+float systematicsPbPb_UnCorrelated(double pt, bool TAAhi = 1, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH);
+	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
+	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
 
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
 
-	sys+=fPbPbPtShape->Eval(pt)*fPbPbPtShape->Eval(pt);
+	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
+		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
 
 	sys+= PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt))*
 		PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt));
@@ -498,7 +507,6 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 				i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))-(systematicsForRAA(i+0.1,centL,centH,0,2)*systematicsForRAA(i+0.1,centL,centH,0,2))),kGreen+2);
 		drawSys(i,sqrt((systematicsForRAA(i,centL,centH,0,0)*systematicsForRAA(i,centL,centH,0,0))-(systematicsForRAA(i,centL,centH,0,3)*systematicsForRAA(i,centL,centH,0,3))),
 				i+0.1,sqrt((systematicsForRAA(i+0.1,centL,centH,0,0)*systematicsForRAA(i+0.1,centL,centH,0,0))-(systematicsForRAA(i+0.1,centL,centH,0,3)*systematicsForRAA(i+0.1,centL,centH,0,3))),kMagenta);
-
 	}
 
 	TH1D *h1 = new TH1D("h1","",100,0,1);

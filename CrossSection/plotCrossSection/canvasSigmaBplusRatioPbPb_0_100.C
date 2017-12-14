@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatioPbPb_0_100()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Thu Nov 30 15:08:59 2017) by ROOT version6.02/13
+//=========  (Thu Dec 14 01:17:17 2017) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -49,18 +49,16 @@ void canvasSigmaBplusRatioPbPb_0_100()
    Double_t xAxis1[2] = {15, 50}; 
    
    TH1D *hPtSigma2 = new TH1D("hPtSigma2","",1, xAxis1);
-   hPtSigma2->SetBinContent(1,6631.959);
-   hPtSigma2->SetBinError(1,2307.297);
-   hPtSigma2->SetEntries(8.26184);
+   hPtSigma2->SetBinContent(1,6629.34);
+   hPtSigma2->SetBinError(1,2307.652);
+   hPtSigma2->SetEntries(8.252775);
    hPtSigma2->SetLineWidth(2);
    hPtSigma2->SetMarkerStyle(20);
    hPtSigma2->SetMarkerSize(0.84);
-   hPtSigma2->GetXaxis()->SetTitle("D^{0} p_{T} (GeV/c)");
    hPtSigma2->GetXaxis()->SetLabelFont(42);
    hPtSigma2->GetXaxis()->SetLabelSize(0.035);
    hPtSigma2->GetXaxis()->SetTitleSize(0.035);
    hPtSigma2->GetXaxis()->SetTitleFont(42);
-   hPtSigma2->GetYaxis()->SetTitle("Uncorrected dN(D^{0})/dp_{T}");
    hPtSigma2->GetYaxis()->SetLabelFont(42);
    hPtSigma2->GetYaxis()->SetLabelSize(0.035);
    hPtSigma2->GetYaxis()->SetTitleSize(0.035);
@@ -74,15 +72,15 @@ void canvasSigmaBplusRatioPbPb_0_100()
    Double_t gaeCrossSyst_fx3001[1] = {
    32.5};
    Double_t gaeCrossSyst_fy3001[1] = {
-   6631.959};
+   6629.34};
    Double_t gaeCrossSyst_felx3001[1] = {
    17.5};
    Double_t gaeCrossSyst_fely3001[1] = {
-   1191.434};
+   2274.62};
    Double_t gaeCrossSyst_fehx3001[1] = {
    17.5};
    Double_t gaeCrossSyst_fehy3001[1] = {
-   1191.434};
+   2274.62};
    TGraphAsymmErrors *grae = new TGraphAsymmErrors(1,gaeCrossSyst_fx3001,gaeCrossSyst_fy3001,gaeCrossSyst_felx3001,gaeCrossSyst_fehx3001,gaeCrossSyst_fely3001,gaeCrossSyst_fehy3001);
    grae->SetName("gaeCrossSyst");
    grae->SetTitle("Graph");
@@ -93,8 +91,8 @@ void canvasSigmaBplusRatioPbPb_0_100()
    grae->SetMarkerSize(0.8);
    
    TH1F *Graph_gaeCrossSyst3001 = new TH1F("Graph_gaeCrossSyst3001","Graph",100,11.5,53.5);
-   Graph_gaeCrossSyst3001->SetMinimum(5202.239);
-   Graph_gaeCrossSyst3001->SetMaximum(8061.68);
+   Graph_gaeCrossSyst3001->SetMinimum(3899.796);
+   Graph_gaeCrossSyst3001->SetMaximum(9358.884);
    Graph_gaeCrossSyst3001->SetDirectory(0);
    Graph_gaeCrossSyst3001->SetStats(0);
 

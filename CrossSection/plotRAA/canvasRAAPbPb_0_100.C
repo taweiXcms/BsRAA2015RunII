@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Nov 30 15:09:02 2017) by ROOT version6.02/13
+//=========  (Thu Dec 14 01:17:19 2017) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -116,15 +116,15 @@ tex->SetNDC();
    Double_t gNuclearModification_fx3001[1] = {
    32.5};
    Double_t gNuclearModification_fy3001[1] = {
-   0.613315};
+   0.6085523};
    Double_t gNuclearModification_felx3001[1] = {
    17.5};
    Double_t gNuclearModification_fely3001[1] = {
-   0.1258278};
+   0.2299535};
    Double_t gNuclearModification_fehx3001[1] = {
    17.5};
    Double_t gNuclearModification_fehy3001[1] = {
-   0.1258278};
+   0.2299535};
    TGraphAsymmErrors *grae = new TGraphAsymmErrors(1,gNuclearModification_fx3001,gNuclearModification_fy3001,gNuclearModification_felx3001,gNuclearModification_fehx3001,gNuclearModification_fely3001,gNuclearModification_fehy3001);
    grae->SetName("gNuclearModification");
    grae->SetTitle("Graph");
@@ -141,8 +141,8 @@ tex->SetNDC();
    grae->SetMarkerSize(1.2);
    
    TH1F *Graph_gNuclearModification3001 = new TH1F("Graph_gNuclearModification3001","Graph",100,11.5,53.5);
-   Graph_gNuclearModification3001->SetMinimum(0.4623216);
-   Graph_gNuclearModification3001->SetMaximum(0.7643084);
+   Graph_gNuclearModification3001->SetMinimum(0.3326081);
+   Graph_gNuclearModification3001->SetMaximum(0.8844964);
    Graph_gNuclearModification3001->SetDirectory(0);
    Graph_gNuclearModification3001->SetStats(0);
 
@@ -167,9 +167,9 @@ tex->SetNDC();
    Double_t xAxis1[2] = {15, 50}; 
    
    TH1D *hNuclearModification2 = new TH1D("hNuclearModification2","",1, xAxis1);
-   hNuclearModification2->SetBinContent(1,0.613315);
-   hNuclearModification2->SetBinError(1,0.2234292);
-   hNuclearModification2->SetEntries(7.535069);
+   hNuclearModification2->SetBinContent(1,0.6085523);
+   hNuclearModification2->SetBinError(1,0.2217108);
+   hNuclearModification2->SetEntries(7.533941);
 
    ci = TColor::GetColor("#0033cc");
    hNuclearModification2->SetLineColor(ci);
@@ -179,12 +179,10 @@ tex->SetNDC();
    hNuclearModification2->SetMarkerColor(ci);
    hNuclearModification2->SetMarkerStyle(21);
    hNuclearModification2->SetMarkerSize(1.2);
-   hNuclearModification2->GetXaxis()->SetTitle("D^{0} p_{T} (GeV/c)");
    hNuclearModification2->GetXaxis()->SetLabelFont(42);
    hNuclearModification2->GetXaxis()->SetLabelSize(0.035);
    hNuclearModification2->GetXaxis()->SetTitleSize(0.035);
    hNuclearModification2->GetXaxis()->SetTitleFont(42);
-   hNuclearModification2->GetYaxis()->SetTitle("Uncorrected dN(D^{0})/dp_{T}");
    hNuclearModification2->GetYaxis()->SetLabelFont(42);
    hNuclearModification2->GetYaxis()->SetLabelSize(0.035);
    hNuclearModification2->GetYaxis()->SetTitleSize(0.035);
@@ -201,9 +199,9 @@ tex->SetNDC();
    Double_t xAxis2[2] = {15, 50}; 
    
    TH1D *hNuclearModification3 = new TH1D("hNuclearModification3","",1, xAxis2);
-   hNuclearModification3->SetBinContent(1,0.613315);
-   hNuclearModification3->SetBinError(1,0.2234292);
-   hNuclearModification3->SetEntries(7.535069);
+   hNuclearModification3->SetBinContent(1,0.6085523);
+   hNuclearModification3->SetBinError(1,0.2217108);
+   hNuclearModification3->SetEntries(7.533941);
 
    ci = TColor::GetColor("#0033cc");
    hNuclearModification3->SetLineColor(ci);
@@ -213,12 +211,10 @@ tex->SetNDC();
    hNuclearModification3->SetMarkerColor(ci);
    hNuclearModification3->SetMarkerStyle(21);
    hNuclearModification3->SetMarkerSize(1.2);
-   hNuclearModification3->GetXaxis()->SetTitle("D^{0} p_{T} (GeV/c)");
    hNuclearModification3->GetXaxis()->SetLabelFont(42);
    hNuclearModification3->GetXaxis()->SetLabelSize(0.035);
    hNuclearModification3->GetXaxis()->SetTitleSize(0.035);
    hNuclearModification3->GetXaxis()->SetTitleFont(42);
-   hNuclearModification3->GetYaxis()->SetTitle("Uncorrected dN(D^{0})/dp_{T}");
    hNuclearModification3->GetYaxis()->SetLabelFont(42);
    hNuclearModification3->GetYaxis()->SetLabelSize(0.035);
    hNuclearModification3->GetYaxis()->SetTitleSize(0.035);
