@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatioPbPb_0_100()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Thu Dec 14 13:20:16 2017) by ROOT version6.02/13
+//=========  (Thu Dec 14 14:29:09 2017) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -133,7 +133,7 @@ tex->SetNDC();
    tex->SetTextSize(0.035);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.77,0.874,"B^{#pm}");
+      tex = new TLatex(0.77,0.874,"B_{s}");
 tex->SetNDC();
    tex->SetTextSize(0.063);
    tex->SetLineWidth(2);
