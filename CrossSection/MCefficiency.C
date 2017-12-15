@@ -178,8 +178,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	hEffOneShot->Divide(hEffOneShot,hPtGen,1,1,"b");
 
 	////// Draw hEff, hEffAcc
-	TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.6);  
-	if(varExp == "abs(By)") hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0],_ptBins[_nBins],10.,0,0.6);  
+	TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.8);  
+	if(varExp == "abs(By)") hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0],_ptBins[_nBins],10.,0,0.8);  
 	hemptyEff->GetXaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->SetTitle("#alpha x #epsilon");

@@ -157,7 +157,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	gaeSigmaBplus->SetName("gaeSigmaBplus");
 	gaeSigmaBplus->SetFillColor(2);
 	gaeSigmaBplus->SetFillStyle(3001); 
-	gaeSigmaBplus->SetTitle(";p_{T}(GeV/c);d#sigma/dp_{T} (B^{s}) (pb GeV-1c)");
+	gaeSigmaBplus->SetTitle(";p_{T}(GeV/c);d#sigma/dp_{T} (B_{s}) (pb GeV-1c)");
 
 	for (int i=0;i<gaeSigmaBplus->GetN();i++){
 		gaeSigmaBplus->GetY()[i] *= norm;

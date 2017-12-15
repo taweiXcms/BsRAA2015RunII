@@ -3,14 +3,13 @@
 CENTPbPbMIN=0
 CENTPbPbMAX=100
 
-DOANALYSISPP_FONLL=0
+DOANALYSISPP_FONLL=1
 DOANALYSISPP_FITNP=0
 DOANALYSISPP_FIT=0
 DOANALYSISPP_FITONSAVED=0
 DOANALYSISPP_MCSTUDY=0
 DOANALYSISPP_CROSS=0
 
-DOANALYSISPbPb_FONLL=0
 DOANALYSISPbPb_FITNP=0
 DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=0
@@ -19,7 +18,7 @@ DOANALYSISPbPb_CROSS=0
 DORAA=0
 
 ### pp 4-bin result
-DOANALYSISPP_FONLL_1050=0
+DOANALYSISPP_FONLL_1050=1
 DOANALYSISPP_FIT_1050=0
 DOANALYSISPP_FITONSAVED_1050=0
 DOANALYSISPP_MCSTUDY_1050=0
@@ -31,11 +30,11 @@ DOANALYSISPP_FITONSAVED_Y=0
 DOANALYSISPP_MCSTUDY_Y=0
 
 ### Reweighting
-DOPTREWEIGHT=0
+DOPTREWEIGHT=1
 
 ### Cross checks
+DOClosure=0
 DOCOMPARE=0
-DOClosure=1
 SAVEMVAPP=0
 SAVEMVAPbPb=0
 PLOTMVA=0
@@ -261,13 +260,13 @@ fi
 ### Reweighting
 
 if [ $DOPTREWEIGHT -eq 1 ]; then
-#g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
-#./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
-#rm Bplusdsigmadpt.exe
-root -b -q weightMCpp.C++
-rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
-root -b -q weightMCPbPb.C++
-rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
+g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
+./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
+rm Bplusdsigmadpt.exe
+#root -b -q weightMCpp.C++
+#rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
+#root -b -q weightMCPbPb.C++
+#rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
 fi
 
 ### MEAN COMPARISON

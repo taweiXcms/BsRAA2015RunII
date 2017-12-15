@@ -1,19 +1,19 @@
 void canvas1DhEff_pp()
 {
 //=========Macro generated from canvas: canvas1D/
-//=========  (Thu Dec 14 13:25:18 2017) by ROOT version6.02/13
+//=========  (Thu Dec 14 21:07:44 2017) by ROOT version6.02/13
    TCanvas *canvas1D = new TCanvas("canvas1D", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    canvas1D->SetHighLightColor(2);
-   canvas1D->Range(-1.25,-0.07500001,61.25,0.675);
+   canvas1D->Range(-1.25,-0.1,61.25,0.9);
    canvas1D->SetFillColor(0);
    canvas1D->SetBorderMode(0);
    canvas1D->SetBorderSize(2);
    canvas1D->SetFrameBorderMode(0);
    canvas1D->SetFrameBorderMode(0);
    
-   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,5,55,10,0,0.6);
+   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,5,55,10,0,0.8);
    hemptyEff1->SetMinimum(0);
    hemptyEff1->SetMaximum(1);
    hemptyEff1->SetStats(0);
