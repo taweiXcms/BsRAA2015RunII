@@ -207,7 +207,7 @@ void Bplusdsigmadpt(TString inputFONLLdat = "pp_Bplus_5p03TeV_y2p4",
 	tlatextotunc->SetTextSize(0.04);
 	tlatextotunc->Draw();
 
-	TLatex * tlatexD0=new TLatex(0.2,0.7,"B^{s},|y|<2.4, BR unc not shown");
+	TLatex * tlatexD0=new TLatex(0.2,0.7,"B_{s},|y|<2.4, BR unc not shown");
 	tlatexD0->SetNDC();
 	tlatexD0->SetTextColor(1);
 	tlatexD0->SetTextFont(42);
