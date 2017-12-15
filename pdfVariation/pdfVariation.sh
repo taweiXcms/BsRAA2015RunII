@@ -4,12 +4,12 @@ CENTPbPbMIN=0
 CENTPbPbMAX=100
 
 #
-DOSAVEHISTPP=0
-DOSAVEHISTPbPb=0
+DOSAVEHISTPP=1
+DOSAVEHISTPbPb=1
 
 #
-DOFITDEFAULT=1
-DOFITDEFAULTNEWPbPb=0
+DOFITDEFAULTPP=1
+DOFITDEFAULTPbPb=0
 
 DOFITINCREASEWIDPP=0
 DOFITINCREASEWIDPbPb=0
@@ -61,16 +61,16 @@ g++ saveMasshisto.C $(root-config --cflags --libs) -g -o saveMasshisto.exe
 rm saveMasshisto.exe
 fi
 
-if [ $DOFITDEFAULT -eq 1 ]; then
+if [ $DOFITDEFAULTPP -eq 1 ]; then
 g++ fitBdefault.C $(root-config --cflags --libs) -g -o fitBdefault.exe 
 ./fitBdefault.exe "$LABELPP" 
 rm fitBdefault.exe
 fi
 
-if [ $DOFITDEFAULTNEWPbPb -eq 1 ]; then
-g++ fitDdefaultnew.C $(root-config --cflags --libs) -g -o fitDdefaultnew.exe 
-./fitDdefaultnew.exe "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
-rm fitDdefaultnew.exe
+if [ $DOFITDEFAULTPbPb -eq 1 ]; then
+g++ fitBdefault.C $(root-config --cflags --libs) -g -o fitBdefault.exe 
+./fitBdefault.exe "$LABELPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm fitBdefault.exe
 fi
 
 if [ $DOFITINCREASEWIDPP -eq 1 ]; then

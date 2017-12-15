@@ -317,10 +317,10 @@ texB->Draw();
           hPull->SetBinContent(i+1,0.);
         }
       else hPull->SetBinContent(i+1,(h->GetBinContent(i+1)-nfit)/h->GetBinError(i+1));
-      hPull->SetBinError(i+1,0);
+      //hPull->SetBinError(i+1,0);
     }
-  hPull->SetMinimum(-4.);
-  hPull->SetMaximum(4.);
+  hPull->SetMinimum(-3.4);
+  hPull->SetMaximum(3.4);
   hPull->SetYTitle("Pull");
   hPull->GetXaxis()->SetTitleOffset(1.);
   hPull->GetYaxis()->SetTitleOffset(0.65);
@@ -350,12 +350,14 @@ texB->Draw();
   texY->Draw();
   texYield->Draw();
   cPull->cd();
+  
+  
   TPad* pPull = new TPad("pPull","",0,0,1,0.3);
   pPull->SetTopMargin(0);
   pPull->SetBottomMargin(0.3);
   pPull->Draw();
   pPull->cd();
-  hPull->Draw("ep");
+  hPull->Draw("e");
   lPull->Draw();
   cPull->cd();
   cPull->SaveAs(Form("plotFits/BMass_default_%s_cent_%.0f_%.0f_pt_%.0f_%.0f_Pull.pdf",collisionsystem.Data(),centmin,centmax,ptmin,ptmax));

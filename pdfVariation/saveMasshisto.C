@@ -7,7 +7,7 @@ Double_t maxhisto=6.0;
 Double_t nbinsmasshisto=50;
 Double_t binwidthmass=(maxhisto-minhisto)/nbinsmasshisto;
 
-TString weightMC = "1";
+TString weightMC="1";
 TString weight = "pthatweight";
 TString seldata;
 TString selmc;
@@ -25,6 +25,8 @@ void saveMasshisto(TString inputdata="",
                    TString outputfile="outfMasshisto/mass")
 {
   collisionsystem=collsyst;
+  if (collsyst=="PP") weightMC= "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
+  else {weightMC = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";}
   seldata = Form("%s&&%s",trgselection.Data(),cut.Data());
   selmc = Form("%s",cut.Data());
   centmin = centMin;
@@ -43,6 +45,7 @@ void saveMasshisto(TString inputdata="",
   nt->AddFriend("ntHi");
   nt->AddFriend("ntSkim");
   nt->AddFriend("BDTStage1_pt15to50");
+  
   TTree* ntMC = (TTree*)infMC->Get("ntphi");
   ntMC->AddFriend("ntHlt");
   ntMC->AddFriend("ntHi");
