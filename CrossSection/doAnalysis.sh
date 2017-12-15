@@ -5,28 +5,28 @@ CENTPbPbMAX=100
 
 DOANALYSISPP_FONLL=0
 DOANALYSISPP_FITNP=0
-DOANALYSISPP_FIT=1
+DOANALYSISPP_FIT=0
 DOANALYSISPP_FITONSAVED=1
 DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=1
+DOANALYSISPP_CROSS=0
 
 DOANALYSISPbPb_FITNP=0
-DOANALYSISPbPb_FIT=1
+DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=1
 DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=1
-DORAA=1
+DOANALYSISPbPb_CROSS=0
+DORAA=0
 
 ### pp 4-bin result
 DOANALYSISPP_FONLL_1050=0
-DOANALYSISPP_FIT_1050=1
-DOANALYSISPP_FITONSAVED_1050=1
+DOANALYSISPP_FIT_1050=0
+DOANALYSISPP_FITONSAVED_1050=0
 DOANALYSISPP_MCSTUDY_1050=0
-DOANALYSISPP_CROSS_1050=1
+DOANALYSISPP_CROSS_1050=0
 
 ### Rapidity result
-DOANALYSISPP_FIT_Y=1
-DOANALYSISPP_FITONSAVED_Y=1
+DOANALYSISPP_FIT_Y=0
+DOANALYSISPP_FITONSAVED_Y=0
 DOANALYSISPP_MCSTUDY_Y=0
 
 ### Reweighting
@@ -47,19 +47,19 @@ CHECKPROMPT=0
 
 ## PP MONTE CARLO
 #INPUTMCPP="/data/HeavyFlavourRun2/MC2015/Bntuple/pp/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root"
-INPUTMCPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root"
+INPUTMCPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root"
 
 ## PP DATA 
 #INPUTDATAPP="/data/HeavyFlavourRun2/Data2015/Bntuple/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs_BDT15to50.root"
-INPUTDATAPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs_BDT15to50.root"
+INPUTDATAPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs_BDT15to50.root"
 
 ## PbPb MONTE CARLO
 #INPUTMCPbPb="/data/HeavyFlavourRun2/MC2015/Bntuple/PbPb/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root"
-INPUTMCPbPb="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root"
+INPUTMCPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root"
 
 ## PbPb DATA 
 #INPUTDATAPbPb="/data/HeavyFlavourRun2/Data2015/Bntuple/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root"
-INPUTDATAPbPb="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root"
+INPUTDATAPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root"
 
 ## ANALYSIS PP TRIGGERED
 FONLLDATINPUT="pp_Bplus_5p03TeV_y2p4"
@@ -373,8 +373,8 @@ fi
 
 ### Checking prompt background structure
 
-#INPUTPROMPTPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
-INPUTPROMPTPP="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
+#INPUTPROMPTPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
+INPUTPROMPTPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50.root"
 if [ $CHECKPROMPT -eq 1 ]; then      
 g++ fitPrompt.C $(root-config --cflags --libs) -g -o fitPrompt.exe 
 CUT="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.5 && Btrk2Pt > 0.5"
@@ -384,7 +384,7 @@ CUT=${CUT}" && abs(PVz)<15 && pBeamScrapingFilter && pPAprimaryVertexFilter"
 #./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.0"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p0.root" "$NPFIT_PP" 0 "0" "100" "BDT0p0"
 #./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.1"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p1.root" "$NPFIT_PP" 0 "0" "100" "BDTm0p1"
 #./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.2"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p2.root" "$NPFIT_PP" 0 "0" "100" "BDTm0p2"
-INPUTPROMPTPbPb="/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs_BDT15to50.root"
+INPUTPROMPTPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs_BDT15to50.root"
 CUT="TMath::Abs(By)<2.4 && TMath::Abs(Bmumumass-3.096916)<0.15 && ((abs(Bmu1eta)<1.2 && Bmu1pt>3.5) || (abs(Bmu1eta)>1.2 && abs(Bmu1eta)<2.1 && Bmu1pt>(5.77-1.8*abs(Bmu1eta))) || (abs(Bmu1eta)>2.1 && abs(Bmu1eta)<2.4 && Bmu1pt>1.8)) && ((abs(Bmu2eta)<1.2 && Bmu2pt>3.5) || (abs(Bmu2eta)>1.2 && abs(Bmu2eta)<2.1 && Bmu2pt>(5.77-1.8*abs(Bmu2eta))) || (abs(Bmu2eta)>2.1 && abs(Bmu2eta)<2.4 && Bmu2pt>1.8)) && Bmu1TMOneStationTight && Bmu2TMOneStationTight && Bmu1InPixelLayer > 0 && (Bmu1InPixelLayer+Bmu1InStripLayer) > 5 && Bmu2InPixelLayer > 0 && (Bmu2InPixelLayer+Bmu2InStripLayer) > 5 && Bmu1dxyPV< 0.3 && Bmu2dxyPV< 0.3 && Bmu1dzPV<20 && Bmu2dzPV<20 && Bmu1isGlobalMuon && Bmu2isGlobalMuon && Bmu1TrgMatchFilterE>0 && Bmu2TrgMatchFilterE>0 && Btrk1highPurity && Btrk2highPurity && abs(Btrk1Eta)<2.4 && abs(Btrk2Eta)<2.4 && Btrk1Pt > 0.8 && Btrk2Pt > 0.8"
 CUT=${CUT}" && abs(PVz)<15 && pclusterCompatibilityFilter && pprimaryVertexFilter && phfCoincFilter3"
 ./fitPrompt.exe 1 0 "$INPUTPROMPTPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMC" "$CUT&&BDTStage1_pt15to50>0.303985"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPbPb_BDTd4.root" "$NPFIT_PbPb" 0 "0" "100" "BDTd4"
