@@ -73,12 +73,11 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	f->FixParameter(2,f->GetParameter(2));
 	f->FixParameter(7,f->GetParameter(7));
 	f->FixParameter(8,f->GetParameter(8));
-	//f->ReleaseParameter(11); // release the signal mean
 	printf("Fixed para.:\n");
 	printf("%f, %f, %f\n", f->GetParameter(2), f->GetParameter(7), f->GetParameter(8));
 	h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
-	f->ReleaseParameter(1);
+	//f->ReleaseParameter(1); // release the signal mean
 	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
