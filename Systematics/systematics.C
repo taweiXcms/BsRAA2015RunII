@@ -57,7 +57,7 @@ bool initialized = 0;
 void initializationPP(int SysOpt=0)
 {
 	ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
-	ppMesonSelection->SetBinContent(1, 12.4);
+	ppMesonSelection->SetBinContent(1, 5.5);
 
 	ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
 	ppSignalExtraction->SetBinContent(1, 0.75);
@@ -86,7 +86,7 @@ void initializationPP(int SysOpt=0)
 void initializationPbPbCent0100(int SysOpt=0)
 {
 	PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
-	PbPbMesonSelection->SetBinContent(1, 31.1);
+	PbPbMesonSelection->SetBinContent(1, 30.4);
 
 	PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
 	PbPbSignalExtraction->SetBinContent(1, 2.4);

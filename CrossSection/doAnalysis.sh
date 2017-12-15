@@ -3,26 +3,26 @@
 CENTPbPbMIN=0
 CENTPbPbMAX=100
 
-DOANALYSISPP_FONLL=1
+DOANALYSISPP_FONLL=0
 DOANALYSISPP_FITNP=0
 DOANALYSISPP_FIT=0
 DOANALYSISPP_FITONSAVED=0
 DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=0
+DOANALYSISPP_CROSS=1
 
 DOANALYSISPbPb_FITNP=0
 DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=0
-DORAA=0
+DOANALYSISPbPb_CROSS=1
+DORAA=1
 
 ### pp 4-bin result
 DOANALYSISPP_FONLL_1050=1
 DOANALYSISPP_FIT_1050=0
 DOANALYSISPP_FITONSAVED_1050=0
 DOANALYSISPP_MCSTUDY_1050=0
-DOANALYSISPP_CROSS_1050=0
+DOANALYSISPP_CROSS_1050=1
 
 ### Rapidity result
 DOANALYSISPP_FIT_Y=0
@@ -30,7 +30,7 @@ DOANALYSISPP_FITONSAVED_Y=0
 DOANALYSISPP_MCSTUDY_Y=0
 
 ### Reweighting
-DOPTREWEIGHT=1
+DOPTREWEIGHT=0
 
 ### Cross checks
 DOClosure=0
@@ -260,13 +260,13 @@ fi
 ### Reweighting
 
 if [ $DOPTREWEIGHT -eq 1 ]; then
-g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
-./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
-rm Bplusdsigmadpt.exe
-#root -b -q weightMCpp.C++
-#rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
-#root -b -q weightMCPbPb.C++
-#rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
+#g++ Bplusdsigmadpt.cc $(root-config --cflags --libs) -g -o Bplusdsigmadpt.exe 
+#./Bplusdsigmadpt.exe "$FONLLDATINPUT"  "$FONLLOUTPUTFILEREWEIGHT" "$LABELPP" 1
+#rm Bplusdsigmadpt.exe
+root -b -q weightMCpp.C++
+rm weightMCpp_C.d weightMCpp_C.so weightMCpp_C_ACLiC_dict_rdict.pcm
+root -b -q weightMCPbPb.C++
+rm weightMCPbPb_C.d weightMCPbPb_C.so weightMCPbPb_C_ACLiC_dict_rdict.pcm
 fi
 
 ### MEAN COMPARISON
