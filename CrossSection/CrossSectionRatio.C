@@ -171,12 +171,13 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texCms->Draw();
 
 	//TLatex* texPrel = new TLatex(0.20,0.95, "#scale[1.25]Preliminary");
-	TLatex* texPrel = new TLatex(0.30,0.89, "Preliminary");
+	//TLatex* texPrel = new TLatex(0.30,0.89, "Preliminary");
+	TLatex* texPrel = new TLatex(0.18,1-(1-0.79)*tpadr, "Preliminary");
 	texPrel->SetNDC();
 	texPrel->SetTextAlign(13);
-	texPrel->SetTextSize(0.050);
-	texPrel->SetTextFont(52);
-	//texPrel->Draw();
+	texPrel->SetTextSize(0.08*tpadr);
+	texPrel->SetTextFont(62);
+	texPrel->Draw();
 
 	TString text;
 	if (label=="PbPb") { text="351 #mub^{-1} (PbPb 5.02 TeV)";}

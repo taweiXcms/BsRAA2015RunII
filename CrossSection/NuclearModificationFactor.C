@@ -219,13 +219,13 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texY->SetLineWidth(2);
 	texY->Draw();
 
-	TLatex* texpre = new TLatex(0.15,0.84,"Preliminary");
+	TLatex* texpre = new TLatex(0.30,0.90,"Preliminary");
 	texpre->SetNDC();
 	texpre->SetTextAlign(13);
-	texpre->SetTextFont(52);
-	texpre->SetTextSize(0.05);
+	texpre->SetTextFont(62);
+	texpre->SetTextSize(0.06);
 	texpre->SetLineWidth(2);
-	//texpre->Draw();
+	texpre->Draw();
 
 	TLegend *legendSigma=new TLegend(0.135,0.65,0.49,0.85,"");
 	if(drawDRAA)legendSigma=new TLegend(0.40,0.66,0.81,0.92,"");

@@ -190,14 +190,37 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	texcms->SetTextFont(62);
 	texcms->SetTextSize(0.075);
 	texcms->SetLineWidth(2);
-	texcms->Draw();
-
+//	texcms->Draw();
+	
 	TLatex* texB = new TLatex(0.225,0.74,"B_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(42);
 	texB->SetTextSize(0.055);
 	texB->SetLineWidth(2);
-	texB->Draw();
+//	texB->Draw();
+
+// preliminary setting
+texcms = new TLatex(0.22,0.87,"CMS");
+texcms->SetNDC();
+texcms->SetTextAlign(13);
+texcms->SetTextFont(62);
+texcms->SetTextSize(0.060);
+texcms->SetLineWidth(2);
+texcms->Draw();
+texcms = new TLatex(0.22,0.81,"Preliminary");
+texcms->SetNDC();
+texcms->SetTextAlign(13);
+texcms->SetTextFont(62);
+texcms->SetTextSize(0.060);
+texcms->SetLineWidth(2);
+texcms->Draw();
+texB = new TLatex(0.225,0.68,"B_{s}");
+texB->SetNDC();
+texB->SetTextFont(42);
+texB->SetTextSize(0.055);
+texB->SetLineWidth(2);
+texB->Draw();
+// preliminary setting
 
 	TLatex* texCol;
 	if(collisionsystem=="pp"||collisionsystem=="PP"||collisionsystem=="ppInc"||collisionsystem=="PbPbInc") texCol= new TLatex(0.95,0.94, Form("28.0 pb^{-1} (%s 5.02 TeV)","pp"));
