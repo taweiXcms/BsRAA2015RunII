@@ -35,7 +35,7 @@ DOPTREWEIGHT=0
 
 ### Cross checks
 DOCOMPARE=0
-DOClosure=0
+DOClosure=1
 SAVEMVAPP=0
 SAVEMVAPbPb=0
 PLOTMVA=0
@@ -330,7 +330,7 @@ TRGPPMCClosure="1"
 LABELPPMCClosure="PPMCClosure"
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 0 "$INPUTMCPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMCClosure" "$CUTPP"   "$SELGENPP"   "$ISMCPPMCClosure"   "$LUMIPPMCClosure"   "$ISDOWEIGHTPPMCClosure"   "$LABELPPMCClosure"  "$OUTPUTFILEPPMCClosure" "plotOthers" "$NPFIT_PP" 0 "0" "100"
+./fitB.exe 0 0 "$INPUTMCPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMCClosure" "$CUTPP"   "$SELGENPP"   "$ISMCPPMCClosure"   "$LUMIPPMCClosure"   "$ISDOWEIGHTPPMCClosure"   "$LABELPPMCClosure"  "$OUTPUTFILEPPMCClosure" "plotClosure" "$NPFIT_PP" 0 "0" "100"
 g++ ClosureTest.C $(root-config --cflags --libs) -g -o ClosureTest.exe 
 ./ClosureTest.exe "$OUTPUTFILEPPMCClosure" "$LABELPP"
 
@@ -342,9 +342,10 @@ TRGPbPbMCClosure="1"
 LABELPbPbMCClosure="PbPbMCClosure"
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 0 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMCClosure" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPbMCClosure"   "$LUMIPbPbMCClosure"   "$ISDOWEIGHTPbPbMCClosure"   "$LABELPbPbMCClosure"  "$OUTPUTFILEPbPbMCClosure" "plotOthers" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 1 0 "$INPUTMCPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMCClosure" "$CUTPbPb"   "$SELGENPbPb"   "$ISMCPbPbMCClosure"   "$LUMIPbPbMCClosure"   "$ISDOWEIGHTPbPbMCClosure"   "$LABELPbPbMCClosure"  "$OUTPUTFILEPbPbMCClosure" "plotClosure" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 g++ ClosureTest.C $(root-config --cflags --libs) -g -o ClosureTest.exe 
 ./ClosureTest.exe "$OUTPUTFILEPbPbMCClosure" "$LABELPbPb"
+rm ClosureTest.exe
 
 fi
 
