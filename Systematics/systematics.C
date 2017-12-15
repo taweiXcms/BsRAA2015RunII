@@ -473,11 +473,11 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 	canvas->SetFrameBorderMode(0);
 	canvas->SetLogx();
 
-	TH2F* hempty=new TH2F("hempty","",50,5,60.,10.,-0.8,0.8);
+	TH2F* hempty=new TH2F("hempty","",50,5,60.,10.,-1.,1.);
 	hempty->GetXaxis()->CenterTitle();
 	hempty->GetYaxis()->CenterTitle();
 	hempty->GetYaxis()->SetTitle("Systematical Uncertainty");
-	hempty->GetXaxis()->SetTitle("B^{+} p_{T} (GeV/c)");
+	hempty->GetXaxis()->SetTitle("B_{s} p_{T} (GeV/c)");
 	hempty->GetXaxis()->SetTitleOffset(1.40);//0.9
 	hempty->GetYaxis()->SetTitleOffset(1.45);//1.
 	hempty->GetXaxis()->SetTitleSize(0.05);//0.045
@@ -522,7 +522,7 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 	TH1D *h7 = new TH1D("h7","",100,0,1);
 	h7->SetLineWidth(2); h7->SetLineColor(kYellow);
 
-	TLatex* texlumi = new TLatex(0.19,0.936,"25.8 pb^{-1} (5.02 TeV pp) + 350.68 #mub^{-1} (5.02 TeV PbPb)");
+	TLatex* texlumi = new TLatex(0.19,0.936,"28.0 pb^{-1} (5.02 TeV pp) + 351 #mub^{-1} (5.02 TeV PbPb)");
 	texlumi->SetNDC();
 	//texlumi->SetTextAlign(31);
 	texlumi->SetTextFont(42);
@@ -544,7 +544,7 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 	texpre->SetLineWidth(2);
 	texpre->Draw();
 
-	TLatex * texY = new TLatex(0.5,0.8324607,"B^{+} R_{AA}, |y| < 2.4");//0.2612903,0.8425793
+	TLatex * texY = new TLatex(0.5,0.8324607,"B_{s} R_{AA}, |y| < 2.4");//0.2612903,0.8425793
 	texY->SetNDC();
 	texY->SetTextColor(1);
 	texY->SetTextFont(42);
@@ -596,7 +596,7 @@ void plotSystematicsPP()
 	hempty->GetXaxis()->CenterTitle();
 	hempty->GetYaxis()->CenterTitle();
 	hempty->GetYaxis()->SetTitle("Systematical Uncertainty");
-	hempty->GetXaxis()->SetTitle("B^{+} p_{T} (GeV/c)");
+	hempty->GetXaxis()->SetTitle("B_{s} p_{T} (GeV/c)");
 	hempty->GetXaxis()->SetTitleOffset(1.40);//0.9
 	hempty->GetYaxis()->SetTitleOffset(1.45);//1.
 	hempty->GetXaxis()->SetTitleSize(0.05);//0.045
@@ -639,7 +639,7 @@ void plotSystematicsPP()
 	TH1D *h6 = new TH1D("h6","",100,0,1);
 	h6->SetLineWidth(2); h6->SetLineColor(kMagenta);
 
-	TLatex* texlumi = new TLatex(0.35,0.936,"25.8 pb^{-1} (5.02 TeV pp)");
+	TLatex* texlumi = new TLatex(0.35,0.936,"28.0 pb^{-1} (5.02 TeV pp)");
 	texlumi->SetNDC();
 	//texlumi->SetTextAlign(31);
 	texlumi->SetTextFont(42);
@@ -661,7 +661,7 @@ void plotSystematicsPP()
 	texpre->SetLineWidth(2);
 	texpre->Draw();
 
-	TLatex * texY = new TLatex(0.5,0.8324607,"B^{+} d#sigma / dp_{T}, |y| < 2.4");//0.2612903,0.8425793
+	TLatex * texY = new TLatex(0.5,0.8324607,"B_{s} d#sigma / dp_{T}, |y| < 2.4");//0.2612903,0.8425793
 	texY->SetNDC();
 	texY->SetTextColor(1);
 	texY->SetTextFont(42);
