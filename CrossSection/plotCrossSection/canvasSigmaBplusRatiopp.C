@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Fri Dec 15 14:13:28 2017) by ROOT version6.02/13
+//=========  (Fri Dec 15 18:55:07 2017) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -126,11 +126,11 @@ void canvasSigmaBplusRatiopp()
    Double_t gaeCrossSyst_felx3002[1] = {
    17.5};
    Double_t gaeCrossSyst_fely3002[1] = {
-   1226.612};
+   1250.1};
    Double_t gaeCrossSyst_fehx3002[1] = {
    17.5};
    Double_t gaeCrossSyst_fehy3002[1] = {
-   1226.612};
+   1250.1};
    grae = new TGraphAsymmErrors(1,gaeCrossSyst_fx3002,gaeCrossSyst_fy3002,gaeCrossSyst_felx3002,gaeCrossSyst_fehx3002,gaeCrossSyst_fely3002,gaeCrossSyst_fehy3002);
    grae->SetName("gaeCrossSyst");
    grae->SetTitle("Graph");
@@ -141,8 +141,8 @@ void canvasSigmaBplusRatiopp()
    grae->SetMarkerSize(0.8);
    
    TH1F *Graph_gaeCrossSyst3002 = new TH1F("Graph_gaeCrossSyst3002","Graph",100,11.5,53.5);
-   Graph_gaeCrossSyst3002->SetMinimum(9409.41);
-   Graph_gaeCrossSyst3002->SetMaximum(12353.28);
+   Graph_gaeCrossSyst3002->SetMinimum(9381.224);
+   Graph_gaeCrossSyst3002->SetMaximum(12381.46);
    Graph_gaeCrossSyst3002->SetDirectory(0);
    Graph_gaeCrossSyst3002->SetStats(0);
 
@@ -378,11 +378,11 @@ tex->SetNDC();
    Double_t gaeRatioCrossFONLLsyst_felx3005[1] = {
    17.5};
    Double_t gaeRatioCrossFONLLsyst_fely3005[1] = {
-   0.1168293};
+   0.1190665};
    Double_t gaeRatioCrossFONLLsyst_fehx3005[1] = {
    17.5};
    Double_t gaeRatioCrossFONLLsyst_fehy3005[1] = {
-   0.1168293};
+   0.1190665};
    grae = new TGraphAsymmErrors(1,gaeRatioCrossFONLLsyst_fx3005,gaeRatioCrossFONLLsyst_fy3005,gaeRatioCrossFONLLsyst_felx3005,gaeRatioCrossFONLLsyst_fehx3005,gaeRatioCrossFONLLsyst_fely3005,gaeRatioCrossFONLLsyst_fehy3005);
    grae->SetName("gaeRatioCrossFONLLsyst");
    grae->SetTitle("Graph");
@@ -392,8 +392,8 @@ tex->SetNDC();
    grae->SetMarkerStyle(20);
    
    TH1F *Graph_gaeRatioCrossFONLLsyst3005 = new TH1F("Graph_gaeRatioCrossFONLLsyst3005","Graph",100,11.5,53.5);
-   Graph_gaeRatioCrossFONLLsyst3005->SetMinimum(0.8962042);
-   Graph_gaeRatioCrossFONLLsyst3005->SetMaximum(1.176595);
+   Graph_gaeRatioCrossFONLLsyst3005->SetMinimum(0.8935197);
+   Graph_gaeRatioCrossFONLLsyst3005->SetMaximum(1.179279);
    Graph_gaeRatioCrossFONLLsyst3005->SetDirectory(0);
    Graph_gaeRatioCrossFONLLsyst3005->SetStats(0);
 

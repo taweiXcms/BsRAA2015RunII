@@ -60,7 +60,7 @@ void initializationPP(int SysOpt=0)
 	ppMesonSelection->SetBinContent(1, 5.5);
 
 	ppSignalExtraction = new TH1D("ppSignalExtraction","",nPtBins,PtBins);
-	ppSignalExtraction->SetBinContent(1, 0.75);
+	ppSignalExtraction->SetBinContent(1, 2.34);
 
 	ppTagAndProbe = new TH1D("ppTagAndProbe","",nPtBins,PtBins); 
 	ppAccUnc = new TH1D("ppAccUnc","",nPtBins,PtBins);
@@ -89,7 +89,7 @@ void initializationPbPbCent0100(int SysOpt=0)
 	PbPbMesonSelection->SetBinContent(1, 30.4);
 
 	PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
-	PbPbSignalExtraction->SetBinContent(1, 2.4);
+	PbPbSignalExtraction->SetBinContent(1, 0.604);
 
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",nPtBins,PtBins);
 	PbPbAccUnc = new TH1D("PbPbAccUnc","",nPtBins,PtBins);
