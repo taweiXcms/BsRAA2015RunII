@@ -200,18 +200,18 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 //	texB->Draw();
 
 // preliminary setting
-texcms = new TLatex(0.22,0.87,"CMS");
+texcms = new TLatex(0.21,0.88,"CMS");
 texcms->SetNDC();
 texcms->SetTextAlign(13);
 texcms->SetTextFont(62);
-texcms->SetTextSize(0.060);
+texcms->SetTextSize(0.055);
 texcms->SetLineWidth(2);
 texcms->Draw();
-texcms = new TLatex(0.22,0.81,"Preliminary");
+texcms = new TLatex(0.21,0.825,"Preliminary");
 texcms->SetNDC();
 texcms->SetTextAlign(13);
 texcms->SetTextFont(62);
-texcms->SetTextSize(0.060);
+texcms->SetTextSize(0.055);
 texcms->SetLineWidth(2);
 texcms->Draw();
 texB = new TLatex(0.225,0.68,"B_{s}");
