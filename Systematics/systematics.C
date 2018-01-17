@@ -292,26 +292,23 @@ float systematicsPP(double pt, double HLT=0, int stage=0, int SysOpt=0)
 
 	sys+= ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt))* 
 		ppSignalExtraction->GetBinContent(ppSignalExtraction->FindBin(pt));
-
 	if (stage==2) return sqrt(sys);
 
-	sys+=(ppTrackingEfficiency)*(ppTrackingEfficiency);
-	sys+=ppAlignment*ppAlignment;
-	sys+=ppLifetime*ppLifetime;
 	sys+= ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt))* 
 		ppMesonSelection->GetBinContent(ppMesonSelection->FindBin(pt));
 	sys+= ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100*
 		ppEff->GetBinError(ppEff->FindBin(pt))/ppEff->GetBinContent(ppEff->FindBin(pt))*100;
 	sys+= ppPtShape->GetBinContent(ppPtShape->FindBin(pt))*
 		ppPtShape->GetBinContent(ppPtShape->FindBin(pt));
-
+	sys+=(ppTrackingEfficiency)*(ppTrackingEfficiency);
+	sys+=ppAlignment*ppAlignment;
+	sys+=ppLifetime*ppLifetime;
 	if (stage==3) return sqrt(sys);
 
 	sys+= ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt))*
 		ppTagAndProbe->GetBinContent(ppTagAndProbe->FindBin(pt));
 	sys+= ppAccUnc->GetBinContent(ppAccUnc->FindBin(pt))*
 		ppAccUnc->GetBinContent(ppAccUnc->FindBin(pt));
-
 	return sqrt(sys);
 }
 
@@ -373,31 +370,28 @@ float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100
 {
 	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
 	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
-
 	double sys=0;
+    if (stage==1) return sqrt(sys);
 
 	sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))* 
 		PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
+    if (stage==2) return sqrt(sys);
 
 	sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
 		PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
-
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
-
 	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
 		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
-
 	sys+=(PbPbTrackingEfficiency)*(PbPbTrackingEfficiency);
 	sys+=PbPbAlignment*PbPbAlignment;
 	sys+=PbPbLifetime*PbPbLifetime;
+    if (stage==3) return sqrt(sys);
 
 	sys+= PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt))*
 		PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt));
-
 	sys+= PbPbAccUnc->GetBinContent(PbPbAccUnc->FindBin(pt))*
 		PbPbAccUnc->GetBinContent(PbPbAccUnc->FindBin(pt));
-
 	return sqrt(sys);
 }
 
@@ -407,12 +401,10 @@ float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0, doub
 	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
 
-	sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
-		PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
-
 	sys+= PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt))* 
 		PbPbSignalExtraction->GetBinContent(PbPbSignalExtraction->FindBin(pt));
-
+	sys+= PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt))* 
+		PbPbMesonSelection->GetBinContent(PbPbMesonSelection->FindBin(pt));
 	sys+=(PbPbTrackingEfficiency)*(PbPbTrackingEfficiency);
 	sys+=PbPbAlignment*PbPbAlignment;
 	sys+=PbPbLifetime*PbPbLifetime;
@@ -428,16 +420,12 @@ float systematicsPbPb_UnCorrelated(double pt, bool TAAhi = 1, double centL=0, do
 
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;
-
 	sys+= PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt))*
 		PbPbPtShape->GetBinContent(PbPbPtShape->FindBin(pt));
-
 	sys+= PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt))*
 		PbPbTagAndProbe->GetBinContent(PbPbTagAndProbe->FindBin(pt));
-
 	sys+= PbPbAccUnc->GetBinContent(PbPbAccUnc->FindBin(pt))*
 		PbPbAccUnc->GetBinContent(PbPbAccUnc->FindBin(pt));
-
 	return sqrt(sys);
 }
 
@@ -559,7 +547,7 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 	tlatexeff2->SetTextFont(42);
 	tlatexeff2->SetTextSize(0.045);
 	tlatexeff2->SetLineWidth(2);
-	tlatexeff2->Draw();
+	//tlatexeff2->Draw();
 
 	TLegend *leg = new TLegend(0.2147651,0.1762653,0.7818792,0.3717277);
 	leg->SetBorderSize(0);
@@ -592,7 +580,7 @@ void plotSystematicsPP()
 	canvas->SetFrameBorderMode(0);
 	canvas->SetLogx();
 
-	TH2F* hempty=new TH2F("hempty","",50,5,60.,10.,-0.8,0.8);
+	TH2F* hempty=new TH2F("hempty","",50,5,60.,10.,-1.,1.);
 	hempty->GetXaxis()->CenterTitle();
 	hempty->GetYaxis()->CenterTitle();
 	hempty->GetYaxis()->SetTitle("Systematical Uncertainty");
@@ -682,6 +670,111 @@ void plotSystematicsPP()
 
 	canvas->SaveAs("SystematicSummaryPP.pdf");
 	canvas->SaveAs("SystematicSummaryPP.png");
+}
+void plotSystematicsPbPb()
+{
+	TCanvas*canvas=new TCanvas("canvas","canvas",600,600);//550,500
+	canvas->cd();
+	canvas->SetFillColor(0);
+	canvas->SetBorderMode(0);
+	canvas->SetBorderSize(2);
+	canvas->SetLeftMargin(0.185);//0.200
+	canvas->SetRightMargin(0.045);
+	canvas->SetTopMargin(0.080);
+	canvas->SetBottomMargin(0.150);
+	canvas->SetFrameBorderMode(0);
+	canvas->SetLogx();
+
+	TH2F* hempty=new TH2F("hempty","",50,5,60.,10.,-1.,1.);
+	hempty->GetXaxis()->CenterTitle();
+	hempty->GetYaxis()->CenterTitle();
+	hempty->GetYaxis()->SetTitle("Systematical Uncertainty");
+	hempty->GetXaxis()->SetTitle("B_{s} p_{T} (GeV/c)");
+	hempty->GetXaxis()->SetTitleOffset(1.40);//0.9
+	hempty->GetYaxis()->SetTitleOffset(1.45);//1.
+	hempty->GetXaxis()->SetTitleSize(0.05);//0.045
+	hempty->GetYaxis()->SetTitleSize(0.05);//0.045
+	hempty->GetXaxis()->SetTitleFont(42);
+	hempty->GetYaxis()->SetTitleFont(42);
+	hempty->GetXaxis()->SetLabelFont(42);
+	hempty->GetYaxis()->SetLabelFont(42);
+	hempty->GetXaxis()->SetLabelSize(0.050);//0.035
+	hempty->GetYaxis()->SetLabelSize(0.050);//0.035  
+	hempty->GetXaxis()->SetLabelOffset(0.01);
+	hempty->Draw();
+
+	drawSys(6,0, 6,normalizationUncertaintyForPbPb(),2);
+	drawSys(6,normalizationUncertaintyForPbPb(), 6.5,normalizationUncertaintyForPbPb(),2);
+	drawSys(6.5,0, 6.5,normalizationUncertaintyForPbPb(),2);
+
+	drawSys(PtBins[0],0, PtBins[0],systematicsPbPb(PtBins[0],1,0,100),1);
+	drawSys(PtBins[nPtBins],0, PtBins[nPtBins],systematicsPbPb(PtBins[nPtBins],1,0,100),1);
+
+	for (double i=PtBins[0];i<PtBins[nPtBins];i+=0.1)
+	{      
+		drawSys(i,systematicsPbPb(i,1,0,100,0,0), i+0.1,systematicsPbPb(i,1,0,100+0.1,0,0),1);
+		drawSys(i,sqrt((systematicsPbPb(i,1,0,100,0,2)*systematicsPbPb(i,1,0,100,0,2))-(systematicsPbPb(i,1,0,100,0,1)*systematicsPbPb(i,1,0,100,0,1))),
+				i+0.1,sqrt((systematicsPbPb(i+0.1,1,0,100,0,2)*systematicsPbPb(i+0.1,1,0,100,0,2))-(systematicsPbPb(i+0.1,1,0,100,0,1)*systematicsPbPb(i+0.1,1,0,100,0,1))),4);
+		drawSys(i,sqrt((systematicsPbPb(i,1,0,100,0,3)*systematicsPbPb(i,1,0,100,0,3))-(systematicsPbPb(i,1,0,100,0,2)*systematicsPbPb(i,1,0,100,0,2))),
+				i+0.1,sqrt((systematicsPbPb(i+0.1,1,0,100,0,3)*systematicsPbPb(i+0.1,1,0,100,0,3))-(systematicsPbPb(i+0.1,1,0,100,0,2)*systematicsPbPb(i+0.1,1,0,100,0,2))),kGreen+2);
+		drawSys(i,sqrt((systematicsPbPb(i,1,0,100,0,0)*systematicsPbPb(i,1,0,100,0,0))-(systematicsPbPb(i,1,0,100,0,3)*systematicsPbPb(i,1,0,100,0,3))),
+				i+0.1,sqrt((systematicsPbPb(i+0.1,1,0,100,0,0)*systematicsPbPb(i+0.1,1,0,100,0,0))-(systematicsPbPb(i+0.1,1,0,100,0,3)*systematicsPbPb(i+0.1,1,0,100,0,3))),kMagenta);
+	}
+
+	TH1D *h1 = new TH1D("h1","",100,0,1);
+	h1->SetLineWidth(2); h1->SetLineColor(1);
+	TH1D *h2 = new TH1D("h2","",100,0,1);
+	h2->SetLineWidth(2); h2->SetLineColor(2);
+	TH1D *h4 = new TH1D("h4","",100,0,1);
+	h4->SetLineWidth(2); h4->SetLineColor(4);
+	TH1D *h5 = new TH1D("h5","",100,0,1);
+	h5->SetLineWidth(2); h5->SetLineColor(kGreen+2);
+	TH1D *h6 = new TH1D("h6","",100,0,1);
+	h6->SetLineWidth(2); h6->SetLineColor(kMagenta);
+
+	TLatex* texlumi = new TLatex(0.35,0.936,"351 #mub^{-1} (5.02 TeV PbPb)");
+	texlumi->SetNDC();
+	//texlumi->SetTextAlign(31);
+	texlumi->SetTextFont(42);
+	texlumi->SetTextSize(0.045);
+	texlumi->SetLineWidth(2);
+	texlumi->Draw();
+	TLatex* texcms = new TLatex(0.22,0.90,"CMS");
+	texcms->SetNDC();
+	texcms->SetTextAlign(13);
+	texcms->SetTextFont(62);//61
+	texcms->SetTextSize(0.06);
+	texcms->SetLineWidth(2);
+	texcms->Draw();
+	TLatex* texpre = new TLatex(0.22,0.84,"Performance");
+	texpre->SetNDC();
+	texpre->SetTextAlign(13);
+	texpre->SetTextFont(52);
+	texpre->SetTextSize(0.04);
+	texpre->SetLineWidth(2);
+	texpre->Draw();
+
+	TLatex * texY = new TLatex(0.5,0.8324607,"B_{s} d#sigma / dp_{T}, |y| < 2.4");//0.2612903,0.8425793
+	texY->SetNDC();
+	texY->SetTextColor(1);
+	texY->SetTextFont(42);
+	texY->SetTextSize(0.045);
+	texY->SetLineWidth(2);
+	texY->Draw();
+
+	TLegend *leg = new TLegend(0.2147651,0.1762653,0.7818792,0.3717277);
+	leg->SetBorderSize(0);
+	leg->SetFillStyle(0);
+	leg->SetTextSize(0.04);
+	leg->AddEntry(h2,"Overall Normalization (N_{MB} + BR)","l");
+	leg->AddEntry(h1,"Total Systematics","l");
+	leg->AddEntry(h4,"Signal Extraction","l");
+	leg->AddEntry(h5,"B Meson Selection and Correction","l");
+	leg->AddEntry(h6,"Tag and Probe","l");
+	leg->Draw();
+
+	canvas->SaveAs("SystematicSummaryPbPb.pdf");
+	canvas->SaveAs("SystematicSummaryPbPb.png");
 }
 
 void plotNormalisationUnc(){

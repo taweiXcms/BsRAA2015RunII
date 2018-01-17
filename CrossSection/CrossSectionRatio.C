@@ -55,6 +55,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		double systematic=0.;
 		if (!isPbPb) systematic=0.01*systematicsPP(xr[i],0.,0,binOpt);
 		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.,0,binOpt);     
+        printf("sys, bin %d = %f \n", i, systematic);
 
 		ycrosssysthigh[i]= hPtSigma->GetBinContent(i+1)*systematic;
 		ycrosssystlow[i]= hPtSigma->GetBinContent(i+1)*systematic;

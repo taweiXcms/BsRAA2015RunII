@@ -81,6 +81,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		systematic=0.01*systematicsForRAA(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
 		systematic_cor=0.01*systematicsForRAA_Correlated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
 		systematic_uncor=0.01*systematicsForRAA_UnCorrelated(hNuclearModification->GetBinCenter(i+1),centMin,centMax,0.,0.,binOpt);
+		printf("sys, bin %d = %f \n", i, systematic);
 		//double systematic=0.;
 		yrlow[i] = hNuclearModification->GetBinContent(i+1)*systematic;
 		yrhigh[i] =hNuclearModification->GetBinContent(i+1)*systematic;

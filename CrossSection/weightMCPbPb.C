@@ -168,12 +168,14 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	hPtFONLL->GetXaxis()->CenterTitle();
 	hPtFONLL->Draw();
 	canvasPtReweight->cd(3);
-	gPad->SetLogy();
+	//gPad->SetLogy();
 	gPad->SetLeftMargin(0.15);
 	hPtFONLLOverGen->SetXTitle("Gen p_{T}(GeV)");
 	hPtFONLLOverGen->SetYTitle("FONLL_PbPb/PYTHIA ");
-	hPtFONLLOverGen->SetMinimum(0.1);  
-	hPtFONLLOverGen->SetMaximum(10.);  
+	//hPtFONLLOverGen->SetMinimum(0.1);  
+	//hPtFONLLOverGen->SetMaximum(10.);  
+	hPtFONLLOverGen->SetMinimum(0.5);  
+	hPtFONLLOverGen->SetMaximum(2.);  
 	hPtFONLLOverGen->GetYaxis()->SetTitleOffset(1.2);
 	hPtFONLLOverGen->GetYaxis()->CenterTitle();
 	hPtFONLLOverGen->GetXaxis()->CenterTitle();
@@ -329,7 +331,7 @@ void weightPbPbCentrality(){
 	canvas->SaveAs("plotReweight/CentralityWeight.pdf");
 }
 void weightMCPbPb(){
-	weightPbPbvertex();
+//	weightPbPbvertex();
 	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
-	weightPbPbCentrality();
+//	weightPbPbCentrality();
 }

@@ -347,7 +347,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	canvas1D->Clear();
 
 	gPad->SetLogy(0);
-	hemptyEff->SetYTitle("hPtGenAcc/hPtGen");
+	//hemptyEff->SetYTitle("hPtGenAcc/hPtGen");
+	hemptyEff->SetYTitle("#alpha");
 	hemptyEff->Draw(); 
 	hEffAcc->Draw("same");
 	if(isPbPb) texCent->Draw();
@@ -355,7 +356,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	canvas1D->SaveAs(Form("%s/canvas1DhEffAcc_%s.pdf",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
-	hemptyEff->SetYTitle("hPtMC/hPtGenAccWeighted");
+	hemptyEff->SetYTitle("#epsilon");
 	hemptyEff->Draw(); 
 	hEffSelection->Draw("same");
 	if(isPbPb) texCent->Draw();
@@ -372,7 +373,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	canvas1D->SaveAs(Form("%s/canvas1DhEff_%s.C",outplotf.Data(),Form(label.Data())));
 	canvas1D->Clear();
 
-	hemptyEff->SetYTitle("hPtMC/hPtGen");
+	hemptyEff->SetYTitle("#alpha x #epsilon (1-shot)");
 	hemptyEff->Draw(); 
 	hEffOneShot->Draw("same");
 	if(isPbPb) texCent->Draw();
