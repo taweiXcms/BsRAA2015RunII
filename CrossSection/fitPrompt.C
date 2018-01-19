@@ -1,4 +1,4 @@
-#include "fitB.h"
+#include "fitPrompt.h"
 using namespace std;
 
 int _nBins = nBins;

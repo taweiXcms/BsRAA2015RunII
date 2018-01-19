@@ -1,5 +1,7 @@
 #include "fitB.h"
 using namespace std;
+float tpadr = 0.7;
+float tpadpos = 1-tpadr;
 
 struct plotStruct{
 	TString var;
@@ -205,6 +207,19 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	TCanvas* cPt =  new TCanvas("cPt","",600,600);
 	cPt->SetLogy(plotSetting[vartype].setlogY);
 	cPt->SetLogx(plotSetting[vartype].setlogX);
+    TPad* pad = new TPad("pad","",0.,tpadpos,1.,1.);
+	pad->SetLogy(plotSetting[vartype].setlogY);
+	pad->SetLogx(plotSetting[vartype].setlogX);
+    pad->SetFillColor(0);
+    pad->SetBorderMode(0);
+    pad->SetBorderSize(2);
+    pad->SetLeftMargin(0.1451613);
+    pad->SetRightMargin(0.05443548);
+    pad->SetTopMargin(0.08474576*tpadr);
+    pad->SetBottomMargin(0);
+    pad->SetLogy();
+    pad->Draw();
+    pad->cd();
 	//cPt->SetLogy();
 	hPt->SetXTitle(Form("%s",varExp.Data()));
 	hPt->SetYTitle("Normalized");
@@ -214,7 +229,7 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
     hPtMC->GetXaxis()->CenterTitle();
     hPtMC->GetYaxis()->CenterTitle();
     hPtMC->GetXaxis()->SetTitleOffset(1.0);
-    hPtMC->GetYaxis()->SetTitleOffset(1.4);
+    hPtMC->GetYaxis()->SetTitleOffset(1.0);
     hPtMC->GetXaxis()->SetTitleSize(0.055);
     hPtMC->GetYaxis()->SetTitleSize(0.055);
     hPtMC->GetXaxis()->SetTitleFont(42);
@@ -226,6 +241,39 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	legPt->AddEntry(hPt,"Data","pl");
 	legPt->AddEntry(hPtMC,"MC","lf");
 	legPt->Draw("same");  
+
+	cPt->cd();
+    TPad* pRatio = new TPad("pRatio","",0.,0.,1.,tpadpos);
+	TH1D* hRatio = (TH1D*)hPt->Clone("hRatio");
+    hRatio->SetXTitle(Form("%s", plotSetting[vartype].text.Data()));
+    hRatio->SetYTitle(Form("Data/MC"));
+    hRatio->GetXaxis()->CenterTitle();
+    hRatio->GetYaxis()->CenterTitle();
+    hRatio->GetXaxis()->SetTitleOffset(1.0);
+    hRatio->GetYaxis()->SetTitleOffset(0.4);
+    hRatio->GetXaxis()->SetTitleSize(0.12);
+    hRatio->GetYaxis()->SetTitleSize(0.12);
+    hRatio->GetXaxis()->SetLabelSize(0.12);
+    hRatio->GetYaxis()->SetLabelSize(0.09);
+    hRatio->GetXaxis()->SetTitleFont(42);
+    hRatio->GetYaxis()->SetTitleFont(42);
+    hRatio->GetXaxis()->SetLabelFont(42);
+    hRatio->GetYaxis()->SetLabelFont(42);
+
+    pRatio->SetLeftMargin(0.1451613);
+    pRatio->SetRightMargin(0.05443548);
+    pRatio->SetTopMargin(0);
+    pRatio->SetBottomMargin(0.30);//0.25
+	pRatio->Draw();
+	pRatio->cd();
+	hRatio->Divide(hPtMC);
+	hRatio->Draw();
+	TLine* line = new TLine(_ptBins[0], 1., _ptBins[_nBins], 1.);
+	line->SetLineStyle(9);
+	line->SetLineWidth(0.8);
+	line->SetLineColor(4);
+	line->Draw();
+
     cPt->SaveAs(Form("plotFitsComp%s/%s_%s_%s_compare%s.pdf",_prefix.Data(),plotSetting[vartype].text.Data(),_isMC.Data(),_isPbPb.Data(),_postfix.Data()));
 
 	hMean->Write();
