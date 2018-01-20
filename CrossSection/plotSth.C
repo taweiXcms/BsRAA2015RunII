@@ -27,7 +27,7 @@ void setHist(TH1D* h, int v){
 	h->GetXaxis()->SetLabelSize(0.055);
 	h->GetYaxis()->SetLabelSize(0.055);
 	h->SetMarkerSize(1.55);
-	h->SetMarkerStyle(2);
+//	h->SetMarkerStyle(2);
 	h->SetMarkerColor(4);
 	//h->SetLineColor(1);
 	h->SetLineWidth(4);
@@ -164,13 +164,13 @@ void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 			hMC->SetAxisRange(0,hMC->GetMaximum()*1.4*1.2,"Y");
 	    	TLatex* tex;
 
-			h->Draw("p");
+			h->Draw("pe");
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex3->Draw();
 	        c->SaveAs(Form("%s%s/%s_%s_%d_%s.pdf",outplotf.Data(),_prefix.Data(),"data",_isPbPb.Data(),count,vname[v].c_str()));
 
-			hMC->Draw("p");
+			hMC->Draw("pe");
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex4->Draw();

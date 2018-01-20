@@ -40,10 +40,10 @@ SAVEMVAPbPb=0
 PLOTMVA=0
 
 ### Project some varibles
-PROJECTVAR=0
+PROJECTVAR=1
 
 ### Data - MC comparison
-DOVARCOMPARE_PP=1
+DOVARCOMPARE_PP=0
 
 ### Checking prompt background structure
 CHECKPROMPT=0
@@ -355,7 +355,7 @@ fi
 
 if [ $PROJECTVAR -eq 1 ]; then      
 g++ plotSth.C $(root-config --cflags --libs) -g -o plotSth.exe 
-#./plotSth.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST" "plotSth" "$NPFIT_PP" 0 "0" "100"
+./plotSth.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST" "plotSth" "$NPFIT_PP" 0 "0" "100"
 ./plotSth.exe 1 0 "$INPUTDATAPbPb" "$INPUTMCPbPb" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPbSAVEHIST" "plotSth" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm plotSth.exe
 fi 
