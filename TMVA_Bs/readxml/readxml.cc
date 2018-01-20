@@ -29,7 +29,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 	RAA = isPbPb?RAA:1.;
 	colsyst = isPbPb?"PbPb":"pp";
 
-	TLatex* texPar = new TLatex(0.18,0.93, Form("%s 5.02 TeV B^{+}",colsyst.Data()));
+	TLatex* texPar = new TLatex(0.18,0.93, Form("%s 5.02 TeV B_{s}",colsyst.Data()));
 	texPar->SetNDC();
 	texPar->SetTextAlign(12);
 	texPar->SetTextSize(0.04);
@@ -132,7 +132,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		}
 		TMVA::gTools().xmlengine().FreeDoc(doc);
 
-		TH2F* hemptyeff = new TH2F("hemptyeff","",100,0,1,140,-0.2,1.2);
+		TH2F* hemptyeff = new TH2F("hemptyeff","",100,0,1,140,-0.2,1.5);
 		hemptyeff->GetXaxis()->CenterTitle();
 		hemptyeff->GetYaxis()->CenterTitle();
 		hemptyeff->GetXaxis()->SetTitle(MVAtype);
@@ -158,6 +158,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		geffB->SetLineWidth(2);
 		geffB->SetLineColor(kBlue+1);
 		TCanvas* ceffSB = new TCanvas("ceffSB","",600,600);
+		ceffSB->SetLogy();
 		hemptyeff->Draw();
 		texPar->Draw();
 		texPtY->Draw();
@@ -227,6 +228,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 
 		TGraph* gsig = new TGraph(100,effS,effSig);
 		TCanvas* csig = new TCanvas("csig","",600,600);
+		csig->SetLogy();
 		hempty->Draw();
 		texPar->Draw();
 		texPtY->Draw();
@@ -236,6 +238,10 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		csig->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_Significance.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax));
 	}
 	else{
+		//TLine indicating opt cut val
+		double cutval = 0.209775;
+		if(pbpb) cutval = 0.303985;
+
 		//read TMVA output
 		TString inputMVAname = Form("../myTMVA/ROOT/TMVA_%s_%.0f_%.0f_varStage%d.root",colsyst.Data(),ptMin,ptMax,stage);
 		TFile *inputMVA = new TFile(inputMVAname.Data());
@@ -276,7 +282,15 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hemptydis->GetXaxis()->SetLabelSize(0.035);
 		hemptydis->GetYaxis()->SetLabelSize(0.035);
 		TCanvas* cdisEffSB = new TCanvas("cdisEffSB","",600,600);
+		cdisEffSB->SetLogy();
 		hemptydis->Draw();
+	    TLine* linedis = new TLine(cutval, 0., cutval, 0);
+	    linedis->SetLineStyle(9);
+   		linedis->SetLineWidth(6);
+	    linedis->SetLineColor(3);
+		linedis->SetY1(hemptydis->GetYaxis()->GetBinLowEdge(1));
+		linedis->SetY2(hemptydis->GetYaxis()->GetBinLowEdge(hemptydis->GetYaxis()->GetNbins()) + hemptydis->GetYaxis()->GetBinWidth(1));
+	    linedis->Draw();
 		th1_S->Draw("same hist");
 		th1_B->Draw("same hist");
 		TLegend* leg = new TLegend(0.60,0.75,0.95,0.86);
@@ -323,6 +337,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		printf("effs*nsignal                       %.10f\n",_effs*wSignal);
 		cout<<setiosflags(ios::left)<<setw(35)<<"cutval: "<<_cutval<<endl;
 		TCanvas* csig = new TCanvas("csig","",600,600);
+		csig->SetLogy();
 		TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.,_maxsigval*1.2);  
 		hempty->GetXaxis()->CenterTitle();
 		hempty->GetYaxis()->CenterTitle();
@@ -339,12 +354,19 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hempty->GetXaxis()->SetLabelSize(0.035);
 		hempty->GetYaxis()->SetLabelSize(0.035);
 		hempty->Draw();
+	    TLine* line = new TLine(cutval, 0., cutval, 0);
+	    line->SetLineStyle(9);
+   		line->SetLineWidth(6);
+	    line->SetLineColor(3);
+		line->SetY1(hempty->GetYaxis()->GetBinLowEdge(1));
+		line->SetY2(hempty->GetYaxis()->GetBinLowEdge(hempty->GetYaxis()->GetNbins()) + hempty->GetYaxis()->GetBinWidth(1));
+	    line->Draw();
 		texPar->Draw();
 		texPtY->Draw();
 		TGraph* _gsig = new TGraph(th1_effS->GetNbinsX(),_cutval_arr,_sigval_arr);
 		_gsig->Draw("same *");
 
-		TH2F* hemptyeff = new TH2F("hemptyeff","",50,minBDT-0.2,maxBDT+0.2,10,0.,1.2);
+		TH2F* hemptyeff = new TH2F("hemptyeff","",50,minBDT-0.2,maxBDT+0.2,10,0.,1.5);
 		hemptyeff->GetXaxis()->CenterTitle();
 		hemptyeff->GetYaxis()->CenterTitle();
 		hemptyeff->GetXaxis()->SetTitle(MVAtype);
@@ -361,7 +383,15 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hemptyeff->GetYaxis()->SetLabelSize(0.035);
 
 		TCanvas* ceffSB = new TCanvas("ceffSB","",600,600);
+        ceffSB->SetLogy();
 		hemptyeff->Draw();
+	    TLine* lineeff = new TLine(cutval, 0., cutval, 0);
+	    lineeff->SetLineStyle(9);
+   		lineeff->SetLineWidth(6);
+	    lineeff->SetLineColor(3);
+		lineeff->SetY1(hemptyeff->GetYaxis()->GetBinLowEdge(1));
+		lineeff->SetY2(hemptyeff->GetYaxis()->GetBinLowEdge(hemptyeff->GetYaxis()->GetNbins()) + hemptyeff->GetYaxis()->GetBinWidth(1));
+	    lineeff->Draw();
 		texPar->Draw();
 		texPtY->Draw();
 		th1_effS->SetMarkerSize(1.1);

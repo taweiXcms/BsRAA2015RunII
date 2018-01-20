@@ -270,7 +270,7 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	hRatio->Draw();
 	TLine* line = new TLine(_ptBins[0], 1., _ptBins[_nBins], 1.);
 	line->SetLineStyle(9);
-	line->SetLineWidth(0.8);
+	line->SetLineWidth(0);
 	line->SetLineColor(4);
 	line->Draw();
 
