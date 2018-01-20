@@ -280,8 +280,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	//hEffOneShot = hPtMC / hPtGen
 
 	TString text;
-	if (isPbPb) { text="350.68 #mub^{-1} (5.02 TeV PbPb)";}
-	else {text="25.8 pb^{-1} (5.02 TeV pp)";}
+	if (isPbPb) { text="351 #mub^{-1} (5.02 TeV PbPb)";}
+	else {text="28.0 pb^{-1} (5.02 TeV pp)";}
 	TLatex* texlumi = new TLatex(0.9,0.92,text.Data());
 	texlumi->SetNDC();
 	texlumi->SetTextAlign(31);

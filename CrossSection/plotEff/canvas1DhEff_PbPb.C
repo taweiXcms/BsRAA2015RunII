@@ -1,7 +1,7 @@
 void canvas1DhEff_PbPb()
 {
 //=========Macro generated from canvas: canvas1D/
-//=========  (Tue Dec 19 16:50:17 2017) by ROOT version6.02/13
+//=========  (Sat Jan 20 10:28:33 2018) by ROOT version6.02/13
    TCanvas *canvas1D = new TCanvas("canvas1D", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -87,7 +87,7 @@ tex->SetNDC();
    tex->SetTextSize(0.038);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.9,0.92,"350.68 #mub^{-1} (5.02 TeV PbPb)");
+      tex = new TLatex(0.9,0.92,"351 #mub^{-1} (5.02 TeV PbPb)");
 tex->SetNDC();
    tex->SetTextAlign(31);
    tex->SetTextFont(42);
