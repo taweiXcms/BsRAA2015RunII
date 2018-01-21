@@ -251,6 +251,13 @@ texB->Draw();
     texSig->SetLineWidth(2);
     if(drawOpt == 1) texSig->Draw("SAME");
 
+    TLatex* texYield = new TLatex(0.55,0.30,Form("Yield = %.3f",yield));
+    texYield->SetNDC();
+    texYield->SetTextFont(42);
+    texYield->SetTextSize(0.04);
+    texYield->SetLineWidth(2);
+    if(drawOpt == 1) texYield->Draw("SAME");
+
 	TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
 	h->GetFunction(Form("f%d",count))->Delete();
 	t->Draw("same");
