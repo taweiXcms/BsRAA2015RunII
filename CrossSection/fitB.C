@@ -54,6 +54,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 
 	TH1D* h;
 	TH1D* hMCSignal;
+	TH1D* hpull;
 
 	TTree* nt;
 	TTree* ntGen;
@@ -160,6 +161,22 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	    tex->Draw();
 
         c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),count,_postfix.Data()));
+
+		hpull = (TH1D*)h->Clone(Form("hpull-%d",count));
+		hpull->SetMaximum(5);
+		hpull->SetMinimum(-5);
+		for(int b = 0; b < h->GetNbinsX(); b++){
+			hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/h->GetBinError(b+1));
+			hpull->SetYTitle("pull");
+            hpull->SetBinError(b+1, h->GetBinError(b+1)/total->Eval(h->GetBinCenter(b+1)));
+		}
+	    TLine* line = new TLine(5., 0., 6., 0.);
+	    line->SetLineStyle(9);
+	    line->SetLineWidth(6);
+	    line->SetLineColor(3);
+		hpull->Draw();
+	    line->Draw();
+        c->SaveAs(Form("%s%s/%s_%s_%d%s_pull.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),count,_postfix.Data()));
 	}  
 
 	hMean->Write();
