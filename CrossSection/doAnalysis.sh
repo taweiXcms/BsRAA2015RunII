@@ -19,13 +19,13 @@ DORAA=0
 
 ### pp 4-bin result
 DOANALYSISPP_FONLL_1050=0
-DOANALYSISPP_FIT_1050=1
+DOANALYSISPP_FIT_1050=0
 DOANALYSISPP_FITONSAVED_1050=0
 DOANALYSISPP_MCSTUDY_1050=0
 DOANALYSISPP_CROSS_1050=0
 
 ### Rapidity result
-DOANALYSISPP_FIT_Y=1
+DOANALYSISPP_FIT_Y=0
 DOANALYSISPP_FITONSAVED_Y=0
 DOANALYSISPP_MCSTUDY_Y=0
 
@@ -33,7 +33,7 @@ DOANALYSISPP_MCSTUDY_Y=0
 DOPTREWEIGHT=0
 
 ### Cross checks
-DOClosure=0
+DOClosure=1
 DOCOMPARE=0
 SAVEMVAPP=0
 SAVEMVAPbPb=0
@@ -333,6 +333,7 @@ LABELPPMCClosure="PPMCClosure"
 
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
 ./fitB.exe 0 0 "$INPUTMCPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMCClosure" "$CUTPP"   "$SELGENPP"   "$ISMCPPMCClosure"   "$LUMIPPMCClosure"   "$ISDOWEIGHTPPMCClosure"   "$LABELPPMCClosure"  "$OUTPUTFILEPPMCClosure" "plotClosure" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
 g++ ClosureTest.C $(root-config --cflags --libs) -g -o ClosureTest.exe 
 ./ClosureTest.exe "$OUTPUTFILEPPMCClosure" "$LABELPP"
 
