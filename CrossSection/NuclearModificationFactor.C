@@ -102,7 +102,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 
 	TCanvas*canvasRAA=new TCanvas("canvasRAA","canvasRAA",600,600);
 	canvasRAA->cd();
-	canvasRAA->SetLogx();
+	//canvasRAA->SetLogx();
 
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,1.55);  
 	if(drawBRpA) {

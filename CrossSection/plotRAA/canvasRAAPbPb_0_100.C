@@ -1,16 +1,15 @@
 void canvasRAAPbPb_0_100()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Tue Dec 19 18:39:41 2017) by ROOT version6.02/13
+//=========  (Sun Jan 21 01:41:17 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    canvasRAA->SetHighLightColor(2);
-   canvasRAA->Range(1.025508,-0.2310559,1.762472,1.69441);
+   canvasRAA->Range(7.070589,-0.2310559,56.48235,1.69441);
    canvasRAA->SetFillColor(0);
    canvasRAA->SetBorderMode(0);
    canvasRAA->SetBorderSize(2);
-   canvasRAA->SetLogx();
    canvasRAA->SetLeftMargin(0.12);
    canvasRAA->SetRightMargin(0.03);
    canvasRAA->SetTopMargin(0.075);
