@@ -74,6 +74,13 @@ void initializationPP(int SysOpt=0)
 		ppAccUnc->SetBinContent(i+1,AccUnc_pp[i]);
 		ppPtShape->SetBinContent(i+1,ptshape_pp[i]);
 	}
+	if(SysOpt==1){
+		ppTagAndProbe = new TH1D("ppTagAndProbeOpt1","",nPtBins,PtBins); 
+		double tnpUnc_ppOpt1[1] = {0.};
+		for(int i = 0; i < nPtBins; i++){
+			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt1[i]);
+		}
+	}
 	if(SysOpt==2){
 		ppTagAndProbe = new TH1D("ppTagAndProbeOpt2","",nPtBinsOpt2,PtBinsOpt2); 
 		double tnpUnc_ppOpt2[4] = {4.225170, 3.354476, 3.025281, 2.829637, };
@@ -102,6 +109,13 @@ void initializationPbPbCent0100(int SysOpt=0)
 		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);
 		PbPbAccUnc->SetBinContent(i+1,AccUnc_PbPb[i]);
 		PbPbPtShape->SetBinContent(i+1,ptshape_PbPb[i]);
+	}
+	if(SysOpt==1){
+		PbPbTagAndProbe = new TH1D("PbPbTagAndProbeOpt1","",nPtBins,PtBins); 
+		double tnpUnc_PbPbOpt1[1] = {0.};
+		for(int i = 0; i < nPtBins; i++){
+			PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_PbPbOpt1[i]);
+		}
 	}
 }
 

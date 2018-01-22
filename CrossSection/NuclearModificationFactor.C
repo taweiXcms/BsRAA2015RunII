@@ -21,7 +21,7 @@ bool drawThm = 0;
 bool BSepSys = 0;
 
 void adjustLegend(TLegend* l);
-void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", int binOpt=0, Float_t centMin=0., Float_t centMax=100.)
+void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", TString outplotf = "", int binOpt=0, Float_t centMin=0., Float_t centMax=100.)
 {
 	float TAABarWid = 0.35;
 	float pti = ptBins[0]-2.;
@@ -493,10 +493,10 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	}
 
 
-	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.pdf",label.Data(),centMin,centMax,AddOn.Data()));
-	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.png",label.Data(),centMin,centMax,AddOn.Data()));
-	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.eps",label.Data(),centMin,centMax,AddOn.Data()));
-	canvasRAA->SaveAs(Form("plotRAA/canvasRAA%s_%.0f_%.0f%s.C",label.Data(),centMin,centMax,AddOn.Data()));
+	canvasRAA->SaveAs(Form("%s/canvasRAA%s_%.0f_%.0f%s.pdf",outplotf.Data(),label.Data(),centMin,centMax,AddOn.Data()));
+	canvasRAA->SaveAs(Form("%s/canvasRAA%s_%.0f_%.0f%s.png",outplotf.Data(),label.Data(),centMin,centMax,AddOn.Data()));
+	canvasRAA->SaveAs(Form("%s/canvasRAA%s_%.0f_%.0f%s.eps",outplotf.Data(),label.Data(),centMin,centMax,AddOn.Data()));
+	canvasRAA->SaveAs(Form("%s/canvasRAA%s_%.0f_%.0f%s.C",  outplotf.Data(),label.Data(),centMin,centMax,AddOn.Data()));
 	TFile *fRAA=new TFile(outputfile.Data(),"recreate");
 	fRAA->cd();
 	gNuclearModification->Write();
@@ -509,9 +509,9 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 
 int main(int argc, char *argv[])
 {
-	if(argc==8)
+	if(argc==9)
 	{
-		NuclearModificationFactor(argv[1], argv[2], argv[3], argv[4], atoi(argv[5]), atof(argv[6]), atof(argv[7]));
+		NuclearModificationFactor(argv[1], argv[2], argv[3], argv[4], argv[5], atoi(argv[6]), atof(argv[7]), atof(argv[8]));
 		return 0;
 	}
 	else

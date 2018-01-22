@@ -236,5 +236,7 @@
 ./plotBsBpRatio_cc.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TMatrixDSymfwd.h
 ./plotBsBpRatio_cc.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TMatrixDUtils.h
 ./plotBsBpRatio_cc.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TMatrixDUtilsfwd.h
+./plotBsBpRatio_cc.so: ../parameters.h
+./plotBsBpRatio_cc.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TLegendEntry.h
 ./plotBsBpRatio_cc.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RVersion.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RConfig.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TClass.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TDictAttributeMap.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TInterpreter.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TROOT.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TBuffer.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TMemberInspector.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TError.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RtypesImp.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TIsAProxy.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TFileMergeInfo.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TCollectionProxyInfo.h
 plotBsBpRatio_cc__ROOTBUILDVERSION= 6.02/13

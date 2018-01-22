@@ -15,7 +15,8 @@ DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
-DORAA=0
+DORAA=1
+DORAARATIO=1
 
 ### pp 4-bin result
 DOANALYSISPP_FONLL_1050=0
@@ -33,7 +34,7 @@ DOANALYSISPP_MCSTUDY_Y=0
 DOPTREWEIGHT=0
 
 ### Cross checks
-DOClosure=1
+DOClosure=0
 DOCOMPARE=0
 SAVEMVAPP=0
 SAVEMVAPbPb=0
@@ -191,7 +192,14 @@ fi
 
 if [ $DORAA -eq 1 ]; then
 g++ NuclearModificationFactor.C $(root-config --cflags --libs) -g -o NuclearModificationFactor.exe
-./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb" "$LABELPbPb" "$OUTPUTFILERAA" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb" "$LABELPbPb" "$OUTPUTFILERAA" "plotRAA" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm NuclearModificationFactor.exe
+fi
+
+OUTPUTFILERAARATIO="plotBsBpRatio/outputRAA_Bs.root"
+if [ $DORAARATIO -eq 1 ]; then
+g++ NuclearModificationFactor.C $(root-config --cflags --libs) -g -o NuclearModificationFactor.exe
+./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb" "$LABELPbPb" "$OUTPUTFILERAARATIO" "plotBsBpRatio" 1 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm NuclearModificationFactor.exe
 fi
 
