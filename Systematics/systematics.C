@@ -75,6 +75,7 @@ void initializationPP(int SysOpt=0)
 		ppPtShape->SetBinContent(i+1,ptshape_pp[i]);
 	}
 	if(SysOpt==1){
+		ppTrackingEfficiency = 4; 
 		ppTagAndProbe = new TH1D("ppTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_ppOpt1[1] = {0.};
 		for(int i = 0; i < nPtBins; i++){
@@ -111,6 +112,7 @@ void initializationPbPbCent0100(int SysOpt=0)
 		PbPbPtShape->SetBinContent(i+1,ptshape_PbPb[i]);
 	}
 	if(SysOpt==1){
+		PbPbTrackingEfficiency = 6;
 		PbPbTagAndProbe = new TH1D("PbPbTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_PbPbOpt1[1] = {0.};
 		for(int i = 0; i < nPtBins; i++){
