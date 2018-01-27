@@ -40,7 +40,7 @@ void setTex(TLatex* tex){
 	tex->SetTextSize(0.055);
 	tex->SetLineWidth(2);
 }
-void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
+void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString trgselectionmc = "", TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
 	if(varExp == "Bpt1050"){
@@ -68,14 +68,12 @@ void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 	if(!isPbPb)
 	{
 		seldata = Form("%s&&%s",trgselection.Data(),cut.Data());
-		selmc = Form("%s",cut.Data());
-		selmcgen = Form("%s",cutmcgen.Data());
+		selmc = Form("%s&&%s",trgselectionmc.Data(),cut.Data());
 	}
 	else
 	{
 		seldata = Form("%s&&%s&&hiBin>=%f&&hiBin<=%f",trgselection.Data(),cut.Data(),hiBinMin,hiBinMax);
-		selmc = Form("%s&&hiBin>=%f&&hiBin<=%f",cut.Data(),hiBinMin,hiBinMax);
-		selmcgen = Form("%s&&hiBin>=%f&&hiBin<=%f",cutmcgen.Data(),hiBinMin,hiBinMax);
+		selmc = Form("%s&&%s&&hiBin>=%f&&hiBin<=%f",trgselectionmc.Data(),cut.Data(),hiBinMin,hiBinMax);
 	}
 
 	gStyle->SetTextSize(0.05);
@@ -93,27 +91,19 @@ void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 	TH1D* hMC;
 
 	TTree* nt;
-	TTree* ntGen;
 	TTree* ntMC;
 
-	if(fitOnSaved == 0){
-		nt = (TTree*)inf->Get("ntphi");
-		nt->AddFriend("ntHlt");
-		nt->AddFriend("ntHi");
-		nt->AddFriend("ntSkim");
-		nt->AddFriend("BDTStage1_pt15to50");
-	
-		ntGen = (TTree*)infMC->Get("ntGen");
-		ntGen->AddFriend("ntHlt");
-		ntGen->AddFriend("ntHi");
-	
-		ntMC = (TTree*)infMC->Get("ntphi");
-		ntMC->AddFriend("ntHlt");
-		ntMC->AddFriend("ntHi");
-		ntMC->AddFriend("ntSkim");
-		ntMC->AddFriend("BDTStage1_pt15to50");
-		ntMC->AddFriend(ntGen);
-	}
+	nt = (TTree*)inf->Get("ntphi");
+	nt->AddFriend("ntHlt");
+	nt->AddFriend("ntHi");
+	nt->AddFriend("ntSkim");
+	nt->AddFriend("BDTStage1_pt15to50");
+
+	ntMC = (TTree*)infMC->Get("ntphi");
+	ntMC->AddFriend("ntHlt");
+	ntMC->AddFriend("ntHi");
+	ntMC->AddFriend("ntSkim");
+	ntMC->AddFriend("BDTStage1_pt15to50");
 
 	TF1 *total;
 	TString outputf;
@@ -139,7 +129,6 @@ void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 	static Int_t count=0;
 	for(int i=0;i<_nBins;i++)
 	{
-    	count++;
 		TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
 	    TLatex* tex1 = new TLatex(0.518,0.82,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
 	    TLatex* tex2 = new TLatex(0.735,0.75,"|y| < 2.4");
@@ -152,7 +141,7 @@ void plotSth(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 		tex3->SetTextSize(0.07);
 
 		for(int v = 0; v < nVar; v++){
-			count = i;
+    		count++;
 			h   = new TH1D(Form("h-%d",count),  "", vbins[v], vbinmin[v], vbinmax[v]);
 			hMC = new TH1D(Form("hMC-%d",count),"", vbins[v], vbinmin[v], vbinmax[v]);
 			setHist(h, v);
@@ -184,7 +173,7 @@ int main(int argc, char *argv[])
 {
 	if(argc==19)
 	{
-		plotSth(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]));
+		plotSth(atoi(argv[1]), argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]));
 	}
 	else
 	{

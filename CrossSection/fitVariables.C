@@ -15,32 +15,39 @@ struct plotStruct{
 //double inf = std::numeric_limits<double>::max();
 //double inf = std::numeric_limits<double>::infinity();
 double inf = 9999;
-struct plotStruct plotSetting[19] = {
+struct plotStruct plotSetting[21] = {
     {"Bpt", 						"Bpt", 			1, 0, 4, {12, 15, 20, 30, 50}},
     {"abs(By)", 					"By", 			1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}},
-    {"Btrk1Pt", 					"Btrk1Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
-    {"Btrk2Pt", 					"Btrk2Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
+//    {"Btrk1Pt", 					"Btrk1Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
+//    {"Btrk2Pt", 					"Btrk2Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
+    {"Btrk1Pt", 					"Btrk1Pt", 		1, 1, 4, {0.8, 2, 3, 5, 30}},
+    {"Btrk2Pt", 					"Btrk2Pt", 		1, 1, 4, {0.8, 2, 3, 5, 30}},
     {"abs(Btrk1Eta)",				"Btrk1Eta", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
     {"abs(Btrk2Eta)",				"Btrk2Eta", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
-    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"Btrk1Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
-    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"Btrk2Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
-    {"abs(Btktkmass-1.019455)", 	"Btktkmass", 	1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.012}},
+//    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"Btrk1Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
+//    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"Btrk2Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
+    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"Btrk1Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 30}},
+    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"Btrk2Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 30}},
+    {"abs(Btktkmass-1.019455)", 	"Btktkmass", 	1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}},
+    {"abs(Bmumumass-3.096916)",     "Bmumumass",    1, 0, 4, {0, 0.02, 0.05, 0.1, 0.2}},
     {"BsvpvDistance/BsvpvDisErr", 	"Bsvpv", 		1, 0, 4, {0., 8., 20., 40., 200}},
     {"Balpha", 						"Balpha", 		1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}},
-    {"Bd0/Bd0Err", 					"Bd0", 			0, 0, 1, {0.}},
-    {"cos(Bdtheta)", 				"cosBtheta", 	0, 0, 1, {0.}},
-    {"Bchi2cl", 					"Bchi2cl", 		0, 0, 1, {0.}},
-    {"Btktkpt", 					"Btktkpt", 		0, 0, 1, {0.}},
-    {"Btktketa", 					"Btktketa", 	0, 0, 1, {0.}},
-    {"Bmu1pt", 						"Bmu1pt", 		0, 0, 1, {0.}},
-    {"Bmu1pt", 						"Bmu2pt", 		0, 0, 1, {0.}},
-    {"", "", 0, 0, 1, {0.}},
+    {"Bd0/Bd0Err", 					"Bd0", 			0, 0, 4, {0.,100,300,600,1000}},
+    {"cos(Bdtheta)", 				"cosBtheta", 	0, 0, 4, {-1,0.0,0.7,0.9,1}},
+    {"Bchi2cl", 					"Bchi2cl", 		0, 0, 4, {0.,0.1,0.3,0.6,1}},
+    {"Btktkpt", 					"Btktkpt", 		0, 0, 4, {0.,5,8,10,40}},
+    {"Btktketa", 					"Btktketa", 	0, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
+    {"Bmu1pt", 						"Bmu1pt", 		0, 0, 4, {0.,5,8,10,40}},
+    {"Bmu1pt", 						"Bmu2pt", 		0, 0, 4, {0.,5,8,10,40}},
+//    {"BDTStage1_pt15to50",			"BDT", 			0, 0, 4, {0.0,0.25,0.3,0.35,1.0}},
+    {"BDTStage1_pt15to50",			"BDT", 			0, 0, 4, {0.0,0.2,0.25,0.3,0.5}},
+    {"BDTStage1_pt15to50",			"PbPbBDT", 			0, 0, 4, {0.0,0.2,0.25,0.3,0.5}},
 };
 
 int _nBins;
 double *_ptBins;
 using namespace std;
-void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., int vartype = 1)
+void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString trgselectionmc = "", TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., int vartype = 1)
 {
 	varExp = plotSetting[vartype].var;
 	_nBins = plotSetting[vartype].nBins;
@@ -223,7 +230,6 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	//cPt->SetLogy();
 	hPt->SetXTitle(Form("%s",varExp.Data()));
 	hPt->SetYTitle("Normalized");
-	hPtMC->Draw("hist");
     hPtMC->SetXTitle(Form("%s", plotSetting[vartype].text.Data()));
     hPtMC->SetYTitle(Form("Normalized entries/bin width"));
     hPtMC->GetXaxis()->CenterTitle();
@@ -236,8 +242,11 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
     hPtMC->GetYaxis()->SetTitleFont(42);
     hPtMC->GetXaxis()->SetLabelFont(42);
     hPtMC->GetYaxis()->SetLabelFont(42);
+	if(plotSetting[vartype].setlogY) hPtMC->SetMinimum(min(hPtMC->GetMinimum(),hPt->GetMinimum())*0.1);
+	hPtMC->Draw("hist");
+//	hPtMC->Draw("same pe");
 	hPt->Draw("same");
-	TLegend* legPt = myLegend(0.75,0.70,0.90,0.85);
+	TLegend* legPt = myLegend(0.75,0.75,0.90,0.90);
 	legPt->AddEntry(hPt,"Data","pl");
 	legPt->AddEntry(hPtMC,"MC","lf");
 	legPt->Draw("same");  
@@ -284,9 +293,9 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 
 int main(int argc, char *argv[])
 {
-	if(argc==19)
+	if(argc==20)
 	{
-        fitVariables(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], atoi(argv[15]), atof(argv[16]), atof(argv[17]), atoi(argv[18]));
+        fitVariables(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], atoi(argv[10]), atof(argv[11]), atoi(argv[12]), argv[13], argv[14], argv[15], atoi(argv[65]), atof(argv[17]), atof(argv[18]), atoi(argv[19]));
 		return 0;
 	}
 	else

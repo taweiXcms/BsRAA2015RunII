@@ -147,15 +147,19 @@ void plotBsBpRatio(){
 	canvasRAA->SaveAs("BsBpRatio.pdf");
 
 	for(int i = 0; i < _nBins; i ++){
-		cout<<xVal[i]<<endl;
-		cout<<xErr[i]<<endl;
-		cout<<BpyVal[i]<<endl;
-		cout<<BpyStaErr[i]<<endl;
-		cout<<BpySysErr[i]<<endl;
-		cout<<BsyVal[i]<<endl;
-		cout<<BsyStaErr[i]<<endl;
-		cout<<BsySysErr[i]<<endl;
-		cout<<raaRatioStaErr[i]<<endl;
-		cout<<raaRatioSysErr[i]<<endl;
+		cout<<"=========="<<endl;
+		cout<<"xVal: "<<xVal[i]<<endl;
+		cout<<"xErr: "<<xErr[i]<<endl;
+		cout<<"BpyVal: "<<BpyVal[i]<<endl;
+		cout<<"BpyStaErr: "<<BpyStaErr[i]<<endl;
+		cout<<"BpySysErr: "<<BpySysErr[i]<<endl;
+		cout<<"BsyVal: "<<BsyVal[i]<<endl;
+		cout<<"BsyStaErr: "<<BsyStaErr[i]<<endl;
+		cout<<"BsySysErr: "<<BsySysErr[i]<<endl;
+		cout<<"raaRatio: "<<raaRatio[i]<<endl;
+		cout<<"raaRatioStaErr: "<<raaRatioStaErr[i]<<endl;
+		cout<<"raaRatioSysErr: "<<raaRatioSysErr[i]<<endl;
+		cout<<"raaRatioStaErr(%): "<<raaRatioStaErr[i]/raaRatio[i]<<endl;
+		cout<<"raaRatioSysErr(%): "<<raaRatioSysErr[i]/raaRatio[i]<<endl;
 	}
 }

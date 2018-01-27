@@ -3,7 +3,7 @@ using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
-void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., TString BDTcut = "")
+void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., TString BDTcut = "")
 {
 //const int npnBins=1;
 //double npptBins[npnBins+1] = {0,100};
@@ -153,7 +153,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	    tex->SetLineWidth(2);
 	    tex->Draw();
 
-        c->SaveAs(Form("plotChecksPrompt%s/%s_%s_%.0f_%.0f%s_%s.pdf",_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_ptBins[i],_ptBins[i+1],_postfix.Data(),BDTcut.Data()));
+        c->SaveAs(Form("%s%s/%s_%s_%.0f_%.0f%s_%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_ptBins[i],_ptBins[i+1],_postfix.Data(),BDTcut.Data()));
 	}  
 
 	hMean->Write();
@@ -221,9 +221,9 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 
 int main(int argc, char *argv[])
 {
-	if(argc==19)
+	if(argc==20)
 	{
-		fitB(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], atoi(argv[15]), atof(argv[16]), atof(argv[17]), argv[18]);
+		fitPrompt(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]), argv[19]);
 		return 0;
 	}
 	else
