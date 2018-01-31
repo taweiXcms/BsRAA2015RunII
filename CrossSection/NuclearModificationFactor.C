@@ -89,9 +89,9 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		yruncor[i] = hNuclearModification->GetBinContent(i+1)*systematic_uncor;
 	}
 	printf("RAA mean: %f \n", hNuclearModification->GetBinContent(1));
-	printf("Sys tot: %f \n",yrlow[0]);
-	printf("Sys corr: %f \n",yrcor[0]);
-	printf("Sys uncorr: %f \n",yruncor[0]);
+	printf("Sys tot: %f %f(%)\n",yrlow[0], yrlow[0]/hNuclearModification->GetBinContent(1));
+	printf("Sys corr: %f %f(%)\n",yrcor[0], yrcor[0]/hNuclearModification->GetBinContent(1));
+	printf("Sys uncorr: %f %f(%)\n",yruncor[0], yruncor[0]/hNuclearModification->GetBinContent(1));
 
 	TGraphAsymmErrors* gNuclearModification = new TGraphAsymmErrors(nBins,apt,yr,aptl,aptl,yrlow,yrhigh);
 	gNuclearModification->SetName("gNuclearModification");
@@ -163,7 +163,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	printf("Global uncertainty: hi = %f, low = %f\n",systnormhi, systnormlo);
 	Float_t systnorm;
 	TBox* bSystnorm = new TBox(pti,1-systnormlo,pti+TAABarWid*1,1+systnormhi);
-	//cout<<systnorm<<endl;
+	cout<<systnorm<<endl;
 	bSystnorm->SetLineColor(16);
 	bSystnorm->SetFillColor(16);
 	if(drawDRAA) bSystnorm = new TBox(pti,1-systnorm,pti+TAABarWid*1,1+systnorm);
