@@ -126,10 +126,6 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal-%d",count));
 		}
 	    h->SetBinErrorOption(TH1::kPoisson);
-for(int b=0; b<h->GetNbinsX(); b++){
-std::cout<<"bin: "<<h->GetBinContent(b+1)<<std::endl;
-std::cout<<"err: "<<h->GetBinError(b+1)<<std::endl;
-}
 		TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
 
 		double yield = f->Integral(minhisto,maxhisto)/binwidthmass;
@@ -171,9 +167,9 @@ std::cout<<"err: "<<h->GetBinError(b+1)<<std::endl;
 		hpull->SetMaximum(5);
 		hpull->SetMinimum(-5);
 		for(int b = 0; b < h->GetNbinsX(); b++){
-//std::cout<<"bin: "<<h->GetBinContent(b+1)<<std::endl;
-//std::cout<<"err: "<<h->GetBinError(b+1)<<std::endl;
-			hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/h->GetBinError(b+1));
+			float binerr = h->GetBinContent(b+1) > total->Eval(h->GetBinCenter(b+1)) ? h->GetBinErrorLow(b+1) : h->GetBinErrorUp(b+1);
+			//hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/h->GetBinError(b+1));
+			hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/binerr);
 			hpull->SetYTitle("pull");
             hpull->SetBinError(b+1, h->GetBinError(b+1)/total->Eval(h->GetBinCenter(b+1)));
 		}
