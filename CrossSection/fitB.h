@@ -35,7 +35,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	if(npfit == "1") f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
 	f->SetNpx(5000);
 	f->SetLineWidth(4);
-	clean0(h);
+	//clean0(h);
 
 	f->SetParLimits(4,-1000,1000);
 	f->SetParLimits(2,0.01,0.1);
@@ -148,6 +148,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	h->SetLineWidth(4);
 	h->SetStats(0);
 	h->GetXaxis()->SetNdivisions(-50205);
+	h->SetMaximum((h->GetBinContent(h->GetMaximumBin())+h->GetBinError(h->GetMaximumBin()))*1.8);
 	h->Draw("e");
 	if(npfit != "1"){
 		Bkpi->SetRange(5.00,5.60);
