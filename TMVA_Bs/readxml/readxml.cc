@@ -272,20 +272,24 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		th1_Train_S->SetFillStyle(3004);
 		th1_Train_S->SetFillColor(kRed);
 		th1_Train_S->SetLineWidth(3);
-		th1_Train_S->Scale(1/th1_S->Integral());
+		th1_Train_S->Scale(1/th1_Train_S->Integral());
 		th1_Train_S->Draw("hist");
 		TCanvas* chcountEffTrainB = new TCanvas("chcountEffTrainB","",600,600);
 		th1_Train_B->SetLineColor(kBlue+1);
 		th1_Train_B->SetFillStyle(1001);
 		th1_Train_B->SetFillColor(kBlue-9);
 		th1_Train_B->SetLineWidth(3);
-		th1_Train_B->Scale(1/th1_B->Integral());
+		th1_Train_B->Scale(1/th1_Train_B->Integral());
 		th1_Train_B->Draw("hist");
+		chcountEffS->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffS.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
+		chcountEffB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
+		chcountEffTrainS->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffTrainS.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
+		chcountEffTrainB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffTrainB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 
 		TH2F* hemptydis = new TH2F("hemptydis","",50,minBDT-0.2,maxBDT+0.2,10,0.,max(th1_S->GetMaximum(),th1_B->GetMaximum())*1.2);
 		hemptydis->GetXaxis()->CenterTitle();
 		hemptydis->GetYaxis()->CenterTitle();
-		hemptydis->GetXaxis()->SetTitle(MVAtype);
+		hemptydis->GetXaxis()->SetTitle(Form("%s test",MVAtype.Data()));
 		hemptydis->GetYaxis()->SetTitle("Probability");
 		hemptydis->GetXaxis()->SetTitleOffset(0.9);
 		hemptydis->GetYaxis()->SetTitleOffset(1.2);
@@ -317,6 +321,14 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		leg->Draw("same");
 		texPar->Draw();
 		texPtY->Draw();
+		cdisEffSB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_disEffSB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
+		hemptydis->GetXaxis()->SetTitle(Form("%s train",MVAtype.Data()));
+		hemptydis->Draw();
+	    linedis->Draw();
+		th1_Train_S->Draw("same hist");
+		th1_Train_B->Draw("same hist");
+		leg->Draw("same");
+		cdisEffSB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_Train_disEffSB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 
 		TH1D* th1_effBvsS = (TH1D*)inputMVA->Get(Form("dataset/Method_%s/%s/MVA_%s_effBvsS", MVAtype.Data(), MVAtype.Data(), MVAtype.Data()));
 		TH1D* th1_rejBvsS = (TH1D*)inputMVA->Get(Form("dataset/Method_%s/%s/MVA_%s_rejBvsS", MVAtype.Data(), MVAtype.Data(), MVAtype.Data()));
@@ -386,6 +398,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		texPtY->Draw();
 		TGraph* _gsig = new TGraph(th1_effS->GetNbinsX(),_cutval_arr,_sigval_arr);
 		_gsig->Draw("same *");
+		csig->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_Significance.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 
 		TCanvas* ceffSB = new TCanvas("ceffSB","",600,600);
         ceffSB->SetLogy();
@@ -436,7 +449,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		th1_trainingEffB->SetLineWidth(2);
 		th1_trainingEffB->SetLineColor(kCyan+1);
 		th1_trainingEffB->Draw("same");
-		TLegend* legeff = new TLegend(0.7,0.75,0.95,0.88);
+		TLegend* legeff = new TLegend(0.55,0.65,0.95,0.88);
 		legeff->SetBorderSize(0);
 		legeff->SetFillStyle(0);
 		legeff->AddEntry(th1_effB,"Background test","l");
@@ -444,13 +457,6 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		legeff->AddEntry(th1_trainingEffB,"Background train","l");
 		legeff->AddEntry(th1_trainingEffS,"Signal train","l");
 		legeff->Draw("same");
-
-		chcountEffS->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffS.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
-		chcountEffB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
-		chcountEffTrainS->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffTrainS.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
-		chcountEffTrainB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_chcountEffTrainB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
-		cdisEffSB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_disEffSB.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
-		csig->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_Significance.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 		ceffSB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_EffvsMVA.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 	}
 
