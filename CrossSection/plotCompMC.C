@@ -30,7 +30,7 @@ struct plotStruct plotSetting[nVar] = {
     {"cos(Bdtheta)",                "cosBtheta",    0, 0, 50, -1, 1}, 
     {"Bchi2cl",                     "Bchi2cl",      0, 0, 50, 0, 1}, 
     {"Btktkpt",                     "Btktkpt",      0, 0, 50, 0, 40}, 
-    {"Btktketa",                    "Btktketa",     0, 0, 50, 0, 2.6}, 
+    {"abs(Btktketa)",               "Btktketa",     0, 0, 50, 0, 2.6}, 
     {"Bmu1pt",                      "Bmu1pt",       0, 0, 50, 0, 40}, 
     {"Bmu1pt",                      "Bmu2pt",       0, 0, 50, 0, 40}, 
     {"BDTStage1_pt15to50",          "BDT",      0, 0, 50, -1, 1},

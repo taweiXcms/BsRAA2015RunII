@@ -36,7 +36,7 @@ struct plotStruct plotSetting[21] = {
     {"cos(Bdtheta)", 				"cosBtheta", 	0, 0, 4, {-1,0.0,0.7,0.9,1}},
     {"Bchi2cl", 					"Bchi2cl", 		0, 0, 4, {0.,0.1,0.3,0.6,1}},
     {"Btktkpt", 					"Btktkpt", 		0, 0, 4, {0.,5,8,10,40}},
-    {"Btktketa", 					"Btktketa", 	0, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
+    {"abs(Btktketa)", 				"Btktketa", 	0, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
     {"Bmu1pt", 						"Bmu1pt", 		0, 0, 4, {0.,5,8,10,40}},
     {"Bmu1pt", 						"Bmu2pt", 		0, 0, 4, {0.,5,8,10,40}},
 //    {"BDTStage1_pt15to50",			"BDT", 			0, 0, 4, {0.0,0.25,0.3,0.35,1.0}},
