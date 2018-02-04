@@ -207,7 +207,8 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		}
 
 		cout<<"mac. sig. cut expression: "<<endl;
-		cout<<"CUTPP=$CUTPP\"";
+		if(!pbpb) cout<<"CUTPP=$CUTPP\"";
+		else cout<<"CUTPbPb=$CUTPbPb\"";
 		cout<<cut[maxindex]<<"\""<<endl;;
 
 		TH2F* hempty = new TH2F("hempty","",50,0,1.,10,0.,maxsig*1.2);  
