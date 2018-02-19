@@ -1,5 +1,4 @@
 #include "fitB.h"
-using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
@@ -107,23 +106,23 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t count=0;
+	static Int_t _count=0;
 	for(int i=0;i<_nBins;i++)
 	{
-    	count++;
-		TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
+    	_count++;
+		TCanvas* c= new TCanvas(Form("c%d",_count),"",600,600);
 		if(fitOnSaved == 0){
 			drawOpt = 1;
-			h = new TH1D(Form("h-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-			hMCSignal = new TH1D(Form("hMCSignal-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-    		if(isMC==1) nt->Project(Form("h-%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-		    else        nt->Project(Form("h-%d",count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			ntMC->Project(Form("hMCSignal-%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			h = new TH1D(Form("h-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+			hMCSignal = new TH1D(Form("hMCSignal-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+    		if(isMC==1) nt->Project(Form("h-%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+		    else        nt->Project(Form("h-%d",_count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			ntMC->Project(Form("hMCSignal-%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 		}
 		if(fitOnSaved == 1){
-			h = (TH1D*)inf->Get(Form("h-%d",count));
-			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal-%d",count));
+			h = (TH1D*)inf->Get(Form("h-%d",_count));
+			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal-%d",_count));
 		}
 	    h->SetBinErrorOption(TH1::kPoisson);
 		TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
@@ -133,9 +132,9 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
         printf("yield: %f, yieldErr: %f\n", yield, yieldErr);
 		yieldErr = yieldErr*_ErrCor;
 		if(fitOnSaved == 0){
-    		TH1D* htest = new TH1D(Form("htest-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+    		TH1D* htest = new TH1D(Form("htest-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
 		    TString sideband = "(abs(Bmass-5.367)>0.2&&abs(Bmass-5.367)<0.3";
-	    	nt->Project(Form("htest-%d",count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+	    	nt->Project(Form("htest-%d",_count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
 	    	std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
 		}
 
@@ -161,25 +160,31 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	    tex->SetLineWidth(2);
 	    tex->Draw();
 
-        c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),count,_postfix.Data()));
+        c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
 
-		hpull = (TH1D*)h->Clone(Form("hpull-%d",count));
-		hpull->SetMaximum(5);
-		hpull->SetMinimum(-5);
+        TCanvas* cpull= new TCanvas(Form("cpull%d",_count),"",600,600);
+        cpull->cd();
+        TGraphAsymmErrors* pullgraph = new TGraphAsymmErrors();
+        pullgraph->SetTitle("");
+		pullgraph->SetMaximum(5);
+		pullgraph->SetMinimum(-5);
+		pullgraph->SetMarkerSize(1.55); pullgraph->SetMarkerStyle(20); pullgraph->SetLineColor(1); pullgraph->SetLineWidth(4);
+        double binerr;
 		for(int b = 0; b < h->GetNbinsX(); b++){
-			float binerr = h->GetBinContent(b+1) > total->Eval(h->GetBinCenter(b+1)) ? h->GetBinErrorLow(b+1) : h->GetBinErrorUp(b+1);
-			//hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/h->GetBinError(b+1));
-			hpull->SetBinContent(b+1, (h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/binerr);
-			hpull->SetYTitle("pull");
-            hpull->SetBinError(b+1, h->GetBinError(b+1)/total->Eval(h->GetBinCenter(b+1)));
+			binerr = h->GetBinContent(b+1) > total->Eval(h->GetBinCenter(b+1)) ? h->GetBinErrorLow(b+1) : h->GetBinErrorUp(b+1);
+            pullgraph->SetPoint(b,h->GetBinCenter(b+1),(h->GetBinContent(b+1)-total->Eval(h->GetBinCenter(b+1)))/binerr);
+            //pullgraph->SetPointEYlow(b,h->GetBinErrorLow(b+1)/binerr);
+            //pullgraph->SetPointEYhigh(b,h->GetBinErrorUp(b+1)/binerr);
+            pullgraph->SetPointEYlow(b,1);
+            pullgraph->SetPointEYhigh(b,1);
 		}
+		pullgraph->Draw();
 	    TLine* line = new TLine(5., 0., 6., 0.);
 	    line->SetLineStyle(9);
 	    line->SetLineWidth(6);
 	    line->SetLineColor(3);
-		hpull->Draw();
 	    line->Draw();
-        c->SaveAs(Form("%s%s/%s_%s_%d%s_pull.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),count,_postfix.Data()));
+        cpull->SaveAs(Form("%s%s/%s_%s_%d%s_pull.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
 	}  
 
 	hMean->Write();

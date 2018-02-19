@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Fri Feb  2 17:19:29 2018) by ROOT version6.02/13
+//=========  (Mon Feb 12 00:34:05 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -121,15 +121,15 @@ tex->SetNDC();
    Double_t gNuclearModification_fx3001[1] = {
    32.5};
    Double_t gNuclearModification_fy3001[1] = {
-   0.6023762};
+   0.7561107};
    Double_t gNuclearModification_felx3001[1] = {
    17.5};
    Double_t gNuclearModification_fely3001[1] = {
-   0.2008866};
+   0.2521556};
    Double_t gNuclearModification_fehx3001[1] = {
    17.5};
    Double_t gNuclearModification_fehy3001[1] = {
-   0.2008866};
+   0.2521556};
    TGraphAsymmErrors *grae = new TGraphAsymmErrors(1,gNuclearModification_fx3001,gNuclearModification_fy3001,gNuclearModification_felx3001,gNuclearModification_fehx3001,gNuclearModification_fely3001,gNuclearModification_fehy3001);
    grae->SetName("gNuclearModification");
    grae->SetTitle("Graph");
@@ -146,8 +146,8 @@ tex->SetNDC();
    grae->SetMarkerSize(1.2);
    
    TH1F *Graph_gNuclearModification3001 = new TH1F("Graph_gNuclearModification3001","Graph",100,11.5,53.5);
-   Graph_gNuclearModification3001->SetMinimum(0.3613123);
-   Graph_gNuclearModification3001->SetMaximum(0.8434401);
+   Graph_gNuclearModification3001->SetMinimum(0.453524);
+   Graph_gNuclearModification3001->SetMaximum(1.058697);
    Graph_gNuclearModification3001->SetDirectory(0);
    Graph_gNuclearModification3001->SetStats(0);
 
@@ -172,12 +172,13 @@ tex->SetNDC();
    Double_t xAxis1[2] = {15, 50}; 
    
    TH1D *hNuclearModification2 = new TH1D("hNuclearModification2","",1, xAxis1);
-   hNuclearModification2->SetBinContent(1,0.6023762);
-   hNuclearModification2->SetBinError(1,0.2215875);
-   hNuclearModification2->SetEntries(7.390011);
+   hNuclearModification2->SetBinContent(1,0.7561107);
+   hNuclearModification2->SetBinError(1,0.2823978);
+   hNuclearModification2->SetEntries(7.168825);
 
    ci = TColor::GetColor("#0033cc");
    hNuclearModification2->SetLineColor(ci);
+   hNuclearModification2->SetLineStyle(0);
    hNuclearModification2->SetLineWidth(3);
 
    ci = TColor::GetColor("#0033cc");
@@ -185,16 +186,21 @@ tex->SetNDC();
    hNuclearModification2->SetMarkerStyle(21);
    hNuclearModification2->SetMarkerSize(1.2);
    hNuclearModification2->GetXaxis()->SetLabelFont(42);
-   hNuclearModification2->GetXaxis()->SetLabelSize(0.035);
-   hNuclearModification2->GetXaxis()->SetTitleSize(0.035);
+   hNuclearModification2->GetXaxis()->SetLabelOffset(0.007);
+   hNuclearModification2->GetXaxis()->SetLabelSize(0.05);
+   hNuclearModification2->GetXaxis()->SetTitleSize(0.06);
+   hNuclearModification2->GetXaxis()->SetTitleOffset(0.9);
    hNuclearModification2->GetXaxis()->SetTitleFont(42);
    hNuclearModification2->GetYaxis()->SetLabelFont(42);
-   hNuclearModification2->GetYaxis()->SetLabelSize(0.035);
-   hNuclearModification2->GetYaxis()->SetTitleSize(0.035);
+   hNuclearModification2->GetYaxis()->SetLabelOffset(0.007);
+   hNuclearModification2->GetYaxis()->SetLabelSize(0.05);
+   hNuclearModification2->GetYaxis()->SetTitleSize(0.06);
+   hNuclearModification2->GetYaxis()->SetTitleOffset(1.05);
    hNuclearModification2->GetYaxis()->SetTitleFont(42);
    hNuclearModification2->GetZaxis()->SetLabelFont(42);
-   hNuclearModification2->GetZaxis()->SetLabelSize(0.035);
-   hNuclearModification2->GetZaxis()->SetTitleSize(0.035);
+   hNuclearModification2->GetZaxis()->SetLabelOffset(0.007);
+   hNuclearModification2->GetZaxis()->SetLabelSize(0.05);
+   hNuclearModification2->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification2->GetZaxis()->SetTitleFont(42);
    hNuclearModification2->Draw("same");
    TBox *box = new TBox(13,0.9586116,13.35,1.045662);
@@ -204,12 +210,13 @@ tex->SetNDC();
    Double_t xAxis2[2] = {15, 50}; 
    
    TH1D *hNuclearModification3 = new TH1D("hNuclearModification3","",1, xAxis2);
-   hNuclearModification3->SetBinContent(1,0.6023762);
-   hNuclearModification3->SetBinError(1,0.2215875);
-   hNuclearModification3->SetEntries(7.390011);
+   hNuclearModification3->SetBinContent(1,0.7561107);
+   hNuclearModification3->SetBinError(1,0.2823978);
+   hNuclearModification3->SetEntries(7.168825);
 
    ci = TColor::GetColor("#0033cc");
    hNuclearModification3->SetLineColor(ci);
+   hNuclearModification3->SetLineStyle(0);
    hNuclearModification3->SetLineWidth(3);
 
    ci = TColor::GetColor("#0033cc");
@@ -217,16 +224,21 @@ tex->SetNDC();
    hNuclearModification3->SetMarkerStyle(21);
    hNuclearModification3->SetMarkerSize(1.2);
    hNuclearModification3->GetXaxis()->SetLabelFont(42);
-   hNuclearModification3->GetXaxis()->SetLabelSize(0.035);
-   hNuclearModification3->GetXaxis()->SetTitleSize(0.035);
+   hNuclearModification3->GetXaxis()->SetLabelOffset(0.007);
+   hNuclearModification3->GetXaxis()->SetLabelSize(0.05);
+   hNuclearModification3->GetXaxis()->SetTitleSize(0.06);
+   hNuclearModification3->GetXaxis()->SetTitleOffset(0.9);
    hNuclearModification3->GetXaxis()->SetTitleFont(42);
    hNuclearModification3->GetYaxis()->SetLabelFont(42);
-   hNuclearModification3->GetYaxis()->SetLabelSize(0.035);
-   hNuclearModification3->GetYaxis()->SetTitleSize(0.035);
+   hNuclearModification3->GetYaxis()->SetLabelOffset(0.007);
+   hNuclearModification3->GetYaxis()->SetLabelSize(0.05);
+   hNuclearModification3->GetYaxis()->SetTitleSize(0.06);
+   hNuclearModification3->GetYaxis()->SetTitleOffset(1.05);
    hNuclearModification3->GetYaxis()->SetTitleFont(42);
    hNuclearModification3->GetZaxis()->SetLabelFont(42);
-   hNuclearModification3->GetZaxis()->SetLabelSize(0.035);
-   hNuclearModification3->GetZaxis()->SetTitleSize(0.035);
+   hNuclearModification3->GetZaxis()->SetLabelOffset(0.007);
+   hNuclearModification3->GetZaxis()->SetLabelSize(0.05);
+   hNuclearModification3->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification3->GetZaxis()->SetTitleFont(42);
    hNuclearModification3->Draw("same p");
       tex = new TLatex(0.81,0.2,"B_{s}");

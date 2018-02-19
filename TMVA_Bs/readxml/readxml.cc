@@ -120,11 +120,11 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 				TString moremin = ">"; moremin+=min; 
 				if(margins[l]=="FMin" || margins[l]=="NotEnforced")
 				{
-					cut[n]+=" && "+varnames[l]+lessmax;
+					cut[n]+="&&"+varnames[l]+lessmax;
 				}
 				if(margins[l]=="FMax" || margins[l]=="NotEnforced")
 				{
-					cut[n]+=" && "+varnames[l]+moremin;
+					cut[n]+="&&"+varnames[l]+moremin;
 				}
 			}
 			eff = TMVA::gTools().GetNextChild(eff);
