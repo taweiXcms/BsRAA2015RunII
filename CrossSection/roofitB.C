@@ -135,17 +135,17 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 			if(isMC==1) skimtree = (TTree*)nt->CopyTree(Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()), "skimtree");
 			else        skimtree = (TTree*)nt->CopyTree(   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()), "skimtree");
 			skimtreeMC = (TTree*)ntMC->CopyTree(Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]), "skimtreeMC");
-			ds = new RooDataSet(Form("ds-%d",_count),"",skimtree, RooArgSet(*mass));
-			dsMC = new RooDataSet(Form("dsMC-%d",_count),"",skimtreeMC,RooArgSet(*mass));
+			ds = new RooDataSet(Form("ds%d",_count),"",skimtree, RooArgSet(*mass));
+			dsMC = new RooDataSet(Form("dsMC%d",_count),"",skimtreeMC,RooArgSet(*mass));
 
 			// create RooDataHist
-			h = new TH1D(Form("h-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
-			hMC = new TH1D(Form("hMC-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
-			if(isMC==1) skimtree->Project(Form("h-%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			else        skimtree->Project(Form("h-%d",_count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			skimtreeMC->Project(Form("hMC-%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
-			dh = new RooDataHist(Form("dh-%d",_count),"",*mass,Import(*h));
-			dhMC = new RooDataHist(Form("dhMC-%d",_count),"",*mass,Import(*hMC));
+			h = new TH1D(Form("h%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+			hMC = new TH1D(Form("hMC%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+			if(isMC==1) skimtree->Project(Form("h%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			else        skimtree->Project(Form("h%d",_count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			skimtreeMC->Project(Form("hMC%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			dh = new RooDataHist(Form("dh%d",_count),"",*mass,Import(*h));
+			dhMC = new RooDataHist(Form("dhMC%d",_count),"",*mass,Import(*hMC));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 			outputw->import(*ds);
 			outputw->import(*dsMC);
@@ -154,32 +154,32 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 		}
 		if(fitOnSaved == 1){
 			inputw = (RooWorkspace*)inf->Get("w");
-			ds = (RooDataSet*)inputw->data(Form("ds-%d",_count));
-			dsMC = (RooDataSet*)inputw->data(Form("dsMC-%d",_count));
-			dh = (RooDataHist*)inputw->data(Form("dh-%d",_count));
-			dhMC = (RooDataHist*)inputw->data(Form("dhMC-%d",_count));
+			ds = (RooDataSet*)inputw->data(Form("ds%d",_count));
+			dsMC = (RooDataSet*)inputw->data(Form("dsMC%d",_count));
+			dh = (RooDataHist*)inputw->data(Form("dh%d",_count));
+			dhMC = (RooDataHist*)inputw->data(Form("dhMC%d",_count));
 		}
 		RooFitResult* f = fit(c, cMC, ds, dsMC, dh, dhMC, mass, frame, _ptBins[i], _ptBins[i+1], isMC, isPbPb, centmin, centmax, npfit);
 		//datahist = frame->getHist("ds");
 		//TGraphAsymmErrors* datagraph = static_cast<TGraphAsymmErrors*>(datahist);
-		modelcurve = frame->getCurve(Form("model-%d",_count));
+		modelcurve = frame->getCurve(Form("model%d",_count));
 
-		RooRealVar* fitYield = static_cast<RooRealVar*>(f->floatParsFinal().at(f->floatParsFinal().index(Form("nsig-%d",_count))));
+		RooRealVar* fitYield = static_cast<RooRealVar*>(f->floatParsFinal().at(f->floatParsFinal().index(Form("nsig%d",_count))));
 		double yield = fitYield->getVal();
 		double yieldErr = fitYield->getError();
         printf("yield: %f, yieldErr: %f\n", yield, yieldErr);
 		yieldErr = yieldErr*_ErrCor;
 		if(fitOnSaved == 0){
-    		TH1D* htest = new TH1D(Form("htest-%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+    		TH1D* htest = new TH1D(Form("htest%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
 		    TString sideband = "(abs(Bmass-5.367)>0.2&&abs(Bmass-5.367)<0.3";
-	    	skimtree->Project(Form("htest-%d",_count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+	    	skimtree->Project(Form("htest%d",_count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
 	    	std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
 		}
 
 		hPt->SetBinContent(i+1,yield/(_ptBins[i+1]-_ptBins[i]));
 		hPt->SetBinError(i+1,yieldErr/(_ptBins[i+1]-_ptBins[i]));
-		if(f->floatParsFinal().index(Form("nsig-%d",_count)) != -1){
-			RooRealVar* fitMean = static_cast<RooRealVar*>(f->floatParsFinal().at(f->floatParsFinal().index(Form("mean-%d",_count))));
+		if(f->floatParsFinal().index(Form("nsig%d",_count)) != -1){
+			RooRealVar* fitMean = static_cast<RooRealVar*>(f->floatParsFinal().at(f->floatParsFinal().index(Form("mean%d",_count))));
 			hMean->SetBinContent(i+1,fitMean->getVal());
 			hMean->SetBinError(i+1,fitMean->getError());  
 		}

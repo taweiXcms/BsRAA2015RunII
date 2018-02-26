@@ -345,5 +345,14 @@
 ./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooStats/SimpleInterval.h
 ./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooStats/ConfInterval.h
 ./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooStats/HypoTestInverterPlot.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooMinuit.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooDataHist.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooGaussian.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooGenericPdf.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooChebychev.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooPolynomial.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooAddPdf.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooExtendPdf.h
+./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RooHist.h
 ./HypoTest_C.so: /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RVersion.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RConfig.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TClass.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TDictAttributeMap.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TInterpreter.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TROOT.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TBuffer.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TMemberInspector.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TError.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/RtypesImp.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TIsAProxy.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TFileMergeInfo.h /cvmfs/cms.cern.ch/slc6_amd64_gcc491/lcg/root/6.02.12/include/TCollectionProxyInfo.h
 HypoTest_C__ROOTBUILDVERSION= 6.02/13

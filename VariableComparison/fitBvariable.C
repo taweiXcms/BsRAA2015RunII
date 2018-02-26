@@ -163,15 +163,15 @@ TF1* fit(TString variable, TString variableplot, TString variablename, TTree *nt
   static Int_t count = 0;
   count++;
   TCanvas* c = new TCanvas(Form("c%d",count),"",600,600);
-  TH1D* h = new TH1D(Form("h-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-  TH1D* hMCSignal = new TH1D(Form("hMCSignal-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+  TH1D* h = new TH1D(Form("h%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+  TH1D* hMCSignal = new TH1D(Form("hMCSignal%d",count),"",nbinsmasshisto,minhisto,maxhisto);
   
   TString iNP = npfit;
   TF1* f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*("+iNP+")");
   
-  if(isMC==1) nt->Project(Form("h-%d",count),"Bmass",Form("%s*(%s&&(%s)>%f&&(%s)<%f)",weight.Data(),seldata.Data(),variable.Data(),ptmin,variable.Data(),ptmax));
-  else nt->Project(Form("h-%d",count),"Bmass",Form("(%s&&(%s)>%f&&(%s)<%f)",seldata.Data(),variable.Data(),ptmin,variable.Data(),ptmax));
-  ntMC->Project(Form("hMCSignal-%d",count),"Bmass",Form("%s*(%s&&(%s)>%f&&(%s)<%f&&(Bgen==23333))",weight.Data(),selmc.Data(),variable.Data(),ptmin,variable.Data(),ptmax));   
+  if(isMC==1) nt->Project(Form("h%d",count),"Bmass",Form("%s*(%s&&(%s)>%f&&(%s)<%f)",weight.Data(),seldata.Data(),variable.Data(),ptmin,variable.Data(),ptmax));
+  else nt->Project(Form("h%d",count),"Bmass",Form("(%s&&(%s)>%f&&(%s)<%f)",seldata.Data(),variable.Data(),ptmin,variable.Data(),ptmax));
+  ntMC->Project(Form("hMCSignal%d",count),"Bmass",Form("%s*(%s&&(%s)>%f&&(%s)<%f&&(Bgen==23333))",weight.Data(),selmc.Data(),variable.Data(),ptmin,variable.Data(),ptmax));   
   
   clean0(h);
   

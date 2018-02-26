@@ -157,15 +157,15 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
 
 		for(int v = vini; v < vend; v++){
 			count++;
-			h_pp   = new TH1D(Form("h_pp-%d",count),  "", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
-			h_PbPb = new TH1D(Form("h_PbPb-%d",count),"", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
+			h_pp   = new TH1D(Form("h_pp%d",count),  "", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
+			h_PbPb = new TH1D(Form("h_PbPb%d",count),"", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
 			setHist(h_pp, v);
 			setHist(h_PbPb, v);
 			h_pp->SetMarkerColor(3);
 			h_pp->SetLineColor(3);
 			
-			nt_pp->Project(Form("h_pp-%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_pp.Data(), Form("%s&&Bgen==23333",selmc_pp.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
-			nt_PbPb->Project(Form("h_PbPb-%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_PbPb.Data(), Form("%s&&Bgen==23333",selmc_PbPb.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt_pp->Project(Form("h_pp%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_pp.Data(), Form("%s&&Bgen==23333",selmc_pp.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt_PbPb->Project(Form("h_PbPb%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_PbPb.Data(), Form("%s&&Bgen==23333",selmc_PbPb.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h_pp->Scale(1/h_pp->Integral());
 			h_pp->SetAxisRange(0,h_pp->GetMaximum()*1.4*1.2,"Y");
 			h_PbPb->Scale(1/h_PbPb->Integral());

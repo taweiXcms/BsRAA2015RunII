@@ -209,21 +209,21 @@ TF1 *fit(TTree *nt, TTree *ntMC, Double_t ptmin, Double_t ptmax, int isMC,bool i
    static Int_t count=0;
    count++;
    TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
-   TH1D* h = new TH1D(Form("h-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-   TH1D* hMCSignal = new TH1D(Form("hMCSignal-%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+   TH1D* h = new TH1D(Form("h%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+   TH1D* hMCSignal = new TH1D(Form("hMCSignal%d",count),"",nbinsmasshisto,minhisto,maxhisto);
 
    //TString iNP="7.26667e+00*Gaus(x,5.10472e+00,2.63158e-02)/(sqrt(2*3.14159)*2.63158e-02)+4.99089e+01*Gaus(x,4.96473e+00,9.56645e-02)/(sqrt(2*3.14159)*9.56645e-02)+3.94417e-01*(3.74282e+01*Gaus(x,5.34796e+00,3.11510e-02)+1.14713e+01*Gaus(x,5.42190e+00,1.00544e-01))";
 
-   TString iNP=Form("TMath::Erf((x-%f)/%f)", NPpar[0], NPpar[1]);
+   TString iNP=Form("TMath::Erf((x%f)/%f)", NPpar[0], NPpar[1]);
    TF1* f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*("+iNP+")+[5]");
 /*
-   if(isMC==1) nt->Project(Form("h-%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)","1",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
-   else nt->Project(Form("h-%d",count),"Bmass",Form("(%s&&%s>%f&&%s<%f)",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
+   if(isMC==1) nt->Project(Form("h%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)","1",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
+   else nt->Project(Form("h%d",count),"Bmass",Form("(%s&&%s>%f&&%s<%f)",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
 */
-   if(isMC==1) nt->Project(Form("h-%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weight.Data(),seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
-   else nt->Project(Form("h-%d",count),"Bmass",Form("(%s&&%s>%f&&%s<%f)",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
+   if(isMC==1) nt->Project(Form("h%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weight.Data(),seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
+   else nt->Project(Form("h%d",count),"Bmass",Form("(%s&&%s>%f&&%s<%f)",seldata.Data(),compname.Data(),ptmin,compname.Data(),ptmax));   
 
-   ntMC->Project(Form("hMCSignal-%d",count),"Bmass",Form("%s&&%s>%f&&%s<%f",Form("%s&&Bgen==23333",selmc.Data()),compname.Data(),ptmin,compname.Data(),ptmax));
+   ntMC->Project(Form("hMCSignal%d",count),"Bmass",Form("%s&&%s>%f&&%s<%f",Form("%s&&Bgen==23333",selmc.Data()),compname.Data(),ptmin,compname.Data(),ptmax));
    clean0(h);
 /*
    TFile*fout=new TFile("testout.root","recreate");

@@ -5,9 +5,9 @@ const int nVar = 2;
 string vexp[nVar] = {"Bmumumass", "Btktkmass"};
 string vname[nVar] = {"Bmumumass", "Btktkmass"};
 string vxaxis[nVar] = {"mumu mass (GeV)", "KK mass (GeV)"};
-int vbins[nVar] = {50, 50};
-float vbinmin[nVar] = {2.8, 0.96};
-float vbinmax[nVar] = {3.4, 1.1};
+int vbins[nVar] = {100, 140};
+float vbinmin[nVar] = {2.9, 0.98};
+float vbinmax[nVar] = {3.4, 1.08};
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
@@ -142,12 +142,12 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 
 		for(int v = 0; v < nVar; v++){
     		count++;
-			h   = new TH1D(Form("h-%d",count),  "", vbins[v], vbinmin[v], vbinmax[v]);
-			hMC = new TH1D(Form("hMC-%d",count),"", vbins[v], vbinmin[v], vbinmax[v]);
+			h   = new TH1D(Form("h%d",count),  "", vbins[v], vbinmin[v], vbinmax[v]);
+			hMC = new TH1D(Form("hMC%d",count),"", vbins[v], vbinmin[v], vbinmax[v]);
 			setHist(h, v);
 			setHist(hMC, v);
-			nt->Project(Form("h-%d",count),     vexp[v].c_str(), Form("(%s&&%s>%f&&%s<%f)*(1/%s)", seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			ntMC->Project(Form("hMC-%d",count), vexp[v].c_str(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc.Data(), Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt->Project(Form("h%d",count),     vexp[v].c_str(), Form("(%s&&%s>%f&&%s<%f)*(1/%s)", seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			ntMC->Project(Form("hMC%d",count), vexp[v].c_str(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc.Data(), Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 			hMC->Scale(1/hMC->Integral());
 			hMC->SetAxisRange(0,hMC->GetMaximum()*1.4*1.2,"Y");
@@ -157,13 +157,13 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex3->Draw();
-	        c->SaveAs(Form("%s%s/%s_%s_%d_%s.pdf",outplotf.Data(),_prefix.Data(),"data",_isPbPb.Data(),count,vname[v].c_str()));
+	        c->SaveAs(Form("%s%s/%s_%s_0_%s.pdf",outplotf.Data(),_prefix.Data(),"data",_isPbPb.Data(),vname[v].c_str()));
 
 			hMC->Draw("pe");
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex4->Draw();
-	        c->SaveAs(Form("%s%s/%s_%s_%d_%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),count,vname[v].c_str()));
+	        c->SaveAs(Form("%s%s/%s_%s_0_%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),vname[v].c_str()));
 		}
 	}  
 	outf->Close();
