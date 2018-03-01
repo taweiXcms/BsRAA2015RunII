@@ -56,7 +56,7 @@ int ntoys = 5000;
 bool useNC = false;
 const char * nuisPriorName = 0;
 
-bool ispp = 1;
+bool ispp = 0;
 TString fname = "";
 int _count = 1;
 int nCPU=2;
