@@ -3,7 +3,7 @@ using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
-void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
+void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., TString mvafiledata = "", TString mvafilemc = "")
 {
 	collisionsystem=collsyst;
 	if(varExp == "Bpt1050"){
@@ -57,15 +57,20 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	TH1D* hpull;
 
 	TTree* nt;
+	TTree* ntmva;
 	TTree* ntGen;
 	TTree* ntMC;
+	TTree* ntMCmva;
 
 	if(fitOnSaved == 0){
+		TFile* infmva = new TFile(mvafiledata.Data());
+		TFile* infMCmva = new TFile(mvafilemc.Data());
 		nt = (TTree*)inf->Get("ntphi");
 		nt->AddFriend("ntHlt");
 		nt->AddFriend("ntHi");
 		nt->AddFriend("ntSkim");
-		nt->AddFriend("BDTStage1_pt15to50");
+		ntmva = (TTree*)infmva->Get("BDTStage1_pt15to50");
+		nt->AddFriend(ntmva);
 	
 		ntGen = (TTree*)infMC->Get("ntGen");
 		ntGen->AddFriend("ntHlt");
@@ -75,8 +80,9 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 		ntMC->AddFriend("ntHlt");
 		ntMC->AddFriend("ntHi");
 		ntMC->AddFriend("ntSkim");
-		ntMC->AddFriend("BDTStage1_pt15to50");
 		ntMC->AddFriend(ntGen);
+		ntMCmva = (TTree*)infMCmva->Get("BDTStage1_pt15to50");
+		ntMC->AddFriend(ntMCmva);
 	}
 
 	TF1 *total;
@@ -250,6 +256,10 @@ int main(int argc, char *argv[])
 	if(argc==19)
 	{
 		fitB(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]));
+	}
+	else if(argc==21)
+	{
+		fitB(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]), argv[19], argv[20]);
 	}
 	else
 	{

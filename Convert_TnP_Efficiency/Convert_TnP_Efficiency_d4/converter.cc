@@ -1,7 +1,7 @@
 #include <iostream>
 #include <parameters.h>
-#include <branchStruct.h>
-#include <tnp_weight.h>
+#include <../branchStruct.h>
+#include <../tnp_weight.h>
 #include <TH1.h>
 #include <TH2.h>
 #include <TFile.h>
@@ -13,7 +13,7 @@
 #include <TGraphAsymmErrors.h>
 using namespace std;
 
-bool ispp = 1;
+bool ispp = 0;
 TString inputmc;
 
 int _nBins = nBins;
@@ -23,11 +23,11 @@ void converter(){
 	string label = "";
 	if(ispp){
 		label = "pp"; 
-		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50.root";
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50v2.root";
     }
 	else{
 		label = "pbpb";
-		inputmc = "/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root";
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50v2.root";
 		
 	}
     TFile* infMC = new TFile(inputmc.Data());
@@ -98,7 +98,8 @@ void converter(){
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
 				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4  
 				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 
-				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.209775
+				&& abs(Btktkmass[b]-1.019455)<0.015
+				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.230537
 				) 
 				if(Bgen[b]==23333){
                     //double _weight = pthatweight;
@@ -153,7 +154,8 @@ void converter(){
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
 				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 
 				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4  
-				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.303985
+				&& abs(Btktkmass[b]-1.019455)<0.015
+				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.255746
 				)	
                 if(Bgen[b]==23333){
                     //double _weight = pthatweight;

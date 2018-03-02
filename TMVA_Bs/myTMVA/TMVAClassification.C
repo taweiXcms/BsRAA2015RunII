@@ -257,8 +257,12 @@ int TMVAClassification(int pbpb=0, float ptMin=10., float ptMax=20., int varStag
 	   dataloader->AddVariable("Btrk2Pt");//>
 	   dataloader->AddVariable("Btrk1Eta");//>
 	   dataloader->AddVariable("Btrk2Eta");//>
+       //dataloader->AddVariable("abs(Btrk1Eta)");//>
+       //dataloader->AddVariable("abs(Btrk2Eta)");//>
 	   dataloader->AddVariable("Btrk1Dxy/Btrk1D0Err");
 	   dataloader->AddVariable("Btrk2Dxy/Btrk2D0Err");
+       //dataloader->AddVariable("abs(Btrk1Dxy/Btrk1D0Err)");
+       //dataloader->AddVariable("abs(Btrk2Dxy/Btrk2D0Err)");
 	   dataloader->AddVariable("abs(Btktkmass-1.019455)"); //phi meson mass
 	   dataloader->AddVariable("BsvpvDistance/BsvpvDisErr");
 	   dataloader->AddVariable("Balpha");//>
@@ -273,6 +277,8 @@ int TMVAClassification(int pbpb=0, float ptMin=10., float ptMax=20., int varStag
 	   dataloader->AddVariable("Btktkpt");//>
 	   dataloader->AddVariable("Btktketa");//>
 	   dataloader->AddVariable("By");//>bs rapidty
+       //dataloader->AddVariable("abs(Btktketa)");//>
+       //dataloader->AddVariable("abs(By)");//>bs rapidty
    }
    //if(varStage>=14){
    //    dataloader->AddVariable("Btktky");//> //phi meson rapidty
@@ -385,6 +391,26 @@ int TMVAClassification(int pbpb=0, float ptMin=10., float ptMax=20., int varStag
 
    TString VarSet = "";
    if(varStage>=1){
+     VarSet+=":VarProp[0]=FMax";
+     VarSet+=":VarProp[1]=FMax";
+     VarSet+=":VarProp[2]=FMin";
+     VarSet+=":VarProp[3]=FMin";
+     VarSet+=":VarProp[4]=FMax";
+     VarSet+=":VarProp[5]=FMax";
+     VarSet+=":VarProp[6]=FMin";
+     VarSet+=":VarProp[7]=FMax";
+     VarSet+=":VarProp[8]=FMin";
+   }
+   if(varStage>=2){
+     VarSet+=":VarProp[9]=FMax";
+     VarSet+=":VarProp[10]=FMax";
+   }
+   if(varStage>=3){
+     VarSet+=":VarProp[11]=FMax";
+     VarSet+=":VarProp[12]=FMax";
+     VarSet+=":VarProp[13]=FMax";
+     VarSet+=":VarProp[14]=FMin";
+     VarSet+=":VarProp[15]=FMin";
    }
 
    // Cut optimisation

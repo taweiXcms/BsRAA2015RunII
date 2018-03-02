@@ -29,6 +29,7 @@ COLSYST=('pp' 'PbPb')
 isPbPb=(0 1)
 #MVA=('CutsGA' 'BDT' 'MLP' 'DNN')
 MVA=('BDT')
+#MVA=('CutsGA' 'CutsSA')
 nvIni=0
 nVAR=1
 

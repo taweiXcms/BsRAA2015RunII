@@ -1,14 +1,13 @@
 rm ROOTfiles/*root
 
-rm plotCrossSection/*
-rm plotEff/*
-rm plotFits/*
-rm plotFitsOnSaved/*
-rm plotFits_Y/*
-rm plotFitsOnSaved_Y/*
+rm plotCrossSection/*/*
+rm plotEff/*/*
+rm plotFits/*/*
 rm plotRAA/*
-rm plotVariablesFits/*
-rm plotVariablesResults/*
 rm plotReweight/*
 rm plotChecksPrompt/*
+rm plotChecksPrompt/*/*
 rm plotFitsComp/*
+rm plotClosure/*
+rm plotCompMC/*
+rm plotSth/*

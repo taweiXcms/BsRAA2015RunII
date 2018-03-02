@@ -32,6 +32,14 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 		_sf_pp = sf_pp_1050;
         varExp = "Bpt";
     }
+    if(varExp == "BptCutBase"){
+		_sf_pp = sf_pp_CutBase;
+        varExp = "Bpt";
+    }
+    if(varExp == "BptPbPbBDT"){
+		_sf_pp = sf_pp_PbPbBDT;
+        varExp = "Bpt";
+    }
     if(varExp == "abs(By)"){
         _nBins = nBinsY;
         _ptBins = ptBinsY;
