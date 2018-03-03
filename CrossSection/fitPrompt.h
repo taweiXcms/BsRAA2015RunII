@@ -26,13 +26,13 @@ TString selmc;
 TString selmcgen;
 TString collisionsystem;
 Float_t hiBinMin,hiBinMax,centMin,centMax;
-static Int_t count=0;
+static Int_t _count=0;
 TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit)
 {
 	c->cd();
 	TString iNP = npfit;
-	TF1 *f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
-	if(npfit == "1") f = new TF1(Form("f%d",count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
+	TF1 *f = new TF1(Form("f%d",_count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
+	if(npfit == "1") f = new TF1(Form("f%d",_count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
 	f->SetNpx(5000);
 	f->SetLineWidth(4);
 	clean0(h);
@@ -61,13 +61,13 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	}
 	h->GetEntries();
 
-	hMCSignal->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
-	hMCSignal->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	f->ReleaseParameter(1);
-	hMCSignal->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	hMCSignal->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	hMCSignal->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	hMCSignal->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	hMCSignal->Fit(Form("f%d",_count),"L m","",minhisto,maxhisto);
 
 	f->FixParameter(1,f->GetParameter(1));
 	f->FixParameter(2,f->GetParameter(2));
@@ -75,16 +75,16 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	f->FixParameter(8,f->GetParameter(8));
 	printf("Fixed para.:\n");
 	printf("%f, %f, %f\n", f->GetParameter(2), f->GetParameter(7), f->GetParameter(8));
-	h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
-	h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	//f->ReleaseParameter(1); // release the signal mean
-	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	h->Fit(Form("f%d",count),"L q","",minhisto,maxhisto);
-	h->Fit(Form("f%d",count),"L m","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	h->Fit(Form("f%d",_count),"L m","",minhisto,maxhisto);
 	//accessing fir results
 	//https://root.cern.ch/root/html/ROOT__Fit__FitResult.html
-	//TFitResultPtr fr = h->Fit(Form("f%d",count),"L m s e","",minhisto,maxhisto);
+	//TFitResultPtr fr = h->Fit(Form("f%d",_count),"L m s e","",minhisto,maxhisto);
 	//Int_t fitStatus = fr;
 	//printf("fit result status: %d\n", fitStatus);
 	//printf("Central val: %f\n", fr->GetParams()[0]);
@@ -92,12 +92,12 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	//printf("Minos err: %f (%.2f%), %f (%.2f%)\n", fr->LowerError(0), -fr->LowerError(0)/fr->GetParams()[0]*100, fr->UpperError(0), fr->UpperError(0)/fr->GetParams()[0]*100);
 	//printf("diff in %: (%.2f%), (%.2f%)\n", -fr->LowerError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100, fr->UpperError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100);
 	if(weightdata != "1"){
-		//      h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
-		//      h->Fit(Form("f%d",count),"q","",minhisto,maxhisto);
-		//      h->Fit(Form("f%d",count),"m","",minhisto,maxhisto);
+		//      h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
+		//      h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
+		//      h->Fit(Form("f%d",_count),"m","",minhisto,maxhisto);
 	}
 
-	TF1 *background = new TF1(Form("background%d",count),"[0]+[1]*x+[2]*x*x");
+	TF1 *background = new TF1(Form("background%d",_count),"[0]+[1]*x+[2]*x*x");
 	background->SetParameter(0,f->GetParameter(3));
 	background->SetParameter(1,f->GetParameter(4));
 	background->SetParameter(2,f->GetParameter(5));
@@ -106,7 +106,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	background->SetLineStyle(7);
 	background->SetLineWidth(4);
 
-	TF1 *Bkpi = new TF1(Form("fBkpi%d",count),"[0]*("+iNP+")");
+	TF1 *Bkpi = new TF1(Form("fBkpi%d",_count),"[0]*("+iNP+")");
 	Bkpi->SetParameter(0,f->GetParameter(11));
 	Bkpi->SetRange(minhisto,maxhisto);
 	Bkpi->SetLineStyle(1);
@@ -115,7 +115,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	Bkpi->SetFillColor(kGreen+4);
 	Bkpi->SetLineWidth(4);
 
-	TF1 *mass = new TF1(Form("fmass%d",count),"[0]*([3]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[3])*Gaus(x,[1],[4])/(sqrt(2*3.14159)*[4]))");
+	TF1 *mass = new TF1(Form("fmass%d",_count),"[0]*([3]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[3])*Gaus(x,[1],[4])/(sqrt(2*3.14159)*[4]))");
 	mass->SetParameters(f->GetParameter(0),f->GetParameter(1),f->GetParameter(2),f->GetParameter(7),f->GetParameter(8));
 	mass->SetParError(0,f->GetParError(0));
 	mass->SetParError(1,f->GetParError(1));
@@ -251,8 +251,8 @@ texB->Draw();
     texSig->SetLineWidth(2);
     if(drawOpt == 1) texSig->Draw("SAME");
 
-	TF1* t = (TF1*)h->GetFunction(Form("f%d",count))->Clone();
-	h->GetFunction(Form("f%d",count))->Delete();
+	TF1* t = (TF1*)h->GetFunction(Form("f%d",_count))->Clone();
+	h->GetFunction(Form("f%d",_count))->Delete();
 	t->Draw("same");
 	h->Draw("e same");
 	h->Write();

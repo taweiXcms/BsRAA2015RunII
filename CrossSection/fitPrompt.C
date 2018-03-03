@@ -44,13 +44,15 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 	gStyle->SetPadBottomMargin(0.145);
 	gStyle->SetTitleX(.0f);
 
-	TFile* inf = new TFile(inputdata.Data());
+	TFile* inf = new TFile(Form("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/%s.root",inputdata.Data()));
+	TFile* infbdt = new TFile(Form("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/TMVA_Bs-20180223-d4-1550-nominal/tmvaVal/prod/%s_BDT.root",inputdata.Data()));
 	TFile* infMC = new TFile(inputmc.Data());
 
 	TH1D* h;
 	TH1D* hMCSignal;
 
 	TTree* nt;
+	TTree* ntbdt;
 	TTree* ntGen;
 	TTree* ntMC;
 
@@ -59,7 +61,9 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 		nt->AddFriend("ntHlt");
 		nt->AddFriend("ntHi");
 		nt->AddFriend("ntSkim");
-		nt->AddFriend("BDTStage1_pt15to50");
+		
+		ntbdt = (TTree*)infbdt->Get("BDTStage1_pt15to50");
+		nt->AddFriend(ntbdt);
 	
 		ntGen = (TTree*)infMC->Get("ntGen");
 		ntGen->AddFriend("ntHlt");
@@ -102,23 +106,23 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t count=0;
+	static Int_t _count=0;
 	for(int i=0;i<_nBins;i++)
 	{
-    	count++;
-		TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
+    	_count++;
+		TCanvas* c= new TCanvas(Form("c%d",_count),"",600,600);
 		if(fitOnSaved == 0){
 			drawOpt = 1;
-			h = new TH1D(Form("h%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-			hMCSignal = new TH1D(Form("hMCSignal%d",count),"",nbinsmasshisto,minhisto,maxhisto);
-    		if(isMC==1) nt->Project(Form("h%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-		    else        nt->Project(Form("h%d",count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			ntMC->Project(Form("hMCSignal%d",count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			h = new TH1D(Form("h%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+			hMCSignal = new TH1D(Form("hMCSignal%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
+    		if(isMC==1) nt->Project(Form("h%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+		    else        nt->Project(Form("h%d",_count),"Bmass",   Form("(%s&&%s>%f&&%s<%f)*(1/%s)",                seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			ntMC->Project(Form("hMCSignal%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 		}
 		if(fitOnSaved == 1){
-			h = (TH1D*)inf->Get(Form("h%d",count));
-			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",count));
+			h = (TH1D*)inf->Get(Form("h%d",_count));
+			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",_count));
 		}
 		TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
 
@@ -127,9 +131,9 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
         printf("yield: %f, yieldErr: %f\n", yield, yieldErr);
 		yieldErr = yieldErr*_ErrCor;
 		if(fitOnSaved == 0){
-    		TH1D* htest = new TH1D(Form("htest%d",count),"",nbinsmasshisto,minhisto,maxhisto);
+    		TH1D* htest = new TH1D(Form("htest%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
 		    TString sideband = "(abs(Bmass-5.367)>0.2&&abs(Bmass-5.367)<0.3";
-	    	nt->Project(Form("htest%d",count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+	    	nt->Project(Form("htest%d",_count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
 	    	std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
 		}
 

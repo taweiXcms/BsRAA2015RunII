@@ -66,7 +66,7 @@ DOVARCOMPARE_MC=0
 DOVARCOMPARE_PP=0
 
 ### Checking prompt background structure
-CHECKPROMPT=0
+CHECKPROMPT=1
 
 ## PP MONTE CARLO
 INPUTMCPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50v2.root"
@@ -526,16 +526,18 @@ fi
 
 if [ $CHECKPROMPT -eq 1 ]; then      
 g++ fitPrompt.C $(root-config --cflags --libs) -g -o fitPrompt.exe 
-INPUTPROMPTPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT15to50v2.root"
+
+INPUTPROMPTPP="Bntuple20171209_bPt0_BfinderMC_pp_JpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs"
 CUT=${BASECUTPP}
 CUT=${CUT}"&&abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
 ./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.230537"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTd4.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDTd4"
+./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.2"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p1.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDT0p2"
 ./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.1"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p1.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDT0p1"
 ./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>0.0"        "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDT0p0.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDT0p0"
 ./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.1"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p1.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDTm0p1"
 ./fitPrompt.exe 0 0 "$INPUTPROMPTPP"  "$INPUTMCPP"  "Bpt" "$TRGPPMC" "$CUT&&BDTStage1_pt15to50>-0.2"       "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPP_BDTm0p2.root" "plotChecksPrompt" "$NPFIT_PP" 0 "0" "100" "BDTm0p2"
 
-INPUTPROMPTPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs_BDT15to50v2.root"
+INPUTPROMPTPbPb="Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs"
 CUT=${BASECUTPbPb}
 CUT=${CUT}"&&abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phfCoincFilter3"
 ./fitPrompt.exe 1 0 "$INPUTPROMPTPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMC" "$CUT&&BDTStage1_pt15to50>0.255746"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "plotChecksPrompt/hPtSpectrumSaveHistBplusPbPb_BDTd4.root" "plotChecksPrompt" "$NPFIT_PbPb" 0 "0" "100" "BDTd4"
@@ -547,7 +549,7 @@ CUT=${CUT}"&&abs(PVz)<15&&pclusterCompatibilityFilter&&pprimaryVertexFilter&&phf
 for f in 00_03 03_06 06_09 09_12 12_15 15_30 30_Inf
 do
 	SUBD="folder_PbPb_"$f
-	INPUTPROMPTPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_ptJpsiX/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_ptJpsi_"$f"_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs_BDT15to50v2.root"
+	INPUTPROMPTPbPb="Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_ptJpsiX/Bntuple20171120_bPt10_BfinderMC_PbPb_JpsiMM_ptJpsi_"$f"_Hydjet_MB_20171119_bPt10jpsiPt0tkPt0p8_Bs"
 	rm -r "plotChecksPrompt/"$SUBD
 	mkdir "plotChecksPrompt/"$SUBD
 	./fitPrompt.exe 1 0 "$INPUTPROMPTPbPb"  "$INPUTMCPbPb"  "Bpt" "$TRGPbPbMC" "$CUT&&BDTStage1_pt15to50>0.255746"   "$SELGENPbPb"   "$ISMCPbPb"   1   "$ISDOWEIGHTPbPb"   "$LABELPbPb"  "plotChecksPrompt/${SUBD}/hPtSpectrumSaveHistBplusPbPb_BDTd4.root" "plotChecksPrompt/${SUBD}" "$NPFIT_PbPb" 0 "0" "100" "BDTd4"
