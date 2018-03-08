@@ -51,8 +51,8 @@ bool generateBinned = false;             // for binned generation
 
 int calcType = 0; // 0 freq 1 hybrid, 2 asymptotic
 int testStatType = 3;   // 0 LEP, 1 TeV, 2 LHC, 3 LHC - one sided
-int ntoys = 5000;
-//int ntoys = 500;
+//int ntoys = 5000;
+int ntoys = 100;
 bool useNC = false;
 const char * nuisPriorName = 0;
 
