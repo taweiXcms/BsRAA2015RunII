@@ -43,7 +43,7 @@
 using namespace RooFit;
 using namespace RooStats;
 
-bool noSystematics = 1;              // force all systematics to be off (i.e. set all nuisance parameters as constat
+bool noSystematics = 0;              // force all systematics to be off (i.e. set all nuisance parameters as constat
 double nToysRatio = 1;                   // ratio Ntoys Null/ntoys ALT
 double poiValue = -1;                    // change poi snapshot value for S+B model (needed for expected p0 values)
 int  printLevel=0;
@@ -97,32 +97,35 @@ void HypoTest(){
     RooAddPdf *model = (RooAddPdf*) ws->pdf(Form("model%d",_count));
 
 	RooAbsPdf* sig_abs = static_cast<RooAbsPdf*>(sig->Clone("sig_abs"));
+	RooAbsReal* nsig_abs = static_cast<RooAbsReal*>(nsig->Clone("nsig_abs"));
 	RooAbsPdf* bkg_abs = static_cast<RooAbsPdf*>(bkg->Clone("bkg_abs"));
 	RooAbsReal* nbkg_abs = static_cast<RooAbsReal*>(nbkg->Clone("nbkg_abs"));
 	RooAbsPdf* peakbg_abs = static_cast<RooAbsPdf*>(peakbg->Clone("peakbg_abs"));
 	RooAbsReal* npeakbg_abs = static_cast<RooAbsReal*>(npeakbg->Clone("npeakbg_abs"));
 	ws->import(*sig_abs);
+	ws->import(*nsig_abs);
 	ws->import(*bkg_abs);
 	ws->import(*nbkg_abs);
 	ws->import(*peakbg_abs);
 	ws->import(*npeakbg_abs);
 
-	double systval = 1.10;
+//	double systval = 1.10;
+	double systval = 1.5;
     ws->factory( Form("kappa_syst[%f]",systval) );
-    ws->factory(Form("beta_syst[0,-5,5]"));
     ws->factory( "expr::alpha_syst('pow(kappa_syst,beta_syst)',kappa_syst,beta_syst[0,-5,5])" );
     ws->factory( Form("prod::nsig_syst(nsig%d,alpha_syst)",_count) );
+	//ws->factory( Form("expr::nsig_syst('@0*@1',nsig%d,alpha_syst)",_count) );
     ws->factory( "Gaussian::constr_syst(beta_syst,glob_syst[0,-5,5],1)" );
     RooGaussian *constr_syst = (RooGaussian*) ws->pdf("constr_syst");
 	RooRealVar* nsig_syst = ws->var(Form("nsig_syst"));
     //RooAddPdf* model_syst_noconstr = new RooAddPdf(Form("model_syst_noconstr"),"",RooArgList(*bkg,*sig,*peakbg),RooArgList(*nbkg,*nsig_syst,*npeakbg));
-    ws->factory( "SUM::model_syst_noconstr(nbkg_abs * bkg_abs, nsig_syst * sig_abs, npeakbg_abs * peakbg_abs)" ); RooAbsPdf* model_syst_noconstr = (RooAddPdf*)ws->pdf("model_syst_noconstr");
+    ws->factory( "SUM::model_syst_noconstr(nbkg_abs * bkg_abs, nsig_syst * sig_abs, npeakbg_abs * peakbg_abs)" ); RooAddPdf* model_syst_noconstr = (RooAddPdf*)ws->pdf("model_syst_noconstr");
     RooProdPdf *model_syst = new RooProdPdf("model_syst","model_syst",RooArgSet(*model_syst_noconstr,*constr_syst));
 	ws->import(*model_syst);
 	if(!noSystematics) ws->var("beta_syst")->setConstant(kFALSE);
 	else ws->var("beta_syst")->setConstant(kTRUE);
 	ws->var("glob_syst")->setConstant(true);
-	
+
 	RooRealVar * pObs = ws->var("Bmass"); // get the pointer to the observable
 	RooArgSet obs("observables");
 	obs.add(*pObs);
@@ -130,33 +133,34 @@ void HypoTest(){
     globalObs.add( *ws->var("glob_syst") );
 	RooArgSet poi("poi");
 	poi.add(*ws->var(Form("nsig%d",_count)));
+	//poi.add(*ws->var(Form("nsig_abs")));
     RooArgSet nuis("nuis");
-    //nuis.add( *ws->var("beta_syst") );
-    //nuis.add( *ws->var(Form("mean%d",_count)) );
-    //nuis.add( *ws->var(Form("a0%d",_count)) );
-    //nuis.add( *ws->var(Form("a1%d",_count)) );
-    //nuis.add( *ws->var(Form("a2%d",_count)) );
-    //nuis.add( *ws->var(Form("nbkg%d",_count)) );
-    //nuis.add( *ws->var(Form("npeakbg%d",_count)) );
+    nuis.add( *ws->var("beta_syst") );
 	//ws->saveSnapshot("snapshot",RooArgSet(*nsig,*nbkg));
 	ws->Print();
 
 	// create signal+background Model Config
 	RooStats::ModelConfig sbHypo("SbHypo");
 	sbHypo.SetWorkspace( *ws );
-	//sbHypo.SetPdf( *ws->pdf(Form("model_syst")) );
-	sbHypo.SetPdf( *ws->pdf(Form("model%d",_count)) );
+	if(noSystematics) sbHypo.SetPdf( *ws->pdf(Form("model%d",_count)) );
+	else sbHypo.SetPdf( *ws->pdf(Form("model_syst")) );
 	sbHypo.SetObservables( obs );
 	sbHypo.SetGlobalObservables( globalObs );
 	sbHypo.SetParametersOfInterest( poi );
-	//sbHypo.SetNuisanceParameters( nuis );
+	if(!noSystematics) sbHypo.SetNuisanceParameters( nuis );
     RooAbsReal * pNll = sbHypo.GetPdf()->createNLL( *data,NumCPU(nCPU) );
     RooMinuit(*pNll).migrad(); // minimize likelihood wrt all parameters before making plots
     ((RooRealVar *)poi.first())->setMin(0.);
+	//RooAbsReal * pProfile = pNll->createProfile( globalObs ); // do not profile global observables
+	//pProfile->getVal(); // this will do fit and set POI and nuisance parameters to fitted values
 	RooArgSet * pPoiAndNuisance = new RooArgSet("poiAndNuisance");
-	//pPoiAndNuisance->add( nuis );
+	if(!noSystematics) pPoiAndNuisance->add( nuis );
 	pPoiAndNuisance->add( poi );
 	sbHypo.SetSnapshot(*pPoiAndNuisance);
+
+	RooPlot* frame = ws->var("Bmass")->frame(Title(""));
+	data->plotOn(frame,Name(Form("ds%d",_count)),Binning(50),MarkerSize(1.55),MarkerStyle(20),MarkerColor(1),LineColor(1),LineWidth(4),LineColor(1));
+	model->plotOn(frame,Name(Form("model%d",_count)),Normalization(1.0,RooAbsReal::RelativeExpected),Precision(1e-6),DrawOption("L"),LineColor(2),LineWidth(4));
 
 	RooStats::ModelConfig bHypo = sbHypo;
 	bHypo.SetName("BHypo");
@@ -165,22 +169,32 @@ void HypoTest(){
     RooArgSet poiAndGlobalObs("poiAndGlobalObs");
     poiAndGlobalObs.add( poi );
     poiAndGlobalObs.add( globalObs );
-    RooAbsReal * pProfile = pNll->createProfile( poiAndGlobalObs ); // do not profile POI and global observables
 	float oldVal = ((RooRealVar *)poi.first())->getVal();
 	((RooRealVar *)poi.first())->setVal( 0 );
+    if(!noSystematics) pNll = model->createNLL( *data,NumCPU(nCPU) ); // ues original model without syst to profile
+    RooAbsReal * pProfile = pNll->createProfile( poiAndGlobalObs ); // do not profile POI and global observables
 	pProfile->getVal(); // this will do fit and set nuisance parameters to profiled values
+	//((RooRealVar *)poi.first())->setConstant(kTRUE);
+	//model->fitTo(*data,NumCPU(nCPU),Minos(RooArgSet(poi)),Extended());
+	//((RooRealVar *)poi.first())->setConstant(kFALSE);
 	RooArgSet * bpPoiAndNuisance = new RooArgSet( "bpoiAndNuisance" );
-	//bpPoiAndNuisance->add( nuis );
+	if(!noSystematics) bpPoiAndNuisance->add( nuis );
 	bpPoiAndNuisance->add( poi );
 	bHypo.SetSnapshot(*bpPoiAndNuisance);
+
+	model->plotOn(frame,Name(Form("model%d",_count)),Normalization(1.0,RooAbsReal::RelativeExpected),Precision(1e-6),DrawOption("L"),LineColor(4),LineWidth(4));
+	frame->Draw();
+	if(ispp) c->SaveAs(Form("pp_PDF.pdf"));
+	else c->SaveAs(Form("PbPb_PDF.pdf"));
+	//return;
 
 	((RooRealVar *)poi.first())->setVal( oldVal );
   	ModelConfig* sbModel = (ModelConfig*)sbHypo.Clone();
   	ModelConfig* bModel = (ModelConfig*)bHypo.Clone();
 
 	// print some check
-	//sbModel->Print();
-	//bModel->Print();
+	sbModel->Print();
+	bModel->Print();
 	RooArgSet* arg = sbModel->GetPdf()->getVariables();
 	TIterator* it = arg->createIterator();
 	RooRealVar* theVar = (RooRealVar*) it->Next();
@@ -189,19 +203,6 @@ void HypoTest(){
 		theVar = (RooRealVar*) it->Next();
 	}
 	//return;
-
-	//if (noSystematics) {
-	//	const RooArgSet * nuisPar = sbModel->GetNuisanceParameters();
-	//	if (nuisPar && nuisPar->getSize() > 0) {
-	//		std::cout << "StandardHypoTestInvDemo" << "  -  Switch off all systematics by setting them constant to their initial values" << std::endl;
-	//		RooStats::SetAllConstant(*nuisPar);
-	//	}
-	//	if (bModel) {
-	//		const RooArgSet * bnuisPar = bModel->GetNuisanceParameters();
-	//		if (bnuisPar)
-	//			RooStats::SetAllConstant(*bnuisPar);
-	//	}
-	//}
 
     SimpleLikelihoodRatioTestStat::SetAlwaysReuseNLL(true);
     ProfileLikelihoodTestStat::SetAlwaysReuseNLL(true);
@@ -386,6 +387,6 @@ void HypoTest(){
 		}
 	}
 
-    if(ispp) c->SaveAs(Form("pp_result_%d.pdf",ntoys));
-    else c->SaveAs(Form("PbPb_result_%d.pdf",ntoys));
+	if(ispp) c->SaveAs(Form("pp_result_%d.pdf",ntoys));
+	else c->SaveAs(Form("PbPb_result_%d.pdf",ntoys));
 }
