@@ -63,10 +63,10 @@ PROJECTVAR=0
 DOVARCOMPARE_MC=0
 
 ### Data - MC comparison
-DOVARCOMPARE_PP=0
+DOVARCOMPARE_PP=1
 
 ### Checking prompt background structure
-CHECKPROMPT=1
+CHECKPROMPT=0
 
 ## PP MONTE CARLO
 INPUTMCPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50v2.root"
@@ -491,7 +491,6 @@ fi
 
 OUTPUTVARCOMPARE=""
 if [ $DOVARCOMPARE_PP -eq 1 ]; then      
-#rm plotFitsComp/*
 g++ fitVariables.C $(root-config --cflags --libs) -g -o fitVariables.exe 
 CUT=$CUTPP
 ./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT"                   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 0
@@ -515,7 +514,6 @@ CUT=$CUTPP
 ./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 18
 CUT=${BASECUTPP}
 CUT=${CUT}"&&abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
-#CUT=${CUT}" && BDTStage1_pt15to50 > 0.0"
 ./fitVariables.exe 0 0 "$INPUTDATAPP"  "$INPUTMCPP"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 19
 CUT=${CUT}"&&Btrk1Pt>0.8&&Btrk2Pt>0.8"
 ./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDT"  "$INPUTMCPP_PbPbBDT"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "$OUTPUTVARCOMPARE" "$NPFIT_PP" 0 "0" "100" 20

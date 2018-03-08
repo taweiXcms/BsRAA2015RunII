@@ -32,16 +32,15 @@ struct plotStruct plotSetting[21] = {
     {"abs(Bmumumass-3.096916)",     "Bmumumass",    1, 0, 4, {0, 0.02, 0.05, 0.1, 0.2}},
     {"BsvpvDistance/BsvpvDisErr", 	"Bsvpv", 		1, 0, 4, {0., 8., 20., 40., 200}},
     {"Balpha", 						"Balpha", 		1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}},
-    {"Bd0/Bd0Err", 					"Bd0", 			0, 0, 4, {0.,100,300,600,1000}},
-    {"cos(Bdtheta)", 				"cosBtheta", 	0, 0, 4, {-1,0.0,0.7,0.9,1}},
-    {"Bchi2cl", 					"Bchi2cl", 		0, 0, 4, {0.,0.1,0.3,0.6,1}},
-    {"Btktkpt", 					"Btktkpt", 		0, 0, 4, {0.,5,8,10,40}},
-    {"abs(Btktketa)", 				"Btktketa", 	0, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
-    {"Bmu1pt", 						"Bmu1pt", 		0, 0, 4, {0.,5,8,10,40}},
-    {"Bmu1pt", 						"Bmu2pt", 		0, 0, 4, {0.,5,8,10,40}},
-//    {"BDTStage1_pt15to50",			"BDT", 			0, 0, 4, {0.0,0.25,0.3,0.35,1.0}},
-    {"BDTStage1_pt15to50",			"BDT", 			0, 0, 4, {0.0,0.2,0.25,0.3,0.5}},
-    {"BDTStage1_pt15to50",			"PbPbBDT", 			0, 0, 4, {0.0,0.2,0.25,0.3,0.5}},
+    {"Bd0/Bd0Err", 					"Bd0", 			1, 0, 4, {0.,100,300,600,1000}},
+    {"cos(Bdtheta)", 				"cosBtheta", 	1, 0, 4, {-1,0.0,0.7,0.9,1}},
+    {"Bchi2cl", 					"Bchi2cl", 		1, 0, 4, {0.,0.1,0.3,0.6,1}},
+    {"Btktkpt", 					"Btktkpt", 		1, 0, 4, {0.,5,8,10,40}},
+    {"abs(Btktketa)", 				"Btktketa", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
+    {"Bmu1pt", 						"Bmu1pt", 		1, 0, 4, {0.,5,8,10,40}},
+    {"Bmu1pt", 						"Bmu2pt", 		1, 0, 4, {0.,5,8,10,40}},
+    {"BDTStage1_pt15to50",			"BDT", 			1, 0, 4, {0.1,0.25,0.3,0.35,0.5}},
+    {"BDTStage1_pt15to50",			"PbPbBDT",		1, 0, 4, {0.1,0.25,0.3,0.35,0.5}},
 };
 
 int _nBins;
@@ -224,10 +223,8 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
     pad->SetRightMargin(0.05443548);
     pad->SetTopMargin(0.08474576*tpadr);
     pad->SetBottomMargin(0);
-    pad->SetLogy();
     pad->Draw();
     pad->cd();
-	//cPt->SetLogy();
 	hPt->SetXTitle(Form("%s",varExp.Data()));
 	hPt->SetYTitle("Normalized");
     hPtMC->SetXTitle(Form("%s", plotSetting[vartype].text.Data()));
@@ -276,6 +273,13 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	pRatio->Draw();
 	pRatio->cd();
 	hRatio->Divide(hPtMC);
+	//if(varExp=="BDTStage1_pt15to50"){
+	if(0){
+		TF1* f = new TF1("f","[0]+[1]*x+[2]*x*x");
+		//TF1* f = new TF1("f","[0]+[1]*x");
+		hRatio->Fit("f","L");
+		//f->Print();
+	}
 	hRatio->Draw();
 	TLine* line = new TLine(_ptBins[0], 1., _ptBins[_nBins], 1.);
 	line->SetLineStyle(9);

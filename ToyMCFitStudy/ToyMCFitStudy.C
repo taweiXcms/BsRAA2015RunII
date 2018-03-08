@@ -39,7 +39,7 @@
 using namespace RooFit ;
 using namespace std;
 
-bool ispp = 1;
+bool ispp = 0;
 int _count = 1;
 TString npfit = "";
 TString colsys = "pp";
@@ -72,7 +72,7 @@ void ToyMCFitStudy()
 	double a2Val = inputw->var(Form("a2%d",_count))->getVal();
 	double nsigVal = inputw->var(Form("nsig%d",_count))->getVal();
 	double nbkgVal = inputw->var(Form("nbkg%d",_count))->getVal();
-	double npeakbgVal = inputw->var(Form("npeakbg%d",_count))->getVal();
+	//double npeakbgVal = inputw->var(Form("npeakbg%d",_count))->getVal();
 	double meanError = inputw->var(Form("mean%d",_count))->getError();
 	double sigma1Error = inputw->var(Form("sigma1%d",_count))->getError();
 	double sigma2Error = inputw->var(Form("sigma2%d",_count))->getError();
@@ -82,7 +82,7 @@ void ToyMCFitStudy()
 	double a2Error = inputw->var(Form("a2%d",_count))->getError();
 	double nsigError = inputw->var(Form("nsig%d",_count))->getError();
 	double nbkgError = inputw->var(Form("nbkg%d",_count))->getError();
-	double npeakbgError = inputw->var(Form("npeakbg%d",_count))->getError();
+	//double npeakbgError = inputw->var(Form("npeakbg%d",_count))->getError();
 
 	double parWidth = 1.0;
 	printf("%f %f %f\n",meanVal,meanVal-parWidth*meanError,meanVal+parWidth*meanError);
@@ -94,8 +94,8 @@ void ToyMCFitStudy()
 	printf("%f %f %f\n",a2Val,a2Val-parWidth*a2Error,a2Val+parWidth*a2Error);
 	printf("%f %f %f\n",nsigVal,nsigVal-parWidth*nsigError,nsigVal+parWidth*nsigError);
 	printf("%f %f %f\n",nbkgVal,nbkgVal-parWidth*nbkgError,nbkgVal+parWidth*nbkgError);
-	printf("%f %f %f\n",npeakbgVal,npeakbgVal-parWidth*npeakbgError,npeakbgVal+parWidth*npeakbgError);
-//	return;
+	//printf("%f %f %f\n",npeakbgVal,npeakbgVal-parWidth*npeakbgError,npeakbgVal+parWidth*npeakbgError);
+	//return;
 
 	RooRealVar mass("Bmass","Bmass",5,6); mass.setBins(50);
 	RooRealVar mean(Form("mean%d",_count),"",meanVal,5.,6.) ;
@@ -109,11 +109,12 @@ void ToyMCFitStudy()
 	RooRealVar a1(Form("a1%d",_count),"",a1Val,-1e4,1e4);
 	RooRealVar a2(Form("a2%d",_count),"",a2Val,-1e4,1e4);
 	RooPolynomial bkg(Form("bkg%d",_count),"",mass,RooArgSet(a0,a1,a2));
-	RooGenericPdf peakbg(Form("peakbg%d",_count),"",Form("(%s)",npfit.Data()),RooArgSet(mass));
+	//RooGenericPdf peakbg(Form("peakbg%d",_count),"",Form("(%s)",npfit.Data()),RooArgSet(mass));
 	RooRealVar nsig(Form("nsig%d",_count),"",nsigVal,0,1e8);
 	RooRealVar nbkg(Form("nbkg%d",_count),"",nbkgVal,0,1e5);
-	RooRealVar npeakbg(Form("npeakbg%d",_count),"",npeakbgVal,0,1e5);
-	RooAddPdf model(Form("model%d",_count),"",RooArgList(bkg,sig,peakbg),RooArgList(nbkg,nsig,npeakbg));
+	//RooRealVar npeakbg(Form("npeakbg%d",_count),"",npeakbgVal,0,1e5);
+	//RooAddPdf model(Form("model%d",_count),"",RooArgList(bkg,sig,peakbg),RooArgList(nbkg,nsig,npeakbg));
+	RooAddPdf model(Form("model%d",_count),"",RooArgList(bkg,sig),RooArgList(nbkg,nsig));
 	sigma1.setConstant();
 	sigma2.setConstant();
 	sig1frac.setConstant();

@@ -22,8 +22,10 @@ double BRUncertainty	= 7.57;// from PDG sqrt((0.08/1.07)^2+(0.033/5.961)^2+(0.5/
 double ppLumiUncertainty = 2.3;     // B+ paper
 double ppTrackingEfficiency	= 4*2; // single track systematics from D* studies
 double PbPbTrackingEfficiency = 6*2; // from charged particle analysis, paper
-double ppAlignment = 2.8;              // alignment systematic from pp 13 TeV analysis
-double PbPbAlignment = 2.8;            // alignment systematic from pp 13 TeV analysis
+//double ppAlignment = 2.8;              // alignment systematic from pp 13 TeV analysis
+//double PbPbAlignment = 2.8;            // alignment systematic from pp 13 TeV analysis
+double ppAlignment = 0;
+double PbPbAlignment = 0;
 double ppLifetime = 0.3;               // from 13 TeV analysis
 double PbPbLifetime = 0.3;             // from 13 TeV analysis
 TH1D*  ppSignalExtraction;
@@ -65,9 +67,8 @@ void initializationPP(int SysOpt=0)
 	ppTagAndProbe = new TH1D("ppTagAndProbe","",nPtBins,PtBins); 
 	ppAccUnc = new TH1D("ppAccUnc","",nPtBins,PtBins);
 	ppPtShape = new TH1D("ppPtShape","",nPtBins,PtBins);
-	double tnpUnc_pp[1] = {3.154493, };
-	//double tnpUnc_pp[1] = {3.172913, }; // only pthatweight
-	double AccUnc_pp[nPtBins] = {2.649775};
+	double tnpUnc_pp[1] = {3.147406, };
+	double AccUnc_pp[nPtBins] = {2.816427};
 	double ptshape_pp[1] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100};
 	for(int i = 0; i < nPtBins; i++){
 		ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp[i]);
@@ -84,7 +85,8 @@ void initializationPP(int SysOpt=0)
 	}
 	if(SysOpt==2){
 		ppTagAndProbe = new TH1D("ppTagAndProbeOpt2","",nPtBinsOpt2,PtBinsOpt2); 
-		double tnpUnc_ppOpt2[4] = {4.225170, 3.354476, 3.025281, 2.829637, };
+		double AccUnc_ppOp2[4] = {0.452393, 0.806122, 2.249326, 3.175795};
+		double tnpUnc_ppOpt2[4] = {4.217616, 3.332084, 3.026775, 2.829370, };
 		for(int i = 0; i < nPtBinsOpt2; i++){
 			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt2[i]);
 		}
@@ -94,7 +96,7 @@ void initializationPP(int SysOpt=0)
 void initializationPbPbCent0100(int SysOpt=0)
 {
 	PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
-	PbPbMesonSelection->SetBinContent(1, 30.4);
+	PbPbMesonSelection->SetBinContent(1, 5.6);
 
 	PbPbSignalExtraction = new TH1D("PbPbSignalExtraction","",nPtBins,PtBins);
 	PbPbSignalExtraction->SetBinContent(1, 2.50);
@@ -102,9 +104,8 @@ void initializationPbPbCent0100(int SysOpt=0)
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",nPtBins,PtBins);
 	PbPbAccUnc = new TH1D("PbPbAccUnc","",nPtBins,PtBins);
 	PbPbPtShape = new TH1D("PbPbPtShape","",nPtBins,PtBins);
-	double tnpUnc_pbpb[1] = {3.789687, };
-	//double tnpUnc_pbpb[1] = {3.818009, }; // only pthatweight
-	double AccUnc_PbPb[nPtBins] = {3.012407};
+	double tnpUnc_pbpb[1] = {3.781974, };
+	double AccUnc_PbPb[nPtBins] = {3.043463};
     double ptshape_PbPb[1] = {(4.513338e-02-4.291407e-02)/4.513338e-02*100};
 	for(int i = 0; i < nPtBins; i++){
 		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);
