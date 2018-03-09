@@ -29,35 +29,35 @@ int type = 13;
 void kkmass(){
 	if(!ispp) BDTcut = "BDTStage1_pt15to50>0.303985";
 	if(type==1){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p005-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p005/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.252209&&abs(Btktkmass-1.019455)<0.005";
 	}
 	if(type==2){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p01-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p01/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.234843&&abs(Btktkmass-1.019455)<0.01";
 	}
 	if(type==3){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p015/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p015/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.230537&&abs(Btktkmass-1.019455)<0.015";
 	}
 	if(type==4){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p015-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p015-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.328975&&abs(Btktkmass-1.019455)<0.015";
 	}
 	if(type==5){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p025/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p025/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.203605&&abs(Btktkmass-1.019455)<0.025";
 	}
 	if(type==6){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p025-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p025-more/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.305686&&abs(Btktkmass-1.019455)<0.025";
 	}
 	if(type==7){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p05/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p05/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.206883&&abs(Btktkmass-1.019455)<0.05";
 	}
 	if(type==8){
-		bdtfile = "../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p1/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
+		bdtfile = "../../../TMVA_Bs-20180223-d4-1550-nominal-tktkmass/TMVA_Bs-20180223-d4-1550-nominal-tktkmass0p1/tmvaVal/prod/Bntuple20171209_bPt0_BfinderMC_pp_BJpsiMM_5p02TeV_TuneCUETP8M1_ext_20171128_bPt0jpsiPt0tkPt0p0_Bs_BDT.root";
 		BDTcut = "BDTStage1_pt15to50>0.209775&&abs(Btktkmass-1.019455)<0.1";
 	}
 	if(type==13){
