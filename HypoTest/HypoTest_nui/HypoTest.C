@@ -51,8 +51,8 @@ bool generateBinned = false;             // for binned generation
 
 int calcType = 0; // 0 freq 1 hybrid, 2 asymptotic
 int testStatType = 3;   // 0 LEP, 1 TeV, 2 LHC, 3 LHC - one sided
-int ntoys = 5000;
-//int ntoys = 50000;
+//int ntoys = 5000;
+int ntoys = 100;
 bool useNC = false;
 const char * nuisPriorName = 0;
 
@@ -106,10 +106,10 @@ void HypoTest(){
 	ws->import(*nsig_abs);
 	ws->import(*bkg_abs);
 	ws->import(*nbkg_abs);
-	ws->import(*peakbg_abs);
-	ws->import(*npeakbg_abs);
+	//ws->import(*peakbg_abs);
+	//ws->import(*npeakbg_abs);
 
-//	double systval = 1.10;
+	//double systval = 1.10;
 	double systval = 1.5;
     ws->factory( Form("kappa_syst[%f]",systval) );
     ws->factory( "expr::alpha_syst('pow(kappa_syst,beta_syst)',kappa_syst,beta_syst[0,-5,5])" );
@@ -174,11 +174,12 @@ void HypoTest(){
 	((RooRealVar *)poi.first())->setVal( 0 );
     if(!noSystematics) pNll = model->createNLL( *data,NumCPU(nCPU) ); // ues original model without syst to profile
     RooAbsReal * pProfile = pNll->createProfile( poiAndGlobalObs ); // do not profile POI and global observables
-	pProfile->getVal(); // this will do fit and set nuisance parameters to profiled values
-	//((RooRealVar *)poi.first())->setConstant(kTRUE);
-	//model->fitTo(*data,NumCPU(nCPU),Minos(RooArgSet(poi)),Extended());
-	//((RooRealVar *)poi.first())->setConstant(kFALSE);
+	//pProfile->getVal(); // this will do fit and set nuisance parameters to profiled values
+	((RooRealVar *)poi.first())->setConstant(kTRUE);
+	model->fitTo(*data,NumCPU(nCPU),Minos(RooArgSet(poi)),Extended());
+	((RooRealVar *)poi.first())->setConstant(kFALSE);
 	RooArgSet * bpPoiAndNuisance = new RooArgSet( "bpoiAndNuisance" );
+//((RooRealVar *)nuis.first())->setVal( 0.001 );
 	if(!noSystematics) bpPoiAndNuisance->add( nuis );
 	bpPoiAndNuisance->add( poi );
 	bHypo.SetSnapshot(*bpPoiAndNuisance);

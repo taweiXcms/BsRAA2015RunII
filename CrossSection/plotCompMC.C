@@ -18,6 +18,8 @@ struct plotStruct plotSetting[nVar] = {
     {"abs(By)",                     "By",           1, 0, 50, 0.0, 2.4}, 
     {"Btrk1Pt",                     "Btrk1Pt",      1, 1, 50, 0.8, 30}, 
     {"Btrk2Pt",                     "Btrk2Pt",      1, 1, 50, 0.8, 30}, 
+//    {"Btrk1Pt",                     "Btrk1Pt",      1, 1, 50, 0.0, 10}, 
+//    {"Btrk2Pt",                     "Btrk2Pt",      1, 1, 50, 0.0, 10}, 
     {"abs(Btrk1Eta)",               "Btrk1Eta",     1, 0, 50, 0.0, 2.6}, 
     {"abs(Btrk2Eta)",               "Btrk2Eta",     1, 0, 50, 0.0, 2.6}, 
     {"abs(Btrk1Dxy/Btrk1D0Err)",    "Btrk1Dxy",     1, 0, 50, 0, 30}, 

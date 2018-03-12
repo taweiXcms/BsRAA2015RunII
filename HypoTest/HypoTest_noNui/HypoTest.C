@@ -52,7 +52,7 @@ bool generateBinned = false;             // for binned generation
 int calcType = 0; // 0 freq 1 hybrid, 2 asymptotic
 int testStatType = 3;   // 0 LEP, 1 TeV, 2 LHC, 3 LHC - one sided
 //int ntoys = 5000;
-int ntoys = 100;
+int ntoys = 50000;
 bool useNC = false;
 const char * nuisPriorName = 0;
 
@@ -169,9 +169,9 @@ void HypoTest(){
 	float oldVal = ((RooRealVar *)poi.first())->getVal();
 	((RooRealVar *)poi.first())->setVal( 0 );
 	pProfile->getVal(); // this will do fit and set nuisance parameters to profiled values
-	//((RooRealVar *)poi.first())->setConstant(kTRUE);
-	//model->fitTo(*data,NumCPU(nCPU),Minos(RooArgSet(poi)),Extended());
-	//((RooRealVar *)poi.first())->setConstant(kFALSE);
+	((RooRealVar *)poi.first())->setConstant(kTRUE);
+	model->fitTo(*data,NumCPU(nCPU),Minos(RooArgSet(poi)),Extended());
+	((RooRealVar *)poi.first())->setConstant(kFALSE);
 	RooArgSet * bpPoiAndNuisance = new RooArgSet( "bpoiAndNuisance" );
 	//bpPoiAndNuisance->add( nuis );
 	bpPoiAndNuisance->add( poi );

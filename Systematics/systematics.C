@@ -8,8 +8,8 @@
 #include <TFile.h>
 const int nPtBins=1;
 double PtBins[nPtBins+1] = {15.,50.};
-const int nPtBinsOpt2=4;
-double PtBinsOpt2[nPtBinsOpt2+1] = {10.,15.,20.,30.,50.};
+const int nPtBins1050=4;
+double PtBins1050[nPtBins1050+1] = {10.,15.,20.,30.,50.};
 // =============================================================================================================
 // B meson decay
 // =============================================================================================================
@@ -75,7 +75,7 @@ void initializationPP(int SysOpt=0)
 		ppAccUnc->SetBinContent(i+1,AccUnc_pp[i]);
 		ppPtShape->SetBinContent(i+1,ptshape_pp[i]);
 	}
-	if(SysOpt==1){
+	if(SysOpt==1){//for Bs Bp ratio
 		ppTrackingEfficiency = 4; 
 		ppTagAndProbe = new TH1D("ppTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_ppOpt1[1] = {0.};
@@ -83,12 +83,17 @@ void initializationPP(int SysOpt=0)
 			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt1[i]);
 		}
 	}
-	if(SysOpt==2){
-		ppTagAndProbe = new TH1D("ppTagAndProbeOpt2","",nPtBinsOpt2,PtBinsOpt2); 
-		double AccUnc_ppOp2[4] = {0.452393, 0.806122, 2.249326, 3.175795};
-		double tnpUnc_ppOpt2[4] = {4.217616, 3.332084, 3.026775, 2.829370, };
-		for(int i = 0; i < nPtBinsOpt2; i++){
-			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt2[i]);
+	if(SysOpt==2){//pp 4-bin result
+		ppTagAndProbe = new TH1D("ppTagAndProbe_1050","",nPtBins1050,PtBins1050); 
+		ppAccUnc = new TH1D("ppAccUnc_1050","",nPtBins1050,PtBins1050);
+		ppPtShape = new TH1D("ppPtShape_1050","",nPtBins1050,PtBins1050);
+		double tnpUnc_pp_1050[4] = {4.217616, 3.332084, 3.026775, 2.829370, };
+		double AccUnc_pp_1050[4] = {0.452393, 0.806122, 2.249326, 3.175795};
+		double ptshape_pp_1050[4] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100};
+		for(int i = 0; i < nPtBins1050; i++){
+			ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp_1050[i]);
+			ppAccUnc->SetBinContent(i+1,AccUnc_pp_1050[i]);
+			ppPtShape->SetBinContent(i+1,ptshape_pp_1050[i]);
 		}
 	}
 }
@@ -112,7 +117,7 @@ void initializationPbPbCent0100(int SysOpt=0)
 		PbPbAccUnc->SetBinContent(i+1,AccUnc_PbPb[i]);
 		PbPbPtShape->SetBinContent(i+1,ptshape_PbPb[i]);
 	}
-	if(SysOpt==1){
+	if(SysOpt==1){// for Bs Bp ratio
 		PbPbTrackingEfficiency = 6;
 		PbPbTagAndProbe = new TH1D("PbPbTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_PbPbOpt1[1] = {0.};
