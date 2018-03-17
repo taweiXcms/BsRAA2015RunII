@@ -106,11 +106,11 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t _count=0;
 	for(int i=0;i<_nBins;i++)
 	{
     	_count++;
 		TCanvas* c= new TCanvas(Form("c%d",_count),"",600,600);
+        TCanvas* cMC= new TCanvas(Form("cMC%d",_count),"",600,600);
 		if(fitOnSaved == 0){
 			drawOpt = 1;
 			h = new TH1D(Form("h%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
@@ -125,7 +125,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",_count));
 		}
 	    h->SetBinErrorOption(TH1::kPoisson);
-		TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
+		TF1* f = fit(c, cMC, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
 
 		double yield = f->Integral(minhisto,maxhisto)/binwidthmass;
 		double yieldErr = f->Integral(minhisto,maxhisto)/binwidthmass*f->GetParError(0)/f->GetParameter(0);
@@ -161,6 +161,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	    tex->Draw();
 
         c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
+        cMC->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
 
         TCanvas* cpull= new TCanvas(Form("cpull%d",_count),"",600,600);
         cpull->cd();
@@ -178,12 +179,12 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
             pullgraph->SetPointEYlow(b,1);
             pullgraph->SetPointEYhigh(b,1);
 		}
-		pullgraph->Draw();
 	    TLine* line = new TLine(5., 0., 6., 0.);
 	    line->SetLineStyle(9);
-	    line->SetLineWidth(6);
-	    line->SetLineColor(3);
+        line->SetLineWidth(4);
+        line->SetLineColor(kGreen+1);
 	    line->Draw();
+		pullgraph->Draw();
         cpull->SaveAs(Form("%s%s/%s_%s_%d%s_pull.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
 	}  
 

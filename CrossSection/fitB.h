@@ -28,30 +28,30 @@ TString selmcgen;
 TString collisionsystem;
 Float_t hiBinMin,hiBinMax,centMin,centMax;
 static Int_t _count=0;
-TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit)
+template <class T>
+//TF1 *fit(TCanvas* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit, int funcOpt = 0)
+TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit, int funcOpt = 0)
 {
 	cout<<"total data: "<<h->GetEntries()<<endl;
-	c->cd();
 	TString iNP = npfit;
-	TF1 *f = new TF1(Form("f%d",_count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
-	//TF1 *f = new TF1(Form("f%d",_count),"[0]*([7]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[7])*exp(-0.5*((x-[1])/[8])^2)/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x+[11]*("+iNP+")");
-	if(npfit == "1") f = new TF1(Form("f%d",_count),"[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
-	//if(npfit == "1") f = new TF1(Form("f%d",_count),"[0]*([7]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[7])*exp(-0.5*((x-[1])/[8])^2)/(sqrt(2*3.14159)*[8]))+[3]+[4]*x+[5]*x*x");
+    TString funcform = "";
+	TString sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))";
+	//TString sigfunc = "[0]*([7]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[7])*exp(-0.5*((x-[1])/[8])^2)/(sqrt(2*3.14159)*[8]))";
+	TString bkgfunc = "[3]+[4]*x+[5]*x*x";
+	if(funcOpt == 1) sigfunc = "[0]*(Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2]))";//single Gaussian
+	if(funcOpt == 2) sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*([9]*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8])+(1-[9])*Gaus(x,[1],[10])/(sqrt(2*3.14159)*[10])))";//triple Gaussian
+	if(funcOpt == 3 || funcOpt == 4) sigfunc = "[0]*([7]*Gaus(x,[1],[2]*(1+[12]))/(sqrt(2*3.14159)*[2]*(1+[12]))+(1-[7])*Gaus(x,[1],[8]*(1+[12]))/(sqrt(2*3.14159)*[8]*(1+[12])))";
+	if(funcOpt == 5) bkgfunc = "[3]+[4]*x";//linear background
+	if(funcOpt == 6) bkgfunc = "[3]+[4]*x+[5]*x*x+[6]*x*x*x";//3rd order background
+	if(funcOpt == 7) bkgfunc = "[3]*exp(-[4]*x)";//exponential background
+	funcform = sigfunc + "+" + bkgfunc;
+	if(npfit != "1") funcform = funcform + "+[11]*(" + iNP + ")";
+	TF1 *f = new TF1(Form("f%d",_count),funcform.Data());
 	f->SetNpx(5000);
 	f->SetLineWidth(4);
+	f->SetRange(minhisto,maxhisto);
 	//clean0(h);
-
-	f->SetParLimits(2,0.01,0.1);
-	f->SetParLimits(8,0.01,0.1);
-	f->SetParLimits(7,0,1);
-	f->SetParameter(0,setparam0);
-	f->SetParameter(1,setparam1);
-	f->SetParameter(2,setparam2);
-	f->SetParameter(8,setparam3);
-	f->FixParameter(6,0);//unused
-	f->FixParameter(9,0);//unused
-	f->FixParameter(10,0);//unused
-
+	
 	if(weightdata != "1"){
 		int maxb = h->GetMaximumBin();
 		double _max = h->GetBinContent(maxb);
@@ -61,12 +61,28 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 		f->SetParLimits(4,-1e5,1e5);
 		f->SetParLimits(11,0,1e4);
 	}
-
-	f->FixParameter(1,fixparam1);
+	
+	//signal setting
+	f->SetParameter(0,setparam0);
+	f->SetParameter(1,setparam1);
+	f->SetParameter(2,setparam2);
+	f->SetParameter(8,setparam3);
+	f->SetParameter(10,setparam3);
+	f->SetParameter(12,0);
+	f->SetParLimits(2,0.01,0.1);
+	f->SetParLimits(8,0.01,0.1);
+	f->SetParLimits(10,0.01,0.1);
+	//signal fraction
+	f->SetParLimits(7,0,1);
+	f->SetParLimits(9,0,1);
+	//remove background for MC fitting
 	f->FixParameter(3,0);
 	f->FixParameter(4,0);
 	f->FixParameter(5,0);
+	f->FixParameter(6,0);
 	f->FixParameter(11,0);
+
+	f->FixParameter(1,fixparam1);
 	hMCSignal->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	hMCSignal->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	f->ReleaseParameter(1);
@@ -74,28 +90,79 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	hMCSignal->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	hMCSignal->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	hMCSignal->Fit(Form("f%d",_count),"L m","",minhisto,maxhisto);
+	
+	cMC->cd();
+	hMCSignal->SetMarkerSize(1.55);
+	hMCSignal->SetMarkerStyle(20);
+	hMCSignal->SetLineColor(1);
+	hMCSignal->SetLineWidth(4);
+	hMCSignal->SetStats(0);
+	hMCSignal->GetXaxis()->SetNdivisions(-50205);
+	hMCSignal->Draw("e");
+	c->cd();
 
 	f->ReleaseParameter(3);
 	f->ReleaseParameter(4);
 	f->ReleaseParameter(5);
+	f->ReleaseParameter(6);
+	//some custome setting for PDF syst
+	if(funcOpt == 5) f->SetParLimits(4,0,1e3);
+	if(funcOpt == 7) f->SetParLimits(4,0,5);
 	f->ReleaseParameter(11);
 	f->SetParLimits(11,0,1000);
 	f->FixParameter(1,f->GetParameter(1));
 	f->FixParameter(2,f->GetParameter(2));
 	f->FixParameter(7,f->GetParameter(7));
 	f->FixParameter(8,f->GetParameter(8));
+	f->FixParameter(9,f->GetParameter(9));
+	f->FixParameter(10,f->GetParameter(10));
+	f->FixParameter(12,f->GetParameter(12));
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	f->ReleaseParameter(1); 
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	if(funcOpt == 3) f->FixParameter(12,f->GetParameter(12)-f->GetParError(12));
+	if(funcOpt == 4) f->FixParameter(12,f->GetParameter(12)+f->GetParError(12));
+	if(funcOpt == 3 || funcOpt == 4){
+		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
+	}
 	TFitResultPtr fitResult = h->Fit(Form("f%d",_count),"L m s","",minhisto,maxhisto);
+	
 
-	TF1 *background = new TF1(Form("background%d",_count),"[0]+[1]*x+[2]*x*x");
-	background->SetParameter(0,f->GetParameter(3));
-	background->SetParameter(1,f->GetParameter(4));
-	background->SetParameter(2,f->GetParameter(5));
+	TF1 *mass = new TF1(Form("fmass%d",_count),Form("%s",sigfunc.Data()));
+	mass->SetParameter(0,f->GetParameter(0));
+	mass->SetParameter(1,f->GetParameter(1));
+	mass->SetParameter(2,f->GetParameter(2));
+	mass->SetParameter(7,f->GetParameter(7));
+	mass->SetParameter(8,f->GetParameter(8));
+	mass->SetParameter(9,f->GetParameter(9));
+	mass->SetParameter(10,f->GetParameter(10));
+	mass->SetParameter(12,f->GetParameter(12));
+	mass->SetParError(0,f->GetParError(0));
+	mass->SetParError(1,f->GetParError(1));
+	mass->SetParError(2,f->GetParError(2));
+	mass->SetParError(7,f->GetParError(7));
+	mass->SetParError(8,f->GetParError(8));
+	mass->SetParError(9,f->GetParError(9));
+	mass->SetParError(10,f->GetParError(10));
+	mass->SetParError(12,f->GetParError(12));
+	mass->SetRange(minhisto,maxhisto);
+	//mass->SetRange(5.16,5.40);
+	mass->SetFillColor(kOrange-3);
+	mass->SetLineColor(kOrange-3);
+	mass->SetFillStyle(3002);
+	mass->SetLineWidth(4);
+	mass->SetLineStyle(7);
+
+	TF1 *background = new TF1(Form("background%d",_count),Form("%s",bkgfunc.Data()));
+	background->SetParameter(3,f->GetParameter(3));
+	background->SetParameter(4,f->GetParameter(4));
+	background->SetParameter(5,f->GetParameter(5));
+	background->SetParameter(6,f->GetParameter(6));
 	background->SetRange(minhisto,maxhisto);
 	background->SetLineColor(4);
 	background->SetLineStyle(7);
@@ -109,22 +176,6 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	Bkpi->SetLineColor(kGreen+4);
 	Bkpi->SetFillColor(kGreen+4);
 	Bkpi->SetLineWidth(4);
-
-	TF1 *mass = new TF1(Form("fmass%d",_count),"[0]*([3]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[3])*Gaus(x,[1],[4])/(sqrt(2*3.14159)*[4]))");
-	//TF1 *mass = new TF1(Form("fmass%d",_count),"[0]*([3]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[3])*exp(-0.5*((x-[1])/[4])^2)/(sqrt(2*3.14159)*[4]))");
-	mass->SetParameters(f->GetParameter(0),f->GetParameter(1),f->GetParameter(2),f->GetParameter(7),f->GetParameter(8));
-	mass->SetParError(0,f->GetParError(0));
-	mass->SetParError(1,f->GetParError(1));
-	mass->SetParError(2,f->GetParError(2));
-	mass->SetParError(3,f->GetParError(7));
-	mass->SetParError(4,f->GetParError(8));
-	mass->SetRange(minhisto,maxhisto);
-	//mass->SetRange(5.16,5.40);
-	mass->SetFillColor(kOrange-3);
-	mass->SetLineColor(kOrange-3);
-	mass->SetFillStyle(3002);
-	mass->SetLineWidth(4);
-	mass->SetLineStyle(7);
 
 	h->SetXTitle("m_{B} (GeV/c^{2})");
 	h->SetYTitle("Events / (20 MeV/c^{2})");
@@ -148,6 +199,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	h->GetXaxis()->SetNdivisions(-50205);
 	//h->SetMaximum((h->GetBinContent(h->GetMaximumBin())+h->GetBinError(h->GetMaximumBin()))*1.4);
 	h->SetMaximum((h->GetBinContent(h->GetMaximumBin()))*1.8);
+	c->cd();
 	h->Draw("e");
 	if(npfit != "1"){
 		//Bkpi->SetRange(5.00,5.60);
@@ -166,7 +218,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	//printf("Central val: %f\n", fr->GetParams()[0]);
 	//printf("HESSE err: %f (%.2f%)\n" , fr->GetErrors()[0], fr->GetErrors()[0]/fr->GetParams()[0]*100);
 	//printf("Minos err: %f (%.2f%), %f (%.2f%)\n", fr->LowerError(0), -fr->LowerError(0)/fr->GetParams()[0]*100, fr->UpperError(0), fr->UpperError(0)/fr->GetParams()[0]*100);
-	//printf("diff in %: (%.2f%), (%.2f%)\n", -fr->LowerError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100, fr->UpperError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100);a
+	//printf("diff in %: (%.2f%), (%.2f%)\n", -fr->LowerError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100, fr->UpperError(0)/fr->GetParams()[0]*100-fr->GetErrors()[0]/fr->GetParams()[0]*100);
 
 	//print out chi2 calculations
 	Double_t yield = mass->Integral(minhisto,maxhisto)/binwidthmass;
@@ -285,6 +337,7 @@ TF1 *fit(TCanvas* c, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, i
 	h->GetFunction(Form("f%d",_count))->Delete();
 	t->Draw("same");
 	h->Draw("e same");
+	f->Write();
 	h->Write();
 	hMCSignal->Write();
 

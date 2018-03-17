@@ -79,9 +79,9 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 
 	TF1 *total;
 	TString outputf;
-	outputf = Form("%s",outputfile.Data());
-	TFile* outf = new TFile(outputf.Data(),"recreate");
-	outf->cd();
+	//outputf = Form("%s",outputfile.Data());
+	//TFile* outf = new TFile(outputf.Data(),"recreate");
+	//outf->cd();
 
 	TH1D* hPt = new TH1D("hPt","",_nBins,_ptBins);
 	TH1D* hPtMC = new TH1D("hPtMC","",_nBins,_ptBins);
@@ -106,7 +106,6 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t _count=0;
 	for(int i=0;i<_nBins;i++)
 	{
     	_count++;
@@ -159,68 +158,7 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 
         c->SaveAs(Form("%s%s/%s_%s_%.0f_%.0f%s_%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_ptBins[i],_ptBins[i+1],_postfix.Data(),BDTcut.Data()));
 	}  
-
-	hMean->Write();
-	hPt->Write();
-	if(fitOnSaved == 1){
-		outf->Close();	
-		return;
-	}
-
-	ntMC->Project("hPtMC",varExp.Data(),TCut(weightmc)*(TCut(selmc.Data())&&"(Bgen==23333)"));
-	divideBinWidth(hPtMC);
-	ntGen->Project("hPtGen","Gpt",TCut(weightgen)*(TCut(selmcgen.Data())));
-	divideBinWidth(hPtGen);
-
-	TCanvas* cPt =  new TCanvas("cPt","",600,600);
-	cPt->SetLogy();
-	hPt->SetXTitle("B_{s} p_{T} (GeV/c)");
-	hPt->SetYTitle("Uncorrected dN(B_{s})/dp_{T}");
-	hPt->Draw();
-	if(isMC==1)
-	{
-		hPtMC->Draw("same hist");
-		TLegend* legPt = myLegend(0.55,0.80,0.90,0.94);
-		legPt->AddEntry(hPt,"Signal extraction","pl");
-		legPt->AddEntry(hPtMC,"Matched reco","lf");
-		legPt->Draw("same");  
-	}
-	hPtMC->Sumw2();
-	TH1D* hEff = (TH1D*)hPtMC->Clone("hEff");
-	hEff->SetTitle(";B_{s} p_{T} (GeV/c);Efficiency");
-	hEff->Sumw2();
-	hEff->Divide(hPtGen);
-	TCanvas* cEff = new TCanvas("cEff","",600,600);
-	hEff->Draw();
-
-	TH1D* hPtCor = (TH1D*)hPt->Clone("hPtCor");
-	hPtCor->SetTitle(";B_{s} p_{T} (GeV/c);Corrected dN(B_{s})/dp_{T}");
-	hPtCor->Divide(hEff);
-	TCanvas* cPtCor=  new TCanvas("cCorResult","",600,600);
-	cPtCor->SetLogy();
-	hPtCor->Draw();
-	if(isMC==1)
-	{
-		hPtGen->Draw("same hist");
-		TLegend* legPtCor = myLegend(0.55,0.80,0.90,0.94);
-		legPtCor->AddEntry(hPtCor,"Corrected signal","pl");
-		legPtCor->AddEntry(hPtGen,"Generated B_{s}","lf");
-		legPtCor->Draw("same");  
-	}
-
-	TH1D* hPtSigma= (TH1D*)hPtCor->Clone("hPtSigma");
-	hPtSigma->SetTitle(";B_{s} p_{T} (GeV/c);d#sigma(B_{s})/dp_{T} (pb/GeV)");
-	hPtSigma->Scale(1./(2*luminosity*BRchain));
-	TCanvas* cPtSigma=  new TCanvas("cPtSigma","",600,600);
-	cPtSigma->SetLogy();
-	hPtSigma->Draw();
-
-	hPtMC->Write();
-	hPtGen->Write();
-	hEff->Write();
-	hPtCor->Write();
-	hPtSigma->Write();
-	outf->Close();
+	return;
 }
 
 int main(int argc, char *argv[])

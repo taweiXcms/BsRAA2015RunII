@@ -226,12 +226,12 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
             pullgraph->SetPointEYlow(b,1);
             pullgraph->SetPointEYhigh(b,1);
         }
-        pullgraph->Draw();
         TLine* line = new TLine(5., 0., 6., 0.);
         line->SetLineStyle(9);
-        line->SetLineWidth(6);
-        line->SetLineColor(3);
+        line->SetLineWidth(4);
+        line->SetLineColor(kGreen+1);
         line->Draw();
+        pullgraph->Draw();
         cpull->SaveAs(Form("%s%s/%s_%s_%d%s_pull.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
 	}  
 

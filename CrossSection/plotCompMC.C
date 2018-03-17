@@ -129,9 +129,9 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
 
 	TF1 *total;
 	TString outputf;
-	outputf = Form("%s",outputfile.Data());
-	TFile* outf = new TFile(outputf.Data(),"recreate");
-	outf->cd();
+	//outputf = Form("%s",outputfile.Data());
+	//TFile* outf = new TFile(outputf.Data(),"recreate");
+	//outf->cd();
 
     TString weightmc_pp  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
 	TString weightmc_PbPb = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
@@ -144,10 +144,9 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t count=0;
 	for(int i=0;i<_nBins;i++)
 	{
-		TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
+		TCanvas* c= new TCanvas(Form("c%d",i),"",600,600);
 	    TLatex* tex1 = new TLatex(0.518,0.82,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
 	    TLatex* tex2 = new TLatex(0.735,0.75,"|y| < 2.4");
 	    TLatex* tex3 = new TLatex(0.25, 0.8,"MC");
@@ -158,16 +157,16 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
 		TLegend* leg; 
 
 		for(int v = vini; v < vend; v++){
-			count++;
-			h_pp   = new TH1D(Form("h_pp%d",count),  "", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
-			h_PbPb = new TH1D(Form("h_PbPb%d",count),"", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
+			_count++;
+			h_pp   = new TH1D(Form("h_pp%d",_count),  "", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
+			h_PbPb = new TH1D(Form("h_PbPb%d",_count),"", plotSetting[v].nBins, plotSetting[v].min, plotSetting[v].max);
 			setHist(h_pp, v);
 			setHist(h_PbPb, v);
 			h_pp->SetMarkerColor(3);
 			h_pp->SetLineColor(3);
 			
-			nt_pp->Project(Form("h_pp%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_pp.Data(), Form("%s&&Bgen==23333",selmc_pp.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
-			nt_PbPb->Project(Form("h_PbPb%d",count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_PbPb.Data(), Form("%s&&Bgen==23333",selmc_PbPb.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt_pp->Project(Form("h_pp%d",_count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_pp.Data(), Form("%s&&Bgen==23333",selmc_pp.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt_PbPb->Project(Form("h_PbPb%d",_count), plotSetting[v].var.Data(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc_PbPb.Data(), Form("%s&&Bgen==23333",selmc_PbPb.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h_pp->Scale(1/h_pp->Integral());
 			h_pp->SetAxisRange(0,h_pp->GetMaximum()*1.4*1.2,"Y");
 			h_PbPb->Scale(1/h_PbPb->Integral());
@@ -186,7 +185,7 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
 	        c->SaveAs(Form("%s%s/%s_%s_%d_%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),i,plotSetting[v].text.Data()));
 		}
 	}  
-	outf->Close();
+	//outf->Close();
 }
 
 int main(int argc, char *argv[])

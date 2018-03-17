@@ -107,9 +107,9 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 
 	TF1 *total;
 	TString outputf;
-	outputf = Form("%s",outputfile.Data());
-	TFile* outf = new TFile(outputf.Data(),"recreate");
-	outf->cd();
+	//outputf = Form("%s",outputfile.Data());
+	//TFile* outf = new TFile(outputf.Data(),"recreate");
+	//outf->cd();
 
     weightgen = "pthatweight*(pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
     weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
@@ -126,10 +126,9 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
     TString _postfix = "";
     if(weightdata!="1") _postfix = "_EFFCOR";
 
-	static Int_t count=0;
 	for(int i=0;i<_nBins;i++)
 	{
-		TCanvas* c= new TCanvas(Form("c%d",count),"",600,600);
+		TCanvas* c= new TCanvas(Form("c%d",i),"",600,600);
 	    TLatex* tex1 = new TLatex(0.518,0.82,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
 	    TLatex* tex2 = new TLatex(0.735,0.75,"|y| < 2.4");
 	    TLatex* tex3 = new TLatex(0.25, 0.8,"Data");
@@ -141,13 +140,13 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 		tex3->SetTextSize(0.07);
 
 		for(int v = 0; v < nVar; v++){
-    		count++;
-			h   = new TH1D(Form("h%d",count),  "", vbins[v], vbinmin[v], vbinmax[v]);
-			hMC = new TH1D(Form("hMC%d",count),"", vbins[v], vbinmin[v], vbinmax[v]);
+    		_count++;
+			h   = new TH1D(Form("h%d",_count),  "", vbins[v], vbinmin[v], vbinmax[v]);
+			hMC = new TH1D(Form("hMC%d",_count),"", vbins[v], vbinmin[v], vbinmax[v]);
 			setHist(h, v);
 			setHist(hMC, v);
-			nt->Project(Form("h%d",count),     vexp[v].c_str(), Form("(%s&&%s>%f&&%s<%f)*(1/%s)", seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-			ntMC->Project(Form("hMC%d",count), vexp[v].c_str(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc.Data(), Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
+			nt->Project(Form("h%d",_count),     vexp[v].c_str(), Form("(%s&&%s>%f&&%s<%f)*(1/%s)", seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
+			ntMC->Project(Form("hMC%d",_count), vexp[v].c_str(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc.Data(), Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 			hMC->Scale(1/hMC->Integral());
 			hMC->SetAxisRange(0,hMC->GetMaximum()*1.4*1.2,"Y");
@@ -166,7 +165,7 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 	        c->SaveAs(Form("%s%s/%s_%s_0_%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),vname[v].c_str()));
 		}
 	}  
-	outf->Close();
+	//outf->Close();
 }
 
 int main(int argc, char *argv[])

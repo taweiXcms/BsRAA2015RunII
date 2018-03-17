@@ -255,8 +255,6 @@ texB->Draw();
 	h->GetFunction(Form("f%d",_count))->Delete();
 	t->Draw("same");
 	h->Draw("e same");
-	h->Write();
-	hMCSignal->Write();
 
 	total=f;
 	return mass;
