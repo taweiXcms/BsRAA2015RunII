@@ -9,7 +9,8 @@ bool isMC = 0;//drop events w/o gen match
 bool mFromfinder = 0;
 bool skimevents=0;//drop events w/o reco cand.
 
-string inFileNames[] = {"/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs.root"};
+//string inFileNames[] = {"/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderData_pp_20171119_bPt0jpsiPt0tkPt0p5_Bs.root"};
+string inFileNames[] = {"/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs.root"};
 
 int nFiles = sizeof(inFileNames)/sizeof(string);
 void addtochain(TChain* root){
