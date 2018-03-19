@@ -1,12 +1,12 @@
 void canvasRAAPbPb_0_100()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Mar  8 12:35:27 2018) by ROOT version6.02/13
+//=========  (Mon Mar 19 11:33:11 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    canvasRAA->SetHighLightColor(2);
-   canvasRAA->Range(7.070589,-0.2310559,56.48235,1.69441);
+   canvasRAA->Range(-5.482353,-0.2310559,56.87059,1.69441);
    canvasRAA->SetFillColor(0);
    canvasRAA->SetBorderMode(0);
    canvasRAA->SetBorderSize(2);
@@ -17,7 +17,7 @@ void canvasRAAPbPb_0_100()
    canvasRAA->SetFrameBorderMode(0);
    canvasRAA->SetFrameBorderMode(0);
    
-   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,13,55,10,0,1.55);
+   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,2,55,10,0,1.55);
    hemptyEff1->SetMinimum(0);
    hemptyEff1->SetMaximum(2);
    hemptyEff1->SetStats(0);
@@ -43,7 +43,7 @@ void canvasRAAPbPb_0_100()
    hemptyEff1->GetZaxis()->SetTitleSize(0.035);
    hemptyEff1->GetZaxis()->SetTitleFont(42);
    hemptyEff1->Draw("");
-   TLine *line = new TLine(13,1,55,1);
+   TLine *line = new TLine(2,1,55,1);
    line->SetLineStyle(2);
    line->SetLineWidth(2);
    line->Draw();
@@ -70,14 +70,15 @@ tex->SetNDC();
    tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.3,0.9,"Preliminary");
+      tex = new TLatex(0.16,0.84,"Preliminary");
 tex->SetNDC();
    tex->SetTextAlign(13);
-   tex->SetTextSize(0.06);
+   tex->SetTextFont(52);
+   tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
    
-   TLegend *leg = new TLegend(0.135,0.65,0.49,0.85,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.5,0.66,0.95,0.92,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.04);
    leg->SetLineColor(0);
@@ -88,16 +89,16 @@ tex->SetNDC();
    TLegendEntry *entry=leg->AddEntry("gNuclearModification_UnCor","B_{s} R_{AA}","pe");
    entry->SetLineStyle(1);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    entry->SetMarkerColor(ci);
-   entry->SetMarkerStyle(21);
+   entry->SetMarkerStyle(33);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
    entry->SetTextSize(0.038);
    entry=leg->AddEntry("gNuclearModification","Syst. uncert.","f");
 
    ci = 924;
-   color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
+   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
    entry->SetFillColor(ci);
    entry->SetFillStyle(1001);
    entry->SetLineStyle(1);
@@ -135,14 +136,14 @@ tex->SetNDC();
    grae->SetTitle("Graph");
 
    ci = 924;
-   color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
+   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
    grae->SetFillColor(ci);
    grae->SetLineColor(0);
    grae->SetLineWidth(0);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    grae->SetMarkerColor(ci);
-   grae->SetMarkerStyle(21);
+   grae->SetMarkerStyle(33);
    grae->SetMarkerSize(1.2);
    
    TH1F *Graph_gNuclearModification3001 = new TH1F("Graph_gNuclearModification3001","Graph",100,11.5,53.5);
@@ -176,15 +177,15 @@ tex->SetNDC();
    hNuclearModification2->SetBinError(1,0.2321647);
    hNuclearModification2->SetEntries(5.58304);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    hNuclearModification2->SetLineColor(ci);
    hNuclearModification2->SetLineStyle(0);
    hNuclearModification2->SetLineWidth(3);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    hNuclearModification2->SetMarkerColor(ci);
-   hNuclearModification2->SetMarkerStyle(21);
-   hNuclearModification2->SetMarkerSize(1.2);
+   hNuclearModification2->SetMarkerStyle(33);
+   hNuclearModification2->SetMarkerSize(2.2);
    hNuclearModification2->GetXaxis()->SetLabelFont(42);
    hNuclearModification2->GetXaxis()->SetLabelOffset(0.007);
    hNuclearModification2->GetXaxis()->SetLabelSize(0.05);
@@ -202,11 +203,7 @@ tex->SetNDC();
    hNuclearModification2->GetZaxis()->SetLabelSize(0.05);
    hNuclearModification2->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification2->GetZaxis()->SetTitleFont(42);
-   hNuclearModification2->Draw("same");
-   TBox *box = new TBox(13,0.9586116,13.35,1.045662);
-   box->SetFillColor(16);
-   box->SetLineColor(16);
-   box->Draw();
+   hNuclearModification2->Draw("same p");
    Double_t xAxis2[2] = {15, 50}; 
    
    TH1D *hNuclearModification3 = new TH1D("hNuclearModification3","",1, xAxis2);
@@ -214,15 +211,15 @@ tex->SetNDC();
    hNuclearModification3->SetBinError(1,0.2321647);
    hNuclearModification3->SetEntries(5.58304);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    hNuclearModification3->SetLineColor(ci);
    hNuclearModification3->SetLineStyle(0);
    hNuclearModification3->SetLineWidth(3);
 
-   ci = TColor::GetColor("#0033cc");
+   ci = TColor::GetColor("#990099");
    hNuclearModification3->SetMarkerColor(ci);
-   hNuclearModification3->SetMarkerStyle(21);
-   hNuclearModification3->SetMarkerSize(1.2);
+   hNuclearModification3->SetMarkerStyle(33);
+   hNuclearModification3->SetMarkerSize(2.2);
    hNuclearModification3->GetXaxis()->SetLabelFont(42);
    hNuclearModification3->GetXaxis()->SetLabelOffset(0.007);
    hNuclearModification3->GetXaxis()->SetLabelSize(0.05);
@@ -240,14 +237,13 @@ tex->SetNDC();
    hNuclearModification3->GetZaxis()->SetLabelSize(0.05);
    hNuclearModification3->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification3->GetZaxis()->SetTitleFont(42);
-   hNuclearModification3->Draw("same p");
-      tex = new TLatex(0.81,0.2,"B_{s}");
-tex->SetNDC();
-   tex->SetTextSize(0.08);
-   tex->SetLineWidth(2);
-   tex->Draw();
+   hNuclearModification3->Draw("same");
+   TBox *box = new TBox(2,0.9586116,4,1.045662);
+   box->SetFillColor(16);
+   box->SetLineColor(16);
+   box->Draw();
    
-   TH2F *hemptyEff_copy4 = new TH2F("hemptyEff_copy4","",50,13,55,10,0,1.55);
+   TH2F *hemptyEff_copy4 = new TH2F("hemptyEff_copy4","",50,2,55,10,0,1.55);
    hemptyEff_copy4->SetMinimum(0);
    hemptyEff_copy4->SetMaximum(2);
    hemptyEff_copy4->SetDirectory(0);

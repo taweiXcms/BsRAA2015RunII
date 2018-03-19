@@ -1,10 +1,10 @@
 void Draw_DRAA(TCanvas*c, TGraphAsymmErrors *grae, bool drawOnlyPoint = 0)
 {
+c->cd();
 if(!drawOnlyPoint){
 c->SetHighLightColor(2);
 
 
-   c->cd();
    Double_t gNuclearModification_fx3001[5] = {
    22.5,
    27.5,
@@ -173,7 +173,7 @@ c->SetHighLightColor(2);
    grae->Draw("5");
    Double_t xAxis1[6] = {20, 25, 30, 40, 60, 100}; 
    
-   TH1D *hNuclearModification2 = new TH1D("hNuclearModification2","",5, xAxis1);
+   TH1D *hNuclearModification2 = new TH1D("hNuclearModification2_DRAA1","",5, xAxis1);
    hNuclearModification2->SetBinContent(1,0.4279886);
    hNuclearModification2->SetBinContent(2,0.4447959);
    hNuclearModification2->SetBinContent(3,0.5041472);
@@ -208,7 +208,7 @@ c->SetHighLightColor(2);
 
    Double_t xAxis2[10] = {2, 3, 4, 5, 6, 8, 10, 12.5, 15, 20}; 
    
-   TH1D *hNuclearModification3 = new TH1D("hNuclearModification3","",9, xAxis2);
+   TH1D *hNuclearModification3 = new TH1D("hNuclearModification3_DRAA1","",9, xAxis2);
    hNuclearModification3->SetBinContent(1,0.6315195);
    hNuclearModification3->SetBinContent(2,0.4432341);
    hNuclearModification3->SetBinContent(3,0.3674997);
@@ -252,7 +252,7 @@ c->SetHighLightColor(2);
 else{
    Double_t xAxis1[6] = {20, 25, 30, 40, 60, 100}; 
    
-   TH1D *hNuclearModification2 = new TH1D("hNuclearModification2","",5, xAxis1);
+   TH1D *hNuclearModification2 = new TH1D("hNuclearModification2_DRAA2","",5, xAxis1);
    hNuclearModification2->SetBinContent(1,0.4279886);
    hNuclearModification2->SetBinContent(2,0.4447959);
    hNuclearModification2->SetBinContent(3,0.5041472);
@@ -287,7 +287,7 @@ else{
 
    Double_t xAxis2[10] = {2, 3, 4, 5, 6, 8, 10, 12.5, 15, 20}; 
    
-   TH1D *hNuclearModification3 = new TH1D("hNuclearModification3","",9, xAxis2);
+   TH1D *hNuclearModification3 = new TH1D("hNuclearModification3_DRAA2","",9, xAxis2);
    hNuclearModification3->SetBinContent(1,0.6315195);
    hNuclearModification3->SetBinContent(2,0.4432341);
    hNuclearModification3->SetBinContent(3,0.3674997);

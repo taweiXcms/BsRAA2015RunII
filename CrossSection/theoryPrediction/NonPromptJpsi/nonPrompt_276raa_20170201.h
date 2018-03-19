@@ -108,7 +108,8 @@ tex->SetNDC();
    gre->SetName("Graph0");
    gre->SetTitle("Graph");
 
-   ci = 926;
+//   ci = 926;
+   ci = 113;
    color = new TColor(ci, 1, 0.8, 0.6, " ", 0.5);
 //   gre->SetFillColor(ci);
 //   gre->SetFillColor(kViolet-9);
@@ -260,7 +261,8 @@ tex->SetNDC();
    gre->SetName("Graph3");
    gre->SetTitle("Graph");
 
-   ci = 927;
+//   ci = 927;
+   ci = 112;
    color = new TColor(ci, 0.8, 0.6, 1, " ", 0.5);
 //   gre->SetFillColor(ci);
 //   gre->SetFillColor(kViolet-9);
