@@ -1,12 +1,12 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Mon Mar 19 11:32:59 2018) by ROOT version6.02/13
+//=========  (Tue Apr  3 11:36:40 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    canvasRAA->SetHighLightColor(2);
-   canvasRAA->Range(-5.482353,-0.2310559,56.87059,1.69441);
+   canvasRAA->Range(-5.482353,-0.3726708,56.87059,2.732919);
    canvasRAA->SetFillColor(0);
    canvasRAA->SetBorderMode(0);
    canvasRAA->SetBorderSize(2);
@@ -17,7 +17,7 @@ void canvasRAAPbPb_0_100_BpRAA()
    canvasRAA->SetFrameBorderMode(0);
    canvasRAA->SetFrameBorderMode(0);
    
-   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,2,55,10,0,1.55);
+   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,2,55,10,0,2.5);
    hemptyEff1->SetMinimum(0);
    hemptyEff1->SetMaximum(2);
    hemptyEff1->SetStats(0);
@@ -239,19 +239,25 @@ tex->SetNDC();
    entry->SetTextSize(0.038);
    leg->Draw();
    
-   Double_t gNuclearModification_fx3002[1] = {
+   Double_t gNuclearModification_fx3002[2] = {
+   11,
    32.5};
-   Double_t gNuclearModification_fy3002[1] = {
-   0.5485694};
-   Double_t gNuclearModification_felx3002[1] = {
+   Double_t gNuclearModification_fy3002[2] = {
+   1.668085,
+   0.8943754};
+   Double_t gNuclearModification_felx3002[2] = {
+   4,
    17.5};
-   Double_t gNuclearModification_fely3002[1] = {
-   0.1076159};
-   Double_t gNuclearModification_fehx3002[1] = {
+   Double_t gNuclearModification_fely3002[2] = {
+   0.3440483,
+   0.184468};
+   Double_t gNuclearModification_fehx3002[2] = {
+   4,
    17.5};
-   Double_t gNuclearModification_fehy3002[1] = {
-   0.1076159};
-   grae = new TGraphAsymmErrors(1,gNuclearModification_fx3002,gNuclearModification_fy3002,gNuclearModification_felx3002,gNuclearModification_fehx3002,gNuclearModification_fely3002,gNuclearModification_fehy3002);
+   Double_t gNuclearModification_fehy3002[2] = {
+   0.3440483,
+   0.184468};
+   grae = new TGraphAsymmErrors(2,gNuclearModification_fx3002,gNuclearModification_fy3002,gNuclearModification_felx3002,gNuclearModification_fehx3002,gNuclearModification_fely3002,gNuclearModification_fehy3002);
    grae->SetName("gNuclearModification");
    grae->SetTitle("Graph");
 
@@ -266,9 +272,9 @@ tex->SetNDC();
    grae->SetMarkerStyle(33);
    grae->SetMarkerSize(1.2);
    
-   TH1F *Graph_gNuclearModification3002 = new TH1F("Graph_gNuclearModification3002","Graph",100,11.5,53.5);
-   Graph_gNuclearModification3002->SetMinimum(0.4194303);
-   Graph_gNuclearModification3002->SetMaximum(0.6777085);
+   TH1F *Graph_gNuclearModification3002 = new TH1F("Graph_gNuclearModification3002","Graph",100,2.7,54.3);
+   Graph_gNuclearModification3002->SetMinimum(0.5796848);
+   Graph_gNuclearModification3002->SetMaximum(2.142355);
    Graph_gNuclearModification3002->SetDirectory(0);
    Graph_gNuclearModification3002->SetStats(0);
 
@@ -329,12 +335,14 @@ tex->SetNDC();
    hNuclearModification2_Bp3->GetZaxis()->SetTitleSize(0.035);
    hNuclearModification2_Bp3->GetZaxis()->SetTitleFont(42);
    hNuclearModification2_Bp3->Draw("same");
-   Double_t xAxis3[2] = {15, 50}; 
+   Double_t xAxis3[3] = {7, 15, 50}; 
    
-   TH1D *hNuclearModification4 = new TH1D("hNuclearModification4","",1, xAxis3);
-   hNuclearModification4->SetBinContent(1,0.5485694);
-   hNuclearModification4->SetBinError(1,0.2321647);
-   hNuclearModification4->SetEntries(5.58304);
+   TH1D *hNuclearModification4 = new TH1D("hNuclearModification4","",2, xAxis3);
+   hNuclearModification4->SetBinContent(1,1.668085);
+   hNuclearModification4->SetBinContent(2,0.8943754);
+   hNuclearModification4->SetBinError(1,0.6212808);
+   hNuclearModification4->SetBinError(2,0.3096108);
+   hNuclearModification4->SetEntries(13.6271);
 
    ci = TColor::GetColor("#990099");
    hNuclearModification4->SetLineColor(ci);
@@ -363,12 +371,14 @@ tex->SetNDC();
    hNuclearModification4->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification4->GetZaxis()->SetTitleFont(42);
    hNuclearModification4->Draw("same p");
-   Double_t xAxis4[2] = {15, 50}; 
+   Double_t xAxis4[3] = {7, 15, 50}; 
    
-   TH1D *hNuclearModification5 = new TH1D("hNuclearModification5","",1, xAxis4);
-   hNuclearModification5->SetBinContent(1,0.5485694);
-   hNuclearModification5->SetBinError(1,0.2321647);
-   hNuclearModification5->SetEntries(5.58304);
+   TH1D *hNuclearModification5 = new TH1D("hNuclearModification5","",2, xAxis4);
+   hNuclearModification5->SetBinContent(1,1.668085);
+   hNuclearModification5->SetBinContent(2,0.8943754);
+   hNuclearModification5->SetBinError(1,0.6212808);
+   hNuclearModification5->SetBinError(2,0.3096108);
+   hNuclearModification5->SetEntries(13.6271);
 
    ci = TColor::GetColor("#990099");
    hNuclearModification5->SetLineColor(ci);
@@ -407,7 +417,7 @@ tex->SetNDC();
    box->SetLineColor(ci);
    box->Draw();
    
-   TH2F *hemptyEff_copy6 = new TH2F("hemptyEff_copy6","",50,2,55,10,0,1.55);
+   TH2F *hemptyEff_copy6 = new TH2F("hemptyEff_copy6","",50,2,55,10,0,2.5);
    hemptyEff_copy6->SetMinimum(0);
    hemptyEff_copy6->SetMaximum(2);
    hemptyEff_copy6->SetDirectory(0);

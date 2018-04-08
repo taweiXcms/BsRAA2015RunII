@@ -6,10 +6,10 @@
 #include <TLegend.h>
 #include <TLatex.h>
 #include <TFile.h>
-const int nPtBins=1;
-double PtBins[nPtBins+1] = {15.,50.};
-const int nPtBins1050=4;
-double PtBins1050[nPtBins1050+1] = {10.,15.,20.,30.,50.};
+const int nPtBins=2;
+double PtBins[nPtBins+1] = {7,15.,50.};
+const int nPtBins750=5;
+double PtBins750[nPtBins750+1] = {7,10.,15.,20.,30.,50.};
 // =============================================================================================================
 // B meson decay
 // =============================================================================================================
@@ -67,9 +67,9 @@ void initializationPP(int SysOpt=0)
 	ppTagAndProbe = new TH1D("ppTagAndProbe","",nPtBins,PtBins); 
 	ppAccUnc = new TH1D("ppAccUnc","",nPtBins,PtBins);
 	ppPtShape = new TH1D("ppPtShape","",nPtBins,PtBins);
-	double tnpUnc_pp[1] = {3.147406, };
-	double AccUnc_pp[nPtBins] = {2.816427};
-	double ptshape_pp[1] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100};
+	double tnpUnc_pp[2] = {4.411893, 3.133342, };
+	double AccUnc_pp[nPtBins] = {2.816427, 2.816427};
+	double ptshape_pp[2] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100};
 	for(int i = 0; i < nPtBins; i++){
 		ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp[i]);
 		ppAccUnc->SetBinContent(i+1,AccUnc_pp[i]);
@@ -84,16 +84,16 @@ void initializationPP(int SysOpt=0)
 		}
 	}
 	if(SysOpt==2){//pp 4-bin result
-		ppTagAndProbe = new TH1D("ppTagAndProbe_1050","",nPtBins1050,PtBins1050); 
-		ppAccUnc = new TH1D("ppAccUnc_1050","",nPtBins1050,PtBins1050);
-		ppPtShape = new TH1D("ppPtShape_1050","",nPtBins1050,PtBins1050);
-		double tnpUnc_pp_1050[4] = {4.217616, 3.332084, 3.026775, 2.829370, };
-		double AccUnc_pp_1050[4] = {0.452393, 0.806122, 2.249326, 3.175795};
-		double ptshape_pp_1050[4] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100};
-		for(int i = 0; i < nPtBins1050; i++){
-			ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp_1050[i]);
-			ppAccUnc->SetBinContent(i+1,AccUnc_pp_1050[i]);
-			ppPtShape->SetBinContent(i+1,ptshape_pp_1050[i]);
+		ppTagAndProbe = new TH1D("ppTagAndProbe_750","",nPtBins750,PtBins750); 
+		ppAccUnc = new TH1D("ppAccUnc_750","",nPtBins750,PtBins750);
+		ppPtShape = new TH1D("ppPtShape_750","",nPtBins750,PtBins750);
+		double tnpUnc_pp_750[5] = {5.765834, 4.110639, 3.306750, 3.013141, 2.830679, };
+		double AccUnc_pp_750[5] = {0.452393, 0.452393, 0.806122, 2.249326, 3.175795};
+		double ptshape_pp_750[5] = {(1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100, (1.555731e-01-1.514180e-01)/1.555731e-01*100};
+		for(int i = 0; i < nPtBins750; i++){
+			ppTagAndProbe->SetBinContent(i+1,tnpUnc_pp_750[i]);
+			ppAccUnc->SetBinContent(i+1,AccUnc_pp_750[i]);
+			ppPtShape->SetBinContent(i+1,ptshape_pp_750[i]);
 		}
 	}
 }
@@ -109,9 +109,9 @@ void initializationPbPbCent0100(int SysOpt=0)
 	PbPbTagAndProbe = new TH1D("PbPbTagAndProbe","",nPtBins,PtBins);
 	PbPbAccUnc = new TH1D("PbPbAccUnc","",nPtBins,PtBins);
 	PbPbPtShape = new TH1D("PbPbPtShape","",nPtBins,PtBins);
-	double tnpUnc_pbpb[1] = {3.781974, };
-	double AccUnc_PbPb[nPtBins] = {3.043463};
-    double ptshape_PbPb[1] = {(4.513338e-02-4.291407e-02)/4.513338e-02*100};
+	double tnpUnc_pbpb[2] = {5.059860, 3.776518, };
+	double AccUnc_PbPb[nPtBins] = {3.043463, 3.043463};
+    double ptshape_PbPb[2] = {(4.513338e-02-4.291407e-02)/4.513338e-02*100, (4.513338e-02-4.291407e-02)/4.513338e-02*100};
 	for(int i = 0; i < nPtBins; i++){
 		PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_pbpb[i]);
 		PbPbAccUnc->SetBinContent(i+1,AccUnc_PbPb[i]);

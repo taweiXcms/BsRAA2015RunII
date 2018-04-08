@@ -18,16 +18,38 @@ double maxhisto=6.00;
 int nbinsmasshisto=50;
 double binwidthmass=(maxhisto-minhisto)/nbinsmasshisto;
 
-TString weight="1";
-TString weightgen="1";
-TString weightmc="1";
-TString weightdata="1";
 TString seldata;
 TString selmc;
 TString selmcgen;
 TString collisionsystem;
 Float_t hiBinMin,hiBinMax,centMin,centMax;
 static Int_t _count=0;
+enum variationType{
+	doubleGaus,
+	singleGaus,
+	tripleGaus,
+	decreaseWidth,
+	increaseWidth,
+	floatMean,
+	linearBG,
+	thirdOrdBG,
+	exponentialBG,
+	variationSize
+};
+struct variationStruct{
+    TString varName; bool isSigVar;
+};
+struct variationStruct variationSetting[variationSize] = {
+	{"doubleGaus", 1},
+	{"singleGaus", 1},
+	{"tripleGaus", 1},
+	{"decreaseWidth", 1},
+	{"increaseWidth", 1},
+	{"floatMean", 1},
+	{"linearBG", 0},
+	{"thirdOrdBG", 0},
+	{"exponentialBG", 0},
+};
 template <class T>
 //TF1 *fit(TCanvas* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit, int funcOpt = 0)
 TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t ptmax, int isMC, bool isPbPb, TF1* &total,Float_t centmin, Float_t centmax, TString npfit, int funcOpt = 0)
@@ -38,12 +60,12 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	TString sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))";
 	//TString sigfunc = "[0]*([7]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[7])*exp(-0.5*((x-[1])/[8])^2)/(sqrt(2*3.14159)*[8]))";
 	TString bkgfunc = "[3]+[4]*x+[5]*x*x";
-	if(funcOpt == 1) sigfunc = "[0]*(Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2]))";//single Gaussian
-	if(funcOpt == 2) sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*([9]*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8])+(1-[9])*Gaus(x,[1],[10])/(sqrt(2*3.14159)*[10])))";//triple Gaussian
-	if(funcOpt == 3 || funcOpt == 4) sigfunc = "[0]*([7]*Gaus(x,[1],[2]*(1+[12]))/(sqrt(2*3.14159)*[2]*(1+[12]))+(1-[7])*Gaus(x,[1],[8]*(1+[12]))/(sqrt(2*3.14159)*[8]*(1+[12])))";
-	if(funcOpt == 5) bkgfunc = "[3]+[4]*x";//linear background
-	if(funcOpt == 6) bkgfunc = "[3]+[4]*x+[5]*x*x+[6]*x*x*x";//3rd order background
-	if(funcOpt == 7) bkgfunc = "[3]*exp(-[4]*x)";//exponential background
+	if(funcOpt == singleGaus) sigfunc = "[0]*(Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2]))";//single Gaussian
+	if(funcOpt == tripleGaus) sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*([9]*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8])+(1-[9])*Gaus(x,[1],[10])/(sqrt(2*3.14159)*[10])))";//triple Gaussian
+	if(funcOpt == decreaseWidth || funcOpt == increaseWidth) sigfunc = "[0]*([7]*Gaus(x,[1],[2]*(1+[12]))/(sqrt(2*3.14159)*[2]*(1+[12]))+(1-[7])*Gaus(x,[1],[8]*(1+[12]))/(sqrt(2*3.14159)*[8]*(1+[12])))";// increase width or decrease width
+	if(funcOpt == linearBG) bkgfunc = "[3]+[4]*x";//linear background
+	if(funcOpt == thirdOrdBG) bkgfunc = "[3]+[4]*x+[5]*x*x+[6]*x*x*x";//3rd order background
+	if(funcOpt == exponentialBG) bkgfunc = "[3]*exp(-[4]*x)";//exponential background
 	funcform = sigfunc + "+" + bkgfunc;
 	if(npfit != "1") funcform = funcform + "+[11]*(" + iNP + ")";
 	TF1 *f = new TF1(Form("f%d",_count),funcform.Data());
@@ -106,8 +128,8 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	f->ReleaseParameter(5);
 	f->ReleaseParameter(6);
 	//some custome setting for PDF syst
-	if(funcOpt == 5) f->SetParLimits(4,0,1e3);
-	if(funcOpt == 7) f->SetParLimits(4,0,5);
+	if(funcOpt == linearBG) f->SetParLimits(4,0,1e3);
+	if(funcOpt == exponentialBG) f->SetParLimits(4,0,5);
 	f->ReleaseParameter(11);
 	f->SetParLimits(11,0,1000);
 	f->FixParameter(1,f->GetParameter(1));
@@ -119,13 +141,13 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	f->FixParameter(12,f->GetParameter(12));
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
-	f->ReleaseParameter(1); 
+	if(funcOpt != floatMean) f->ReleaseParameter(1); 
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
-	if(funcOpt == 3) f->FixParameter(12,f->GetParameter(12)-f->GetParError(12));
-	if(funcOpt == 4) f->FixParameter(12,f->GetParameter(12)+f->GetParError(12));
-	if(funcOpt == 3 || funcOpt == 4){
+	if(funcOpt == decreaseWidth) f->FixParameter(12,f->GetParameter(12)-f->GetParError(12));
+	if(funcOpt == increaseWidth) f->FixParameter(12,f->GetParameter(12)+f->GetParError(12));
+	if(funcOpt == decreaseWidth || funcOpt == increaseWidth){
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);

@@ -5,9 +5,14 @@ double *_ptBins = ptBins;
 void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
-	if(varExp == "Bpt1050"){
-		_nBins = nBins1050;
-		_ptBins = ptBins1050;
+	if(varExp == "Bpt750"){
+		_nBins = nBins750;
+		_ptBins = ptBins750;
+		varExp = "Bpt";
+	}
+	if(varExp == "Bpt750_acc"){
+		_nBins = nBins750_acc;
+		_ptBins = ptBins750_acc;
 		varExp = "Bpt";
 	}
 	if(varExp == "abs(By)"){
@@ -56,26 +61,23 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	TH1D* hpull;
 
 	TTree* nt;
-	TTree* ntGen;
 	TTree* ntMC;
+	TTree* ntGen;
 
 	if(fitOnSaved == 0){
 		nt = (TTree*)inf->Get("ntphi");
-		nt->AddFriend("ntHlt");
-		nt->AddFriend("ntHi");
-		nt->AddFriend("ntSkim");
-		nt->AddFriend("BDTStage1_pt15to50");
+		//nt->AddFriend("ntHlt");
+		//nt->AddFriend("ntHi");
+		//nt->AddFriend("ntSkim");
 	
 		ntGen = (TTree*)infMC->Get("ntGen");
-		ntGen->AddFriend("ntHlt");
-		ntGen->AddFriend("ntHi");
+		//ntGen->AddFriend("ntHlt");
+		//ntGen->AddFriend("ntHi");
 	
 		ntMC = (TTree*)infMC->Get("ntphi");
-		ntMC->AddFriend("ntHlt");
-		ntMC->AddFriend("ntHi");
-		ntMC->AddFriend("ntSkim");
-		ntMC->AddFriend("BDTStage1_pt15to50");
-		ntMC->AddFriend(ntGen);
+		//ntMC->AddFriend("ntHlt");
+		//ntMC->AddFriend("ntHi");
+		//ntMC->AddFriend("ntSkim");
 	}
 
 	TF1 *total;
@@ -91,11 +93,11 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	TH1D* hSigmaGaus1 = new TH1D("hSigmaGaus1","",_nBins,_ptBins); 
 	TH1D* hSigmaGaus2 = new TH1D("hSigmaGaus2","",_nBins,_ptBins); 
 
-    weightgen = "pthatweight*(pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
-    weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
+    weightgen = weightgen_pp;
+    weightmc  = weightmc_pp;
 	if(usePbPb){
-		weightgen = "pthatweight*(pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
-		weightmc = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
+		weightgen = weightgen_PbPb;
+		weightmc = weightmc_PbPb;
 	}
 
     TString _prefix = "";
@@ -145,7 +147,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 
 	    TLatex* tex;
 	    tex = new TLatex(0.518,0.82,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
-		if(varExp=="abs(By)") tex = new TLatex(0.518,0.82,Form("%.1f < y < %.1f",_ptBins[i],_ptBins[i+1]));
+		if(varExp=="abs(By)") tex = new TLatex(0.735,0.75,Form("%.1f < y < %.1f",_ptBins[i],_ptBins[i+1]));
 	    tex->SetNDC();
 	    tex->SetTextFont(42);
 	    tex->SetTextSize(0.055);
@@ -153,7 +155,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 	    tex->Draw();
 	
 	    tex = new TLatex(0.735,0.75,"|y| < 2.4");
-		if(varExp=="abs(By)") tex = new TLatex(0.65,0.75,"15 < p_{T} < 50 GeV.c");
+		if(varExp=="abs(By)") tex = new TLatex(0.518,0.82,"7 < p_{T} < 50 GeV.c");
 	    tex->SetNDC();
 	    tex->SetTextFont(42);
 	    tex->SetTextSize(0.055);

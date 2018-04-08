@@ -13,38 +13,63 @@
 #include <TGraphAsymmErrors.h>
 using namespace std;
 
-bool ispp = 0;
+bool ispp = 1;
 TString inputmc;
-
+bool nominalCut = 1;
+bool ppwithPbPbBDT = 0;
+bool cutGA = 0;
+int optSum = nominalCut + ppwithPbPbBDT + cutGA;
+bool is750 = 0;
+bool is750_acc = 0;
+bool isY = 0;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 
 void converter(){
+	if(optSum!=1) {cout<<"wrong option; return;"<<endl; return;}
+	if(is750){
+		_nBins = nBins750;
+		_ptBins = ptBins750;
+	}
+	if(is750_acc){
+		_nBins = nBins750_acc;
+		_ptBins = ptBins750_acc;
+	}
+	if(isY){
+		_nBins = nBinsY;
+		_ptBins = ptBinsY;
+	}
 	string label = "";
 	if(ispp){
 		label = "pp"; 
-		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50v2.root";
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50.root";
     }
 	else{
 		label = "pbpb";
-		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50v2.root";
-		
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50.root";
+	}
+	if(ppwithPbPbBDT){
+		ispp = 1;
+		label = "pp"; 
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50.root";
 	}
     TFile* infMC = new TFile(inputmc.Data());
     TTree* ntphi = (TTree*)infMC->Get("ntphi");
     TTree* ntSkim = (TTree*)infMC->Get("ntSkim");
     TTree* ntHlt = (TTree*)infMC->Get("ntHlt");
     TTree* ntHi = (TTree*)infMC->Get("ntHi");
-    TTree* mvaTree = (TTree*)infMC->Get("BDTStage1_pt15to50");
+    TTree* mvaTree1 = (TTree*)infMC->Get("BDTStage1_pt7to15");
+    TTree* mvaTree2 = (TTree*)infMC->Get("BDTStage1_pt15to50");
     TTree* ntGen = (TTree*)infMC->Get("ntGen");
 	ntphi->AddFriend("ntSkim");
 	ntphi->AddFriend("ntHlt");
 	ntphi->AddFriend("ntGen");
+	ntphi->AddFriend("BDTStage1_pt7to15");
 	ntphi->AddFriend("BDTStage1_pt15to50");
-	setAddressTree(ntphi, ntHlt, ntSkim, ntHi, mvaTree, ntGen, ispp);
+	setAddressTree(ntphi, ntHlt, ntSkim, ntHi, ntGen, ispp);
 	int nevents_total = ntphi->GetEntries();
 
-	TFile *f= new TFile(Form("results_%s.root", label.c_str()), "recreate"); 
+	//TFile *f= new TFile(Form("results_%s.root", label.c_str()), "recreate"); 
 	TH1D* hGen = new TH1D("hGen","",_nBins,_ptBins);
 	TH1D* hNominal = new TH1D("hNominal","",_nBins,_ptBins);
 	TH1D* hScale = new TH1D("hScale","",_nBins,_ptBins);
@@ -69,6 +94,7 @@ void converter(){
 	TH1D* hSysUnc = new TH1D("hSysUnc","",_nBins,_ptBins);
 	TH1D* hAllUnc = new TH1D("hAllUnc","",_nBins,_ptBins);
 	TH1D* hSF = new TH1D("hSF","",_nBins,_ptBins);
+	float varToFill = 0;
     for(int entry=0; entry<nevents_total; entry++){
     //for(int entry=111; entry<112; entry++){
 	    //if ((entry%10000) == 0) printf("Loading event #%d of %d.\n",entry,nevents_total);
@@ -76,11 +102,14 @@ void converter(){
     	ntHlt->GetEntry(entry);
     	ntSkim->GetEntry(entry);
     	ntHi->GetEntry(entry);
-    	mvaTree->GetEntry(entry);
+    	mvaTree1->GetEntry(entry);
+    	mvaTree2->GetEntry(entry);
     	ntGen->GetEntry(entry);
 	    for(int g=0; g<Gsize; g++){
         }
 	    for(int b=0; b<Bsize; b++){
+			varToFill = Bpt[b];
+			if(isY) varToFill = fabs(By[b]);
 			if(ispp){
 				if(HLT_HIL1DoubleMu0ForPPRef_v1)
 				if(abs(PVz)<15
@@ -96,25 +125,29 @@ void converter(){
 				&& Bmu1dxyPV[b]< 0.3 && Bmu2dxyPV[b]< 0.3 && Bmu1dzPV[b]<20 && Bmu2dzPV[b]<20 
 				&& Bmu1isGlobalMuon[b] && Bmu2isGlobalMuon[b] 
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
-				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4  
-				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 
+				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 && Btrk1Pt[b]>0. 
+				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 && Btrk2Pt[b]>0.
 				&& abs(Btktkmass[b]-1.019455)<0.015
-				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.230537
+				&& ( 
+					(nominalCut	&& ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.191055) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.208973)))
+					|| (ppwithPbPbBDT && ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.213755) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.254413)))
+					|| (cutGA && ((Bpt[b]>7 && Bpt[b]<15 && (Btrk1Pt[b]>0.96044105851185124 && Btrk2Pt[b]>0.47625434136305045 && abs(Btrk1Eta[b])<2.4147199180394177 && abs(Btrk2Eta[b])<2.3052611917398886 && abs(Btrk1Dxy[b]/Btrk1D0Err[b])>-0.50700522672246873 && abs(Btrk2Dxy[b]/Btrk2D0Err[b])>-0.29258267190923393 && abs(Btktkmass[b]-1.019455)<0.011577334741913982 && BsvpvDistance[b]/BsvpvDisErr[b]>-38.83571176258711 && Balpha[b]<3.104092988813095 && Bd0[b]/Bd0Err[b]>510.17997420026234 && cos(Bdtheta[b])>-0.40326844831704939 && Bchi2cl[b]>0.0048939239665767064)) || (Bpt[b]>15 && Bpt[b]<50 && (Btrk1Pt[b]>0.88010392070518972 && Btrk2Pt[b]>0.74630343789870546 && abs(Btrk1Eta[b])<2.2626072028730744 && abs(Btrk2Eta[b])<2.4187801371666175 && abs(Btrk1Dxy[b]/Btrk1D0Err[b])>-0.30170714307721802 && abs(Btrk2Dxy[b]/Btrk2D0Err[b])>-1.2682355606270277 && abs(Btktkmass[b]-1.019455)<0.014813912795464632 && BsvpvDistance[b]/BsvpvDisErr[b]>-56.600106798148566 && Balpha[b]<2.5800384512856156 && Bd0[b]/Bd0Err[b]>397.24968036422979 && cos(Bdtheta[b])>-0.63456958254017426 && Bchi2cl[b]>0.015022113220583305))))
+					)
 				) 
 				if(Bgen[b]==23333){
                     //double _weight = pthatweight;
-					double _weight = pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt[b] + -0.000691*Bgenpt[b]*Bgenpt[b] + 0.000005*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]));
-					hNominal->Fill(Bpt[b], _weight);
+                    double _weight = pthatweight*(0.675236 + 0.035587*Bgenpt[b] + -0.000358*Bgenpt[b]*Bgenpt[b]);
+					hNominal->Fill(varToFill, _weight);
 					//passed and fill
 					double scale = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], 0)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], 0)*tnp_weight_trk_pp(0);
-					hScale->Fill(Bpt[b], _weight*scale);
+					hScale->Fill(varToFill, _weight*scale);
 					for(int i = 1; i <= 100; i ++){
 						double statTrg = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], i)*tnp_weight_trk_pp(0);
 						double statMuid = scale*tnp_weight_muid_pp(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_muid_pp(Bmu2pt[b], Bmu2eta[b], i);
 						double statSTA = scale*tnp_weight_sta_pp(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_sta_pp(Bmu2pt[b], Bmu2eta[b], i);
-						hStatTrg[i-1]->Fill(Bpt[b], _weight*statTrg);
-						hStatMuid[i-1]->Fill(Bpt[b], _weight*statMuid);
-						hStatSTA[i-1]->Fill(Bpt[b], _weight*statSTA);
+						hStatTrg[i-1]->Fill(varToFill, _weight*statTrg);
+						hStatMuid[i-1]->Fill(varToFill, _weight*statMuid);
+						hStatSTA[i-1]->Fill(varToFill, _weight*statSTA);
 					}
 					double sysHiTrg = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], -1)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], -1)*tnp_weight_trk_pp(0);
 					double sysLoTrg = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], -2)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], -2)*tnp_weight_trk_pp(0);
@@ -125,15 +158,15 @@ void converter(){
                     double sysHiSTA = scale*tnp_weight_sta_pp(Bmu1pt[b], Bmu1eta[b], -1)*tnp_weight_sta_pp(Bmu2pt[b], Bmu2eta[b], -1);
                     double sysLoSTA = scale*tnp_weight_sta_pp(Bmu1pt[b], Bmu1eta[b], -2)*tnp_weight_sta_pp(Bmu2pt[b], Bmu2eta[b], -2);
 					double sysbinnedTrg = tnp_weight_trg_pp(Bmu1pt[b], Bmu1eta[b], -10)*tnp_weight_trk_pp(0)*tnp_weight_trg_pp(Bmu2pt[b], Bmu2eta[b], -10)*tnp_weight_trk_pp(0);
-					hSysHiTrg ->Fill(Bpt[b], _weight*sysHiTrg);
-					hSysHiTrk ->Fill(Bpt[b], _weight*sysHiTrk);
-					hSysHiMuid->Fill(Bpt[b], _weight*sysHiMuid);
-					hSysHiSTA ->Fill(Bpt[b], _weight*sysHiSTA);
-					hSysLoTrg ->Fill(Bpt[b], _weight*sysLoTrg);
-					hSysLoTrk ->Fill(Bpt[b], _weight*sysLoTrk);
-					hSysLoMuid->Fill(Bpt[b], _weight*sysLoMuid);
-					hSysLoSTA ->Fill(Bpt[b], _weight*sysLoSTA);
-					hSysBinnedTrg ->Fill(Bpt[b], _weight*sysbinnedTrg);
+					hSysHiTrg ->Fill(varToFill, _weight*sysHiTrg);
+					hSysHiTrk ->Fill(varToFill, _weight*sysHiTrk);
+					hSysHiMuid->Fill(varToFill, _weight*sysHiMuid);
+					hSysHiSTA ->Fill(varToFill, _weight*sysHiSTA);
+					hSysLoTrg ->Fill(varToFill, _weight*sysLoTrg);
+					hSysLoTrk ->Fill(varToFill, _weight*sysLoTrk);
+					hSysLoMuid->Fill(varToFill, _weight*sysLoMuid);
+					hSysLoSTA ->Fill(varToFill, _weight*sysLoSTA);
+					hSysBinnedTrg ->Fill(varToFill, _weight*sysbinnedTrg);
 				}
 			}
 			else{
@@ -152,25 +185,25 @@ void converter(){
 				&& Bmu1dxyPV[b]< 0.3 && Bmu2dxyPV[b]< 0.3 && Bmu1dzPV[b]<20 && Bmu2dzPV[b]<20 
 				&& Bmu1isGlobalMuon[b] && Bmu2isGlobalMuon[b] 
 				&& Bmu1TrgMatchFilterE[b]>0 && Bmu2TrgMatchFilterE[b]>0 
-				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 
-				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4  
+				&& Btrk1highPurity[b] && abs(Btrk1Eta[b])<2.4 && Btrk1Pt[b]>0. 
+				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 && Btrk2Pt[b]>0.
 				&& abs(Btktkmass[b]-1.019455)<0.015
-				&& Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.255746
+				&& ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.213755) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.254413))
 				)	
                 if(Bgen[b]==23333){
                     //double _weight = pthatweight;
-					double _weight = pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt[b] + -0.000199*Bgenpt[b]*Bgenpt[b] + 0.000000*Bgenpt[b]*Bgenpt[b]*Bgenpt[b]))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)*((PVz-0.44)/5.12)))/(0.08*exp(-0.5*((PVz-3.25)/5.23)*((PVz-3.25)/5.23)));
-					hNominal->Fill(Bpt[b], _weight);
+					double _weight = pthatweight*(0.675091 + 0.035578*Bgenpt[b] + -0.000359*Bgenpt[b]*Bgenpt[b])*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)*((PVz-0.44)/5.12)))/(0.08*exp(-0.5*((PVz-3.25)/5.23)*((PVz-3.25)/5.23)));
+					hNominal->Fill(varToFill, _weight);
 					//passed and fill
 					double scale = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], 0)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], 0)*tnp_weight_trk_pbpb(0);
-					hScale->Fill(Bpt[b], _weight*scale);
+					hScale->Fill(varToFill, _weight*scale);
 					for(int i = 1; i <= 100; i ++){
 						double statTrg = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], i)*tnp_weight_trk_pbpb(0);
 						double statMuid = scale*tnp_weight_muid_pbpb(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_muid_pbpb(Bmu2pt[b], Bmu2eta[b], i);
 						double statSTA = scale*tnp_weight_sta_pbpb(Bmu1pt[b], Bmu1eta[b], i)*tnp_weight_sta_pbpb(Bmu2pt[b], Bmu2eta[b], i);
-						hStatTrg[i-1]->Fill(Bpt[b], _weight*statTrg);
-						hStatMuid[i-1]->Fill(Bpt[b], _weight*statMuid);
-						hStatSTA[i-1]->Fill(Bpt[b], _weight*statSTA);
+						hStatTrg[i-1]->Fill(varToFill, _weight*statTrg);
+						hStatMuid[i-1]->Fill(varToFill, _weight*statMuid);
+						hStatSTA[i-1]->Fill(varToFill, _weight*statSTA);
 					}
 					double sysHiTrg = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], -1)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], -1)*tnp_weight_trk_pbpb(0);
 					double sysLoTrg = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], -2)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], -2)*tnp_weight_trk_pbpb(0);
@@ -181,15 +214,15 @@ void converter(){
                     double sysHiSTA = scale*tnp_weight_sta_pbpb(Bmu1pt[b], Bmu1eta[b], -1)*tnp_weight_sta_pbpb(Bmu2pt[b], Bmu2eta[b], -1);
                     double sysLoSTA = scale*tnp_weight_sta_pbpb(Bmu1pt[b], Bmu1eta[b], -2)*tnp_weight_sta_pbpb(Bmu2pt[b], Bmu2eta[b], -2);
 					double sysbinnedTrg = tnp_weight_trg_pbpb(Bmu1pt[b], Bmu1eta[b], -10)*tnp_weight_trk_pbpb(0)*tnp_weight_trg_pbpb(Bmu2pt[b], Bmu2eta[b], -10)*tnp_weight_trk_pbpb(0);
-					hSysHiTrg ->Fill(Bpt[b], _weight*sysHiTrg);
-					hSysHiTrk ->Fill(Bpt[b], _weight*sysHiTrk);
-					hSysHiMuid->Fill(Bpt[b], _weight*sysHiMuid);
-					hSysHiSTA ->Fill(Bpt[b], _weight*sysHiSTA);
-					hSysLoTrg ->Fill(Bpt[b], _weight*sysLoTrg);
-					hSysLoTrk ->Fill(Bpt[b], _weight*sysLoTrk);
-					hSysLoMuid->Fill(Bpt[b], _weight*sysLoMuid);
-					hSysLoSTA ->Fill(Bpt[b], _weight*sysLoSTA);
-					hSysBinnedTrg ->Fill(Bpt[b], _weight*sysbinnedTrg);
+					hSysHiTrg ->Fill(varToFill, _weight*sysHiTrg);
+					hSysHiTrk ->Fill(varToFill, _weight*sysHiTrk);
+					hSysHiMuid->Fill(varToFill, _weight*sysHiMuid);
+					hSysHiSTA ->Fill(varToFill, _weight*sysHiSTA);
+					hSysLoTrg ->Fill(varToFill, _weight*sysLoTrg);
+					hSysLoTrk ->Fill(varToFill, _weight*sysLoTrk);
+					hSysLoMuid->Fill(varToFill, _weight*sysLoMuid);
+					hSysLoSTA ->Fill(varToFill, _weight*sysLoSTA);
+					hSysBinnedTrg ->Fill(varToFill, _weight*sysbinnedTrg);
 				}
 			}
         }//Bsize loop

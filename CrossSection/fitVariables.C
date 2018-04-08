@@ -127,16 +127,11 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	TH1D* hSigmaGaus1 = new TH1D("hSigmaGaus1","",_nBins,_ptBins); 
 	TH1D* hSigmaGaus2 = new TH1D("hSigmaGaus2","",_nBins,_ptBins); 
 	
-    //weightgen = "pthatweight*(pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
-    weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
-    //weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight";
-    //weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1";
-	weightmc += "*((Bpt>10&&Bpt<12)*22823.31/21305.33 + (Bpt>12&&Bpt<15)*46684.27/44737.63 + (Bpt>15&&Bpt<20)*62732.74/61234.12 + (Bpt>20&&Bpt<30)*49566.28/49053.79 + (Bpt>30&&Bpt<50)*15394.50/15472.96)";
-	//double sf_pp[4] = {22823.31/21305.33, 46684.27/44737.63, 62732.74/61234.12, 49566.28/49053.79, };
-    if(usePbPb){
-        weightgen = "pthatweight*(pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
-        weightmc = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
-    }
+	weightmc  = weightmc_pp;
+	weightmc += Form("*((Bpt>7&&Bpt<15)*%f + (Bpt>15&&Bpt<20)*%f + (Bpt>20&&Bpt<50)*%f)",sf_pp_750[0],sf_pp_750[1],sf_pp_750[2]);
+	if(usePbPb){
+		weightmc = weightmc_PbPb;
+	}
 
 	TString _isMC = "data";
 	if(isMC) _isMC = "mc";

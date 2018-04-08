@@ -15,6 +15,7 @@ int     HLT_HIL1DoubleMu0_part2_v1;
 int     HLT_HIL1DoubleMu0_part3_v1;
 int     hiBin;
 //common
+float   BDTStage1_pt7to15[MAX_XB]; 
 float   BDTStage1_pt15to50[MAX_XB]; 
 float   pthatweight;
 int     Gsize;
@@ -66,8 +67,10 @@ float   Btrk1D0Err[MAX_XB];
 float   Btrk2Dxy[MAX_XB];
 float   Btrk2D0Err[MAX_XB];
 float   Balpha[MAX_XB];
+float   Bd0[MAX_XB];
+float   Bd0Err[MAX_XB];
 
-void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree* mvaTree, TTree* ntGen, bool ispp){
+void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree* ntGen, bool ispp){
 	if(ispp){
 		ntSkim->SetBranchAddress("pBeamScrapingFilter",&pBeamScrapingFilter);
 		ntSkim->SetBranchAddress("pPAprimaryVertexFilter",&pPAprimaryVertexFilter);
@@ -83,7 +86,8 @@ void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree
 		ntHlt->SetBranchAddress("HLT_HIL1DoubleMu0_part3_v1",&HLT_HIL1DoubleMu0_part3_v1);
 		ntHi->SetBranchAddress("hiBin",&hiBin);
 	}
-	mvaTree->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
+	ntKp->SetBranchAddress("BDTStage1_pt7to15",BDTStage1_pt7to15);
+	ntKp->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
 	ntHi->SetBranchAddress("pthatweight",&pthatweight);
 	ntGen->SetBranchAddress("Gsize",&Gsize);
     ntGen->SetBranchAddress("Gpt",Gpt);
@@ -134,4 +138,6 @@ void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree
 	ntKp->SetBranchAddress("Btrk2Dxy",Btrk2Dxy);
 	ntKp->SetBranchAddress("Btrk2D0Err",Btrk2D0Err);
 	ntKp->SetBranchAddress("Balpha",Balpha);
+	ntKp->SetBranchAddress("Bd0",Bd0);
+	ntKp->SetBranchAddress("Bd0Err",Bd0Err);
 }

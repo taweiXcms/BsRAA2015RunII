@@ -1,2 +1,10 @@
-const int nBins=1;
-double ptBins[nBins+1] = {15,50};
+const int nBins=2;
+double ptBins[nBins+1] = {7,15,50};
+const int nBins750=3;
+double ptBins750[nBins750+1] = {7,15,20,50};
+const int nBins750_acc=4;
+double ptBins750_acc[nBins750_acc+1] = {7,12,15,20,50};
+//const int nBins750=5;
+//double ptBins750[nBins750+1] = {7,10,15,20,30,50};
+const int nBinsY=4;
+double ptBinsY[nBinsY+1] = {0.0, 0.5, 1.0, 1.5, 2.4};

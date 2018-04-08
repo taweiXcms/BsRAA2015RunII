@@ -1,19 +1,19 @@
 void canvas1DhEff_pp()
 {
 //=========Macro generated from canvas: canvas1D/
-//=========  (Thu Mar  1 20:42:42 2018) by ROOT version6.02/13
+//=========  (Wed Apr  4 23:16:29 2018) by ROOT version6.02/13
    TCanvas *canvas1D = new TCanvas("canvas1D", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
    canvas1D->SetHighLightColor(2);
-   canvas1D->Range(4.375,-0.1,60.625,0.9);
+   canvas1D->Range(-4.625,-0.1,61.625,0.9);
    canvas1D->SetFillColor(0);
    canvas1D->SetBorderMode(0);
    canvas1D->SetBorderSize(2);
    canvas1D->SetFrameBorderMode(0);
    canvas1D->SetFrameBorderMode(0);
    
-   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,10,55,10,0,0.8);
+   TH2F *hemptyEff1 = new TH2F("hemptyEff1","",50,2,55,10,0,0.8);
    hemptyEff1->SetMinimum(0);
    hemptyEff1->SetMaximum(1);
    hemptyEff1->SetStats(0);
@@ -42,16 +42,14 @@ void canvas1DhEff_pp()
    hemptyEff1->GetZaxis()->SetTitleSize(0.035);
    hemptyEff1->GetZaxis()->SetTitleFont(42);
    hemptyEff1->Draw("");
-   Double_t xAxis1[2] = {15, 50}; 
+   Double_t xAxis1[3] = {7, 15, 50}; 
    
-   TH1D *hEff2 = new TH1D("hEff2","",1, xAxis1);
-   hEff2->SetBinContent(0,0.008685539);
-   hEff2->SetBinContent(1,0.1458064);
-   hEff2->SetBinContent(2,6.77238e-77);
-   hEff2->SetBinError(0,8.211064e-05);
-   hEff2->SetBinError(1,0.0007164077);
-   hEff2->SetBinError(2,nan);
-   hEff2->SetEntries(41422.16);
+   TH1D *hEff2 = new TH1D("hEff2","",2, xAxis1);
+   hEff2->SetBinContent(1,0.02118397);
+   hEff2->SetBinContent(2,0.1575054);
+   hEff2->SetBinError(1,0.0001644659);
+   hEff2->SetBinError(2,0.0007431898);
+   hEff2->SetEntries(55110.41);
    hEff2->SetStats(0);
    hEff2->SetLineColor(2);
    hEff2->SetMarkerColor(2);

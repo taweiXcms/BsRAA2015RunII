@@ -17,12 +17,12 @@ bool BSepSys = 0;
 // better draw the following all together
 bool drawChHad = 0;
 bool drawDRAA = 0;
-bool drawBpRAA = 0;
+bool drawBpRAA = 1;
 bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 1;
+bool drawThm = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 //Color_t BsBoxColor = kAzure+7;
@@ -132,7 +132,8 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		TAABarWid = 0.12;
 	}
 
-	TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,1.55);  
+	//TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,1.55);  
+	TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,2.5);  
 	if(drawBpRpA) hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,3);  
 	hemptyEff->GetXaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->CenterTitle();

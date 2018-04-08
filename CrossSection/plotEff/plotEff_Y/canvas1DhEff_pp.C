@@ -1,7 +1,7 @@
 void canvas1DhEff_pp()
 {
 //=========Macro generated from canvas: canvas1D/
-//=========  (Thu Mar  1 20:50:11 2018) by ROOT version6.02/13
+//=========  (Wed Apr  4 22:27:38 2018) by ROOT version6.02/13
    TCanvas *canvas1D = new TCanvas("canvas1D", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -45,15 +45,15 @@ void canvas1DhEff_pp()
    Double_t xAxis1[5] = {0, 0.5, 1, 1.5, 2.4}; 
    
    TH1D *hEff2 = new TH1D("hEff2","",4, xAxis1);
-   hEff2->SetBinContent(1,0.166654);
-   hEff2->SetBinContent(2,0.1744025);
-   hEff2->SetBinContent(3,0.1744135);
-   hEff2->SetBinContent(4,0.08521363);
-   hEff2->SetBinError(1,0.001508938);
-   hEff2->SetBinError(2,0.001577824);
-   hEff2->SetBinError(3,0.001679624);
-   hEff2->SetBinError(4,0.001031357);
-   hEff2->SetEntries(41707.35);
+   hEff2->SetBinContent(1,0.1809983);
+   hEff2->SetBinContent(2,0.1918837);
+   hEff2->SetBinContent(3,0.1909618);
+   hEff2->SetBinContent(4,0.09496058);
+   hEff2->SetBinError(1,0.001565559);
+   hEff2->SetBinError(2,0.001646515);
+   hEff2->SetBinError(3,0.001745826);
+   hEff2->SetBinError(4,0.001077353);
+   hEff2->SetEntries(46317.61);
    hEff2->SetStats(0);
    hEff2->SetLineColor(2);
    hEff2->SetMarkerColor(2);

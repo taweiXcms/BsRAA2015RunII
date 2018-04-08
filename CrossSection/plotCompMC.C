@@ -73,9 +73,9 @@ void setTex(TLatex* tex){
 void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb = "", TString varExp = "", TString trgselection_pp = "",  TString trgselection_PbPb = "", TString cut_pp = "", TString cut_PbPb = "", int isMC = 0, int vini = 1, int vend = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
-	if(varExp == "Bpt1050"){
-		_nBins = nBins1050;
-		_ptBins = ptBins1050;
+	if(varExp == "Bpt750"){
+		_nBins = nBins750;
+		_ptBins = ptBins750;
 		varExp = "Bpt";
 	}
 	if(varExp == "abs(By)"){
@@ -132,9 +132,6 @@ void plotCompMC(int usePbPb = 0, TString inputmc_pp = "", TString inputmc_PbPb =
 	//outputf = Form("%s",outputfile.Data());
 	//TFile* outf = new TFile(outputf.Data(),"recreate");
 	//outf->cd();
-
-    TString weightmc_pp  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
-	TString weightmc_PbPb = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
 
     TString _prefix = "";
     TString _isMC = "data";

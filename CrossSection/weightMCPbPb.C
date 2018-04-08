@@ -3,7 +3,8 @@
 #include "TLegendEntry.h"
 
 void weightPbPbvertex(){
-    TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    TFile*fMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    //TFile*fMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -12,7 +13,8 @@ void weightPbPbvertex(){
 	ntDkpiMC->AddFriend(ntHiMC);
 	ntDkpiMC->AddFriend(ntHltMC);
 
-    TFile*fData=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root");
+    TFile*fData=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root");
+    //TFile*fData=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged.root");
 	TTree *ntDkpiData = (TTree*)fData->Get("ntphi");
 	TTree *ntSkimData = (TTree*)fData->Get("ntSkim");
 	TTree *ntHiData = (TTree*)fData->Get("ntHi");
@@ -67,9 +69,8 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	TString selmcgen="TMath::Abs(Gy)<2.4&&abs(GpdgId)==531&&GisSignal>0";
 	TString myweightfunctiongen,myweightfunctionreco;
 
-	//TCut weighpthat="pthatweight";
-	TCut weighpthat="pthatweight * (6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))";//add centrality weight
-	//TCut weighpthat="pthatweight * (6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917))) * (pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
+	TCut weighpthat="pthatweight";
+	//TCut weighpthat="pthatweight * (0.675091 + 0.035578*Gpt + -0.000359*Gpt*Gpt)";
 
 	gStyle->SetOptTitle(1);
 	//gStyle->SetOptStat(111111);
@@ -83,7 +84,8 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	gStyle->SetStatW(0.30);
 	gStyle->SetStatH(0.04);
 	gStyle->SetStatFontSize(0.03); 
-    TFile*infMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    TFile*infMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_candWise_BDT7to50.root");
+    //TFile*infMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root");
 	TTree* ntGen = (TTree*)infMC->Get("ntGen");
 	TTree *ntHiMC = (TTree*)infMC->Get("ntHi");
 	ntGen->AddFriend(ntHiMC);
@@ -114,7 +116,8 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	hPtFONLLOverGen->Divide(hPtGen);
 
     //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2])",0, 100);
-    TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);
+    TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]",0, 100);
+    //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3])",0, 100);
     //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4])",0, 100);
     //TF1 *myfit = new TF1("myfit","pow(10,[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]+x*x*x*x*x*[5])",0, 100);
 
@@ -122,7 +125,7 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	c1->cd();
 	gPad->SetLogy();
 	gStyle->SetOptStat(111111111);
-	hPtFONLLOverGen->Fit("myfit","","",minfit,maxfit);
+	hPtFONLLOverGen->Fit("myfit","m q","",minfit,maxfit);
 	hPtFONLLOverGen->Fit("myfit","L m","",minfit,maxfit);
     printf("NDF: %d, chi: %f, prob: %f\n", myfit->GetNDF(), myfit->GetChisquare(), myfit->GetProb());
 	TLegend* leg0 = myLegend(0.13,0.83,0.40,0.89);
@@ -141,8 +144,10 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 	//double par6=myfit->GetParameter(6);
 
     printf("#########################\n");
-    printf("(pow(10, %f + %f*Gpt + %f*Gpt*Gpt + %f*Gpt*Gpt*Gpt))\n", par0, par1, par2, par3);
-    printf("(pow(10, %f + %f*Bgenpt + %f*Bgenpt*Bgenpt + %f*Bgenpt*Bgenpt*Bgenpt))\n", par0, par1, par2, par3);
+    printf("(%f + %f*Gpt + %f*Gpt*Gpt)\n", par0, par1, par2);
+    printf("(%f + %f*Bgenpt + %f*Bgenpt*Bgenpt)\n", par0, par1, par2);
+    //printf("(pow(10, %f + %f*Gpt + %f*Gpt*Gpt + %f*Gpt*Gpt*Gpt))\n", par0, par1, par2, par3);
+    //printf("(pow(10, %f + %f*Bgenpt + %f*Bgenpt*Bgenpt + %f*Bgenpt*Bgenpt*Bgenpt))\n", par0, par1, par2, par3);
     printf("#########################\n");
 
 	TCanvas*canvasPtReweight=new TCanvas("canvasPtReweight","canvasPtReweight_PbPb_MC_Bs",1253.,494.); 
@@ -184,7 +189,8 @@ void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
 }
 
 void weightPbPbCentrality(){
-	TFile*fMC=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    TFile*fMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt10_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20171119_bPt10jpsiPt0tkPt0p8_Bs_pthatweight_BDT15to50.root");
+    //TFile*fMC=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root");
 	TTree *ntDkpiMC = (TTree*)fMC->Get("ntphi");
 	TTree *ntSkimMC = (TTree*)fMC->Get("ntSkim");
 	TTree *ntHiMC = (TTree*)fMC->Get("ntHi");
@@ -193,7 +199,8 @@ void weightPbPbCentrality(){
 	ntDkpiMC->AddFriend(ntHiMC);
 	ntDkpiMC->AddFriend(ntHltMC);
 
-	TFile*fData=new TFile("/afs/lns.mit.edu/user/tawei/scratch/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root");
+    TFile*fData=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171110_bPt10_BfinderData_PbPb_20171109_bPt10jpsiPt0tkPt0p8_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT15to50.root");
+    //TFile*fData=new TFile("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged.root");
 	TTree *ntDkpiData = (TTree*)fData->Get("ntphi");
 	TTree *ntSkimData = (TTree*)fData->Get("ntSkim");
 	TTree *ntHiData = (TTree*)fData->Get("ntHi");
@@ -332,6 +339,6 @@ void weightPbPbCentrality(){
 }
 void weightMCPbPb(){
 //	weightPbPbvertex();
-//	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
+	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
 //	weightPbPbCentrality();
 }

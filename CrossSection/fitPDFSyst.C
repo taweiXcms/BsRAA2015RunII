@@ -5,9 +5,9 @@ double *_ptBins = ptBins;
 void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
-	if(varExp == "Bpt1050"){
-		_nBins = nBins1050;
-		_ptBins = ptBins1050;
+	if(varExp == "Bpt750"){
+		_nBins = nBins750;
+		_ptBins = ptBins750;
 		varExp = "Bpt";
 	}
 	if(varExp == "abs(By)"){
@@ -87,12 +87,11 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 		hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",i+1));
 		h->SetBinErrorOption(TH1::kPoisson);
 
-		const int nfVar = 8;
-		float yVar[nfVar];
+		float yVar[variationSize];
 
-		for(int fopt=0; fopt<nfVar; fopt++){
+		for(int fopt=0; fopt<variationSize; fopt++){
 			//_count++;
-			_count = i*nfVar+fopt+1;
+			_count = i*variationSize+fopt+1;
 			TCanvas* c= new TCanvas(Form("c%d_%d",_count),"",600,750);
 			float tpadr = 0.3;
 		    TPad* pFit = new TPad("pFit","",0.,tpadr,1.,1.);
@@ -196,10 +195,19 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 			hPt->Write();
 		}  
 		
-		for(int fopt=1; fopt<nfVar; fopt++){
-			printf("%f syst: %f\n",yVar[fopt], abs(yVar[fopt]-yVar[0])/yVar[0]*100);
-			
+		float sigVarMax = 0;
+		float bkgVarMax = 0;
+		FILE* outTextFile = fopen(Form("%s%s/varValues_%s_%d.txt",outplotf.Data(),_prefix.Data(),_isPbPb.Data(),i),"w");
+		fprintf(outTextFile, Form("Pt range: %.0f ~ %.0f\n",_ptBins[i], _ptBins[i+1]));
+		for(int fopt=0; fopt<variationSize; fopt++){
+			float varVal = abs(yVar[fopt]-yVar[0])/yVar[0]*100;
+			printf("%15s,    yield: %f,    syst: %f(%)\n",variationSetting[fopt].varName.Data(), yVar[fopt], varVal);
+			fprintf(outTextFile, "%15s,    yield: %f,    syst: %f(%)\n",variationSetting[fopt].varName.Data(), yVar[fopt], varVal);
+			if(variationSetting[fopt].isSigVar) sigVarMax = max(sigVarMax, varVal);
+			else bkgVarMax = max(bkgVarMax, varVal);
 		}
+		fprintf(outTextFile, Form("Max signal     variation: %f(%)\n",sigVarMax));
+		fprintf(outTextFile, Form("Max background variation: %f(%)\n",bkgVarMax));
 
 	}
 	outf->Close();	

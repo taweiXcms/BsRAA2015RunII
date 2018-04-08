@@ -24,9 +24,9 @@ TTree* makeTTree(TTree* intree, TString treeTitle)
 void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
-	if(varExp == "Bpt1050"){
-		_nBins = nBins1050;
-		_ptBins = ptBins1050;
+	if(varExp == "Bpt750"){
+		_nBins = nBins750;
+		_ptBins = ptBins750;
 		varExp = "Bpt";
 	}
 	if(varExp == "abs(By)"){
@@ -75,15 +75,15 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 	TH1D* hpull;
 
 	TTree* nt = new TTree();
-	TTree* ntGen = new TTree();
 	TTree* ntMC = new TTree();
+	TTree* ntGen = new TTree();
 	TTree* skimtree = new TTree();
 	TTree* skimtreeMC = new TTree();
 
 	if(fitOnSaved == 0){
 		nt = (TTree*)inf->Get("ntphi");
-		ntGen = (TTree*)infMC->Get("ntGen");
 		ntMC = (TTree*)infMC->Get("ntphi");
+		ntGen = (TTree*)infMC->Get("ntGen");
 	}
 
 	TString outputf;
@@ -108,11 +108,11 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 	RooHist* datahist = new RooHist();
 	RooCurve* modelcurve = new RooCurve();
 
-    weightgen = "pthatweight*(pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
-    weightmc  = "HLT_HIL1DoubleMu0ForPPRef_v1*pthatweight*(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
+	weightgen = weightgen_pp;
+	weightmc  = weightmc_pp;
 	if(usePbPb){
-		weightgen = "pthatweight*(pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
-		weightmc = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || HLT_HIL1DoubleMu0_part2_v1 || HLT_HIL1DoubleMu0_part3_v1)*pthatweight*(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))*(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))*(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
+		weightgen = weightgen_PbPb;
+		weightmc = weightmc_PbPb;
 	}
 
     TString _prefix = "";

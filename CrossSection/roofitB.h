@@ -34,10 +34,6 @@ double maxhisto=6.00;
 int nbinsmasshisto=50;
 double binwidthmass=(maxhisto-minhisto)/nbinsmasshisto;
 
-TString weight="1";
-TString weightgen="1";
-TString weightmc="1";
-TString weightdata="1";
 TString seldata;
 TString selmc;
 TString selmcgen;

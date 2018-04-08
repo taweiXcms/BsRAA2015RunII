@@ -1,0 +1,12 @@
+Pt range: 15 ~ 50
+     doubleGaus,    yield: 10.535810,    syst: 0.000000(%)
+     singleGaus,    yield: 10.081246,    syst: 4.314467(%)
+     tripleGaus,    yield: 10.455441,    syst: 0.762826(%)
+  decreaseWidth,    yield: 10.538421,    syst: 0.024775(%)
+  increaseWidth,    yield: 10.538421,    syst: 0.024775(%)
+      floatMean,    yield: 10.556343,    syst: 0.194884(%)
+       linearBG,    yield: 10.650331,    syst: 1.086960(%)
+     thirdOrdBG,    yield: 10.449461,    syst: 0.819581(%)
+  exponentialBG,    yield: 10.542224,    syst: 0.060873(%)
+Max signal     variation: 4.314467(%)
+Max background variation: 1.086960(%)

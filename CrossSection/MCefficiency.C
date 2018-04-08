@@ -26,10 +26,16 @@ double *_sf_pbpb = sf_pbpb;
 
 void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString selmcgenacceptance="", TString cut_recoonly="", TString cut="", TString varExp = "", TString varGenExp = "", TString label="", TString outputfile="", TString outplotf="", int PbPbweight=0, Float_t centmin=0., Float_t centmax=100.)
 {    
-    if(varExp == "Bpt1050"){
-        _nBins = nBins1050;
-        _ptBins = ptBins1050;
-		_sf_pp = sf_pp_1050;
+    if(varExp == "Bpt750"){
+        _nBins = nBins750;
+        _ptBins = ptBins750;
+		_sf_pp = sf_pp_750;
+        varExp = "Bpt";
+    }
+    if(varExp == "Bpt750_acc"){
+        _nBins = nBins750_acc;
+        _ptBins = ptBins750_acc;
+		_sf_pp = sf_pp_750_acc;
         varExp = "Bpt";
     }
     if(varExp == "BptCutBase"){
@@ -89,41 +95,38 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	TTree* ntGen = (TTree*)infMC->Get("ntGen");
 
 	ntMC->AddFriend(ntGen);
-	ntMC->AddFriend("ntSkim");
-	ntMC->AddFriend("ntHlt");
-	ntMC->AddFriend("ntHi");
-	ntMC->AddFriend("BDTStage1_pt15to50");
+	//ntMC->AddFriend("ntSkim");
+	//ntMC->AddFriend("ntHlt");
+	//ntMC->AddFriend("ntHi");
+	//ntMC->AddFriend("BDTStage1_pt15to50");
 
 	ntGen->AddFriend(ntMC);
-	ntGen->AddFriend("ntSkim");
-	ntGen->AddFriend("ntHlt");
-	ntGen->AddFriend("ntHi");
-	ntGen->AddFriend("BDTStage1_pt15to50");
+	//ntGen->AddFriend("ntSkim");
+	//ntGen->AddFriend("ntHlt");
+	//ntGen->AddFriend("ntHi");
+	//ntGen->AddFriend("BDTStage1_pt15to50");
 
 	// weigths
-	TCut weighpthat = "1";
+	TCut weighpthat = "pthatweight";
 	TCut weightGpt = "1";
 	TCut weightBgenpt = "1";
 	TCut weightHiBin = "1";
 	TCut weightPVz = "1";
 	if(PbPbweight==0) {
-		weighpthat = "pthatweight";
-		weightGpt = "(pow(10, -0.365511 + 0.030289*Gpt + -0.000691*Gpt*Gpt + 0.000005*Gpt*Gpt*Gpt))";
-		weightBgenpt = "(pow(10, -0.365511 + 0.030289*Bgenpt + -0.000691*Bgenpt*Bgenpt + 0.000005*Bgenpt*Bgenpt*Bgenpt))";
-		weightHiBin = "1";
-		weightPVz = "1";
+		weightGpt = weightGpt_pp;
+		weightBgenpt = weightBgenpt_pp;
 	}
 	if(PbPbweight==1) {
-		weighpthat = "pthatweight";
-		weightGpt = "(pow(10, -0.244653 + 0.016404*Gpt + -0.000199*Gpt*Gpt + 0.000000*Gpt*Gpt*Gpt))";
-		weightBgenpt = "(pow(10, -0.244653 + 0.016404*Bgenpt + -0.000199*Bgenpt*Bgenpt + 0.000000*Bgenpt*Bgenpt*Bgenpt))";
-		weightHiBin = "(6.625124*exp(-0.093135*pow(abs(hiBin-0.500000),0.884917)))";
-		weightPVz = "(0.08*exp(-0.5*((PVz-0.44)/5.12)**2))/(0.08*exp(-0.5*((PVz-3.25)/5.23)**2))";
+		weightGpt = weightGpt_PbPb;
+		weightBgenpt = weightBgenpt_PbPb;
+		weightHiBin = weightHiBin_PbPb;
+		weightPVz = weightPVz_PbPb;
 	}
 
 	TH1D* hPtMC = new TH1D("hPtMC","",_nBins,_ptBins);
 	TH1D* hPtMCrecoonly = new TH1D("hPtMCrecoonly","",_nBins,_ptBins);
 	TH1D* hPtGen = new TH1D("hPtGen","",_nBins,_ptBins);
+	TH1D* hPtGenWeighted = new TH1D("hPtGenWeighted","",_nBins,_ptBins);
 	TH1D* hPtGenAcc = new TH1D("hPtGenAcc","",_nBins,_ptBins);
 	TH1D* hPtGenAccWeighted = new TH1D("hPtGenAccWeighted","",_nBins,_ptBins);
 	ntMC->Project("hPtMC",varExp.Data(),
@@ -132,6 +135,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 		TCut(weighpthat)*TCut(weightBgenpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(cut_recoonly.Data())&&"(Bgen==23333)"));
 	ntGen->Project("hPtGen",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgen.Data())));
+	ntGen->Project("hPtGenWeighted",varGenExp.Data(),
+		TCut(weighpthat)*TCut(weightGpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(selmcgen.Data())));
 	ntGen->Project("hPtGenAcc",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgenacceptance.Data())));
 	ntGen->Project("hPtGenAccWeighted",varGenExp.Data(),
@@ -160,6 +165,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	divideBinWidth(hPtMC);
 	divideBinWidth(hPtMCrecoonly);
 	divideBinWidth(hPtGen);
+	divideBinWidth(hPtGenWeighted);
 	divideBinWidth(hPtGenAcc);
 	divideBinWidth(hPtGenAccWeighted);
 
@@ -183,7 +189,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	//Acc * Eff (one shot)
 	TH1D* hEffOneShot = (TH1D*)hPtMC->Clone("hEffOneShot");
 	hEffOneShot->Sumw2();
-	hEffOneShot->Divide(hEffOneShot,hPtGen,1,1,"b");
+	hEffOneShot->Divide(hEffOneShot,hPtGenWeighted,1,1,"b");
 
 	////// Draw hEff, hEffAcc
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.8);  
@@ -391,12 +397,15 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 	TFile *fout=new TFile(outputfile.Data(),"recreate");
 	fout->cd();
-	hPtGen->Write();
-	hEffAcc->Write();
-	hEffOneShot->Write();
-	hEffSelection->Write();
-	hEff->Write();
 	hPtMC->Write();
+	hPtGen->Write();
+	hPtGenWeighted->Write();
+	hPtGenAcc->Write();
+	hPtGenAccWeighted->Write();
+	hEffAcc->Write();
+	hEffSelection->Write();
+	hEffOneShot->Write();
+	hEff->Write();
 	fout->Close();  
 
 }
