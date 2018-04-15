@@ -1,7 +1,7 @@
 void canvas1DhEff_PbPb()
 {
 //=========Macro generated from canvas: canvas1D/
-//=========  (Fri Apr  6 14:00:05 2018) by ROOT version6.02/13
+//=========  (Thu Apr 12 23:06:23 2018) by ROOT version6.02/13
    TCanvas *canvas1D = new TCanvas("canvas1D", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -45,11 +45,11 @@ void canvas1DhEff_PbPb()
    Double_t xAxis1[3] = {7, 15, 50}; 
    
    TH1D *hEff2 = new TH1D("hEff2","",2, xAxis1);
-   hEff2->SetBinContent(1,0.002763777);
-   hEff2->SetBinContent(2,0.04837108);
-   hEff2->SetBinError(1,0.0001352269);
-   hEff2->SetBinError(2,0.001033158);
-   hEff2->SetEntries(2408.373);
+   hEff2->SetBinContent(1,0.002851409);
+   hEff2->SetBinContent(2,0.05014478);
+   hEff2->SetBinError(1,0.0001394557);
+   hEff2->SetBinError(2,0.001067179);
+   hEff2->SetEntries(2424.716);
    hEff2->SetStats(0);
    hEff2->SetLineColor(2);
    hEff2->SetMarkerColor(2);

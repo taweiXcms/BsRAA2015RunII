@@ -81,17 +81,18 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
     if(weightdata!="1") _postfix = "_EFFCOR";
 
 	// loop over different fitting function
+	int variationTypes = exponentialBG+1;
 	for(int i=0;i<_nBins;i++)
 	{
 		h = (TH1D*)inf->Get(Form("h%d",i+1));
 		hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",i+1));
 		h->SetBinErrorOption(TH1::kPoisson);
 
-		float yVar[variationSize];
+		float yVar[variationTypes];
 
-		for(int fopt=0; fopt<variationSize; fopt++){
+		for(int fopt=0; fopt<variationTypes; fopt++){
 			//_count++;
-			_count = i*variationSize+fopt+1;
+			_count = i*variationTypes+fopt+1;
 			TCanvas* c= new TCanvas(Form("c%d_%d",_count),"",600,750);
 			float tpadr = 0.3;
 		    TPad* pFit = new TPad("pFit","",0.,tpadr,1.,1.);
@@ -199,7 +200,7 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 		float bkgVarMax = 0;
 		FILE* outTextFile = fopen(Form("%s%s/varValues_%s_%d.txt",outplotf.Data(),_prefix.Data(),_isPbPb.Data(),i),"w");
 		fprintf(outTextFile, Form("Pt range: %.0f ~ %.0f\n",_ptBins[i], _ptBins[i+1]));
-		for(int fopt=0; fopt<variationSize; fopt++){
+		for(int fopt=0; fopt<variationTypes; fopt++){
 			float varVal = abs(yVar[fopt]-yVar[0])/yVar[0]*100;
 			printf("%15s,    yield: %f,    syst: %f(%)\n",variationSetting[fopt].varName.Data(), yVar[fopt], varVal);
 			fprintf(outTextFile, "%15s,    yield: %f,    syst: %f(%)\n",variationSetting[fopt].varName.Data(), yVar[fopt], varVal);

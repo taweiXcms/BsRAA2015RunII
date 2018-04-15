@@ -11,35 +11,6 @@ float vbinmax[nVar] = {3.4, 1.08};
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
-void setHist(TH1D* h, int v){
-	h->SetXTitle(vxaxis[v].c_str());
-	//h->SetYTitle("Events / (20 MeV/c^{2})");
-	h->GetXaxis()->CenterTitle();
-	h->GetYaxis()->CenterTitle();
-	h->GetXaxis()->SetTitleOffset(1.0);
-	h->GetYaxis()->SetTitleOffset(1.4);
-	h->GetXaxis()->SetTitleSize(0.055);
-	h->GetYaxis()->SetTitleSize(0.055);
-	h->GetXaxis()->SetTitleFont(42);
-	h->GetYaxis()->SetTitleFont(42);
-	h->GetXaxis()->SetLabelFont(42);
-	h->GetYaxis()->SetLabelFont(42);
-	h->GetXaxis()->SetLabelSize(0.055);
-	h->GetYaxis()->SetLabelSize(0.055);
-	h->SetMarkerSize(1.55);
-//	h->SetMarkerStyle(2);
-	h->SetMarkerColor(4);
-	//h->SetLineColor(1);
-	h->SetLineWidth(4);
-	h->SetStats(0);
-	h->GetXaxis()->SetNdivisions(-50205);
-}
-void setTex(TLatex* tex){
-	tex->SetNDC();
-	tex->SetTextFont(42);
-	tex->SetTextSize(0.055);
-	tex->SetLineWidth(2);
-}
 void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString trgselectionmc = "", TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100.)
 {
 	collisionsystem=collsyst;
@@ -94,16 +65,16 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 	TTree* ntMC;
 
 	nt = (TTree*)inf->Get("ntphi");
-	nt->AddFriend("ntHlt");
-	nt->AddFriend("ntHi");
-	nt->AddFriend("ntSkim");
-	nt->AddFriend("BDTStage1_pt15to50");
+	//nt->AddFriend("ntHlt");
+	//nt->AddFriend("ntHi");
+	//nt->AddFriend("ntSkim");
+	//nt->AddFriend("BDTStage1_pt15to50");
 
 	ntMC = (TTree*)infMC->Get("ntphi");
-	ntMC->AddFriend("ntHlt");
-	ntMC->AddFriend("ntHi");
-	ntMC->AddFriend("ntSkim");
-	ntMC->AddFriend("BDTStage1_pt15to50");
+	//ntMC->AddFriend("ntHlt");
+	//ntMC->AddFriend("ntHi");
+	//ntMC->AddFriend("ntSkim");
+	//ntMC->AddFriend("BDTStage1_pt15to50");
 
 	TF1 *total;
 	TString outputf;
@@ -133,18 +104,22 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 	    TLatex* tex2 = new TLatex(0.735,0.75,"|y| < 2.4");
 	    TLatex* tex3 = new TLatex(0.25, 0.8,"Data");
 	    TLatex* tex4 = new TLatex(0.25, 0.8,"MC");
+	    TLatex* tex5 = new TLatex(0.25, 0.7,(usePbPb)? "PbPb" : "pp");
 		setTex(tex1);
 		setTex(tex2);
 		setTex(tex3);
 		setTex(tex4);
+		setTex(tex5);
 		tex3->SetTextSize(0.07);
 
 		for(int v = 0; v < nVar; v++){
     		_count++;
 			h   = new TH1D(Form("h%d",_count),  "", vbins[v], vbinmin[v], vbinmax[v]);
 			hMC = new TH1D(Form("hMC%d",_count),"", vbins[v], vbinmin[v], vbinmax[v]);
-			setHist(h, v);
-			setHist(hMC, v);
+			setHist(h);
+		    h->SetXTitle(vxaxis[v].c_str());
+			setHist(hMC);
+		    hMC->SetXTitle(vxaxis[v].c_str());
 			nt->Project(Form("h%d",_count),     vexp[v].c_str(), Form("(%s&&%s>%f&&%s<%f)*(1/%s)", seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
 			ntMC->Project(Form("hMC%d",_count), vexp[v].c_str(), Form("%s*(%s&&%s>%f&&%s<%f)", weightmc.Data(), Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
@@ -156,12 +131,14 @@ void plotSth(int usePbPb = 0, TString inputdata = "", TString inputmc = "", TStr
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex3->Draw();
+		    tex5->Draw();
 	        c->SaveAs(Form("%s%s/%s_%s_0_%s.pdf",outplotf.Data(),_prefix.Data(),"data",_isPbPb.Data(),vname[v].c_str()));
 
 			hMC->Draw("pe");
 		    tex1->Draw();
 		    tex2->Draw();
 		    tex4->Draw();
+		    tex5->Draw();
 	        c->SaveAs(Form("%s%s/%s_%s_0_%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),vname[v].c_str()));
 		}
 	}  

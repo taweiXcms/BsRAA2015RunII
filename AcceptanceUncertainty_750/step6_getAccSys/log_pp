@@ -1,0 +1,66 @@
+
+Processing drawmacro.C++(1)...
+pt bin 0
+pt var Mean: 0.072919, y var Mean: 0.074560
+pt var RMS:  0.000483, y var RMS:  0.000717
+sys = 0.071720
+pt bin 1
+pt var Mean: 0.233215, y var Mean: 0.231233
+pt var RMS:  0.000213, y var RMS:  0.001096
+sys = 0.109570
+pt bin 2
+pt var Mean: 0.361107, y var Mean: 0.357927
+pt var RMS:  0.000496, y var RMS:  0.001814
+sys = 0.181436
+pt bin 3
+pt var Mean: 0.550046, y var Mean: 0.546129
+pt var RMS:  0.004106, y var RMS:  0.003441
+sys = 0.410564
+pt bin 0
+pt var Mean: 0.124706, y var Mean: 0.127570
+pt var RMS:  0.005067, y var RMS:  0.000009
+sys = 0.506698
+pt bin 1
+pt var Mean: 0.122674, y var Mean: 0.125539
+pt var RMS:  0.005017, y var RMS:  0.000026
+sys = 0.501680
+pt bin 2
+pt var Mean: 0.150690, y var Mean: 0.154361
+pt var RMS:  0.005055, y var RMS:  0.000449
+sys = 0.505479
+pt bin 3
+pt var Mean: 0.151080, y var Mean: 0.146622
+pt var RMS:  0.004311, y var RMS:  0.003364
+sys = 0.431115
+pt bins 0
+MinVal : 0.0714515 , Mean : 0.0729191 , MaxVal : 0.0766911
+MinVal : 0.0706026 , Mean : 0.0745603 , MaxVal : 0.0767789
+avg: 0.073178, pt var unc: 0.003513, y var unc: 0.003600, final: 0.360038
+pt bins 1
+MinVal : 0.232404 , Mean : 0.233215 , MaxVal : 0.23455
+MinVal : 0.22783 , Mean : 0.231233 , MaxVal : 0.237257
+avg: 0.233337, pt var unc: 0.001213, y var unc: 0.005507, final: 0.550676
+pt bins 2
+MinVal : 0.359091 , Mean : 0.361107 , MaxVal : 0.363862
+MinVal : 0.352152 , Mean : 0.357927 , MaxVal : 0.367765
+avg: 0.361404, pt var unc: 0.002458, y var unc: 0.009252, final: 0.925195
+pt bins 3
+MinVal : 0.528154 , Mean : 0.550046 , MaxVal : 0.565958
+MinVal : 0.535007 , Mean : 0.546129 , MaxVal : 0.56419
+avg: 0.552694, pt var unc: 0.024540, y var unc: 0.017686, final: 2.453959
+y bins 0
+MinVal : 0.108285 , Mean : 0.124706 , MaxVal : 0.147945
+MinVal : 0.127526 , Mean : 0.12757 , MaxVal : 0.127628
+avg: 0.127935, pt var unc: 0.020009, y var unc: 0.000409, final: 2.000910
+y bins 1
+MinVal : 0.106421 , Mean : 0.122674 , MaxVal : 0.145687
+MinVal : 0.125399 , Mean : 0.125539 , MaxVal : 0.125651
+avg: 0.125853, pt var unc: 0.019834, y var unc: 0.000453, final: 1.983435
+y bins 2
+MinVal : 0.134418 , Mean : 0.15069 , MaxVal : 0.182128
+MinVal : 0.151969 , Mean : 0.154361 , MaxVal : 0.155801
+avg: 0.154503, pt var unc: 0.027625, y var unc: 0.002534, final: 2.762515
+y bins 3
+MinVal : 0.137327 , Mean : 0.15108 , MaxVal : 0.18141
+MinVal : 0.13965 , Mean : 0.146622 , MaxVal : 0.17872
+avg: 0.152857, pt var unc: 0.028554, y var unc: 0.025863, final: 2.855365

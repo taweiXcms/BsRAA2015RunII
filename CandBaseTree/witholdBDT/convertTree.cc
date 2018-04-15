@@ -6,8 +6,8 @@ bool ispp;
 bool isdata;
 void convertTree(){
 // PbPb
-  fname = "Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT7to50_BDT15to50_20180223MVA";
-  ispp = 0; isdata = 1;
+//  fname = "Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT7to50_BDT15to50_20180223MVA";
+//  ispp = 0; isdata = 1;
 //  fname = "Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_BDT15to50_20180223MVA";
 //  ispp = 0; isdata = 0;
 	TFile *inf = new TFile(Form("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/%s.root",fname.Data()));

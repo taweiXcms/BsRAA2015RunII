@@ -38,6 +38,9 @@ void ClosureTest(TString inputfile="ROOTfiles/hPtSpectrumDzeroPbPbMBMCClosure.ro
 	hPtCor->SetLineWidth(2);
 	hPtCor->SetLineColor(1);
 	hPtCor->Draw("same");
+    TLatex* tex5 = new TLatex(0.25, 0.7,label.Data());
+    setTex(tex5);
+    tex5->Draw();
 	canvas->SaveAs(Form("plotClosure/canvasClosure%s.pdf",label.Data()));
 }
 

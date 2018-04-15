@@ -11,5 +11,9 @@ void getCutSyst(){
 	float bnorm = hnorm->GetBinContent(1);
 	float bCutBase = hCutBase->GetBinContent(1);
 	float bPbPbBDT = hPbPbBDT->GetBinContent(1);
-	printf("norm: %f, CutBase: %f(%f), PbPbBDT: %f(%f)\n", bnorm, bCutBase, abs(bnorm-bCutBase)/bnorm, bPbPbBDT, abs(bnorm-bPbPbBDT)/bnorm);
+	printf("norm: %f, CutBase: %f(%f), PbPbBDT: %f(%f)\n", bnorm, bCutBase, abs(bnorm-bCutBase)/bnorm*100, bPbPbBDT, abs(bnorm-bPbPbBDT)/bnorm*100);
+	bnorm = hnorm->GetBinContent(2);
+	bCutBase = hCutBase->GetBinContent(2);
+	bPbPbBDT = hPbPbBDT->GetBinContent(2);
+	printf("norm: %f, CutBase: %f(%f), PbPbBDT: %f(%f)\n", bnorm, bCutBase, abs(bnorm-bCutBase)/bnorm*100, bPbPbBDT, abs(bnorm-bPbPbBDT)/bnorm*100);
 }

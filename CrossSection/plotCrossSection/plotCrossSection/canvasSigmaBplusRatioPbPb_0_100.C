@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatioPbPb_0_100()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Fri Apr  6 14:01:24 2018) by ROOT version6.02/13
+//=========  (Thu Apr 12 23:30:21 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -49,11 +49,11 @@ void canvasSigmaBplusRatioPbPb_0_100()
    Double_t xAxis1[3] = {7, 15, 50}; 
    
    TH1D *hPtSigma2 = new TH1D("hPtSigma2","",2, xAxis1);
-   hPtSigma2->SetBinContent(1,542898.9);
-   hPtSigma2->SetBinContent(2,7544.975);
-   hPtSigma2->SetBinError(1,192820.9);
-   hPtSigma2->SetBinError(2,2439.927);
-   hPtSigma2->SetEntries(8.14795);
+   hPtSigma2->SetBinContent(1,526214.1);
+   hPtSigma2->SetBinContent(2,7278.097);
+   hPtSigma2->SetBinError(1,186893.5);
+   hPtSigma2->SetBinError(2,2353.586);
+   hPtSigma2->SetEntries(8.147024);
    hPtSigma2->SetLineStyle(0);
    hPtSigma2->SetLineWidth(2);
    hPtSigma2->SetMarkerStyle(20);
@@ -81,20 +81,20 @@ void canvasSigmaBplusRatioPbPb_0_100()
    11,
    32.5};
    Double_t gaeCrossSyst_fy3001[2] = {
-   542898.9,
-   7544.975};
+   526214.1,
+   7278.097};
    Double_t gaeCrossSyst_felx3001[2] = {
    4,
    17.5};
    Double_t gaeCrossSyst_fely3001[2] = {
-   88324.79,
-   1057.255};
+   123364.1,
+   1193.901};
    Double_t gaeCrossSyst_fehx3001[2] = {
    4,
    17.5};
    Double_t gaeCrossSyst_fehy3001[2] = {
-   88324.79,
-   1057.255};
+   123364.1,
+   1193.901};
    TGraphAsymmErrors *grae = new TGraphAsymmErrors(2,gaeCrossSyst_fx3001,gaeCrossSyst_fy3001,gaeCrossSyst_felx3001,gaeCrossSyst_fehx3001,gaeCrossSyst_fely3001,gaeCrossSyst_fehy3001);
    grae->SetName("gaeCrossSyst");
    grae->SetTitle("Graph");
@@ -105,8 +105,8 @@ void canvasSigmaBplusRatioPbPb_0_100()
    grae->SetMarkerSize(0.8);
    
    TH1F *Graph_gaeCrossSyst3001 = new TH1F("Graph_gaeCrossSyst3001","Graph",100,2.7,54.3);
-   Graph_gaeCrossSyst3001->SetMinimum(5838.948);
-   Graph_gaeCrossSyst3001->SetMaximum(693697.3);
+   Graph_gaeCrossSyst3001->SetMinimum(5475.776);
+   Graph_gaeCrossSyst3001->SetMaximum(713927.6);
    Graph_gaeCrossSyst3001->SetDirectory(0);
    Graph_gaeCrossSyst3001->SetStats(0);
 

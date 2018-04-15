@@ -10,6 +10,8 @@ rm plotFONLL/*
 rm plotFits/*/*
 rm plotFitsComp/*
 rm plotPDFSyst/*
+rm plotPtShapeSyst/*
+rm plotPtShapeSyst/*/*
 rm plotRAA/*
 rm plotReweight/*
 rm plotSth/*

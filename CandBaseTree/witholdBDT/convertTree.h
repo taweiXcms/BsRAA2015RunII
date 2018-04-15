@@ -1084,6 +1084,7 @@ void buildGenBranch(TTree* nt, bool ispp, bool isdata)
 	}
 	if(!ispp)
     	nt->Branch("hiBin",&hiBin);
+    nt->Branch("PVz",&PVz);
 	nt->Branch("Gsize",&Gsize);
 	nt->Branch("Gy",&__Gy,"Gy/F");
 	nt->Branch("Geta",&__Geta,"Geta/F");

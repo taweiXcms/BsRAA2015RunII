@@ -16,8 +16,8 @@
 #include <TLorentzRotation.h>
 
 
-const int nBins = 1;
-double ptBins[nBins+1] = {15, 50};
+const int nBins = 2;
+double ptBins[nBins+1] = {7, 15, 50};
 double Rat[nBins];
 double RatErr[nBins];
 const int nBinsy=1;

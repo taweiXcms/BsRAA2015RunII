@@ -1,0 +1,26 @@
+
+Processing drawmacro.C++(1)...
+pt bin 0
+pt var Mean: 0.097059, y var Mean: 0.098396
+pt var RMS:  0.001156, y var RMS:  0.000368
+sys = 0.115577
+pt bin 1
+pt var Mean: 0.428108, y var Mean: 0.426224
+pt var RMS:  0.005067, y var RMS:  0.002621
+sys = 0.506704
+y bin 0
+pt var Mean: 0.138192, y var Mean: 0.140492
+pt var RMS:  0.004813, y var RMS:  0.000197
+sys = 0.481263
+pt bins 0
+MinVal : 0.093467 , Mean : 0.0970591 , MaxVal : 0.105737
+MinVal : 0.0963585 , Mean : 0.0983963 , MaxVal : 0.0995627
+avg: 0.097687, pt var unc: 0.008049, y var unc: 0.001876, final: 0.804942
+pt bins 1
+MinVal : 0.406573 , Mean : 0.428108 , MaxVal : 0.452111
+MinVal : 0.417957 , Mean : 0.426224 , MaxVal : 0.440209
+avg: 0.431239, pt var unc: 0.024667, y var unc: 0.013282, final: 2.466690
+y bins 0
+MinVal : 0.122726 , Mean : 0.138192 , MaxVal : 0.168149
+MinVal : 0.13988 , Mean : 0.140492 , MaxVal : 0.141572
+avg: 0.141065, pt var unc: 0.027084, y var unc: 0.001185, final: 2.708440

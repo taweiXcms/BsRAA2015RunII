@@ -1,14 +1,16 @@
-#include "fitPrompt.h"
+#include "fitB.h"
 using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
-void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., TString BDTcut = "")
-{
 //const int npnBins=1;
 //double npptBins[npnBins+1] = {0,100};
 //_nBins = npnBins;
 //_ptBins = npptBins;
+
+void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString inputmc = "", TString varExp = "", TString trgselection = "",  TString cut = "", TString cutmcgen = "", int isMC = 0, Double_t luminosity = 1., int doweight = 0, TString collsyst = "", TString outputfile = "", TString outplotf = "", TString npfit = "", int doDataCor = 0, Float_t centmin = 0., Float_t centmax = 100., TString BDTcut = "", TString inputmvafs = "")
+{
+
 	collisionsystem=collsyst;
 	if(collisionsystem=="ppInc"||collisionsystem=="PbPbInc"){
 		_nBins = nBinsInc;
@@ -44,15 +46,24 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 	gStyle->SetPadBottomMargin(0.145);
 	gStyle->SetTitleX(.0f);
 
-	TFile* inf = new TFile(Form("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/%s.root",inputdata.Data()));
-	TFile* infbdt = new TFile(Form("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/TMVA_Bs-20180223-d4-1550-nominal/tmvaVal/prod/%s_BDT.root",inputdata.Data()));
+    TFile* inf = new TFile(inputdata.Data());
 	TFile* infMC = new TFile(inputmc.Data());
+
+	std::vector<std::string> mvafiles;
+	split2(inputmvafs.Data(), mvafiles, ';');
+	TFile* infbdt1 = new TFile(mvafiles[0].c_str());
+	TFile* infbdt2 = new TFile(mvafiles[1].c_str());
+	//cout<<inputdata<<endl;
+	//cout<<mvafiles[0]<<endl;
+	//cout<<mvafiles[1]<<endl;
+	//return;
 
 	TH1D* h;
 	TH1D* hMCSignal;
 
 	TTree* nt;
-	TTree* ntbdt;
+	TTree* ntbdt1;
+	TTree* ntbdt2;
 	TTree* ntGen;
 	TTree* ntMC;
 
@@ -62,26 +73,28 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 		nt->AddFriend("ntHi");
 		nt->AddFriend("ntSkim");
 		
-		ntbdt = (TTree*)infbdt->Get("BDTStage1_pt15to50");
-		nt->AddFriend(ntbdt);
+		ntbdt1 = (TTree*)infbdt1->Get("BDTStage1_pt7to15");
+		ntbdt2 = (TTree*)infbdt2->Get("BDTStage1_pt15to50");
+		nt->AddFriend(ntbdt1);
+		nt->AddFriend(ntbdt2);
 	
-		ntGen = (TTree*)infMC->Get("ntGen");
-		ntGen->AddFriend("ntHlt");
-		ntGen->AddFriend("ntHi");
+		//ntGen = (TTree*)infMC->Get("ntGen");
+		//ntGen->AddFriend("ntHlt");
+		//ntGen->AddFriend("ntHi");
 	
 		ntMC = (TTree*)infMC->Get("ntphi");
-		ntMC->AddFriend("ntHlt");
-		ntMC->AddFriend("ntHi");
-		ntMC->AddFriend("ntSkim");
-		ntMC->AddFriend("BDTStage1_pt15to50");
-		ntMC->AddFriend(ntGen);
+		//ntMC->AddFriend("ntHlt");
+		//ntMC->AddFriend("ntHi");
+		//ntMC->AddFriend("ntSkim");
+		//ntMC->AddFriend("BDTStage1_pt15to50");
+		//ntMC->AddFriend(ntGen);
 	}
 
 	TF1 *total;
 	TString outputf;
-	//outputf = Form("%s",outputfile.Data());
-	//TFile* outf = new TFile(outputf.Data(),"recreate");
-	//outf->cd();
+	outputf = Form("%s",outputfile.Data());
+	TFile* outf = new TFile(outputf.Data(),"recreate");
+	outf->cd();
 
 	TH1D* hPt = new TH1D("hPt","",_nBins,_ptBins);
 	TH1D* hPtMC = new TH1D("hPtMC","",_nBins,_ptBins);
@@ -110,8 +123,9 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 	{
     	_count++;
 		TCanvas* c= new TCanvas(Form("c%d",_count),"",600,600);
+        TCanvas* cMC= new TCanvas(Form("cMC%d",_count),"",600,600);
 		if(fitOnSaved == 0){
-			drawOpt = 1;
+			drawOpt = 0;
 			h = new TH1D(Form("h%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
 			hMCSignal = new TH1D(Form("hMCSignal%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
     		if(isMC==1) nt->Project(Form("h%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)*(1/%s)",weightmc.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
@@ -119,22 +133,13 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 			ntMC->Project(Form("hMCSignal%d",_count),"Bmass",Form("%s*(%s&&%s>%f&&%s<%f)",weightmc.Data(),Form("%s&&Bgen==23333",selmc.Data()),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1]));
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 		}
-		if(fitOnSaved == 1){
-			h = (TH1D*)inf->Get(Form("h%d",_count));
-			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",_count));
-		}
-		TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
+		//TF1* f = fit(c, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit);
+        TF1* f = fit(c, cMC, h, hMCSignal, _ptBins[i], _ptBins[i+1], isMC, isPbPb, total, centmin, centmax, npfit, onlyBG);
 
 		double yield = f->Integral(minhisto,maxhisto)/binwidthmass;
 		double yieldErr = f->Integral(minhisto,maxhisto)/binwidthmass*f->GetParError(0)/f->GetParameter(0);
         printf("yield: %f, yieldErr: %f\n", yield, yieldErr);
 		yieldErr = yieldErr*_ErrCor;
-		if(fitOnSaved == 0){
-    		TH1D* htest = new TH1D(Form("htest%d",_count),"",nbinsmasshisto,minhisto,maxhisto);
-		    TString sideband = "(abs(Bmass-5.367)>0.2&&abs(Bmass-5.367)<0.3";
-	    	nt->Project(Form("htest%d",_count),"Bmass",Form("%s&&%s&&%s>%f&&%s<%f)*(1/%s)",sideband.Data(),seldata.Data(),varExp.Data(),_ptBins[i],varExp.Data(),_ptBins[i+1],weightdata.Data()));
-	    	std::cout<<"yield bkg sideband: "<<htest->GetEntries()<<std::endl;
-		}
 
 		hPt->SetBinContent(i+1,yield/(_ptBins[i+1]-_ptBins[i]));
 		hPt->SetBinError(i+1,yieldErr/(_ptBins[i+1]-_ptBins[i]));
@@ -163,9 +168,9 @@ void fitPrompt(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStr
 
 int main(int argc, char *argv[])
 {
-	if(argc==20)
+	if(argc==21)
 	{
-		fitPrompt(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]), argv[19]);
+		fitPrompt(atoi(argv[1]), atoi(argv[2]), argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], atoi(argv[9]), atof(argv[10]), atoi(argv[11]), argv[12], argv[13], argv[14], argv[15], atoi(argv[16]), atof(argv[17]), atof(argv[18]), argv[19], argv[20]);
 		return 0;
 	}
 	else

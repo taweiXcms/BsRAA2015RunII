@@ -13,7 +13,7 @@
 void GetMinMaxMean(TH1D* hs, double& aMean, double& aMin, double& aMax);
 
 const int nBins = 4;
-double ptbin[nBins+1] = {10,15,20,30,50};
+double ptbin[nBins+1] = {7,12,15,20,50};
 double Rat[nBins];
 double RatErr[nBins];
 const int nBinsy=4;
@@ -124,7 +124,7 @@ void drawmacro(bool ispp=1){
 		double avg21=hf21y[i]->GetMean();
 		double sig21=hf21y[i]->GetRMS(); 
 		double avgh=avghy[i]; 
-		printf("pt bin %d\n", i);
+		printf("y bin %d\n", i);
 		printf("pt var Mean: %f, y var Mean: %f\n", hf11y[i]->GetMean(), hf21y[i]->GetMean());
 		printf("pt var RMS:  %f, y var RMS:  %f\n", hf11y[i]->GetRMS(), hf21y[i]->GetRMS());
 		printf("sys = %f\n", 100*max(hf11y[i]->GetRMS(), hf21y[i]->GetRMS()));

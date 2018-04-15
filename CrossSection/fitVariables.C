@@ -5,42 +5,42 @@ float tpadpos = 1-tpadr;
 
 struct plotStruct{
 	TString var;
+	TString latex;
 	TString text;
 	bool setlogY;
 	bool setlogX;
 	int nBins;
 	double arrBins[100];
+	int printdecimaldigit;
 };
 
 //double inf = std::numeric_limits<double>::max();
 //double inf = std::numeric_limits<double>::infinity();
 double inf = 9999;
-struct plotStruct plotSetting[21] = {
-    {"Bpt", 						"Bpt", 			1, 0, 4, {12, 15, 20, 30, 50}},
-    {"abs(By)", 					"By", 			1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}},
-//    {"Btrk1Pt", 					"Btrk1Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
-//    {"Btrk2Pt", 					"Btrk2Pt", 		1, 1, 4, {0.8, 2, 3, 5, 50}},
-    {"Btrk1Pt", 					"Btrk1Pt", 		1, 1, 4, {0.8, 2, 3, 5, 30}},
-    {"Btrk2Pt", 					"Btrk2Pt", 		1, 1, 4, {0.8, 2, 3, 5, 30}},
-    {"abs(Btrk1Eta)",				"Btrk1Eta", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
-    {"abs(Btrk2Eta)",				"Btrk2Eta", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
-//    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"Btrk1Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
-//    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"Btrk2Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 50}},
-    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"Btrk1Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 30}},
-    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"Btrk2Dxy", 	1, 0, 4, {0, 1.5, 7.5, 10, 30}},
-    {"abs(Btktkmass-1.019455)", 	"Btktkmass", 	1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}},
-    {"abs(Bmumumass-3.096916)",     "Bmumumass",    1, 0, 4, {0, 0.02, 0.05, 0.1, 0.2}},
-    {"BsvpvDistance/BsvpvDisErr", 	"Bsvpv", 		1, 0, 4, {0., 8., 20., 40., 200}},
-    {"Balpha", 						"Balpha", 		1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}},
-    {"Bd0/Bd0Err", 					"Bd0", 			1, 0, 4, {0.,100,300,600,1000}},
-    {"cos(Bdtheta)", 				"cosBtheta", 	1, 0, 4, {-1,0.0,0.7,0.9,1}},
-    {"Bchi2cl", 					"Bchi2cl", 		1, 0, 4, {0.,0.1,0.3,0.6,1}},
-    {"Btktkpt", 					"Btktkpt", 		1, 0, 4, {0.,5,8,10,40}},
-    {"abs(Btktketa)", 				"Btktketa", 	1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}},
-    {"Bmu1pt", 						"Bmu1pt", 		1, 0, 4, {0.,5,8,10,40}},
-    {"Bmu1pt", 						"Bmu2pt", 		1, 0, 4, {0.,5,8,10,40}},
-    {"BDTStage1_pt15to50",			"BDT", 			1, 0, 4, {0.1,0.25,0.3,0.35,0.5}},
-    {"BDTStage1_pt15to50",			"PbPbBDT",		1, 0, 4, {0.1,0.25,0.3,0.35,0.5}},
+struct plotStruct plotSetting[23] = {
+    {"Bpt", 						"B pt", 	       "Bpt", 		    1, 0, 4, {7, 12, 15, 20, 50}, 0}, //0
+    {"abs(By)", 					"B y", 		       "By", 		    1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}, 1}, //1
+    {"Btrk1Pt", 					"tk1 pt", 	       "Btrk1Pt", 	    1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //2
+    {"Btrk2Pt", 					"tk2 pt", 	       "Btrk2Pt", 	    1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //3
+    {"abs(Btrk1Eta)",				"tk1 eta",         "Btrk1Eta",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //4
+    {"abs(Btrk2Eta)",				"tk2 eta",         "Btrk2Eta",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //5
+    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"normed tk1 Dxy",  "Btrk1Dxy",      1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //6
+    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"normed tk2 Dxy",  "Btrk2Dxy",      1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //7
+    {"abs(Btktkmass-1.019455)", 	"|phi-PDG| mass",  "Btktkmass",     1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}, 4}, //8
+    {"abs(Bmumumass-3.096916)",     "|jpsi-PDG| mass", "Bmumumass",     1, 0, 4, {0, 0.01, 0.018, 0.03, 0.2}, 3}, //9
+    {"BsvpvDistance/BsvpvDisErr", 	"SVPV", 	       "Bsvpv", 	    1, 0, 4, {0., 10., 20., 30., 200}, 0}, //10
+    {"Balpha", 						"alpha", 	       "Balpha", 	    1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}, 2}, //11
+    {"Bd0/Bd0Err", 					"normed d0", 	   "Bd0", 		    1, 0, 4, {0.,1500,3000,6000,15000}, 0}, //12
+    {"cos(Bdtheta)", 				"cos(theta)",      "cosBtheta",     1, 0, 4, {0.9975,0.9995,0.9999,0.99997,1}, 5}, //13
+    {"Bchi2cl", 					"fit prob", 	   "Bchi2cl", 	    1, 0, 4, {0.,0.6,0.75,0.9,1}, 1}, //14
+    {"Btktkpt", 					"phi pt", 	       "Btktkpt", 	    1, 0, 4, {0.,2.5,4,7,40}, 0}, //15
+    {"abs(Btktketa)", 				"phi eta",         "Btktketa",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //16
+    {"Bmu1pt", 						"mu1 pt", 	       "Bmu1pt", 	    1, 0, 4, {0.,3.8,6,8,40}, 1}, //17
+    {"Bmu1pt", 						"mu2 pt", 	       "Bmu2pt", 	    1, 0, 4, {0.,3.8,6,8,40}, 1}, //18
+    {"BDTStage1_pt7to15",			"BDT 7~15", 	   "BDT7to15",      1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //19
+    {"BDTStage1_pt15to50",			"BDT 15~50", 	   "BDT15to50",     1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //20
+    {"BDTStage1_pt7to15",			"PbPb BDT 7~15",   "PbPbBDT7to15",  1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //21
+    {"BDTStage1_pt15to50",			"PbPb BDT 15~50",  "PbPbBDT15to50", 1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //22
 };
 
 int _nBins;
@@ -98,21 +98,21 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 
 	if(fitOnSaved == 0){
 		nt = (TTree*)inf->Get("ntphi");
-		nt->AddFriend("ntHlt");
-		nt->AddFriend("ntHi");
-		nt->AddFriend("ntSkim");
-		nt->AddFriend("BDTStage1_pt15to50");
+		//nt->AddFriend("ntHlt");
+		//nt->AddFriend("ntHi");
+		//nt->AddFriend("ntSkim");
+		//nt->AddFriend("BDTStage1_pt15to50");
 	
 		ntGen = (TTree*)infMC->Get("ntGen");
-		ntGen->AddFriend("ntHlt");
-		ntGen->AddFriend("ntHi");
+		//ntGen->AddFriend("ntHlt");
+		//ntGen->AddFriend("ntHi");
 	
 		ntMC = (TTree*)infMC->Get("ntphi");
-		ntMC->AddFriend("ntHlt");
-		ntMC->AddFriend("ntHi");
-		ntMC->AddFriend("ntSkim");
-		ntMC->AddFriend("BDTStage1_pt15to50");
-		ntMC->AddFriend(ntGen);
+		//ntMC->AddFriend("ntHlt");
+		//ntMC->AddFriend("ntHi");
+		//ntMC->AddFriend("ntSkim");
+		//ntMC->AddFriend("BDTStage1_pt15to50");
+		//ntMC->AddFriend(ntGen);
 	}
 
 	TF1 *total;
@@ -179,10 +179,12 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 		hMean->SetBinError(i+1,f->GetParError(1));  
 
         TLatex* tex;
-        tex = new TLatex(0.31,0.745,Form("%.4f<%s<%.4f",_ptBins[i],varExp.Data(),_ptBins[i+1]));
+		int ndigit = plotSetting[vartype].printdecimaldigit;
+        tex = new TLatex(0.4,0.85,Form("%*.*f < %s < %*.*f",6-ndigit,ndigit,_ptBins[i],plotSetting[vartype].latex.Data(),6-ndigit,ndigit,_ptBins[i+1]));
         tex->SetNDC();
         tex->SetTextFont(42);
-        tex->SetTextSize(0.035);
+//        tex->SetTextSize(0.035);
+        tex->SetTextSize(0.045);
         tex->SetLineWidth(2);
         tex->Draw();
 
