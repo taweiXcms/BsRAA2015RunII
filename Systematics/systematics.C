@@ -422,6 +422,8 @@ float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100
 	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
 	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
+    if (pt < PtBins[0]) return 0;
+    if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;
     if (stage==1) return sqrt(sys);
 
 	sys+= PbPbSignalExtractionSigVar->GetBinContent(PbPbSignalExtractionSigVar->FindBin(pt))* 
@@ -454,6 +456,8 @@ float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0, doub
 	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
 	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
+    if (pt < PtBins[0]) return 0;
+    if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;
 
 	sys+= PbPbSignalExtractionSigVar->GetBinContent(PbPbSignalExtractionSigVar->FindBin(pt))* 
 		PbPbSignalExtractionSigVar->GetBinContent(PbPbSignalExtractionSigVar->FindBin(pt));
@@ -473,6 +477,8 @@ float systematicsPbPb_UnCorrelated(double pt, bool TAAhi = 1, double centL=0, do
 	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
 	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
 	double sys=0;
+    if (pt < PtBins[0]) return 0;
+    if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;
 
 	sys+= PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100*
 		PbPbEff->GetBinError(PbPbEff->FindBin(pt))/PbPbEff->GetBinContent(PbPbEff->FindBin(pt))*100;

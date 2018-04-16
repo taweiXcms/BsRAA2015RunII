@@ -17,7 +17,7 @@ DOANALYSISPbPb_ROOFIT=0
 DOANALYSISPbPb_ROOFITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
-DORAA=0
+DORAA=1
 DORAARATIO=0
 
 ### pp 3-bin result
@@ -670,13 +670,6 @@ g++ fitPDFSyst.C $(root-config --cflags --libs) -g -o fitPDFSyst.exe
 ./fitPDFSyst.exe 1 1 "$OUTPUTFILEPbPbSAVEHIST" "$OUTPUTFILEPbPbSAVEHIST" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPb_PDFSYST" "plotPDFSyst" "$NPFIT_PbPb" 0 "0" "100"
 rm fitPDFSyst.exe
 fi 
-
-if [ $DOANALYSISPP_CROSS -eq 1 ]; then      
-g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_ROOFIT" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100"
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb_ROOFIT" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection/plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "0" "100"
-rm CrossSectionRatio.exe
-fi
 
 ### Pt Shape Syst.
 if [ $DOPTSHAPESYST -eq 1 ]; then      

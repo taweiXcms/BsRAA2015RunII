@@ -1,23 +1,31 @@
 import math
-sys0 = [0, 8, 5.5, 2.7, 3.1, 2.8, 5.6, 0.49]
-sys1 = [0, 8, 5.5, 2.7, 4.2, 0.45, 5.6, 0.49]
-sys2 = [0, 8, 5.5, 2.7, 3.3, 0.81, 5.6, 0.49]
-sys3 = [0, 8, 5.5, 2.7, 3.0, 2.2, 5.6, 0.49]
-sys4 = [0, 8, 5.5, 2.7, 2.8, 3.2, 5.6, 0.49]
-sysAA = [0, 12, 5.6, 4.9, 3.8, 3.0, 2.5, 2.1]
+sys0 = [0, 8, 11, 6.5, 4.4, 1.8, 1.9, 2.5, 0.78]
+sys1 = [0, 8, 0.81, 2.3, 3.1, 1.9, 2.8, 0.58, 0.47]
+
+sys01 = [0, 8, 0.81, 0.46, 3.4, 1.5, 2.8, 0.58, 0.76]
+sys02 = [0, 8, 0.81, 0.9, 3.0, 1.8, 2.8, 0.58, 0.53]
+
+sysAA0 = [0, 12, 15, 7.9, 5.1, 1.8, 8.3, 3.2, 4.9]
+sysAA1 = [0, 12, 8.5, 3.8, 3.8, 1.9, 1.1, 4.3, 2.1]
+
 for i in range (len(sys0)):
 	sys0[0] += sys0[i]*sys0[i]
 	sys1[0] += sys1[i]*sys1[i]
-	sys2[0] += sys2[i]*sys2[i]
-	sys3[0] += sys3[i]*sys3[i]
-	sys4[0] += sys4[i]*sys4[i]
-	sysAA[0] += sysAA[i]*sysAA[i]
+	sys01[0] += sys01[i]*sys01[i]
+	sys02[0] += sys02[i]*sys02[i]
+	sysAA0[0] += sysAA0[i]*sysAA0[i]
+	sysAA1[0] += sysAA1[i]*sysAA1[i]
+	print "bin1: ",math.sqrt(sys0[i]*sys0[i]+sysAA0[i]*sysAA0[i])
+	print "bin2: ",math.sqrt(sys1[i]*sys1[i]+sysAA1[i]*sysAA1[i])
+print "========="
 print sys0[0], math.sqrt(sys0[0])
 print sys1[0], math.sqrt(sys1[0])
-print sys2[0], math.sqrt(sys2[0])
-print sys3[0], math.sqrt(sys3[0])
-print sys4[0], math.sqrt(sys4[0])
-print sysAA[0], math.sqrt(sysAA[0])
-tot = sys0[0] + sysAA[0]
-print tot, math.sqrt(tot)
+print sys01[0], math.sqrt(sys01[0])
+print sys02[0], math.sqrt(sys02[0])
+print sysAA0[0], math.sqrt(sysAA0[0])
+print sysAA1[0], math.sqrt(sysAA1[0])
+tot0 = sys0[0] + sysAA0[0]
+tot1 = sys1[0] + sysAA1[0]
+print tot0, math.sqrt(tot0)
+print tot1, math.sqrt(tot1)
 
