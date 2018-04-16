@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Mon Apr 16 15:17:04 2018) by ROOT version6.02/13
+//=========  (Mon Apr 16 17:03:57 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);

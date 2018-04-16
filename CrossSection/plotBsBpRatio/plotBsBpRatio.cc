@@ -43,7 +43,7 @@ void plotBsBpRatio(){
     TCanvas*canvasRAA=new TCanvas("canvasRAA","canvasRAA",600,600);
     canvasRAA->cd();
 
-    TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,3);
+    TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,6.5);
     hemptyEff->GetXaxis()->CenterTitle();
     hemptyEff->GetYaxis()->CenterTitle();
     hemptyEff->GetYaxis()->SetTitle("B_{s} R_{AA} / B^{+} R_{AA}");
@@ -58,13 +58,11 @@ void plotBsBpRatio(){
     hemptyEff->GetYaxis()->SetLabelFont(42);
     hemptyEff->GetXaxis()->SetLabelSize(0.04);
     hemptyEff->GetYaxis()->SetLabelSize(0.04);
-    hemptyEff->SetMaximum(2);
-    hemptyEff->SetMinimum(0.);
     hemptyEff->Draw();
 
     TGraphAsymmErrors* gRAAratio = new TGraphAsymmErrors(_nBins,xVal,raaRatio,xErr,xErr,raaRatioSysErr,raaRatioSysErr);
-    gRAAratio->SetFillColor(kAzure+7);
-    gRAAratio->SetFillColorAlpha(kAzure+7, 0.5);
+    gRAAratio->SetFillColor(kMagenta-3);
+    gRAAratio->SetFillColorAlpha(kMagenta-3, 0.5);
     gRAAratio->SetLineWidth(0);
     gRAAratio->SetMarkerSize(1.2);
     gRAAratio->SetMarkerStyle(21);
@@ -77,8 +75,8 @@ void plotBsBpRatio(){
 		hRAAratio->SetBinError(i+1,raaRatioStaErr[i]);
 	}
     hRAAratio->SetLineWidth(3);
-    hRAAratio->SetLineColor(kAzure-1);
-    hRAAratio->SetMarkerColor(kAzure-1);
+    hRAAratio->SetLineColor(kMagenta+2);
+    hRAAratio->SetMarkerColor(kMagenta+2);
     hRAAratio->SetMarkerStyle(21);
     hRAAratio->SetMarkerSize(1.2);
 
