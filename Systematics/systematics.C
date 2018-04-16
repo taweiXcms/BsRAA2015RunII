@@ -34,8 +34,8 @@ TH1D*  ppMesonSelection;
 TH1D*  ppTagAndProbe;
 TH1D*  ppAccUnc;
 TH1D*  ppPtShape;
-TFile* ppMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPP.root");
-TH1D* ppEff = (TH1D*)ppMCEfffile->Get("hEff");
+TFile* ppMCEfffile;
+TH1D* ppEff;
 
 // =============================================================================================================
 // PbPb uncertainty
@@ -52,8 +52,8 @@ TH1D*  PbPbMesonSelection;
 TH1D*  PbPbTagAndProbe;				                
 TH1D*  PbPbAccUnc;
 TH1D*  PbPbPtShape;
-TFile* PbPbMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPbPb.root");
-TH1D* PbPbEff = (TH1D*)PbPbMCEfffile->Get("hEff");
+TFile* PbPbMCEfffile;
+TH1D* PbPbEff;
 // RAA uncertainty, for systematic that can cancel such as PDF variation
 TH1D*  RAASignalExtraction;
 
@@ -61,6 +61,8 @@ bool initialized = 0;
 void initializationPP(int SysOpt=0)
 {
 
+	ppMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPP.root");
+	ppEff = (TH1D*)ppMCEfffile->Get("hEff");
 	ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins,PtBins);
 	ppSignalExtractionSigVar = new TH1D("ppSignalExtractionSigVar","",nPtBins,PtBins);
 	ppSignalExtractionBkgVar = new TH1D("ppSignalExtractionBkgVar","",nPtBins,PtBins);
@@ -90,6 +92,8 @@ void initializationPP(int SysOpt=0)
 		}
 	}
 	if(SysOpt==2){//pp 3-bin result
+		ppMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPP_750.root");
+		ppEff = (TH1D*)ppMCEfffile->Get("hEff");
 		ppMesonSelection = new TH1D("ppMesonSelection","",nPtBins750,PtBins750);
 		ppSignalExtractionSigVar = new TH1D("ppSignalExtractionSigVar","",nPtBins750,PtBins750);
 		ppSignalExtractionBkgVar = new TH1D("ppSignalExtractionBkgVar","",nPtBins750,PtBins750);
@@ -115,7 +119,8 @@ void initializationPP(int SysOpt=0)
 
 void initializationPbPbCent0100(int SysOpt=0)
 {
-
+	PbPbMCEfffile = new TFile("../CrossSection/ROOTfiles/MCstudiesPbPb.root");
+	PbPbEff = (TH1D*)PbPbMCEfffile->Get("hEff");
 	PbPbMesonSelection = new TH1D("PbPbMesonSelection","",nPtBins,PtBins);
 	PbPbSignalExtractionSigVar = new TH1D("PbPbSignalExtractionSigVar","",nPtBins,PtBins);
 	PbPbSignalExtractionBkgVar = new TH1D("PbPbSignalExtractionBkgVar","",nPtBins,PtBins);
