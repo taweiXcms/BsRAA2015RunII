@@ -87,8 +87,10 @@ void initializationPP(int SysOpt=0)
 		ppTrackingEfficiency = 4; 
 		ppTagAndProbe = new TH1D("ppTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_ppOpt1[2] = {0., 0.};
+		double AccUnc_ppOpt1[nPtBins] = {0., 0.};
 		for(int i = 0; i < nPtBins; i++){
 			ppTagAndProbe->SetBinContent(i+1,tnpUnc_ppOpt1[i]);//assume canceled
+			ppAccUnc->SetBinContent(i+1,AccUnc_ppOpt1[i]);//assume canceled
 		}
 	}
 	if(SysOpt==2){//pp 3-bin result
@@ -145,8 +147,10 @@ void initializationPbPbCent0100(int SysOpt=0)
 		PbPbTrackingEfficiency = 6;
 		PbPbTagAndProbe = new TH1D("PbPbTagAndProbeOpt1","",nPtBins,PtBins); 
 		double tnpUnc_PbPbOpt1[2] = {0., 0.};
+		double AccUnc_PbPbOpt1[nPtBins] = {0., 0.};
 		for(int i = 0; i < nPtBins; i++){
-			PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_PbPbOpt1[i]);
+			PbPbTagAndProbe->SetBinContent(i+1,tnpUnc_PbPbOpt1[i]);//assume canceled
+			PbPbAccUnc->SetBinContent(i+1,AccUnc_PbPbOpt1[i]);//assume canceled
 		}
 	}
 }
