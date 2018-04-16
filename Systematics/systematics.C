@@ -621,8 +621,8 @@ void plotSystematicsRAA(double centL=0,double centH=100)
 	leg->AddEntry(h5,"B Meson Selection and Correction","l");
 	leg->AddEntry(h6,"Tag and Probe","l");
 	leg->Draw();
-	canvas->SaveAs(Form("SystematicSummaryPbPb_Cent%d.pdf",(int)centH));
-	canvas->SaveAs(Form("SystematicSummaryPbPb_Cent%d.png",(int)centH));
+	canvas->SaveAs("SystematicSummaryRAA.pdf");
+	canvas->SaveAs("SystematicSummaryRAA.png");
 }
 
 // =============================================================================================================
