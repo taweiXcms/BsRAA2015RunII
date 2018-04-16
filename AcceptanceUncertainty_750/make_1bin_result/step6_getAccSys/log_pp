@@ -1,17 +1,19 @@
 
 Processing drawmacro.C++(1)...
 pt bin 0
+avg: 0.097687
 pt var Mean: 0.097059, y var Mean: 0.098396
 pt var RMS:  0.001156, y var RMS:  0.000368
-sys = 0.115577
+sys = 1.825962
 pt bin 1
+avg: 0.431239
 pt var Mean: 0.428108, y var Mean: 0.426224
 pt var RMS:  0.005067, y var RMS:  0.002621
-sys = 0.506704
+sys = 1.901166
 y bin 0
 pt var Mean: 0.138192, y var Mean: 0.140492
 pt var RMS:  0.004813, y var RMS:  0.000197
-sys = 0.481263
+sys = 5.447788
 pt bins 0
 MinVal : 0.093467 , Mean : 0.0970591 , MaxVal : 0.105737
 MinVal : 0.0963585 , Mean : 0.0983963 , MaxVal : 0.0995627

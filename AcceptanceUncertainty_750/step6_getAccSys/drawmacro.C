@@ -105,7 +105,7 @@ void drawmacro(bool ispp=1){
 		printf("pt bin %d\n", i);
 		printf("pt var Mean: %f, y var Mean: %f\n", hf11pt[i]->GetMean(), hf21pt[i]->GetMean());
 		printf("pt var RMS:  %f, y var RMS:  %f\n", hf11pt[i]->GetRMS(), hf21pt[i]->GetRMS());
-		printf("sys = %f\n", 100*max(hf11pt[i]->GetRMS(), hf21pt[i]->GetRMS()));
+        printf("sys = %f\n", 100*max( (fabs(hf11pt[i]->GetMean()-avgh)+hf11pt[i]->GetRMS())/avgh, (fabs(hf21pt[i]->GetMean()-avgh)+hf21pt[i]->GetRMS())/avgh ));
 		hpullf11pt[i]=new TH1D(Form("hpullf11pt_%i",i+1),Form("Pull distribution in (%.0f#leqp_{T}<%.0f) (GeV/c);pull;Entries",ptbin[i],ptbin[i+1]),1000,((avgh-0.0500-avg11)/sig11),((avgh+0.0500-avg11)/sig11));
 		hpullf21pt[i]=new TH1D(Form("hpullf21pt_%i",i+1),Form("Pull distribution in (%.0f#leqp_{T}<%.0f) (GeV/c);pull;Entries",ptbin[i],ptbin[i+1]),1000,((avgh-0.0500-avg21)/sig21),((avgh+0.0500-avg21)/sig21));
 		for (int j=0;j<1000;j++) {
@@ -127,7 +127,7 @@ void drawmacro(bool ispp=1){
 		printf("y bin %d\n", i);
 		printf("pt var Mean: %f, y var Mean: %f\n", hf11y[i]->GetMean(), hf21y[i]->GetMean());
 		printf("pt var RMS:  %f, y var RMS:  %f\n", hf11y[i]->GetRMS(), hf21y[i]->GetRMS());
-		printf("sys = %f\n", 100*max(hf11y[i]->GetRMS(), hf21y[i]->GetRMS()));
+        printf("sys = %f\n", 100*max( (fabs(hf11y[i]->GetMean()-avgh)+hf11y[i]->GetRMS())/avgh, (fabs(hf21y[i]->GetMean()-avgh)+hf21y[i]->GetRMS())/avgh ));
 		hpullf11y[i]=new TH1D(Form("hpullf11y_%i",i+1),Form("Pull distribution in (%1.3f#leqy_{lab}<%1.3f);pull;Entries",ybin[i],ybin[i+1]),1000,((avgh-0.0500-avg11)/sig11),((avgh+0.0500-avg11)/sig11));
 		hpullf21y[i]=new TH1D(Form("hpullf21y_%i",i+1),Form("Pull distribution in (%1.3f#leqy_{lab}<%1.3f);pull;Entries",ybin[i],ybin[i+1]),1000,((avgh-0.0500-avg21)/sig21),((avgh+0.0500-avg21)/sig21));
 		for (int j=0;j<1000;j++) {

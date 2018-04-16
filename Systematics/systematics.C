@@ -71,7 +71,7 @@ void initializationPP(int SysOpt=0)
 	double extUncSig_pp[2] = {2.544908, 0.581398, };
 	double extUncBkg_pp[2] = {1.905882, 2.786836, };
 	double tnpUnc_pp[2] = {4.411893, 3.133342, };
-	double AccUnc_pp[nPtBins] = {0.115577, 0.506704, };
+	double AccUnc_pp[nPtBins] = {1.825962, 1.901166, };
 	double ptshape_pp[2] = {6.453736, 2.288807, };
 	for(int i = 0; i < nPtBins; i++){
 		ppMesonSelection->SetBinContent(i+1, selUnc_pp[i]);
@@ -100,7 +100,7 @@ void initializationPP(int SysOpt=0)
 		double extUncSig_pp_750[3] = {extUncSig_pp[0], extUncSig_pp[1], extUncSig_pp[1], };//maybe need update 
 		double extUncBkg_pp_750[3] = {extUncBkg_pp[0], extUncBkg_pp[1], extUncBkg_pp[1], };//maybe need update
 		double tnpUnc_pp_750[3] = {4.411893, 3.306750, 2.955307, };
-		double AccUnc_pp_750[3] = {0.115577, 0.181436, 0.410564, };
+		double AccUnc_pp_750[3] = {1.825962, 1.464296, 1.810332, };
 		double ptshape_pp_750[3] = {6.453736, 0.464262, 0.903425, };
 		for(int i = 0; i < nPtBins750; i++){
 			ppMesonSelection->SetBinContent(i+1, selUnc_pp_750[i]);
@@ -126,7 +126,7 @@ void initializationPbPbCent0100(int SysOpt=0)
 	double extUncSig_pbpb[2] = {3.223332, 4.314467, };
 	double extUncBkg_pbpb[2] = {8.331483, 1.086960, };
 	double tnpUnc_pbpb[2] = {5.059860, 3.776518, };
-	double AccUnc_PbPb[nPtBins] = {0.112680, 0.504945, };
+	double AccUnc_PbPb[nPtBins] = {1.794936, 1.904811, };
     double ptshape_PbPb[2] = {7.909751, 3.812999, };
 	for(int i = 0; i < nPtBins; i++){
 		PbPbMesonSelection->SetBinContent(i+1, selUnc_pbpb[i]);

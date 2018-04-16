@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Mon Apr 16 01:20:27 2018) by ROOT version6.02/13
+//=========  (Mon Apr 16 14:15:07 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -249,14 +249,14 @@ tex->SetNDC();
    4,
    17.5};
    Double_t gNuclearModification_fely3002[2] = {
-   0.4590365,
-   0.1626281};
+   0.4608719,
+   0.1641521};
    Double_t gNuclearModification_fehx3002[2] = {
    4,
    17.5};
    Double_t gNuclearModification_fehy3002[2] = {
-   0.4590365,
-   0.1626281};
+   0.4608719,
+   0.1641521};
    grae = new TGraphAsymmErrors(2,gNuclearModification_fx3002,gNuclearModification_fy3002,gNuclearModification_felx3002,gNuclearModification_fehx3002,gNuclearModification_fely3002,gNuclearModification_fehy3002);
    grae->SetName("gNuclearModification");
    grae->SetTitle("Graph");
@@ -273,8 +273,8 @@ tex->SetNDC();
    grae->SetMarkerSize(1.2);
    
    TH1F *Graph_gNuclearModification3002 = new TH1F("Graph_gNuclearModification3002","Graph",100,2.7,54.3);
-   Graph_gNuclearModification3002->SetMinimum(0.5605528);
-   Graph_gNuclearModification3002->SetMaximum(2.204014);
+   Graph_gNuclearModification3002->SetMinimum(0.558693);
+   Graph_gNuclearModification3002->SetMaximum(2.206185);
    Graph_gNuclearModification3002->SetDirectory(0);
    Graph_gNuclearModification3002->SetStats(0);
 
