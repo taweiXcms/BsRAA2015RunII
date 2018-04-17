@@ -265,6 +265,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	cout<<"bkg integral: "<<bkgIntegral->getVal()<<endl;
 	cout<<"bkg integral error: "<<bkgIntegralErr<<endl;
 	Double_t bkgd = nbkg.getVal();
+	bkgd = bkgd*bkgIntegral->getVal();
 	Double_t SB = yield/bkgd;
 	Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
 	TLatex* texSig = new TLatex(0.55,0.42,Form("Significance = %.3f",Significance));

@@ -124,6 +124,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	TH1D* hPtMC = new TH1D("hPtMC","",_nBins,_ptBins);
 	TH1D* hPtMCrecoonly = new TH1D("hPtMCrecoonly","",_nBins,_ptBins);
 	TH1D* hPtGen = new TH1D("hPtGen","",_nBins,_ptBins);
+	TH1D* hPtGenWeighted = new TH1D("hPtGenWeighted","",_nBins,_ptBins);
 	TH1D* hPtGenAcc = new TH1D("hPtGenAcc","",_nBins,_ptBins);
 	TH1D* hPtGenAccWeighted = new TH1D("hPtGenAccWeighted","",_nBins,_ptBins);
 	ntMC->Project("hPtMC",varExp.Data(),
@@ -132,6 +133,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 		TCut(weighpthat)*TCut(weightBgenpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(cut_recoonly.Data())&&"(Bgen==23333)"));
 	ntGen->Project("hPtGen",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgen.Data())));
+	ntGen->Project("hPtGenWeighted",varGenExp.Data(),
+		TCut(weighpthat)*TCut(weightGpt)*TCut(weightHiBin)*TCut(weightPVz)*(TCut(selmcgen.Data())));
 	ntGen->Project("hPtGenAcc",varGenExp.Data(),
 		TCut(weighpthat)*TCut(weightGpt)*(TCut(selmcgenacceptance.Data())));
 	ntGen->Project("hPtGenAccWeighted",varGenExp.Data(),
@@ -160,6 +163,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	divideBinWidth(hPtMC);
 	divideBinWidth(hPtMCrecoonly);
 	divideBinWidth(hPtGen);
+	divideBinWidth(hPtGenWeighted);
 	divideBinWidth(hPtGenAcc);
 	divideBinWidth(hPtGenAccWeighted);
 
@@ -183,7 +187,7 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	//Acc * Eff (one shot)
 	TH1D* hEffOneShot = (TH1D*)hPtMC->Clone("hEffOneShot");
 	hEffOneShot->Sumw2();
-	hEffOneShot->Divide(hEffOneShot,hPtGen,1,1,"b");
+	hEffOneShot->Divide(hEffOneShot,hPtGenWeighted,1,1,"b");
 
 	////// Draw hEff, hEffAcc
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0,0.8);  
@@ -391,12 +395,15 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 
 	TFile *fout=new TFile(outputfile.Data(),"recreate");
 	fout->cd();
-	hPtGen->Write();
-	hEffAcc->Write();
-	hEffOneShot->Write();
-	hEffSelection->Write();
-	hEff->Write();
 	hPtMC->Write();
+	hPtGen->Write();
+	hPtGenWeighted->Write();
+	hPtGenAcc->Write();
+	hPtGenAccWeighted->Write();
+	hEffAcc->Write();
+	hEffSelection->Write();
+	hEffOneShot->Write();
+	hEff->Write();
 	fout->Close();  
 
 }
