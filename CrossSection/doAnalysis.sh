@@ -69,7 +69,7 @@ DOVARCOMPARE_PP=0
 CHECKPROMPT=0
 
 ### PDF Syst.
-DOPDFSYST_PP=0
+DOPDFSYST_PP=1
 
 ## PP MONTE CARLO
 INPUTMCPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20171120_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20171119_bPt0jpsiPt0tkPt0p5_Bs_pthatweight_BDT15to50v2.root"
