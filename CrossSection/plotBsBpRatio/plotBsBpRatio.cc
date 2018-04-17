@@ -37,8 +37,10 @@ void plotBsBpRatio(){
 		BsyStaErr[i] = BshNucl->GetBinError(i+1)/BsyVal[i];
 		BsySysErr[i] = BsgNucl->GetErrorYhigh(i)/BsyVal[i];	
 		raaRatio[i] = BsyVal[i]/BpyVal[i];
-		raaRatioStaErr[i] = sqrt(BpyStaErr[i]/BpyVal[i]*BpyStaErr[i]/BpyVal[i] + BsyStaErr[i]/BsyVal[i]*BsyStaErr[i]/BsyVal[i])*raaRatio[i];
-		raaRatioSysErr[i] = sqrt(BpySysErr[i]/BpyVal[i]*BpySysErr[i]/BpyVal[i] + BsySysErr[i]/BsyVal[i]*BsySysErr[i]/BsyVal[i])*raaRatio[i];
+//		raaRatioStaErr[i] = sqrt(BpyStaErr[i]/BpyVal[i]*BpyStaErr[i]/BpyVal[i] + BsyStaErr[i]/BsyVal[i]*BsyStaErr[i]/BsyVal[i])*raaRatio[i];
+//		raaRatioSysErr[i] = sqrt(BpySysErr[i]/BpyVal[i]*BpySysErr[i]/BpyVal[i] + BsySysErr[i]/BsyVal[i]*BsySysErr[i]/BsyVal[i])*raaRatio[i];
+		raaRatioStaErr[i] = sqrt(BpyStaErr[i]*BpyStaErr[i] + BsyStaErr[i]*BsyStaErr[i])*raaRatio[i];
+		raaRatioSysErr[i] = sqrt(BpySysErr[i]*BpySysErr[i] + BsySysErr[i]*BsySysErr[i])*raaRatio[i];
 	}
     TCanvas*canvasRAA=new TCanvas("canvasRAA","canvasRAA",600,600);
     canvasRAA->cd();
@@ -149,15 +151,15 @@ void plotBsBpRatio(){
 		cout<<"xVal: "<<xVal[i]<<endl;
 		cout<<"xErr: "<<xErr[i]<<endl;
 		cout<<"BpyVal: "<<BpyVal[i]<<endl;
-		cout<<"BpyStaErr: "<<BpyStaErr[i]<<endl;
-		cout<<"BpySysErr: "<<BpySysErr[i]<<endl;
+		cout<<"BpyStaErr(%): "<<BpyStaErr[i]*100<<endl;
+		cout<<"BpySysErr(%): "<<BpySysErr[i]*100<<endl;
 		cout<<"BsyVal: "<<BsyVal[i]<<endl;
-		cout<<"BsyStaErr: "<<BsyStaErr[i]<<endl;
-		cout<<"BsySysErr: "<<BsySysErr[i]<<endl;
+		cout<<"BsyStaErr(%): "<<BsyStaErr[i]*100<<endl;
+		cout<<"BsySysErr(%): "<<BsySysErr[i]*100<<endl;
 		cout<<"raaRatio: "<<raaRatio[i]<<endl;
-		cout<<"raaRatioStaErr: "<<raaRatioStaErr[i]<<endl;
-		cout<<"raaRatioSysErr: "<<raaRatioSysErr[i]<<endl;
-		cout<<"raaRatioStaErr(%): "<<raaRatioStaErr[i]/raaRatio[i]<<endl;
-		cout<<"raaRatioSysErr(%): "<<raaRatioSysErr[i]/raaRatio[i]<<endl;
+		cout<<"raaRatioStaErr(%): "<<raaRatioStaErr[i]/raaRatio[i]*100<<endl;
+		cout<<"raaRatioSysErr(%): "<<raaRatioSysErr[i]/raaRatio[i]*100<<endl;
+		cout<<"raaRatioStaErr(absolute): "<<raaRatioStaErr[i]<<endl;
+		cout<<"raaRatioSysErr(absolute): "<<raaRatioSysErr[i]<<endl;
 	}
 }
