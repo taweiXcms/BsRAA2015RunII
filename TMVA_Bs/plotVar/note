@@ -1,5 +1,7 @@
 rt608
 root << EOI
+TMVA::TMVAGui( "../myTMVA/ROOT/TMVA_pp_7_15_varStage1.root" )
+TMVA::TMVAGui( "../myTMVA/ROOT/TMVA_PbPb_7_15_varStage1.root" )
 TMVA::TMVAGui( "../myTMVA/ROOT/TMVA_pp_15_50_varStage1.root" )
 TMVA::TMVAGui( "../myTMVA/ROOT/TMVA_PbPb_15_50_varStage1.root" )
 EOI
