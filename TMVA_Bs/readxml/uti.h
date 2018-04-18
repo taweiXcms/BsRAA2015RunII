@@ -26,6 +26,7 @@
 #include <TROOT.h>
 #include <TStyle.h>
 #include <TProfile.h>
+#include <TFrame.h>
 
 // Remove error
 void removeError(TH1F* h)
