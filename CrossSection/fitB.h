@@ -143,14 +143,16 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	f->FixParameter(9,f->GetParameter(9));
 	f->FixParameter(10,f->GetParameter(10));
 	f->FixParameter(12,f->GetParameter(12));
+	float relativeWidth = f->GetParameter(12);
+	float relativeWidthErr = f->GetParError(12);
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"q","",minhisto,maxhisto);
 	if(funcOpt != floatMean) f->ReleaseParameter(1); 
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
-	if(funcOpt == decreaseWidth) f->FixParameter(12,f->GetParameter(12)-f->GetParError(12));
-	if(funcOpt == increaseWidth) f->FixParameter(12,f->GetParameter(12)+f->GetParError(12));
+	if(funcOpt == decreaseWidth) f->FixParameter(12,relativeWidth-relativeWidthErr);
+	if(funcOpt == increaseWidth) f->FixParameter(12,relativeWidth+relativeWidthErr);
 	if(funcOpt == decreaseWidth || funcOpt == increaseWidth){
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
