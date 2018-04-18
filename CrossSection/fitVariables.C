@@ -23,8 +23,8 @@ struct plotStruct plotSetting[23] = {
     {"abs(By)", 					"B y", 		       "By", 		    0, 1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}, 1}, //1
     {"Btrk1Pt", 					"tk1 pt", 	       "Btrk1Pt", 	    0, 1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //2
     {"Btrk2Pt", 					"tk2 pt", 	       "Btrk2Pt", 	    0, 1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //3
-    {"abs(Btrk1Eta)",				"tk1 eta",         "Btrk1Eta",      1, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //4
-    {"abs(Btrk2Eta)",				"tk2 eta",         "Btrk2Eta",      1, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //5
+    {"abs(Btrk1Eta)",				"tk1 eta",         "Btrk1Eta",      0, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //4
+    {"abs(Btrk2Eta)",				"tk2 eta",         "Btrk2Eta",      0, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //5
     {"abs(Btrk1Dxy/Btrk1D0Err)", 	"normed tk1 Dxy",  "Btrk1Dxy",      0, 1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //6
     {"abs(Btrk2Dxy/Btrk1D0Err)", 	"normed tk2 Dxy",  "Btrk2Dxy",      0, 1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //7
     {"abs(Btktkmass-1.019455)", 	"|phi-PDG| mass",  "Btktkmass",     0, 1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}, 4}, //8
