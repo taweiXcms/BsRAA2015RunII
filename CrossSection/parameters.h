@@ -44,6 +44,10 @@ TString weightmc_PbPb = "(HLT_HIL1DoubleMu0_v1 || HLT_HIL1DoubleMu0_part1_v1 || 
 TString weightgen="1";
 TString weightmc="1";
 TString weightdata="1";
+TString weightGtk1eta="(1.08472 + -0.282757*abs(Gtk1eta) + 0.146944*abs(Gtk1eta)*abs(Gtk1eta))";
+TString weightGtk2eta="(0.953683 + 0.127024*abs(Gtk2eta) + -0.0581856*abs(Gtk2eta)*abs(Gtk2eta))";
+TString weightBtk1eta="(1.08472 + -0.282757*abs(Btrk1Eta) + 0.146944*abs(Btrk1Eta)*abs(Btrk1Eta))";
+TString weightBtk2eta="(0.953683 + 0.127024*abs(Btrk2Eta) + -0.0581856*abs(Btrk2Eta)*abs(Btrk2Eta))";
 
 const int nBinsCent=4;
 double ptBinsCent[nBinsCent+1] = {0.*2,10*2.,30.*2,50.*2,100*2};
@@ -66,4 +70,5 @@ double sf_pp_750[3] = {145556.43/137477.84, 82656.10/80783.33, 78578.69/78104.83
 double sf_pp_750_acc[4] = {70450.42/65157.74, 75106.01/72320.10, 82656.10/80783.33, 78578.69/78104.83, };
 double sf_pp_CutBase[2] = {101167.78/95546.77, 144104.49/142131.81, };
 double sf_pp_PbPbBDT[2] = {50097.28/47324.82, 109065.05/107287.96, };
+double sf_pp_OldPbPbBDT[2] = {31508.43/29789.44, 100244.84/98565.04, };
 double sf_pp_Y[4] = {75549.42/74848.71, 78204.01/77269.31, 80739.83/77530.53, 72297.97/66717.44, };

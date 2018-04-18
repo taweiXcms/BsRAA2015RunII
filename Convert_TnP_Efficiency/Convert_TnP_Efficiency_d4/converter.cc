@@ -17,9 +17,10 @@ bool ispp = 1;
 TString inputmc;
 bool nominalCut = 1;
 bool ppwithPbPbBDT = 0;
+bool ppwithOldPbPbBDT = 0;
 bool cutGA = 0;
-int optSum = nominalCut + ppwithPbPbBDT + cutGA;
-bool is750 = 1;
+int optSum = nominalCut + cutGA + ppwithPbPbBDT + ppwithOldPbPbBDT;
+bool is750 = 0;
 bool is750_acc = 0;
 bool isY = 0;
 int _nBins = nBins;
@@ -53,6 +54,11 @@ void converter(){
 		label = "pp"; 
 		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50.root";
 	}
+	if(ppwithOldPbPbBDT){
+		ispp = 1;
+		label = "pp"; 
+		inputmc = "/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT.root";
+	}
     TFile* infMC = new TFile(inputmc.Data());
     TTree* ntphi = (TTree*)infMC->Get("ntphi");
     TTree* ntSkim = (TTree*)infMC->Get("ntSkim");
@@ -60,12 +66,22 @@ void converter(){
     TTree* ntHi = (TTree*)infMC->Get("ntHi");
     TTree* mvaTree1 = (TTree*)infMC->Get("BDTStage1_pt7to15");
     TTree* mvaTree2 = (TTree*)infMC->Get("BDTStage1_pt15to50");
+	TTree* mvaTree3;
+	TTree* mvaTree4;
+	if(ppwithOldPbPbBDT){
+    	mvaTree3 = (TTree*)infMC->Get("BDTStage1_pt7to15_20180223MVA");
+	    mvaTree4 = (TTree*)infMC->Get("BDTStage1_pt15to50_20180223MVA");
+	}
     TTree* ntGen = (TTree*)infMC->Get("ntGen");
 	ntphi->AddFriend("ntSkim");
 	ntphi->AddFriend("ntHlt");
 	ntphi->AddFriend("ntGen");
 	ntphi->AddFriend("BDTStage1_pt7to15");
 	ntphi->AddFriend("BDTStage1_pt15to50");
+	if(ppwithOldPbPbBDT){
+		ntphi->AddFriend("BDTStage1_pt7to15_20180223MVA");
+		ntphi->AddFriend("BDTStage1_pt15to50_20180223MVA");
+	}
 	setAddressTree(ntphi, ntHlt, ntSkim, ntHi, ntGen, ispp);
 	int nevents_total = ntphi->GetEntries();
 
@@ -104,6 +120,10 @@ void converter(){
     	ntHi->GetEntry(entry);
     	mvaTree1->GetEntry(entry);
     	mvaTree2->GetEntry(entry);
+		if(ppwithOldPbPbBDT){
+	    	mvaTree3->GetEntry(entry);
+    		mvaTree4->GetEntry(entry);
+		}
     	ntGen->GetEntry(entry);
 	    for(int g=0; g<Gsize; g++){
         }
@@ -131,6 +151,7 @@ void converter(){
 				&& ( 
 					(nominalCut	&& ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.191055) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.208973)))
 					|| (ppwithPbPbBDT && ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.213755) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.254413)))
+					|| (ppwithOldPbPbBDT && ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15_20180223MVA[b]>0.245684) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50_20180223MVA[b]>0.255746)) && Btrk1Pt[b]>0.8 && Btrk2Pt[b]>0.8)
 					|| (cutGA && ((Bpt[b]>7 && Bpt[b]<15 && (Btrk1Pt[b]>0.96044105851185124 && Btrk2Pt[b]>0.47625434136305045 && abs(Btrk1Eta[b])<2.4147199180394177 && abs(Btrk2Eta[b])<2.3052611917398886 && abs(Btrk1Dxy[b]/Btrk1D0Err[b])>-0.50700522672246873 && abs(Btrk2Dxy[b]/Btrk2D0Err[b])>-0.29258267190923393 && abs(Btktkmass[b]-1.019455)<0.011577334741913982 && BsvpvDistance[b]/BsvpvDisErr[b]>-38.83571176258711 && Balpha[b]<3.104092988813095 && Bd0[b]/Bd0Err[b]>510.17997420026234 && cos(Bdtheta[b])>-0.40326844831704939 && Bchi2cl[b]>0.0048939239665767064)) || (Bpt[b]>15 && Bpt[b]<50 && (Btrk1Pt[b]>0.88010392070518972 && Btrk2Pt[b]>0.74630343789870546 && abs(Btrk1Eta[b])<2.2626072028730744 && abs(Btrk2Eta[b])<2.4187801371666175 && abs(Btrk1Dxy[b]/Btrk1D0Err[b])>-0.30170714307721802 && abs(Btrk2Dxy[b]/Btrk2D0Err[b])>-1.2682355606270277 && abs(Btktkmass[b]-1.019455)<0.014813912795464632 && BsvpvDistance[b]/BsvpvDisErr[b]>-56.600106798148566 && Balpha[b]<2.5800384512856156 && Bd0[b]/Bd0Err[b]>397.24968036422979 && cos(Bdtheta[b])>-0.63456958254017426 && Bchi2cl[b]>0.015022113220583305))))
 					)
 				) 

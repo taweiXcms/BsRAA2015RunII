@@ -5,6 +5,11 @@ TString fname;
 bool ispp;
 bool isdata;
 void convertTree(){
+// pp
+//	fname = "Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_20180223PbPbBDT";
+//	ispp = 1; isdata = 1;
+	fname = "Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT";
+	ispp = 1; isdata = 0;
 // PbPb
 //  fname = "Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT7to50_BDT15to50_20180223MVA";
 //  ispp = 0; isdata = 1;
@@ -18,8 +23,10 @@ void convertTree(){
 	TTree* ntSkim = (TTree*)inf->Get("ntSkim");
 	TTree* BDTStage1_pt7to15 = (TTree*)inf->Get("BDTStage1_pt7to15");
 	TTree* BDTStage1_pt15to50 = (TTree*)inf->Get("BDTStage1_pt15to50");
+	TTree* BDTStage1_pt7to15_20180223MVA = (TTree*)inf->Get("BDTStage1_pt7to15_20180223MVA");
 	TTree* BDTStage1_pt15to50_20180223MVA = (TTree*)inf->Get("BDTStage1_pt15to50_20180223MVA");
 	BDTStage1_pt7to15->AddFriend(BDTStage1_pt15to50);
+	BDTStage1_pt7to15->AddFriend(BDTStage1_pt7to15_20180223MVA);
 	BDTStage1_pt7to15->AddFriend(BDTStage1_pt15to50_20180223MVA);
 	TFile *outf = new TFile(Form("%s_candWise.root",fname.Data()),"recreate");
 	TTree* newntphi = new TTree("ntphi","");
@@ -41,6 +48,7 @@ void convertTree(){
         ntSkim->GetEntry(n);
         BDTStage1_pt7to15->GetEntry(n);
         BDTStage1_pt15to50->GetEntry(n);
+        BDTStage1_pt7to15_20180223MVA->GetEntry(n);
         BDTStage1_pt15to50_20180223MVA->GetEntry(n);
         for(int b=0; b<Bsize; b++){
 			fillVal(b, ispp, isdata);

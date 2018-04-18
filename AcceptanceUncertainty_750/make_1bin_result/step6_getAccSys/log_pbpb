@@ -2,27 +2,27 @@
 Processing drawmacro.C++(0)...
 pt bin 0
 avg: 0.097744
-pt var Mean: 0.097116, y var Mean: 0.098432
-pt var RMS:  0.001127, y var RMS:  0.000358
-sys = 1.794936
+pt var Mean: 0.097336, y var Mean: 0.098355
+pt var RMS:  0.001218, y var RMS:  0.000373
+sys = 1.662617
 pt bin 1
 avg: 0.430203
-pt var Mean: 0.427058, y var Mean: 0.425298
-pt var RMS:  0.005049, y var RMS:  0.002570
-sys = 1.904811
+pt var Mean: 0.427996, y var Mean: 0.425853
+pt var RMS:  0.005247, y var RMS:  0.002668
+sys = 1.732661
 y bin 0
-pt var Mean: 0.138287, y var Mean: 0.140443
-pt var RMS:  0.004715, y var RMS:  0.000269
-sys = 5.230792
+pt var Mean: 0.139201, y var Mean: 0.140502
+pt var RMS:  0.005059, y var RMS:  0.000280
+sys = 4.826754
 pt bins 0
-MinVal : 0.0934038 , Mean : 0.097116 , MaxVal : 0.103491
-MinVal : 0.096297 , Mean : 0.0984324 , MaxVal : 0.0997376
-avg: 0.097744, pt var unc: 0.005747, y var unc: 0.001994, final: 0.574732
+MinVal : 0.0937557 , Mean : 0.0973365 , MaxVal : 0.105211
+MinVal : 0.0963361 , Mean : 0.0983549 , MaxVal : 0.099503
+avg: 0.097744, pt var unc: 0.007468, y var unc: 0.001759, final: 0.746761
 pt bins 1
-MinVal : 0.404219 , Mean : 0.427058 , MaxVal : 0.446895
-MinVal : 0.415576 , Mean : 0.425298 , MaxVal : 0.440011
-avg: 0.430203, pt var unc: 0.025984, y var unc: 0.014627, final: 2.598425
+MinVal : 0.407144 , Mean : 0.427996 , MaxVal : 0.450164
+MinVal : 0.417469 , Mean : 0.425853 , MaxVal : 0.439667
+avg: 0.430203, pt var unc: 0.023059, y var unc: 0.012734, final: 2.305887
 y bins 0
-MinVal : 0.122284 , Mean : 0.138287 , MaxVal : 0.163496
-MinVal : 0.139422 , Mean : 0.140443 , MaxVal : 0.142072
-avg: 0.140945, pt var unc: 0.022551, y var unc: 0.001522, final: 2.255114
+MinVal : 0.123862 , Mean : 0.139201 , MaxVal : 0.163721
+MinVal : 0.139592 , Mean : 0.140502 , MaxVal : 0.142016
+avg: 0.140945, pt var unc: 0.022777, y var unc: 0.001353, final: 2.277665

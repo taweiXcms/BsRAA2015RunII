@@ -17,6 +17,8 @@ int     hiBin;
 //common
 float   BDTStage1_pt7to15[MAX_XB]; 
 float   BDTStage1_pt15to50[MAX_XB]; 
+float   BDTStage1_pt7to15_20180223MVA[MAX_XB]; 
+float   BDTStage1_pt15to50_20180223MVA[MAX_XB]; 
 float   pthatweight;
 int     Gsize;
 float   Gpt[MAX_GEN];
@@ -88,6 +90,8 @@ void setAddressTree(TTree* ntKp, TTree* ntHlt, TTree* ntSkim, TTree* ntHi, TTree
 	}
 	ntKp->SetBranchAddress("BDTStage1_pt7to15",BDTStage1_pt7to15);
 	ntKp->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
+	ntKp->SetBranchAddress("BDTStage1_pt7to15_20180223MVA",BDTStage1_pt7to15_20180223MVA);
+	ntKp->SetBranchAddress("BDTStage1_pt15to50_20180223MVA",BDTStage1_pt15to50_20180223MVA);
 	ntHi->SetBranchAddress("pthatweight",&pthatweight);
 	ntGen->SetBranchAddress("Gsize",&Gsize);
     ntGen->SetBranchAddress("Gpt",Gpt);

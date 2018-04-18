@@ -17,7 +17,7 @@ DOANALYSISPbPb_ROOFIT=0
 DOANALYSISPbPb_ROOFITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
-DORAA=1
+DORAA=0
 DORAARATIO=0
 
 ### pp 3-bin result
@@ -28,10 +28,6 @@ DOANALYSISPP_ROOFIT_750=0
 DOANALYSISPP_ROOFITONSAVED_750=0
 DOANALYSISPP_MCSTUDY_750=0
 DOANALYSISPP_CROSS_750=0
-
-### pp 4-bin result for acceptance
-DOANALYSISPP_FIT_750_acc=0
-DOANALYSISPP_MCSTUDY_750_acc=0
 
 ### pp cut base MVA (CUTBASE)
 DOANALYSISPP_FIT_CUTBASE=0
@@ -49,9 +45,20 @@ DOANALYSISPP_ROOFITONSAVED_PbPbBDT=0
 DOANALYSISPP_MCSTUDY_PbPbBDT=0
 DOANALYSISPP_CROSS_PbPbBDT=0
 
-### Rapidity result
+### pp sample with old PbPb MVA (BDT)
+DOANALYSISPP_FIT_OLDPbPbBDT=0
+DOANALYSISPP_FITONSAVED_OLDPbPbBDT=0
+DOANALYSISPP_ROOFIT_OLDPbPbBDT=0
+DOANALYSISPP_ROOFITONSAVED_OLDPbPbBDT=0
+DOANALYSISPP_MCSTUDY_OLDPbPbBDT=0
+DOANALYSISPP_CROSS_OLDPbPbBDT=0
+
+### pp 4-bin result for acceptance
+DOANALYSISPP_FIT_750_acc=0
+DOANALYSISPP_MCSTUDY_750_acc=0
+
+### Rapidity result for acceptance
 DOANALYSISPP_FIT_Y=0
-DOANALYSISPP_FITONSAVED_Y=0
 DOANALYSISPP_MCSTUDY_Y=0
 
 ### Reweighting
@@ -78,17 +85,16 @@ DOPDFSYST=0
 ### Pt Shape Syst.
 DOPTSHAPESYST=0
 
+### Track Eta Weight Syst.
+DOTKETAWEIGHTSYST=0
+
 ## PP MONTE CARLO
 INPUTMCPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50.root"
 INPUTMCPPCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_candWise.root"
-INPUTMCPP_PbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50.root"
-INPUTMCPP_PbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50_candWise.root"
 
 ## PP DATA 
 INPUTDATAPP="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50.root"
 INPUTDATAPPCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_candWise.root"
-INPUTDATAPP_PbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_PbPb_BDT7to50.root"
-INPUTDATAPP_PbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_PbPb_BDT7to50_candWise.root"
 
 ## PbPb MONTE CARLO
 INPUTMCPbPb="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50.root"
@@ -141,7 +147,6 @@ fi
 
 if [ $DOANALYSISPP_FIT -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-#./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST" "plotFits/plotFits" "$NPFIT_PP" 0 "0" "100"
 ./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST" "plotFits/plotFits" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
@@ -164,7 +169,7 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"a
 ./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm MCefficiency.exe
 fi
@@ -209,7 +214,6 @@ NPROOFIT_PbPb="1"
 
 if [ $DOANALYSISPbPb_FIT -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-#./fitB.exe 1 0 "$INPUTDATAPbPb" "$INPUTMCPbPb" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPbSAVEHIST" "plotFits/plotFits" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 ./fitB.exe 1 0 "$INPUTDATAPbPbCANDWISE" "$INPUTMCPbPbCANDWISE" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "$LABELPbPb" "$OUTPUTFILEPbPbSAVEHIST" "plotFits/plotFits" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 fi 
@@ -279,7 +283,6 @@ fi
 
 if [ $DOANALYSISPP_FIT_750 -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-#./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt750" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_750" "plotFits/plotFits_750" "$NPFIT_PP" 0 "0" "100"
 ./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt750" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_750" "plotFits/plotFits_750" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
@@ -314,23 +317,6 @@ g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.e
 rm CrossSectionRatio.exe
 fi
 
-### pp 4-bin result
-
-OUTPUTFILEPPSAVEHIST_750_acc="ROOTfiles/hPtSpectrumSaveHistBplusPP_750_acc.root"
-OUTPUTFILEMCSTUDYPP_750_acc="ROOTfiles/MCstudiesPP_750_acc.root"
-
-if [ $DOANALYSISPP_FIT_750_acc -eq 1 ]; then      
-g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt750_acc" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_750_acc" "plotFits/plotFits_750_acc" "$NPFIT_PP" 0 "0" "100"
-rm fitB.exe
-fi 
-
-if [ $DOANALYSISPP_MCSTUDY_750_acc -eq 1 ]; then      
-g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_acc" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750_acc" "plotEff/plotEff_750_acc" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-rm MCefficiency.exe
-fi
-
 ### pp cut base MVA (CUTBASE)
 
 CUTPPTEST1=${BASECUTPP}"&&Btrk1Pt>1.2&&Btrk2Pt>1.2&&abs(Btrk1Eta)<2.2&&abs(Btrk2Eta)<2.2&&abs(Btrk1Dxy/Btrk1D0Err)>2.0&&abs(Btrk2Dxy/Btrk2D0Err)>2.0&&abs(Btktkmass-1.019455)<0.01&&BsvpvDistance/BsvpvDisErr>1.0&&Balpha<2.0"
@@ -351,7 +337,6 @@ OUTPUTFILEPlotPP_CUTBASE="ROOTfiles/CrossSectionPP_CUTBASE.root"
 
 if [ $DOANALYSISPP_FIT_CUTBASE -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-#./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "Bpt" "$TRGPP" "$CUTPPCUTBASE" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_CUTBASE" "plotFits/plotFits_CUTBASE" "$NPFIT_PP" 0 "0" "100"
 ./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt" "$TRGPP" "$CUTPPCUTBASE" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_CUTBASE" "plotFits/plotFits_CUTBASE" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
@@ -389,6 +374,10 @@ fi
 
 ### pp sample with PbPb MVA (BDT)
 
+INPUTMCPP_PbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50.root"
+INPUTMCPP_PbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_PbPb_BDT7to50_candWise.root"
+INPUTDATAPP_PbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_PbPb_BDT7to50.root"
+INPUTDATAPP_PbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_PbPb_BDT7to50_candWise.root"
 CUTPPPbPbBDT=${BASECUTPbPb}"&&((Bpt>7&&Bpt<15&&BDTStage1_pt7to15>0.213755)||(Bpt>15&&Bpt<50&&BDTStage1_pt15to50>0.254413))"
 CUTPPPbPbBDT=${CUTPPPbPbBDT}"&&abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
 OUTPUTFILEPPSAVEHIST_PbPbBDT="ROOTfiles/hPtSpectrumSaveHistBplusPP_PbPbBDT.root"
@@ -400,9 +389,7 @@ OUTPUTFILEPlotPP_PbPbBDT="ROOTfiles/CrossSectionPP_PbPbBDT.root"
 
 if [ $DOANALYSISPP_FIT_PbPbBDT -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-#./fitB.exe 0 0 "$INPUTDATAPP_PbPbBDT" "$INPUTMCPP_PbPbBDT" "Bpt" "$TRGPP" "$CUTPPPbPbBDT" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_PbPbBDT" "plotFits/plotFits_PbPbBDT" "$NPFIT_PP" 0 "0" "100"
 ./fitB.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE" "$INPUTMCPP_PbPbBDTCANDWISE" "Bpt" "$TRGPP" "$CUTPPPbPbBDT" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_PbPbBDT" "plotFits/plotFits_PbPbBDT" "$NPFIT_PP" 0 "0" "100"
-#./fitB.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE" "$INPUTMCPP_PbPbBDTCANDWISE" "Bpt750" "$TRGPP" "$CUTPPPbPbBDT" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_PbPbBDT" "plotFits/plotFits_750" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
 
@@ -436,21 +423,82 @@ g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.e
 rm CrossSectionRatio.exe
 fi
 
-### Rapidity result
+### pp sample with Old PbPb MVA (BDT)
+
+INPUTMCPP_OLDPbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT.root"
+INPUTMCPP_OLDPbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT_candWise.root"
+INPUTDATAPP_OLDPbPbBDT="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_20180223PbPbBDT.root"
+INPUTDATAPP_OLDPbPbBDTCANDWISE="/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_20180223PbPbBDT_candWise.root"
+CUTPPOLDPbPbBDT=${BASECUTPbPb}"&&((Bpt>7&&Bpt<15&&BDTStage1_pt7to15_20180223MVA>0.245684)||(Bpt>15&&Bpt<50&&BDTStage1_pt15to50_20180223MVA>0.255746))&&Btrk1Pt>0.8&&Btrk2Pt>0.8"
+CUTPPOLDPbPbBDT=${CUTPPOLDPbPbBDT}"&&abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
+OUTPUTFILEPPSAVEHIST_OLDPbPbBDT="ROOTfiles/hPtSpectrumSaveHistBplusPP_OLDPbPbBDT.root"
+OUTPUTFILEPP_OLDPbPbBDT="ROOTfiles/hPtSpectrumBplusPP_OLDPbPbBDT.root"
+OUTPUTFILEPPSAVEHIST_ROOFIT_OLDPbPbBDT="ROOTfiles/hPtSpectrumSaveHistBplusPP_roofit_OLDPbPbBDT.root"
+OUTPUTFILEPP_ROOFIT_OLDPbPbBDT="ROOTfiles/hPtSpectrumBplusPP_roofit_OLDPbPbBDT.root"
+OUTPUTFILEMCSTUDYPP_OLDPbPbBDT="ROOTfiles/MCstudiesPP_OLDPbPbBDT.root"
+OUTPUTFILEPlotPP_OLDPbPbBDT="ROOTfiles/CrossSectionPP_OLDPbPbBDT.root"
+
+if [ $DOANALYSISPP_FIT_OLDPbPbBDT -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 0 "$INPUTDATAPP_OLDPbPbBDTCANDWISE" "$INPUTMCPP_OLDPbPbBDTCANDWISE" "Bpt" "$TRGPP" "$CUTPPOLDPbPbBDT" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_OLDPbPbBDT" "plotFits/plotFits_OLDPbPbBDT" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_FITONSAVED_OLDPbPbBDT -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST_OLDPbPbBDT" "$OUTPUTFILEPPSAVEHIST_OLDPbPbBDT" "Bpt" "$TRGPP" "$CUTPPOLDPbPbBDT" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP_OLDPbPbBDT" "plotFits/plotFitsOnSaved_OLDPbPbBDT" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_ROOFIT_OLDPbPbBDT -eq 1 ]; then      
+root -b -q 'roofitB.C++('0','0','\"$INPUTDATAPP_OLDPbPbBDTCANDWISE\"','\"$INPUTMCPP_OLDPbPbBDTCANDWISE\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPPOLDPbPbBDT\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"$LABELPP\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_OLDPbPbBDT\"','\"plotFits/plotFits_roofit_OLDPbPbBDT\"','\"$NPROOFIT_PP\"','0','0','100')'
+rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
+fi 
+
+if [ $DOANALYSISPP_ROOFITONSAVED_OLDPbPbBDT -eq 1 ]; then      
+root -b -q 'roofitB.C++('0','1','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_OLDPbPbBDT\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_OLDPbPbBDT\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPPOLDPbPbBDT\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"$LABELPP\"','\"$OUTPUTFILEPP_ROOFIT_OLDPbPbBDT\"','\"plotFits/plotFitsOnSaved_roofit_OLDPbPbBDT\"','\"$NPROOFIT_PP\"','0','0','100')'
+rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
+fi 
+
+if [ $DOANALYSISPP_MCSTUDY_OLDPbPbBDT -eq 1 ]; then      
+g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
+#./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDT" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDTCANDWISE" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency.exe
+fi
+
+if [ $DOANALYSISPP_CROSS_OLDPbPbBDT -eq 1 ]; then      
+g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
+#./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_OLDPbPbBDT" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "$OUTPUTFILEPlotPP_OLDPbPbBDT" "plotCrossSection/plotCrossSection_OLDPbPbBDT" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100"
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_ROOFIT_OLDPbPbBDT" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "$OUTPUTFILEPlotPP_OLDPbPbBDT" "plotCrossSection/plotCrossSection_OLDPbPbBDT" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100"
+rm CrossSectionRatio.exe
+fi
+
+### pp 4-bin result for acceptance
+
+OUTPUTFILEPPSAVEHIST_750_acc="ROOTfiles/hPtSpectrumSaveHistBplusPP_750_acc.root"
+OUTPUTFILEMCSTUDYPP_750_acc="ROOTfiles/MCstudiesPP_750_acc.root"
+
+if [ $DOANALYSISPP_FIT_750_acc -eq 1 ]; then      
+g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
+./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt750_acc" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_750_acc" "plotFits/plotFits_750_acc" "$NPFIT_PP" 0 "0" "100"
+rm fitB.exe
+fi 
+
+if [ $DOANALYSISPP_MCSTUDY_750_acc -eq 1 ]; then      
+g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_acc" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750_acc" "plotEff/plotEff_750_acc" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency.exe
+fi
+
+### Rapidity result for acceptance
 
 OUTPUTFILEPPSAVEHIST_Y="ROOTfiles/hPtSpectrumSaveHistBplusPP_Y.root"
-OUTPUTFILEPP_Y="ROOTfiles/hPtSpectrumBplusPP_Y.root"
 OUTPUTFILEMCSTUDYPP_Y="ROOTfiles/MCstudiesPP_Y.root"
 if [ $DOANALYSISPP_FIT_Y -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
 #./fitB.exe 0 0 "$INPUTDATAPP" "$INPUTMCPP" "abs(By)" "$TRGPP" "$CUTPP&&Bpt>15&&Bpt<50" "$SELGENPP&&Gpt>15&&Gpt<50" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_Y" "plotFits/plotFits_Y" "$NPFIT_PP" 0 "0" "100"
 ./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "abs(By)" "$TRGPP" "$CUTPP&&Bpt>7&&Bpt<50" "$SELGENPP&&Gpt>15&&Gpt<50" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPPSAVEHIST_Y" "plotFits/plotFits_Y" "$NPFIT_PP" 0 "0" "100"
-rm fitB.exe
-fi 
-
-if [ $DOANALYSISPP_FITONSAVED_Y -eq 1 ]; then      
-g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST_Y" "$OUTPUTFILEPPSAVEHIST_Y" "abs(By)" "$TRGPP" "$CUTPP&&Bpt>7&&Bpt<50" "$SELGENPP&&Gpt>15&&Gpt<50" "$ISMCPP" 1 "$ISDOWEIGHTPP" "$LABELPP" "$OUTPUTFILEPP_Y" "plotFits/plotFitsOnSaved_Y" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
 
@@ -554,16 +602,16 @@ CUT=$CUTPP
 #./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 17
 #./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 18
 
-CUT=${BASECUTPP}
+#CUT=${BASECUTPP}
 #CUT=${CUT}"&&abs(PVz)<15&&pBeamScrapingFilter&&pPAprimaryVertexFilter"
 #./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 19
 #./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 20
-#./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<15"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 19
-#./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 20
+##./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<15"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 19
+##./fitVariables.exe 0 0 "$INPUTDATAPPCANDWISE"  "$INPUTMCPPCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 20
 #./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 21
 #./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 22
-#./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<15"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 21
-#./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 22
+##./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>7&&Bpt<15"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 21
+##./fitVariables.exe 0 0 "$INPUTDATAPP_PbPbBDTCANDWISE"  "$INPUTMCPP_PbPbBDTCANDWISE"  "Bpt" "$TRGPP" "$TRGPPMC" "$CUT&&Bpt>15&&Bpt<50"   "$SELGENPP"   "$ISMCPP"   1   "$ISDOWEIGHTPP"   "$LABELPP"  "" "$NPFIT_PP" 0 "0" "100" 22
 rm fitVariables.exe
 fi 
 
@@ -681,5 +729,17 @@ rm MCefficiency.exe
 cd plotPtShapeSyst
 root -b -q getPtShapeSyst.C++
 rm getPtShapeSyst_C.d getPtShapeSyst_C.so getPtShapeSyst_C_ACLiC_dict_rdict.pcm
+cd -
+fi
+
+### Track Eta Weight Syst.
+if [ $DOTKETAWEIGHTSYST -eq 1 ]; then      
+g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
+#./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt_tkEtaWeight" "Gpt" "$LABELPP" "plotTkEtaWeightSyst/MCstudiesPP.root" "plotTkEtaWeightSyst/plotTkEtaWeightSyst" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 1 "$INPUTMCPbPbCANDWISE" "$SELGENPbPb" "$SELGENPbPbACCPbPb" "$RECOONLYPbPb" "$CUTPbPb&&$TRGPbPbMC" "Bpt_tkEtaWeight" "Gpt" "$LABELPbPb" "plotTkEtaWeightSyst/MCstudiesPbPb.root" "plotTkEtaWeightSyst/plotTkEtaWeightSyst" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
+rm MCefficiency.exe
+cd plotTkEtaWeightSyst 
+root -b -q getTkEtaWeightSyst.C++
+rm getTkEtaWeightSyst_C.d getTkEtaWeightSyst_C.so getTkEtaWeightSyst_C_ACLiC_dict_rdict.pcm
 cd -
 fi

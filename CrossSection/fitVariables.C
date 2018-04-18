@@ -7,6 +7,7 @@ struct plotStruct{
 	TString var;
 	TString latex;
 	TString text;
+	bool dofit;
 	bool setlogY;
 	bool setlogX;
 	int nBins;
@@ -18,29 +19,29 @@ struct plotStruct{
 //double inf = std::numeric_limits<double>::infinity();
 double inf = 9999;
 struct plotStruct plotSetting[23] = {
-    {"Bpt", 						"B pt", 	       "Bpt", 		    1, 0, 4, {7, 12, 15, 20, 50}, 0}, //0
-    {"abs(By)", 					"B y", 		       "By", 		    1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}, 1}, //1
-    {"Btrk1Pt", 					"tk1 pt", 	       "Btrk1Pt", 	    1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //2
-    {"Btrk2Pt", 					"tk2 pt", 	       "Btrk2Pt", 	    1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //3
-    {"abs(Btrk1Eta)",				"tk1 eta",         "Btrk1Eta",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //4
-    {"abs(Btrk2Eta)",				"tk2 eta",         "Btrk2Eta",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //5
-    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"normed tk1 Dxy",  "Btrk1Dxy",      1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //6
-    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"normed tk2 Dxy",  "Btrk2Dxy",      1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //7
-    {"abs(Btktkmass-1.019455)", 	"|phi-PDG| mass",  "Btktkmass",     1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}, 4}, //8
-    {"abs(Bmumumass-3.096916)",     "|jpsi-PDG| mass", "Bmumumass",     1, 0, 4, {0, 0.01, 0.018, 0.03, 0.2}, 3}, //9
-    {"BsvpvDistance/BsvpvDisErr", 	"SVPV", 	       "Bsvpv", 	    1, 0, 4, {0., 10., 20., 30., 200}, 0}, //10
-    {"Balpha", 						"alpha", 	       "Balpha", 	    1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}, 2}, //11
-    {"Bd0/Bd0Err", 					"normed d0", 	   "Bd0", 		    1, 0, 4, {0.,1500,3000,6000,15000}, 0}, //12
-    {"cos(Bdtheta)", 				"cos(theta)",      "cosBtheta",     1, 0, 4, {0.9975,0.9995,0.9999,0.99997,1}, 5}, //13
-    {"Bchi2cl", 					"fit prob", 	   "Bchi2cl", 	    1, 0, 4, {0.,0.6,0.75,0.9,1}, 1}, //14
-    {"Btktkpt", 					"phi pt", 	       "Btktkpt", 	    1, 0, 4, {0.,2.5,4,7,40}, 0}, //15
-    {"abs(Btktketa)", 				"phi eta",         "Btktketa",      1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //16
-    {"Bmu1pt", 						"mu1 pt", 	       "Bmu1pt", 	    1, 0, 4, {0.,3.8,6,8,40}, 1}, //17
-    {"Bmu1pt", 						"mu2 pt", 	       "Bmu2pt", 	    1, 0, 4, {0.,3.8,6,8,40}, 1}, //18
-    {"BDTStage1_pt7to15",			"BDT 7~15", 	   "BDT7to15",      1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //19
-    {"BDTStage1_pt15to50",			"BDT 15~50", 	   "BDT15to50",     1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //20
-    {"BDTStage1_pt7to15",			"PbPb BDT 7~15",   "PbPbBDT7to15",  1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //21
-    {"BDTStage1_pt15to50",			"PbPb BDT 15~50",  "PbPbBDT15to50", 1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //22
+    {"Bpt", 						"B pt", 	       "Bpt", 		    0, 1, 0, 4, {7, 12, 15, 20, 50}, 0}, //0
+    {"abs(By)", 					"B y", 		       "By", 		    0, 1, 0, 4, {0.0, 0.5, 1.0, 1.5, 2.4}, 1}, //1
+    {"Btrk1Pt", 					"tk1 pt", 	       "Btrk1Pt", 	    0, 1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //2
+    {"Btrk2Pt", 					"tk2 pt", 	       "Btrk2Pt", 	    0, 1, 0, 4, {0., 1.2, 2, 3, 30}, 0}, //3
+    {"abs(Btrk1Eta)",				"tk1 eta",         "Btrk1Eta",      1, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //4
+    {"abs(Btrk2Eta)",				"tk2 eta",         "Btrk2Eta",      1, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //5
+    {"abs(Btrk1Dxy/Btrk1D0Err)", 	"normed tk1 Dxy",  "Btrk1Dxy",      0, 1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //6
+    {"abs(Btrk2Dxy/Btrk1D0Err)", 	"normed tk2 Dxy",  "Btrk2Dxy",      0, 1, 0, 4, {0, 1.2, 4., 6, 30}, 1}, //7
+    {"abs(Btktkmass-1.019455)", 	"|phi-PDG| mass",  "Btktkmass",     0, 1, 0, 4, {0., 0.0015, 0.003, 0.005, 0.015}, 4}, //8
+    {"abs(Bmumumass-3.096916)",     "|jpsi-PDG| mass", "Bmumumass",     0, 1, 0, 4, {0, 0.01, 0.018, 0.03, 0.2}, 3}, //9
+    {"BsvpvDistance/BsvpvDisErr", 	"SVPV", 	       "Bsvpv", 	    0, 1, 0, 4, {0., 10., 20., 30., 200}, 0}, //10
+    {"Balpha", 						"alpha", 	       "Balpha", 	    0, 1, 0, 4, {0., 0.01, 0.02, 0.04, 0.3}, 2}, //11
+    {"Bd0/Bd0Err", 					"normed d0", 	   "Bd0", 		    0, 1, 0, 4, {0.,1500,3000,6000,15000}, 0}, //12
+    {"cos(Bdtheta)", 				"cos(theta)",      "cosBtheta",     0, 1, 0, 4, {0.9975,0.9995,0.9999,0.99997,1}, 5}, //13
+    {"Bchi2cl", 					"fit prob", 	   "Bchi2cl", 	    0, 1, 0, 4, {0.,0.6,0.75,0.9,1}, 1}, //14
+    {"Btktkpt", 					"phi pt", 	       "Btktkpt", 	    0, 1, 0, 4, {0.,2.5,4,7,40}, 0}, //15
+    {"abs(Btktketa)", 				"phi eta",         "Btktketa",      0, 1, 0, 4, {0.0, 0.4, 0.8, 1.4, 2.6}, 1}, //16
+    {"Bmu1pt", 						"mu1 pt", 	       "Bmu1pt", 	    0, 1, 0, 4, {0.,3.8,6,8,40}, 1}, //17
+    {"Bmu1pt", 						"mu2 pt", 	       "Bmu2pt", 	    0, 1, 0, 4, {0.,3.8,6,8,40}, 1}, //18
+    {"BDTStage1_pt7to15",			"BDT 7~15", 	   "BDT7to15",      0, 1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //19
+    {"BDTStage1_pt15to50",			"BDT 15~50", 	   "BDT15to50",     0, 1, 0, 4, {0.1,0.25,0.3,0.35,1.}, 2}, //20
+    {"BDTStage1_pt7to15",			"PbPb BDT 7~15",   "PbPbBDT7to15",  0, 1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //21
+    {"BDTStage1_pt15to50",			"PbPb BDT 15~50",  "PbPbBDT15to50", 0, 1, 0, 4, {-0.0,0.1,0.2,0.25,1.}, 2}, //22
 };
 
 int _nBins;
@@ -132,6 +133,8 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	if(usePbPb){
 		weightmc = weightmc_PbPb;
 	}
+	//weightmc += Form("*%s",weightBtk1eta.Data());
+	//weightmc += Form("*%s",weightBtk2eta.Data());
 
 	TString _isMC = "data";
 	if(isMC) _isMC = "mc";
@@ -271,12 +274,11 @@ void fitVariables(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", T
 	pRatio->Draw();
 	pRatio->cd();
 	hRatio->Divide(hPtMC);
-	//if(varExp=="BDTStage1_pt15to50"){
-	if(0){
+	if(plotSetting[vartype].dofit){
 		TF1* f = new TF1("f","[0]+[1]*x+[2]*x*x");
 		//TF1* f = new TF1("f","[0]+[1]*x");
 		hRatio->Fit("f","L");
-		//f->Print();
+		f->Print();
 	}
 	hRatio->Draw();
 	TLine* line = new TLine(_ptBins[0], 1., _ptBins[_nBins], 1.);

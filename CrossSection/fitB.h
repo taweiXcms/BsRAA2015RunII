@@ -31,7 +31,7 @@ enum variationType{
 	decreaseWidth,
 	increaseWidth,
 	floatMean,
-	linearBG,
+	secondOrdBG,
 	thirdOrdBG,
 	exponentialBG,
 	onlyBG,
@@ -47,7 +47,7 @@ struct variationStruct variationSetting[variationSize] = {
 	{"decreaseWidth", 1},
 	{"increaseWidth", 1},
 	{"floatMean", 1},
-	{"linearBG", 0},
+	{"secondOrdBG", 0},
 	{"thirdOrdBG", 0},
 	{"exponentialBG", 0},
 	{"onlyBG", 0},
@@ -61,12 +61,13 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
     TString funcform = "";
 	TString sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8]))";
 	//TString sigfunc = "[0]*([7]*exp(-0.5*((x-[1])/[2])^2)/(sqrt(2*3.14159)*[2])+(1-[7])*exp(-0.5*((x-[1])/[8])^2)/(sqrt(2*3.14159)*[8]))";
-	TString bkgfunc = "[3]+[4]*x+[5]*x*x";
+	//TString bkgfunc = "[3]+[4]*x+[5]*x*x";
+	TString bkgfunc = "[3]+[4]*x";
 	if(funcOpt == singleGaus) sigfunc = "[0]*(Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2]))";//single Gaussian
 	if(funcOpt == tripleGaus) sigfunc = "[0]*([7]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])+(1-[7])*([9]*Gaus(x,[1],[8])/(sqrt(2*3.14159)*[8])+(1-[9])*Gaus(x,[1],[10])/(sqrt(2*3.14159)*[10])))";//triple Gaussian
 	if(funcOpt == decreaseWidth || funcOpt == increaseWidth) sigfunc = "[0]*([7]*Gaus(x,[1],[2]*(1+[12]))/(sqrt(2*3.14159)*[2]*(1+[12]))+(1-[7])*Gaus(x,[1],[8]*(1+[12]))/(sqrt(2*3.14159)*[8]*(1+[12])))";// increase width or decrease width
-	if(funcOpt == linearBG) bkgfunc = "[3]+[4]*x";//linear background
-	if(funcOpt == thirdOrdBG) bkgfunc = "[3]+[4]*x+[5]*x*x+[6]*x*x*x";//3rd order background
+	if(funcOpt == secondOrdBG) bkgfunc = "[3]+[4]*x+[5]*x*x";//2nd order background
+	if(funcOpt == thirdOrdBG) bkgfunc =  "[3]+[4]*x+[5]*x*x+[6]*x*x*x";//3rd order background
 	if(funcOpt == exponentialBG) bkgfunc = "[3]*exp(-[4]*x)";//exponential background
 	funcform = sigfunc + "+" + bkgfunc;
 	if(funcOpt == onlyBG) funcform = bkgfunc;//consider only background, for prompt fit
@@ -131,7 +132,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	f->ReleaseParameter(5);
 	f->ReleaseParameter(6);
 	//some custome setting for PDF syst
-	if(funcOpt == linearBG) f->SetParLimits(4,0,1e3);
+	//if(funcOpt == linearBG) f->SetParLimits(4,0,1e3);
 	if(funcOpt == exponentialBG) f->SetParLimits(4,0,5);
 	f->ReleaseParameter(11);
 	f->SetParLimits(11,0,1000);

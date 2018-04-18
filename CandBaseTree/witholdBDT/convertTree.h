@@ -5,6 +5,7 @@
 
 float BDTStage1_pt7to15[MAX_XB];
 float BDTStage1_pt15to50[MAX_XB];
+float BDTStage1_pt7to15_20180223MVA[MAX_XB];
 float BDTStage1_pt15to50_20180223MVA[MAX_XB];
 float pthat;
 float pthatweight;
@@ -24,6 +25,7 @@ void setBDTBranchAddress(TTree* nt, bool ispp, bool isdata)
 {
     nt->SetBranchAddress("BDTStage1_pt7to15",BDTStage1_pt7to15);
     nt->SetBranchAddress("BDTStage1_pt15to50",BDTStage1_pt15to50);
+    nt->SetBranchAddress("BDTStage1_pt7to15_20180223MVA",BDTStage1_pt7to15_20180223MVA);
     nt->SetBranchAddress("BDTStage1_pt15to50_20180223MVA",BDTStage1_pt15to50_20180223MVA);
 }
 
@@ -449,6 +451,7 @@ void setBranchAddress(TTree* nt, bool ispp, bool isdata)
 
 float __BDTStage1_pt7to15;
 float __BDTStage1_pt15to50;
+float __BDTStage1_pt7to15_20180223MVA;
 float __BDTStage1_pt15to50_20180223MVA;
 
 //BInfo
@@ -619,6 +622,7 @@ void buildBranch(TTree* nt, bool ispp, bool isdata)
 {
     nt->Branch("BDTStage1_pt7to15",&__BDTStage1_pt7to15);
     nt->Branch("BDTStage1_pt15to50",&__BDTStage1_pt15to50);
+    nt->Branch("BDTStage1_pt7to15_20180223MVA",&__BDTStage1_pt7to15_20180223MVA);
     nt->Branch("BDTStage1_pt15to50_20180223MVA",&__BDTStage1_pt15to50_20180223MVA);
 	if(!isdata){
     	nt->Branch("pthat",&pthat);
@@ -838,6 +842,7 @@ void buildBranch(TTree* nt, bool ispp, bool isdata)
 void fillVal(int i, bool ispp, bool isdata){
 	__BDTStage1_pt7to15 = BDTStage1_pt7to15[i];
 	__BDTStage1_pt15to50 = BDTStage1_pt15to50[i];
+	__BDTStage1_pt7to15_20180223MVA = BDTStage1_pt7to15_20180223MVA[i];
 	__BDTStage1_pt15to50_20180223MVA = BDTStage1_pt15to50_20180223MVA[i];
 
 	//BInfo

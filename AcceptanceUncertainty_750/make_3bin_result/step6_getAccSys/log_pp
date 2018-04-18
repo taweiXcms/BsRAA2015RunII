@@ -1,34 +1,34 @@
 
 Processing drawmacro.C++(1)...
 pt bin 0
-pt var Mean: 0.097059, y var Mean: 0.098396
-pt var RMS:  0.001156, y var RMS:  0.000368
-sys = 1.825962
+pt var Mean: 0.097269, y var Mean: 0.098321
+pt var RMS:  0.001245, y var RMS:  0.000373
+sys = 1.702369
 pt bin 1
-pt var Mean: 0.361107, y var Mean: 0.357927
-pt var RMS:  0.000496, y var RMS:  0.001814
-sys = 1.464296
+pt var Mean: 0.361195, y var Mean: 0.358296
+pt var RMS:  0.000524, y var RMS:  0.001835
+sys = 1.367577
 pt bin 2
-pt var Mean: 0.550046, y var Mean: 0.546129
-pt var RMS:  0.004106, y var RMS:  0.003441
-sys = 1.810332
+pt var Mean: 0.550729, y var Mean: 0.546831
+pt var RMS:  0.004258, y var RMS:  0.003474
+sys = 1.689249
 y bin 0
-pt var Mean: 0.138192, y var Mean: 0.140492
-pt var RMS:  0.004813, y var RMS:  0.000197
-sys = 5.447788
+pt var Mean: 0.139067, y var Mean: 0.140532
+pt var RMS:  0.005177, y var RMS:  0.000200
+sys = 5.086164
 pt bins 0
-MinVal : 0.093467 , Mean : 0.0970591 , MaxVal : 0.105737
-MinVal : 0.0963585 , Mean : 0.0983963 , MaxVal : 0.0995627
-avg: 0.097687, pt var unc: 0.008049, y var unc: 0.001876, final: 0.804942
+MinVal : 0.0937015 , Mean : 0.0972688 , MaxVal : 0.10433
+MinVal : 0.0964367 , Mean : 0.0983213 , MaxVal : 0.0994845
+avg: 0.097687, pt var unc: 0.006643, y var unc: 0.001797, final: 0.664272
 pt bins 1
-MinVal : 0.359091 , Mean : 0.361107 , MaxVal : 0.363862
-MinVal : 0.352152 , Mean : 0.357927 , MaxVal : 0.367765
-avg: 0.361404, pt var unc: 0.002458, y var unc: 0.009252, final: 0.925195
+MinVal : 0.359236 , Mean : 0.361195 , MaxVal : 0.363573
+MinVal : 0.352441 , Mean : 0.358296 , MaxVal : 0.367187
+avg: 0.361404, pt var unc: 0.002168, y var unc: 0.008963, final: 0.896282
 pt bins 2
-MinVal : 0.528154 , Mean : 0.550046 , MaxVal : 0.565958
-MinVal : 0.535007 , Mean : 0.546129 , MaxVal : 0.56419
-avg: 0.552694, pt var unc: 0.024540, y var unc: 0.017686, final: 2.453959
+MinVal : 0.530586 , Mean : 0.550729 , MaxVal : 0.564632
+MinVal : 0.535671 , Mean : 0.546831 , MaxVal : 0.563305
+avg: 0.552694, pt var unc: 0.022108, y var unc: 0.017023, final: 2.210774
 y bins 0
-MinVal : 0.122726 , Mean : 0.138192 , MaxVal : 0.168149
-MinVal : 0.13988 , Mean : 0.140492 , MaxVal : 0.141572
-avg: 0.141065, pt var unc: 0.027084, y var unc: 0.001185, final: 2.708440
+MinVal : 0.123685 , Mean : 0.139067 , MaxVal : 0.166738
+MinVal : 0.13988 , Mean : 0.140532 , MaxVal : 0.141572
+avg: 0.141065, pt var unc: 0.025674, y var unc: 0.001185, final: 2.567375

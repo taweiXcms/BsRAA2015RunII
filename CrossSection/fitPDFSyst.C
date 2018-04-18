@@ -188,8 +188,8 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 			line->SetLineColor(kGreen+1);
 			line->Draw();
 			pullgraph->Draw("p e same");
-			c->SaveAs(Form("%s%s/%s_%s_%d%s_fit%d.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data(),fopt));
-	        cMC->SaveAs(Form("%s%s/%s_%s_%d%s_fit%d.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data(),fopt));
+			c->SaveAs(Form("%s%s/%s_%s_%.0f_%.0f%s_fit%d.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_ptBins[i],_ptBins[i+1],_postfix.Data(),fopt));
+	        cMC->SaveAs(Form("%s%s/%s_%s_%.0f_%.0f%s_fit%d.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_ptBins[i],_ptBins[i+1],_postfix.Data(),fopt));
 
 
 			hMean->Write();

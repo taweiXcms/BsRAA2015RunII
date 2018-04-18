@@ -84,7 +84,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	RooRealVar a0MC(Form("a0MC%d",_count),"",0,0,1e6);
 	RooRealVar a1MC(Form("a1MC%d",_count),"",0,-1e4,1e4);
 	RooRealVar a2MC(Form("a2MC%d",_count),"",0,-1e4,1e4);
-	RooPolynomial bkgMC(Form("bkgMC%d",_count),"",*mass,RooArgSet(a0MC,a1MC,a2MC));
+	//RooPolynomial bkgMC(Form("bkgMC%d",_count),"",*mass,RooArgSet(a0MC,a1MC,a2MC));//2nd order poly
+	RooPolynomial bkgMC(Form("bkgMC%d",_count),"",*mass,RooArgSet(a0MC,a1MC));//linear
 	RooRealVar nsigMC(Form("nsigMC%d",_count),"",1,0,1e8);
 	RooRealVar nbkgMC(Form("nbkgMC%d",_count),"",0,0,1e5);
 	RooAddPdf* modelMC = new RooAddPdf(Form("modelMC%d",_count),"",RooArgList(sigMC),RooArgList(nsigMC));
@@ -114,7 +115,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	RooRealVar a0(Form("a0%d",_count),"",1e3,0,1e6);
 	RooRealVar a1(Form("a1%d",_count),"",1e0,-1e4,1e4);
 	RooRealVar a2(Form("a2%d",_count),"",1e0,-1e4,1e4);
-	RooPolynomial bkg(Form("bkg%d",_count),"",*mass,RooArgSet(a0,a1,a2));
+	//RooPolynomial bkg(Form("bkg%d",_count),"",*mass,RooArgSet(a0,a1,a2));//2nd orderpoly
+	RooPolynomial bkg(Form("bkg%d",_count),"",*mass,RooArgSet(a0,a1));//linear
 	RooGenericPdf peakbg(Form("peakbg%d",_count),"",Form("(%s)",npfit.Data()),RooArgSet(*mass));
 	RooRealVar nsig(Form("nsig%d",_count),"",1,0,1e8);
 	RooRealVar nbkg(Form("nbkg%d",_count),"",1,0,1e5);

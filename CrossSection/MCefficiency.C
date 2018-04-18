@@ -22,7 +22,7 @@ int _nBins = nBins;
 double *_ptBins = ptBins;
 double *_sf_pp = sf_pp;
 double *_sf_pbpb = sf_pbpb;
-int customizedOpt = 0; //1: remove pt weight
+int customizedOpt = 0; //1: remove pt weight, 2: do tk eta weihting
 
 void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString selmcgenacceptance="", TString cut_recoonly="", TString cut="", TString _varExp = "", TString _varGenExp = "", TString label="", TString outputfile="", TString outplotf="", int PbPbweight=0, Float_t centmin=0., Float_t centmax=100.)
 {    
@@ -36,6 +36,10 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 	found = str.find("noPtWeight");
 	if (found!=std::string::npos){
 		customizedOpt = 1;
+	}
+	found = str.find("tkEtaWeight");
+	if (found!=std::string::npos){
+		customizedOpt = 2;
 	}
     if(_varExp == "Bpt750" || _varExp == "Bpt750_noPtWeight"){
         _nBins = nBins750;
@@ -52,6 +56,9 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
     }
     if(_varExp == "BptPbPbBDT"){
 		_sf_pp = sf_pp_PbPbBDT;
+    }
+    if(_varExp == "BptOLDPbPbBDT"){
+		_sf_pp = sf_pp_OldPbPbBDT;
     }
     if(_varExp == "abs(By)"){
         _nBins = nBinsY;
@@ -129,6 +136,8 @@ void MCefficiency(int isPbPb=0, TString inputmc="", TString selmcgen="", TString
 		weightPVz = weightPVz_PbPb;
 	}
 	if(customizedOpt == 1) { weightGpt = "1"; weightBgenpt = "1"; }
+	//if(customizedOpt == 2) { weightGpt = weightGpt*TCut(weightGtk1eta); weightBgenpt = weightBgenpt*TCut(weightBtk1eta); }
+	if(customizedOpt == 2) { weightGpt = weightGpt*TCut(weightGtk1eta)*TCut(weightGtk2eta); weightBgenpt = weightBgenpt*TCut(weightBtk1eta)*TCut(weightBtk2eta); }
 
 	TH1D* hPtMC = new TH1D("hPtMC","",_nBins,_ptBins);
 	TH1D* hPtMCrecoonly = new TH1D("hPtMCrecoonly","",_nBins,_ptBins);
