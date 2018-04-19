@@ -3,9 +3,8 @@
 #include "TLegendEntry.h"
 #include "../Systematics/systematics.C"
 float tpadr = 0.7;
-bool addpbpb = 0;
 
-void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5TeV_y1.root", TString input="ROOTfiles/hPtSpectrumBplusPP.root", TString efficiency="test.root",TString outputplot="myplot.root",TString outplotf="",int usePbPb=0,TString label="pp",int binOpt=0,int doDataCor=0,double lumi=1.,Float_t centMin=0.,Float_t centMax=100.)
+void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5TeV_y1.root", TString input="ROOTfiles/hPtSpectrumBplusPP.root", TString efficiency="test.root",TString outputplot="myplot.root",TString outplotf="",int usePbPb=0,TString label="pp",int binOpt=0,int doDataCor=0,double lumi=1.,Float_t centMin=0.,Float_t centMax=100., int plotFONLL=1, int addpbpb=0)
 {
 	gStyle->SetOptTitle(0);
 	gStyle->SetOptStat(0);
@@ -19,7 +18,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	bool isPbPb=(bool)(usePbPb);
 
 	float tpadpos = 1-tpadr;
-	if(!isPbPb) tpadr = 1;
+	if(plotFONLL) tpadr = 1;
 
 	TFile* file = new TFile(input.Data());  
 	TFile* fileeff = new TFile(efficiency.Data());
@@ -120,7 +119,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	pSigma->SetTopMargin(0.08474576*tpadr);
 	pSigma->SetBottomMargin(0);
 	pSigma->SetLogy();
-	if(!isPbPb){
+	if(plotFONLL){
 		pSigma->Draw();
 		pSigma->cd();
 	}
@@ -155,7 +154,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	gaeBplusReference->SetFillStyle(1001); 
 	gaeBplusReference->SetLineWidth(3);
 	gaeBplusReference->SetLineColor(kOrange);
-	if(!isPbPb)gaeBplusReference->Draw("5same");
+	if(plotFONLL)gaeBplusReference->Draw("5same");
 	hPtSigma->SetLineColor(1);
 	hPtSigma->SetLineWidth(2);
 	hPtSigma->SetMarkerStyle(20);
@@ -233,16 +232,16 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texGlobal->SetLineWidth(2);
 	if(!addpbpb) texGlobal->Draw();
 
-	TLegend* leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.80)*tpadr);
+	TLegend* leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.85)*tpadr);
 	leg_CS->SetBorderSize(0);
 	leg_CS->SetFillStyle(0);
 	leg_CS->SetTextSize(0.05*tpadr);
-	leg_CS->AddEntry(hPtSigma,"Data","pf");
-	//leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
-	if(!isPbPb) leg_CS->AddEntry(gaeBplusReference,"FONLL","f");//paper
-	leg_CS->Draw("same");
-
-	if(addpbpb){
+	if(!addpbpb){
+		leg_CS->AddEntry(hPtSigma,"Data","pf");
+		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL","f");//paper
+		leg_CS->Draw("same");
+	}
+	else{
 		TFile* filepbpb = new TFile("ROOTfiles/CrossSectionPbPb.root");
 		TGraphAsymmErrors* gaeCrossSyst_PbPb = (TGraphAsymmErrors*)filepbpb->Get("gaeCrossSyst");
 		gaeCrossSyst_PbPb->SetLineColor(2);
@@ -254,13 +253,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		hPtSigma_PbPb->SetMarkerStyle(21);
 		hPtSigma_PbPb->SetMarkerSize(1.2*tpadr);
 		hPtSigma_PbPb->Draw("epsame");
-		leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.85)*tpadr);
-		leg_CS->SetBorderSize(0);
-		leg_CS->SetFillStyle(0);
-		leg_CS->SetTextSize(0.05*tpadr);
+		leg_CS->SetY2(1-(1-0.85)*tpadr);
 		leg_CS->AddEntry(hPtSigma,"Data pp","pf");
 		leg_CS->AddEntry(hPtSigma_PbPb,"Data PbPb","pf");
-		leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
+		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
 		leg_CS->Draw("same");
 		hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
 		texGlobal = new TLatex(0.53,0.594,Form("Global uncert."));
@@ -314,7 +310,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	l->SetLineWidth(1);
 	l->SetLineStyle(2);
 
-	if(!isPbPb){
+	if(plotFONLL){
 		pRatio->Draw();
 		pRatio->cd();
 		hemptyRatio->Draw();
@@ -386,6 +382,16 @@ int main(int argc, char *argv[])
 	if(argc==13)
 	{
 		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],argv[5],atoi(argv[6]),argv[7],atoi(argv[8]),atoi(argv[9]),atof(argv[10]),atof(argv[11]),atof(argv[12]));
+		return 0;
+	}
+	else if(argc==14)
+	{
+		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],argv[5],atoi(argv[6]),argv[7],atoi(argv[8]),atoi(argv[9]),atof(argv[10]),atof(argv[11]),atof(argv[12]),atoi(argv[13]));
+		return 0;
+	}
+	else if(argc==15)
+	{
+		CrossSectionRatio(argv[1], argv[2], argv[3],argv[4],argv[5],atoi(argv[6]),argv[7],atoi(argv[8]),atoi(argv[9]),atof(argv[10]),atof(argv[11]),atof(argv[12]),atoi(argv[13]),atoi(argv[14]));
 		return 0;
 	}
 	else

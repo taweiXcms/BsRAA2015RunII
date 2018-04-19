@@ -2,7 +2,7 @@
 %%Title: plotCrossSection/plotCrossSection/canvasSigmaBplusRatioPbPb_0_100.pgn ( A 4)
 %%Pages: (atend)
 %%Creator: ROOT Version 6.02/13
-%%CreationDate: Thu Apr 19 12:14:27 2018
+%%CreationDate: Thu Apr 19 14:22:43 2018
 %%Orientation: Landscape
 %%EndComments
 %%BeginProlog
@@ -97,8 +97,8 @@ newpath  gsave  90 r 0 -594 t  28 20 t .25 .25 scale  gsave
  gsave  2363 2268 0 0 C 1776.11 1617.53 t 0 r /Helvetica findfont 75.3262 sf 0 0 m (8.3, ) show NC gr 
  gsave  2363 2268 0 0 C 1736.47 1617.53 t 0 r /Symbol findfont 75.3262 sf 0 0 m (+) show NC gr 
  gsave  2363 2268 0 0 C 1248.83 1617.53 t 0 r /Helvetica findfont 75.3262 sf 0 0 m (Global uncert. ) show NC gr 
- gsave  2363 2268 0 0 C 1423.27 1835.58 t 0 r /Helvetica findfont 75.3262 sf 0 0 m (Data) show NC gr  1 1 1 c 3 lw 1258 1815 m 136 X 111 Y -136 X f 6 lw black 1258 1926 m 136 X s 1258 1815 m 136 X s 1394 1815 m 111 Y s 1258 1815 m 111 Y s 3 lw 1326
- 1871 m20 6 lw gr showpage
+ gsave  2363 2268 0 0 C 1423.27 1883.16 t 0 r /Helvetica findfont 75.3262 sf 0 0 m (Data) show NC gr  1 1 1 c 3 lw 1258 1827 m 136 X 167 Y -136 X f 6 lw black 1258 1994 m 136 X s 1258 1827 m 136 X s 1394 1827 m 167 Y s 1258 1827 m 167 Y s 3 lw 1326
+ 1911 m20 6 lw gr showpage
  gr 
 %%Trailer
 %%Pages:  1
