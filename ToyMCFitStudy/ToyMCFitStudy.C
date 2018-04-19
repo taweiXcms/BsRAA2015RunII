@@ -69,7 +69,7 @@ void ToyMCFitStudy()
 	double sig1fracVal = inputw->var(Form("sig1frac%d",_count))->getVal();
 	double a0Val = inputw->var(Form("a0%d",_count))->getVal();
 	double a1Val = inputw->var(Form("a1%d",_count))->getVal();
-	double a2Val = inputw->var(Form("a2%d",_count))->getVal();
+	//double a2Val = inputw->var(Form("a2%d",_count))->getVal();
 	double nsigVal = inputw->var(Form("nsig%d",_count))->getVal();
 	double nbkgVal = inputw->var(Form("nbkg%d",_count))->getVal();
 	//double npeakbgVal = inputw->var(Form("npeakbg%d",_count))->getVal();
@@ -79,7 +79,7 @@ void ToyMCFitStudy()
 	double sig1fracError = inputw->var(Form("sig1frac%d",_count))->getError();
 	double a0Error = inputw->var(Form("a0%d",_count))->getError();
 	double a1Error = inputw->var(Form("a1%d",_count))->getError();
-	double a2Error = inputw->var(Form("a2%d",_count))->getError();
+	//double a2Error = inputw->var(Form("a2%d",_count))->getError();
 	double nsigError = inputw->var(Form("nsig%d",_count))->getError();
 	double nbkgError = inputw->var(Form("nbkg%d",_count))->getError();
 	//double npeakbgError = inputw->var(Form("npeakbg%d",_count))->getError();
@@ -91,7 +91,7 @@ void ToyMCFitStudy()
 	printf("%f %f %f\n",sig1fracVal,sig1fracVal-parWidth*sig1fracError,sig1fracVal+parWidth*sig1fracError);
 	printf("%f %f %f\n",a0Val,a0Val-parWidth*a0Error,a0Val+parWidth*a0Error);
 	printf("%f %f %f\n",a1Val,a1Val-parWidth*a1Error,a1Val+parWidth*a1Error);
-	printf("%f %f %f\n",a2Val,a2Val-parWidth*a2Error,a2Val+parWidth*a2Error);
+	//printf("%f %f %f\n",a2Val,a2Val-parWidth*a2Error,a2Val+parWidth*a2Error);
 	printf("%f %f %f\n",nsigVal,nsigVal-parWidth*nsigError,nsigVal+parWidth*nsigError);
 	printf("%f %f %f\n",nbkgVal,nbkgVal-parWidth*nbkgError,nbkgVal+parWidth*nbkgError);
 	//printf("%f %f %f\n",npeakbgVal,npeakbgVal-parWidth*npeakbgError,npeakbgVal+parWidth*npeakbgError);
@@ -107,8 +107,9 @@ void ToyMCFitStudy()
 	RooAddPdf sig(Form("sig%d",_count),"",RooArgList(sig1,sig2),sig1frac);
 	RooRealVar a0(Form("a0%d",_count),"",a0Val,0,1e6);
 	RooRealVar a1(Form("a1%d",_count),"",a1Val,-1e4,1e4);
-	RooRealVar a2(Form("a2%d",_count),"",a2Val,-1e4,1e4);
-	RooPolynomial bkg(Form("bkg%d",_count),"",mass,RooArgSet(a0,a1,a2));
+	//RooRealVar a2(Form("a2%d",_count),"",a2Val,-1e4,1e4);
+	//RooPolynomial bkg(Form("bkg%d",_count),"",mass,RooArgSet(a0,a1,a2));
+	RooPolynomial bkg(Form("bkg%d",_count),"",mass,RooArgSet(a0,a1));
 	//RooGenericPdf peakbg(Form("peakbg%d",_count),"",Form("(%s)",npfit.Data()),RooArgSet(mass));
 	RooRealVar nsig(Form("nsig%d",_count),"",nsigVal,0,1e8);
 	RooRealVar nbkg(Form("nbkg%d",_count),"",nbkgVal,0,1e5);
@@ -123,7 +124,6 @@ void ToyMCFitStudy()
 	RooPlot* frame = mass.frame(Title(Form("%s_PDF", colsys.Data())));
 	model.plotOn(frame,Name(Form("model%d",_count)),Normalization(1.0,RooAbsReal::RelativeExpected),Precision(1e-6),DrawOption("L"),LineColor(2),LineWidth(4));
 	frame->Draw();
-	c1->SaveAs(Form("%s_PDF.pdf", colsys.Data()));
 
 	// C r e a t e   m o d e l
 	// -----------------------
@@ -172,7 +172,7 @@ void ToyMCFitStudy()
 	// A Binned() option is added in this example to bin the data between generation and fitting
 	// to speed up the study at the expemse of some precision
 
-//	RooMCStudy* mcstudy = new RooMCStudy(model,mass,Binned(0),Silence(),Extended(),
+	//RooMCStudy* mcstudy = new RooMCStudy(model,mass,Binned(0),Silence(),Extended(),
 	RooMCStudy* mcstudy = new RooMCStudy(model,mass,Binned(),Silence(),Extended(),
 			FitOptions(Save(kTRUE),PrintEvalErrors(0))) ;
 
@@ -189,68 +189,67 @@ void ToyMCFitStudy()
 	// ------------------------------------------------
 
 	// Make plots of the distributions of mean, the error on mean and the pull of mean
-	RooPlot* frame1 = mcstudy->plotParam(mean,Bins(50),Range(5.345,5.390)) ;
-	//RooPlot* frame1 = mcstudy->plotParam(mean,Bins(50)) ;
-	RooPlot* frame2 = new RooPlot();
+	RooRealVar target;
+	RooPlot* frame1;
+	RooPlot* frame2;
+	RooPlot* frame3;
+	RooPlot* frame4;
+	TString postfix = "";
+	if(_count == 1) postfix += "_7_15";
+	if(_count == 2) postfix += "_15_50";
+	
+	target = mean;
+	postfix += "_mean";
+	frame1 = mcstudy->plotParam(target,Bins(50),Range(5.345,5.390)) ;
+	//RooPlot* frame1 = mcstudy->plotParam(target,Bins(50)) ;
 	if(ispp)
-		frame2 = mcstudy->plotError(mean,Bins(50)) ;
+	    frame2 = mcstudy->plotError(target,Bins(50)) ;
 	else
-		frame2 = mcstudy->plotError(mean,Bins(50),Range(0.000,0.012)) ;
-	//RooPlot* frame2 = mcstudy->plotError(mean,Bins(50)) ;
-	//RooPlot* frame3 = mcstudy->plotPull(mean,Bins(50),FitGauss(),Range(-8,8)) ;
-	RooPlot* frame3 = mcstudy->plotPull(mean,Bins(50),FitGauss(0),Range(-8,8)) ;
-
-	RooHist* datahist = new RooHist();
-	//frame3->Print();
-	cout<<frame3->getHist(Form("h_fitParData_model%d",_count))<<endl;
-	datahist = frame3->getHist(Form("h_fitParData_model%d",_count));
-	TGraphAsymmErrors* datagraph = static_cast<TGraphAsymmErrors*>(datahist);
-	datagraph->SetTitle("");
-	datagraph->GetXaxis()->SetTitle("Pull");
-	TF1 *f = new TF1("f","[0]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])");
-	f->SetParName(1,"mean");
-	f->SetParName(2,"width");
-	f->SetParLimits(8,0.01,0.1);
-	f->SetParLimits(7,0,1);
-	f->SetParameter(0,10);
-	f->SetParameter(1,0);
-	f->SetParameter(2,1);
-	//f->SetParLimits(0,0,1e2);
-	f->SetParLimits(1,-5,5);
-	f->SetParLimits(2,0,5);
-	f->SetLineWidth(4);
-	datagraph->Fit("f");
-	frame3->SetMaximum(datagraph->GetHistogram()->GetMaximum()*1.3);
-
+	    frame2 = mcstudy->plotError(target,Bins(50),Range(0.000,0.012)) ;
+	//frame2 = mcstudy->plotError(target,Bins(50)) ;
+	frame3 = mcstudy->plotPull(target,Bins(50),FitGauss(),Range(-8,8)) ;
+	frame4 = mcstudy->plotNLL(Bins(50)) ;
+	
+	bool doCusFit = 0;
+	TF1* f;
+	// Do customize fit
+	if(doCusFit){
+		RooHist* datahist = new RooHist();
+		cout<<frame3->getHist(Form("h_fitParData_model%d",_count))<<endl;
+		datahist = frame3->getHist(Form("h_fitParData_model%d",_count));
+		TGraphAsymmErrors* datagraph = static_cast<TGraphAsymmErrors*>(datahist);
+		datagraph->SetTitle("");
+		datagraph->GetXaxis()->SetTitle("Pull");
+		f = new TF1("f","[0]*Gaus(x,[1],[2])/(sqrt(2*3.14159)*[2])");
+		f->SetParName(1,"mean");
+		f->SetParName(2,"width");
+		f->SetParLimits(8,0.01,0.1);
+		f->SetParLimits(7,0,1);
+		f->SetParameter(0,10);
+		f->SetParameter(1,0);
+		f->SetParameter(2,1);
+		//f->SetParLimits(0,0,1e2);
+		f->SetParLimits(1,-5,5);
+		f->SetParLimits(2,0,5);
+		f->SetLineWidth(4);
+		//datagraph->Fit("f");
+		frame3->SetMaximum(datagraph->GetHistogram()->GetMaximum()*1.3);
+	}
 	frame1->SetTitle("");
 	frame2->SetTitle("");
 	frame3->SetTitle("");
+	frame4->SetTitle("");
 	frame1->GetXaxis()->SetTitle("mean");
 	frame2->GetXaxis()->SetTitle("Error");
 	frame3->GetXaxis()->SetTitle("Pull");
 	frame1->GetYaxis()->SetTitle("Entries");
 	frame2->GetYaxis()->SetTitle("Entries");
 	frame3->GetYaxis()->SetTitle("Entries");
+	frame4->GetYaxis()->SetTitle("Entries");
 	frame1->GetXaxis()->SetNdivisions(505);
 	frame2->GetXaxis()->SetNdivisions(505);
 	frame3->GetXaxis()->SetNdivisions(505);
-
-	// Plot distribution of minimized likelihood
-	RooPlot* frame4 = mcstudy->plotNLL(Bins(50)) ;
-	frame4->SetTitle("");
 	frame4->GetXaxis()->SetNdivisions(505);
-	frame4->GetYaxis()->SetTitle("Entries");
-
-	// Make some histograms from the parameter dataset
-	//TH1* hh_cor_a0_s1f = mcstudy->fitParDataSet().createHistogram("hh",a1,YVar(sig1frac)) ;
-	//TH1* hh_cor_a0_a1  = mcstudy->fitParDataSet().createHistogram("hh",a0,YVar(a1)) ;
-
-	// Access some of the saved fit results from individual toys
-	//TH2* corrHist000 = mcstudy->fitResult(0)->correlationHist("c000") ;
-	//TH2* corrHist127 = mcstudy->fitResult(127)->correlationHist("c127") ;
-	//TH2* corrHist953 = mcstudy->fitResult(953)->correlationHist("c953") ;
-
-
 
 	// Draw all plots on a canvas
 	gStyle->SetPalette(1) ;
@@ -263,17 +262,22 @@ void ToyMCFitStudy()
 	c->cd(2) ; gPad->SetLeftMargin(0.15) ; frame2->GetYaxis()->SetTitleOffset(1.2) ; frame2->Draw() ;
 	//gPad->SetLogy();
 	c->cd(3) ; gPad->SetLeftMargin(0.15) ; frame3->GetYaxis()->SetTitleOffset(1.2) ; frame3->Draw() ;
-	f->Draw("same");
+	if(doCusFit) f->Draw("same");// Draw customized fit function
 	//gPad->SetLogy();
 	c->cd(4) ; gPad->SetLeftMargin(0.15) ; frame4->GetYaxis()->SetTitleOffset(1.2) ; frame4->Draw() ;
-	//c->cd(5) ; gPad->SetLeftMargin(0.15) ; hh_cor_a0_s1f->GetYaxis()->SetTitleOffset(1.4) ; hh_cor_a0_s1f->Draw("box") ;
-	//c->cd(6) ; gPad->SetLeftMargin(0.15) ; hh_cor_a0_a1->GetYaxis()->SetTitleOffset(1.4) ; hh_cor_a0_a1->Draw("box") ;
-	//c->cd(7) ; gPad->SetLeftMargin(0.15) ; corrHist000->GetYaxis()->SetTitleOffset(1.4) ; corrHist000->Draw("colz") ;
-	//c->cd(8) ; gPad->SetLeftMargin(0.15) ; corrHist127->GetYaxis()->SetTitleOffset(1.4) ; corrHist127->Draw("colz") ;
-	//c->cd(9) ; gPad->SetLeftMargin(0.15) ; corrHist953->GetYaxis()->SetTitleOffset(1.4) ; corrHist953->Draw("colz") ;
+
+	// Make some histograms from the parameter dataset
+	//TH1* hh_cor_a0_s1f = mcstudy->fitParDataSet().createHistogram("hh",a1,YVar(sig1frac)) ;
+	//TH1* hh_cor_a0_a1  = mcstudy->fitParDataSet().createHistogram("hh",a0,YVar(a1)) ;
+
+	// Access some of the saved fit results from individual toys
+	//TH2* corrHist000 = mcstudy->fitResult(0)->correlationHist("c000") ;
+	//TH2* corrHist127 = mcstudy->fitResult(127)->correlationHist("c127") ;
+	//TH2* corrHist953 = mcstudy->fitResult(953)->correlationHist("c953") ;
 
 	// Make RooMCStudy object available on command line after
 	// macro finishes
 	gDirectory->Add(mcstudy) ;
-	c->SaveAs(Form("%s_results.pdf",colsys.Data()));
+	c1->SaveAs(Form("PDF_%s%s.pdf",colsys.Data(),postfix.Data()));
+	c->SaveAs(Form("results_%s%s.pdf",colsys.Data(),postfix.Data()));
 }
