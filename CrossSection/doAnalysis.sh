@@ -18,7 +18,7 @@ DOANALYSISPbPb_ROOFITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
 DORAA=0
-DORAARATIO=0
+DORAARATIO=1
 
 ### pp 3-bin result
 DOANALYSISPP_FONLL_750=0
@@ -80,7 +80,7 @@ DOVARCOMPARE_PP=0
 CHECKPROMPT=0
 
 ### PDF Syst.
-DOPDFSYST=1
+DOPDFSYST=0
 
 ### Pt Shape Syst.
 DOPTSHAPESYST=0
@@ -259,6 +259,9 @@ if [ $DORAARATIO -eq 1 ]; then
 g++ NuclearModificationFactor.C $(root-config --cflags --libs) -g -o NuclearModificationFactor.exe
 ./NuclearModificationFactor.exe "$OUTPUTFILEPlotPP" "$OUTPUTFILEPlotPbPb" "$LABELPbPb" "$OUTPUTFILERAARATIO" "plotBsBpRatio" 1 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm NuclearModificationFactor.exe
+cd plotBsBpRatio
+root -b -q plotBsBpRatio.cc
+cd -
 fi
 
 #########################################

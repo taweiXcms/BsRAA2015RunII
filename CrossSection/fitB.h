@@ -295,7 +295,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->SetLineWidth(2);
 	//texcms->Draw();
 
-	TLatex* texB = new TLatex(0.225,0.74,"B_{s}");
+	TLatex* texB = new TLatex(0.225,0.74,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(42);
 	texB->SetTextSize(0.055);
@@ -317,7 +317,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->SetTextSize(0.055);
 	texcms->SetLineWidth(2);
 	texcms->Draw();
-	texB = new TLatex(0.225,0.68,"B_{s}");
+	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(42);
 	texB->SetTextSize(0.055);

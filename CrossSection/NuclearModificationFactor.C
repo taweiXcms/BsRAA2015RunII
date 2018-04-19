@@ -199,7 +199,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	//tlatexeff2->SetTextSize(0.050);
 	//tlatexeff2->Draw();
 
-	TLatex* texB = new TLatex(0.81,0.20,"B_{s}");
+	TLatex* texB = new TLatex(0.81,0.20,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.08);
@@ -334,8 +334,8 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		}
 		GlobSystPosCounter++;
 		//if(drawB) bSystnorm->Draw(); //Draw at the very end to avoid being covered by other stuff
-		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B_{s} R_{AA}","pe");
-		else ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B_{s} R_{AA}","pf");
+		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","pe");
+		else ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","pf");
 		ent_B->SetTextFont(42);
 		ent_B->SetLineColor(4);
 		ent_B->SetMarkerColor(4);

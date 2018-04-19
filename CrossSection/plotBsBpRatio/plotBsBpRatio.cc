@@ -48,7 +48,7 @@ void plotBsBpRatio(){
     TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,6.5);
     hemptyEff->GetXaxis()->CenterTitle();
     hemptyEff->GetYaxis()->CenterTitle();
-    hemptyEff->GetYaxis()->SetTitle("B_{s} R_{AA} / B^{+} R_{AA}");
+    hemptyEff->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
     hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
     hemptyEff->GetXaxis()->SetTitleOffset(1.0);
     hemptyEff->GetYaxis()->SetTitleOffset(1.1);
@@ -91,7 +91,7 @@ void plotBsBpRatio(){
     legendSigma->SetTextSize(0.04);
 
 	TLegendEntry *ent_B;
-	ent_B = legendSigma->AddEntry(hRAAratio,"B_{s}/B^{+} R_{AA} ratio","p");
+	ent_B = legendSigma->AddEntry(hRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","p");
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
@@ -119,7 +119,7 @@ void plotBsBpRatio(){
     texlumi->Draw();
 
     //TLatex* texB = new TLatex(0.77,0.21,"B^{#plus}+B^{#minus}");
-    TLatex* texB = new TLatex(0.81,0.22,"B_{s}");
+    TLatex* texB = new TLatex(0.81,0.22,"B^{0}_{s}");
     texB->SetNDC();
     texB->SetTextFont(62);
     texB->SetTextSize(0.08);
