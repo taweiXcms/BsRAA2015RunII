@@ -1,0 +1,78 @@
+MVA methods: BDT
+
+Processing calRatio.cc++("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root","/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs.root",0,"BDT",7,15,1.,"pp_pT_7_15.h")...
+# of background in sideband: 41421
+# of background in signal region: 33136.8
+# of generated signal: 3916.68
+# of predicted signal: 126.444
+
+Processing readxml.cc++(0,"BDT",1,7,15,1.)...
+=======================================================================================================
+MVA type:                          BDT
+Pt:                                7 15
+Stage:                             1
+Raa:                               1.000000
+significance:                      7.092040
+effb                               0.0012071463
+effs                               0.6055827141
+effb*nbackground                   40.0009689331
+effs*nsignal                       76.5720214844
+cutval:                            0.191055
+
+Processing calRatio.cc++("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root","/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs.root",0,"",15,50,1.,"pp_pT_15_50.h")...
+# of background in sideband: 2401
+# of background in signal region: 1920.8
+# of generated signal: 602.896
+# of predicted signal: 110.906
+
+Processing readxml.cc++(0,"BDT",1,15,50,1.)...
+=======================================================================================================
+MVA type:                          BDT
+Pt:                                15 50
+Stage:                             1
+Raa:                               1.000000
+significance:                      8.509301
+effb                               0.0141666671
+effs                               0.8429170847
+effb*nbackground                   27.2113342285
+effs*nsignal                       93.4846420288
+cutval:                            0.208973
+
+Processing calRatio.cc++("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root","/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged.root",1,"",7,15,1.,"PbPb_pT_7_15.h")...
+# of background in sideband: 1032351
+# of background in signal region: 825881
+# of generated signal: 1861.79
+# of predicted signal: 18.9089
+
+Processing readxml.cc++(1,"BDT",1,7,15,1.)...
+=======================================================================================================
+MVA type:                          BDT
+Pt:                                7 15
+Stage:                             1
+Raa:                               1.000000
+significance:                      2.300552
+effb                               0.0000019373
+effs                               0.3479620218
+effb*nbackground                   1.6000015736
+effs*nsignal                       6.5795636177
+cutval:                            0.213755
+
+Processing calRatio.cc++("/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderMC_PbPb_BsToJpsiPhi_HydjetCymbMB_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight.root","/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/samples/Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged.root",1,"",15,50,1.,"PbPb_pT_15_50.h")...
+# of background in sideband: 96022
+# of background in signal region: 76817.6
+# of generated signal: 286.586
+# of predicted signal: 27.0232
+
+Processing readxml.cc++(1,"BDT",1,15,50,1.)...
+=======================================================================================================
+MVA type:                          BDT
+Pt:                                15 50
+Stage:                             1
+Raa:                               1.000000
+significance:                      4.020043
+effb                               0.0000208286
+effs                               0.6523130536
+effb*nbackground                   1.6000000238
+effs*nsignal                       17.6276035309
+cutval:                            0.254413
+/export/d00/scratch/tawei/HeavyFlavor/Run2Ana/BsTMVA/TMVA_Bs-20180317-study/nominal/TMVA_Bs-20180317-tkPt0-phi0p015-HPtag-more_evtWiseProd

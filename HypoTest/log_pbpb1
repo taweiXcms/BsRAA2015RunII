@@ -1,0 +1,15 @@
+Results HypoTestCalculator_result:
+ - Null p-value = 0.00015 +/- 3.87269e-05
+ - Significance = 3.6153 +/- 0.066881 sigma
+ - Number of Alt toys: 100000
+ - Number of Null toys: 100000
+ - Test statistic evaluated on data: 8.71873
+ - CL_b: 0.00015 +/- 3.87269e-05
+ - CL_s+b: 0.59281 +/- 0.00155366
+ - CL_s: 3952.07 +/- 1020.4
+ Expected p -value and significance at -2 sigma = 0.1498 significance 1.03729 sigma
+ Expected p -value and significance at -1 sigma = 0.0058 significance 2.52408 sigma
+ Expected p -value and significance at 0 sigma = 4e-05 significance 3.9444 sigma
+ Expected p -value and significance at 1 sigma = 0 significance inf sigma
+ Expected p -value and significance at 2 sigma = 0 significance inf sigma
+Info in <TCanvas::Print>: pdf file result_PbPb_7_15_100000.pdf has been created

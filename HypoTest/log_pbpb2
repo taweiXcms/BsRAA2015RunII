@@ -1,0 +1,16 @@
+Results HypoTestCalculator_result:
+ - Null p-value = 0 +/- 0
+ - Significance = inf +/- -nan sigma
+ - Number of Alt toys: 100000
+ - Number of Null toys: 100000
+ - Test statistic evaluated on data: 17.2943
+ - CL_b: 0 +/- 0
+ - CL_s+b: 0.3849 +/- 0.00153867
+Error: Cannot compute CLs because CLb = 0. Returning CLs = -1
+ - CL_s: -1 +/- -1
+ Expected p -value and significance at -2 sigma = 0.02639 significance 1.93672 sigma
+ Expected p -value and significance at -1 sigma = 0.00026 significance 3.47024 sigma
+ Expected p -value and significance at 0 sigma = 0 significance inf sigma
+ Expected p -value and significance at 1 sigma = 0 significance inf sigma
+ Expected p -value and significance at 2 sigma = 0 significance inf sigma
+Info in <TCanvas::Print>: pdf file result_PbPb_15_50_100000.pdf has been created
