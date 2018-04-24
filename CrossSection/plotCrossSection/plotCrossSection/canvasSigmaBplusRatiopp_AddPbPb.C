@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp_AddPbPb()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Fri Apr 20 16:36:52 2018) by ROOT version6.02/13
+//=========  (Tue Apr 24 14:20:37 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -34,7 +34,7 @@ void canvasSigmaBplusRatiopp_AddPbPb()
    hemptySigma1->GetXaxis()->SetLabelSize(0.036);
    hemptySigma1->GetXaxis()->SetTitleSize(0.036);
    hemptySigma1->GetXaxis()->SetTitleFont(42);
-   hemptySigma1->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
+   hemptySigma1->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
    hemptySigma1->GetYaxis()->CenterTitle(true);
    hemptySigma1->GetYaxis()->SetLabelFont(42);
    hemptySigma1->GetYaxis()->SetLabelSize(0.042);
