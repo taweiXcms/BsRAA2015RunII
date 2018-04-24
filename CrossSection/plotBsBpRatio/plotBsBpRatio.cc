@@ -63,13 +63,13 @@ void plotBsBpRatio(){
     hemptyEff->Draw();
 
     TGraphAsymmErrors* gRAAratio = new TGraphAsymmErrors(_nBins,xVal,raaRatio,xErr,xErr,raaRatioSysErr,raaRatioSysErr);
-    gRAAratio->SetFillColor(kMagenta-3);
-    gRAAratio->SetFillColorAlpha(kMagenta-3, 0.5);
+    gRAAratio->SetFillColor(BsBoxColor);
+    gRAAratio->SetFillColorAlpha(BsBoxColor, 0.5);
     gRAAratio->SetLineWidth(0);
-    gRAAratio->SetMarkerSize(1.2);
-    gRAAratio->SetMarkerStyle(21);
     gRAAratio->SetLineColor(0);
-    gRAAratio->SetMarkerColor(kAzure-1);
+    gRAAratio->SetMarkerColor(BsPointColor);
+    gRAAratio->SetMarkerStyle(33);
+    gRAAratio->SetMarkerSize(2.2);
 
 	TH1D* hRAAratio = new TH1D("hRAAratio","",_nBins,_ptBins);
 	for(int i = 0; i < _nBins; i++){
@@ -77,12 +77,12 @@ void plotBsBpRatio(){
 		hRAAratio->SetBinError(i+1,raaRatioStaErr[i]);
 	}
     hRAAratio->SetLineWidth(3);
-    hRAAratio->SetLineColor(kMagenta+2);
-    hRAAratio->SetMarkerColor(kMagenta+2);
-    hRAAratio->SetMarkerStyle(21);
-    hRAAratio->SetMarkerSize(1.2);
+    hRAAratio->SetLineColor(BsPointColor);
+    hRAAratio->SetMarkerColor(BsPointColor);
+    hRAAratio->SetMarkerStyle(33);
+    hRAAratio->SetMarkerSize(2.2);
 
-	TLegend *legendSigma=new TLegend(0.16,0.78,0.50,0.90,"");
+	TLegend *legendSigma=new TLegend(0.55,0.70,0.92,0.92,"");
     legendSigma->SetBorderSize(0);
     legendSigma->SetLineColor(0);
     legendSigma->SetFillColor(0);
@@ -91,7 +91,7 @@ void plotBsBpRatio(){
     legendSigma->SetTextSize(0.04);
 
 	TLegendEntry *ent_B;
-	ent_B = legendSigma->AddEntry(hRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","p");
+	ent_B = legendSigma->AddEntry(gRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","pf");
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
@@ -126,7 +126,7 @@ void plotBsBpRatio(){
     texB->SetLineWidth(2);
     //texB->Draw();
 
-    TLatex* texcms = new TLatex(0.18,0.93,"CMS");
+    TLatex* texcms = new TLatex(0.18,0.90,"CMS");
     texcms->SetNDC();
     texcms->SetTextAlign(13);
     texcms->SetTextFont(62);//61
@@ -134,11 +134,11 @@ void plotBsBpRatio(){
     texcms->SetLineWidth(2);
     texcms->Draw();
 
-    TLatex* texpre = new TLatex(0.32,0.93,"Preliminary");
+    TLatex* texpre = new TLatex(0.18,0.84,"Preliminary");
     texpre->SetNDC();
     texpre->SetTextAlign(13);
-    texpre->SetTextFont(62);
-    texpre->SetTextSize(0.06);
+    texpre->SetTextFont(52);
+    texpre->SetTextSize(0.04);
     texpre->SetLineWidth(2);
     texpre->Draw();
 
