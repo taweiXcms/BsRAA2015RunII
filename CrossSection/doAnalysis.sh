@@ -9,14 +9,14 @@ DOANALYSISPP_FITONSAVED=0
 DOANALYSISPP_ROOFIT=0
 DOANALYSISPP_ROOFITONSAVED=0
 DOANALYSISPP_MCSTUDY=0
-DOANALYSISPP_CROSS=1
+DOANALYSISPP_CROSS=0
 
 DOANALYSISPbPb_FIT=0
 DOANALYSISPbPb_FITONSAVED=0
 DOANALYSISPbPb_ROOFIT=0
 DOANALYSISPbPb_ROOFITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
-DOANALYSISPbPb_CROSS=1
+DOANALYSISPbPb_CROSS=0
 DORAA=0
 DORAARATIO=0
 
@@ -27,7 +27,7 @@ DOANALYSISPP_FITONSAVED_750=0
 DOANALYSISPP_ROOFIT_750=0
 DOANALYSISPP_ROOFITONSAVED_750=0
 DOANALYSISPP_MCSTUDY_750=0
-DOANALYSISPP_CROSS_750=1
+DOANALYSISPP_CROSS_750=0
 
 ### pp cut base MVA (CUTBASE)
 DOANALYSISPP_FIT_CUTBASE=0
@@ -169,16 +169,16 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"a
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP" "plotEff/plotEff" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
 if [ $DOANALYSISPP_CROSS -eq 1 ]; then      
 g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
-#./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100" 0 
+#./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100" 
 #./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100" 0 1
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_ROOFIT" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100" 0
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_ROOFIT" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100"
 ./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPP_ROOFIT" "$OUTPUTFILEMCSTUDYPP" "$OUTPUTFILEPlotPP" "plotCrossSection/plotCrossSection" 0 "$LABELPP" 0 0 "$LUMIPP" "0" "100" 0 1
 rm CrossSectionRatio.exe
 fi
@@ -245,8 +245,8 @@ fi
 
 if [ $DOANALYSISPbPb_CROSS -eq 1 ]; then      
 g++ CrossSectionRatio.C $(root-config --cflags --libs) -g -o CrossSectionRatio.exe 
-#./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection/plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "0" "100" 0
-./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb_ROOFIT" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection/plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "0" "100" 0
+#./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection/plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX" 0
+./CrossSectionRatio.exe "$FONLLOUTPUTFILE" "$OUTPUTFILEPbPb_ROOFIT" "$OUTPUTFILEMCSTUDYPbPb" "$OUTPUTFILEPlotPbPb" "plotCrossSection/plotCrossSection" 1 "$LABELPbPb" 0 0 "$LUMIPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX" 0
 rm CrossSectionRatio.exe
 fi
 
@@ -310,8 +310,8 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_750 -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750" "plotEff/plotEff_750" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750" "plotEff/plotEff_750" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750" "plotEff/plotEff_750" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750" "plotEff/plotEff_750" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -364,8 +364,8 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_CUTBASE -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPPCUTBASE" "$RECOONLYPP" "$CUTPPCUTBASE&&$TRGPPMC" "BptCutBase" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_CUTBASE" "plotEff/plotEff_CUTBASE" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPPCUTBASE" "$RECOONLYPP" "$CUTPPCUTBASE&&$TRGPPMC" "BptCutBase" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_CUTBASE" "plotEff/plotEff_CUTBASE" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP" "$SELGENPPACCPPCUTBASE" "$RECOONLYPP" "$CUTPPCUTBASE&&$TRGPPMC" "BptCutBase" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_CUTBASE" "plotEff/plotEff_CUTBASE" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPPCUTBASE" "$RECOONLYPP" "$CUTPPCUTBASE&&$TRGPPMC" "BptCutBase" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_CUTBASE" "plotEff/plotEff_CUTBASE" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -416,8 +416,8 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_PbPbBDT -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP_PbPbBDT" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPPPbPbBDT&&$TRGPPMC" "BptPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_PbPbBDT" "plotEff/plotEff_PbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPP_PbPbBDTCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPPPbPbBDT&&$TRGPPMC" "BptPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_PbPbBDT" "plotEff/plotEff_PbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP_PbPbBDT" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPPPbPbBDT&&$TRGPPMC" "BptPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_PbPbBDT" "plotEff/plotEff_PbPbBDT" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPP_PbPbBDTCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPPPbPbBDT&&$TRGPPMC" "BptPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_PbPbBDT" "plotEff/plotEff_PbPbBDT" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -467,8 +467,8 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_OLDPbPbBDT -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDT" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDTCANDWISE" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDT" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPP_OLDPbPbBDTCANDWISE" "$SELGENPP" "$SELGENPPACCPP&&Gtk1pt>0.8&&Gtk2pt>0.8" "$RECOONLYPP" "$CUTPPOLDPbPbBDT&&$TRGPPMC" "BptOLDPbPbBDT" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_OLDPbPbBDT" "plotEff/plotEff_OLDPbPbBDT" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -492,7 +492,7 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_750_acc -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_acc" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750_acc" "plotEff/plotEff_750_acc" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_acc" "Gpt" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_750_acc" "plotEff/plotEff_750_acc" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -509,8 +509,8 @@ fi
 
 if [ $DOANALYSISPP_MCSTUDY_Y -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP&&Gpt>15&&Gpt<50" "$SELGENPPACCPP&&Gpt>15&&Gpt<50" "$RECOONLYPP&&Bpt>15&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>15&&Bpt<50" "abs(By)" "abs(Gy)" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "plotEff/plotEff_Y" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP&&Gpt>15&&Gpt<50" "$SELGENPPACCPP&&Gpt>15&&Gpt<50" "$RECOONLYPP&&Bpt>15&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>15&&Bpt<50" "abs(By)" "abs(Gy)" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "plotEff/plotEff_Y" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPP" "$SELGENPP&&Gpt>15&&Gpt<50" "$SELGENPPACCPP&&Gpt>15&&Gpt<50" "$RECOONLYPP&&Bpt>15&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>15&&Bpt<50" "abs(By)" "abs(Gy)" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "plotEff/plotEff_Y" "$ISDOWEIGHTPP" "0" "100"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP&&Gpt>15&&Gpt<50" "$SELGENPPACCPP&&Gpt>15&&Gpt<50" "$RECOONLYPP&&Bpt>15&&Bpt<50" "$CUTPP&&$TRGPPMC&&Bpt>15&&Bpt<50" "abs(By)" "abs(Gy)" "$LABELPP" "$OUTPUTFILEMCSTUDYPP_Y" "plotEff/plotEff_Y" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 fi
 
@@ -727,9 +727,9 @@ fi
 ### Pt Shape Syst.
 if [ $DOPTSHAPESYST -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt_noPtWeight" "Gpt" "$LABELPP" "plotPtShapeSyst/MCstudiesPP.root" "plotPtShapeSyst/plotPtShapeSyst" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt_noPtWeight" "Gpt" "$LABELPP" "plotPtShapeSyst/MCstudiesPP.root" "plotPtShapeSyst/plotPtShapeSyst" "$ISDOWEIGHTPP" "0" "100"
 ./MCefficiency.exe 1 "$INPUTMCPbPbCANDWISE" "$SELGENPbPb" "$SELGENPbPbACCPbPb" "$RECOONLYPbPb" "$CUTPbPb&&$TRGPbPbMC" "Bpt_noPtWeight" "Gpt" "$LABELPbPb" "plotPtShapeSyst/MCstudiesPbPb.root" "plotPtShapeSyst/plotPtShapeSyst" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
-./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_noPtWeight" "Gpt" "$LABELPP" "plotPtShapeSyst/MCstudiesPP_750.root" "plotPtShapeSyst/plotPtShapeSyst_750" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt750_noPtWeight" "Gpt" "$LABELPP" "plotPtShapeSyst/MCstudiesPP_750.root" "plotPtShapeSyst/plotPtShapeSyst_750" "$ISDOWEIGHTPP" "0" "100"
 rm MCefficiency.exe
 cd plotPtShapeSyst
 root -b -q getPtShapeSyst.C++
@@ -740,7 +740,7 @@ fi
 ### Track Eta Weight Syst.
 if [ $DOTKETAWEIGHTSYST -eq 1 ]; then      
 g++ MCefficiency.C $(root-config --cflags --libs) -g -o MCefficiency.exe 
-#./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt_tkEtaWeight" "Gpt" "$LABELPP" "plotTkEtaWeightSyst/MCstudiesPP.root" "plotTkEtaWeightSyst/plotTkEtaWeightSyst" "$ISDOWEIGHTPP" "$CENTPbPbMIN" "$CENTPbPbMAX"
+#./MCefficiency.exe 0 "$INPUTMCPPCANDWISE" "$SELGENPP" "$SELGENPPACCPP" "$RECOONLYPP" "$CUTPP&&$TRGPPMC" "Bpt_tkEtaWeight" "Gpt" "$LABELPP" "plotTkEtaWeightSyst/MCstudiesPP.root" "plotTkEtaWeightSyst/plotTkEtaWeightSyst" "$ISDOWEIGHTPP" "0" "100"
 #./MCefficiency.exe 1 "$INPUTMCPbPbCANDWISE" "$SELGENPbPb" "$SELGENPbPbACCPbPb" "$RECOONLYPbPb" "$CUTPbPb&&$TRGPbPbMC" "Bpt_tkEtaWeight" "Gpt" "$LABELPbPb" "plotTkEtaWeightSyst/MCstudiesPbPb.root" "plotTkEtaWeightSyst/plotTkEtaWeightSyst" "$ISDOWEIGHTPbPb" "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm MCefficiency.exe
 cd plotTkEtaWeightSyst 

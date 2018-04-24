@@ -166,8 +166,8 @@ void initializationPbPbCent010(int SysOpt=0)
 void initialization(double centL=0,double centH=100,int SysOpt=0){
 	initializationPP(SysOpt);
 	initializationRAA(SysOpt);
-	if (centL==0&&centH==100) initializationPbPbCent0100(SysOpt);
-	if (centL==0&&centH==10) initializationPbPbCent010(SysOpt);
+	if (centL==0&&centH==10) initializationPbPbCent0100(SysOpt);
+	else initializationPbPbCent0100(SysOpt);
 	initialized=1;
 }
 
@@ -182,7 +182,8 @@ float normalizationUncertaintyForRAA(bool TAAhi = 1, double centL=0,double centH
 	if (centL==0&&centH==10) {
 		// 0-10%
 		sys+=TAAUncertainty0to10*TAAUncertainty0to10;
-	} else {
+	} 
+	else {
 		// 0-100%a
 		if(TAAhi == 1)
 			sys+=TAAUncertainty0to100LO*TAAUncertainty0to100LO;
@@ -194,8 +195,7 @@ float normalizationUncertaintyForRAA(bool TAAhi = 1, double centL=0,double centH
 
 float systematicsForRAA(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -254,8 +254,7 @@ float systematicsForRAA(double pt, double centL=0, double centH=100, double HLT=
 
 float systematicsForRAA_Correlated(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -288,8 +287,7 @@ float systematicsForRAA_Correlated(double pt, double centL=0, double centH=100, 
 
 float systematicsForRAA_UnCorrelated(double pt, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 
 	double sys=0;
 
@@ -423,8 +421,7 @@ float normalizationUncertaintyForPbPb(bool TAAhi=1, double centL=0,double centH=
 
 float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 	double sys=0;
     if (pt < PtBins[0]) return 0;
     if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;
@@ -457,8 +454,7 @@ float systematicsPbPb(double pt, bool TAAhi = 1, double centL=0,double centH=100
 
 float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 	double sys=0;
     if (pt < PtBins[0]) return 0;
     if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;
@@ -478,8 +474,7 @@ float systematicsPbPb_Correlated(double pt, bool TAAhi = 1, double centL=0, doub
 
 float systematicsPbPb_UnCorrelated(double pt, bool TAAhi = 1, double centL=0, double centH=100, double HLT=0, int stage=0, int SysOpt=0)
 {
-	if (!initialized && centL==0&&centH==100) initialization(centL,centH,SysOpt);
-	if (!initialized && centL==0&&centH==10) initialization(centL,centH,SysOpt);
+	initialization(centL,centH,SysOpt);
 	double sys=0;
     if (pt < PtBins[0]) return 0;
     if (pt >= PtBins[nPtBins]) pt = PtBins[nPtBins]-0.1;

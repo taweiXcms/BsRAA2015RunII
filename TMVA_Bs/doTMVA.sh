@@ -28,8 +28,8 @@ fi
 PTBIN=(7 15 50)
 #PTBIN=(7 15)
 #PTBIN=(15 50)
-
 RAA=(1. 1.)
+
 COLSYST=('pp' 'PbPb')
 isPbPb=(0 1)
 #MVA=('CutsGA' 'CutsSA' 'BDT' 'MLP' 'DNN')

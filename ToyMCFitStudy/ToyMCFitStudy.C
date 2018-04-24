@@ -39,12 +39,21 @@
 using namespace RooFit ;
 using namespace std;
 
-bool ispp = 0;
-int _count = 1;
 TString npfit = "";
-TString colsys = "pp";
+void RunTheCode(bool ispp = 1, int _count = 1, int varSet = 1);
+void ToyMCFitStudy(){
+	int varSet = 1;
+//	varSet = 2;
+//	varSet = 3;
+//	varSet = 4;
+	varSet = 5;
+	RunTheCode(1, 1, varSet);
+	RunTheCode(1, 2, varSet);
+	RunTheCode(0, 1, varSet);
+	RunTheCode(0, 2, varSet);
+}
 
-void ToyMCFitStudy()
+void RunTheCode(bool ispp, int _count, int varSet)
 {
 	gStyle->SetOptStat(0);
 	//gStyle->SetOptFit(0);
@@ -52,9 +61,11 @@ void ToyMCFitStudy()
 	// Set width of stat-box (fraction of pad size)
 	gStyle->SetStatH(0.2);                
 	// Set height of stat-box (fraction of pad size)
+	gStyle->SetTitleX(0.5);
 
 	npfit = "1.238105*TMath::Gaus(Bmass,5.067665,0.015902)/(sqrt(2*3.14159)*0.015902)+30.054860*TMath::Erf((Bmass-5.142158)/-0.114983)+30.054860+10.468093*(0.390932*TMath::Gaus(Bmass,5.375549,0.166548)/(sqrt(2*3.14159)*0.166548)+(1-0.390932)*TMath::Gaus(Bmass,5.375549,0.040095)/(sqrt(2*3.14159)*0.040095))";
 	if(!ispp) npfit = "1.299998*TMath::Gaus(Bmass,6.099828,-0.242801)/(sqrt(2*3.14159)*-0.242801)+8.186179*TMath::Erf((Bmass-5.000000)/-0.205218)+8.186179+1.263652*(0.426611*TMath::Gaus(Bmass,5.383307,0.249980)/(sqrt(2*3.14159)*0.249980)+(1-0.426611)*TMath::Gaus(Bmass,5.383307,0.037233)/(sqrt(2*3.14159)*0.037233))";
+	TString colsys = "pp";
 	if(!ispp) colsys = "PbPb";
 	//get from input
 	TString inputdata = "hPtSpectrumSaveHistBplusPP_roofit.root";
@@ -189,30 +200,103 @@ void ToyMCFitStudy()
 	// ------------------------------------------------
 
 	// Make plots of the distributions of mean, the error on mean and the pull of mean
-	RooRealVar target;
-	RooPlot* frame1;
-	RooPlot* frame2;
-	RooPlot* frame3;
-	RooPlot* frame4;
+	RooRealVar* target = new RooRealVar();
+	RooPlot* frame1 = new RooPlot();
+	RooPlot* frame2 = new RooPlot();
+	RooPlot* frame3 = new RooPlot();
+	RooPlot* frame4 = new RooPlot();
 	TString postfix = "";
+	TString title = "";
 	if(_count == 1) postfix += "_7_15";
 	if(_count == 2) postfix += "_15_50";
 	
-	target = mean;
-	postfix += "_mean";
-	frame1 = mcstudy->plotParam(target,Bins(50),Range(5.345,5.390)) ;
-	//RooPlot* frame1 = mcstudy->plotParam(target,Bins(50)) ;
-	if(ispp)
-	    frame2 = mcstudy->plotError(target,Bins(50)) ;
-	else
-	    frame2 = mcstudy->plotError(target,Bins(50),Range(0.000,0.012)) ;
-	//frame2 = mcstudy->plotError(target,Bins(50)) ;
-	frame3 = mcstudy->plotPull(target,Bins(50),FitGauss(),Range(-8,8)) ;
-	frame4 = mcstudy->plotNLL(Bins(50)) ;
+	if(varSet==1){
+		title = "signal Gauss mean";
+		postfix += "_mean";
+		target = &mean;
+		frame1 = mcstudy->plotParam(*target,Bins(50),Range(5.345,5.390)) ;
+		frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss(),Range(-8,8)) ;
+		frame4 = mcstudy->plotNLL(Bins(50)) ;
+		if(ispp)
+		    frame2 = mcstudy->plotError(*target,Bins(50),Range(0.000,0.0035)) ;
+		else
+		    frame2 = mcstudy->plotError(*target,Bins(50),Range(0.000,0.020)) ;
+	}
+	if(varSet==2){
+		title = "bg 0th order coeff";
+		postfix += "_a0";
+		target = &a0;
+		if(ispp){
+			frame1 = mcstudy->plotParam(*target,Bins(50),Range(950.,1100.)) ;
+			frame2 = mcstudy->plotError(*target,Bins(50)) ;
+			frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss()) ;
+		}
+		else{
+			if(_count==1){
+				frame1 = mcstudy->plotParam(*target,Bins(50),Range(0.,200000.)) ;
+				frame2 = mcstudy->plotError(*target,Bins(50),Range(0.,1200000.)) ;
+				frame2 = mcstudy->plotError(*target,Bins(50)) ;
+				frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss(),Range(-1,0.3)) ;
+			}
+			else{
+				frame1 = mcstudy->plotParam(*target,Bins(50),Range(500.,1500.)) ;
+				frame2 = mcstudy->plotError(*target,Bins(50),Range(-200.,4000.)) ;
+				frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss(),Range(-0.15,0.05)) ;
+			}
+		}
+		frame4 = mcstudy->plotNLL(Bins(50)) ;
+	}
+	if(varSet==3){
+		title = "bg 1st order coeff";
+		postfix += "_a1";
+		target = &a1;
+		if(ispp){
+			frame1 = mcstudy->plotParam(*target,Bins(50)) ;
+			frame2 = mcstudy->plotError(*target,Bins(50)) ;
+			frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss()) ;
+			frame4 = mcstudy->plotNLL(Bins(50)) ;
+		}
+		else{
+			if(_count==1){
+				frame1 = mcstudy->plotParam(*target,Bins(50)) ;
+				frame2 = mcstudy->plotError(*target,Bins(50)) ;
+				frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss(),Range(-0.2,1.8)) ;
+				frame4 = mcstudy->plotNLL(Bins(50)) ;
+			}
+			else{
+				frame1 = mcstudy->plotParam(*target,Bins(50),Range(-140.,-120.)) ;
+				frame2 = mcstudy->plotError(*target,Bins(50),Range(-100.,18000.)) ;
+				frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss(),Range(-0.1,0.2)) ;
+				frame4 = mcstudy->plotNLL(Bins(50)) ;
+			}
+		}
+	}
+	if(varSet==4){
+		title = "# of signal";
+		postfix += "_nsig";
+		target = &nsig;
+		frame1 = mcstudy->plotParam(*target,Bins(50)) ;
+		frame2 = mcstudy->plotError(*target,Bins(50)) ;
+		if(ispp)
+			frame2 = mcstudy->plotError(*target,Bins(50)) ;
+		else
+			frame2 = mcstudy->plotError(*target,Bins(50),Range(0.,6.)) ;
+		frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss()) ;
+		frame4 = mcstudy->plotNLL(Bins(50)) ;
+	}
+	if(varSet==5){
+		title = "# of background";
+		postfix += "_nbkg";
+		target = &nbkg;
+		frame1 = mcstudy->plotParam(*target,Bins(50)) ;
+		frame2 = mcstudy->plotError(*target,Bins(50)) ;
+		frame3 = mcstudy->plotPull(*target,Bins(50),FitGauss()) ;
+		frame4 = mcstudy->plotNLL(Bins(50)) ;
+	}
 	
+	// Do customize fit
 	bool doCusFit = 0;
 	TF1* f;
-	// Do customize fit
 	if(doCusFit){
 		RooHist* datahist = new RooHist();
 		cout<<frame3->getHist(Form("h_fitParData_model%d",_count))<<endl;
@@ -235,7 +319,9 @@ void ToyMCFitStudy()
 		//datagraph->Fit("f");
 		frame3->SetMaximum(datagraph->GetHistogram()->GetMaximum()*1.3);
 	}
-	frame1->SetTitle("");
+
+	// plot setting
+	frame1->SetTitle(title.Data());
 	frame2->SetTitle("");
 	frame3->SetTitle("");
 	frame4->SetTitle("");
@@ -255,16 +341,17 @@ void ToyMCFitStudy()
 	gStyle->SetPalette(1) ;
 	gStyle->SetOptStat(0) ;
 	TCanvas* c = new TCanvas("rf801_mcstudy","rf801_mcstudy",900,900) ;
+	c->SetRightMargin(0.3);
 	c->Divide(2,2) ;
 	//gPad->SetLogy();
-	c->cd(1) ; gPad->SetLeftMargin(0.15) ; frame1->GetYaxis()->SetTitleOffset(1.2) ; frame1->Draw() ;
+	c->cd(1) ; gPad->SetLeftMargin(0.153) ; gPad->SetRightMargin(0.12) ; frame1->GetYaxis()->SetTitleOffset(1.35) ; frame1->Draw() ;
 	//gPad->SetLogy();
-	c->cd(2) ; gPad->SetLeftMargin(0.15) ; frame2->GetYaxis()->SetTitleOffset(1.2) ; frame2->Draw() ;
+	c->cd(2) ; gPad->SetLeftMargin(0.153) ; gPad->SetRightMargin(0.12) ; frame2->GetYaxis()->SetTitleOffset(1.35) ; frame2->Draw() ;
 	//gPad->SetLogy();
-	c->cd(3) ; gPad->SetLeftMargin(0.15) ; frame3->GetYaxis()->SetTitleOffset(1.2) ; frame3->Draw() ;
-	if(doCusFit) f->Draw("same");// Draw customized fit function
+	c->cd(3) ; gPad->SetLeftMargin(0.153) ; gPad->SetRightMargin(0.12) ; frame3->GetYaxis()->SetTitleOffset(1.35) ; frame3->Draw() ;
+	if(doCusFit) f->Draw("same");// Draw cugstomized fit function
 	//gPad->SetLogy();
-	c->cd(4) ; gPad->SetLeftMargin(0.15) ; frame4->GetYaxis()->SetTitleOffset(1.2) ; frame4->Draw() ;
+	c->cd(4) ; gPad->SetLeftMargin(0.153) ; gPad->SetRightMargin(0.12) ; frame4->GetYaxis()->SetTitleOffset(1.35) ; frame4->Draw() ;
 
 	// Make some histograms from the parameter dataset
 	//TH1* hh_cor_a0_s1f = mcstudy->fitParDataSet().createHistogram("hh",a1,YVar(sig1frac)) ;

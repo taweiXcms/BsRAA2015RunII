@@ -25,6 +25,8 @@ bool is750_acc = 0;
 bool isY = 0;
 int _nBins = nBins;
 double *_ptBins = ptBins;
+int centL = 0;
+int centH = 100;
 
 void converter(){
 	if(optSum!=1) {cout<<"wrong option; return;"<<endl; return;}
@@ -210,6 +212,7 @@ void converter(){
 				&& Btrk2highPurity[b] && abs(Btrk2Eta[b])<2.4 && Btrk2Pt[b]>0.
 				&& abs(Btktkmass[b]-1.019455)<0.015
 				&& ((Bpt[b]>7 && Bpt[b]<15 && BDTStage1_pt7to15[b]>0.213755) || (Bpt[b]>15 && Bpt[b]<50 && BDTStage1_pt15to50[b]>0.254413))
+				&& hiBin >= centL*2 && hiBin <= centH*2
 				)	
                 if(Bgen[b]==23333){
                     //double _weight = pthatweight;
