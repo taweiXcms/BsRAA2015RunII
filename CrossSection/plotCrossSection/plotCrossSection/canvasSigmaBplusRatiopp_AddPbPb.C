@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp_AddPbPb()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Tue Apr 24 14:20:37 2018) by ROOT version6.02/13
+//=========  (Tue Apr 24 15:09:32 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -137,7 +137,8 @@ tex->SetNDC();
       tex = new TLatex(0.18,0.853,"Preliminary");
 tex->SetNDC();
    tex->SetTextAlign(13);
-   tex->SetTextSize(0.056);
+   tex->SetTextFont(52);
+   tex->SetTextSize(0.03733333);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.9,0.9552,"28.0 pb^{-1} (pp 5.02 TeV)");
@@ -153,7 +154,7 @@ tex->SetNDC();
    tex->SetTextSize(0.035);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.77,0.874,"B^{0}_{s}");
+      tex = new TLatex(0.82,0.825,"B^{0}_{s}");
 tex->SetNDC();
    tex->SetTextSize(0.063);
    tex->SetLineWidth(2);

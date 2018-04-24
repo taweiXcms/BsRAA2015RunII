@@ -103,7 +103,14 @@ void plotBsBpRatio(){
     line->SetLineWidth(2);
     line->Draw();
 
-    TLatex * texY = new TLatex(0.81,0.17,"|y| < 2.4");
+    TLatex* texB = new TLatex(0.81,0.56,"B^{0}_{s}");
+    texB->SetNDC();
+    texB->SetTextFont(62);
+    texB->SetTextSize(0.08);
+    texB->SetLineWidth(2);
+    texB->Draw();
+
+    TLatex * texY = new TLatex(0.81,0.51,"|y| < 2.4");
     texY->SetNDC();
     texY->SetTextColor(1);
     texY->SetTextFont(42);
@@ -117,14 +124,6 @@ void plotBsBpRatio(){
     texlumi->SetTextSize(0.038);
     texlumi->SetLineWidth(2);
     texlumi->Draw();
-
-    //TLatex* texB = new TLatex(0.77,0.21,"B^{#plus}+B^{#minus}");
-    TLatex* texB = new TLatex(0.81,0.22,"B^{0}_{s}");
-    texB->SetNDC();
-    texB->SetTextFont(62);
-    texB->SetTextSize(0.08);
-    texB->SetLineWidth(2);
-    //texB->Draw();
 
     TLatex* texcms = new TLatex(0.18,0.90,"CMS");
     texcms->SetNDC();

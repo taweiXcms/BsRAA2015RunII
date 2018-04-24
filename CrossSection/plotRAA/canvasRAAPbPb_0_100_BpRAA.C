@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Apr 19 12:17:30 2018) by ROOT version6.02/13
+//=========  (Tue Apr 24 17:53:37 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -53,21 +53,21 @@ tex->SetNDC();
    tex->SetTextSize(0.038);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.81,0.2,"B^{0}_{s}");
+      tex = new TLatex(0.81,0.56,"B^{0}_{s}");
 tex->SetNDC();
    tex->SetTextSize(0.08);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.81,0.51,"|y| < 2.4");
+tex->SetNDC();
+   tex->SetTextFont(42);
+   tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.16,0.9,"CMS");
 tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextSize(0.06);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.81,0.15,"|y| < 2.4");
-tex->SetNDC();
-   tex->SetTextFont(42);
-   tex->SetTextSize(0.04);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.16,0.84,"Preliminary");

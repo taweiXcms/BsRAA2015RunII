@@ -179,8 +179,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	TLatex* texPrel = new TLatex(0.18,1-(1-0.79)*tpadr, "Preliminary");
 	texPrel->SetNDC();
 	texPrel->SetTextAlign(13);
-	texPrel->SetTextSize(0.08*tpadr);
-	texPrel->SetTextFont(62);
+	texPrel->SetTextSize(0.08*tpadr*2./3.);
+	texPrel->SetTextFont(52);
 	texPrel->Draw();
 
 	TString text;
@@ -217,7 +217,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 
 	//TLatex* texB = new TLatex(0.77,0.82,"B^{#plus}+B^{#minus}");
 	//TLatex* texB = new TLatex(0.77,1-(1-0.82)*tpadr,"B^{#pm}");
-	TLatex* texB = new TLatex(0.77,1-(1-0.82)*tpadr,"B^{0}_{s}");
+	//TLatex* texB = new TLatex(0.77,1-(1-0.82)*tpadr,"B^{0}_{s}");
+	TLatex* texB = new TLatex(0.82,1-(1-0.75)*tpadr,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.09*tpadr);

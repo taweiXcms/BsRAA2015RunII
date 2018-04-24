@@ -25,10 +25,6 @@ bool drawBpRpA = 0;
 bool drawThm = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
-//Color_t BsBoxColor = kAzure+7;
-//Color_t BsPointColor = kAzure-1;
-Color_t BsBoxColor = kMagenta-3;
-Color_t BsPointColor = kMagenta+2;
 
 float TAABarWid = 1.;
 float *GlobSystPos;
@@ -199,12 +195,19 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	//tlatexeff2->SetTextSize(0.050);
 	//tlatexeff2->Draw();
 
-	TLatex* texB = new TLatex(0.81,0.20,"B^{0}_{s}");
+	TLatex* texB = new TLatex(0.81,0.56,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.08);
 	texB->SetLineWidth(2);
 	texB->Draw();
+
+	TLatex *texY = new TLatex(0.81,0.51,"|y| < 2.4");
+	texY->SetNDC();
+	texY->SetTextFont(42);
+	texY->SetTextSize(0.04);
+	texY->SetLineWidth(2);
+	texY->Draw();
 
 	TLatex* texcms = new TLatex(0.16,0.90,"CMS");
 	texcms->SetNDC();
@@ -213,13 +216,6 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texcms->SetTextSize(0.06);
 	texcms->SetLineWidth(2);
 	texcms->Draw();
-
-	TLatex *texY = new TLatex(0.81,0.15,"|y| < 2.4");
-	texY->SetNDC();
-	texY->SetTextFont(42);
-	texY->SetTextSize(0.04);
-	texY->SetLineWidth(2);
-	texY->Draw();
 
 	//TLatex* texpre = new TLatex(0.30,0.895,"Preliminary");
 	TLatex* texpre = new TLatex(0.16,0.84,"Preliminary");

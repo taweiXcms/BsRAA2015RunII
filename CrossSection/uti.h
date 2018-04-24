@@ -37,6 +37,21 @@
 #include <TFitResult.h>
 using namespace std;
 
+template <class iNumber>
+int sigDigitAfterDecimal(iNumber i, int ndigit=2){
+	return (fabs(i)<pow(10,ndigit-1)) ?  -int(floor(log10(fabs(i))))+ndigit-1 : 0 ;
+}
+template <class iNumber>
+iNumber roundToNdigit(iNumber i, int ndigit=2){
+	iNumber ifactored = (i >= 0) ? i : -i;
+	int nLogTen	= floor(log10(ifactored));
+	double factorOfTen = pow(10,nLogTen-(ndigit-1));
+	ifactored = ifactored/factorOfTen;
+	ifactored = round(ifactored);
+	ifactored = ifactored*factorOfTen;
+	return (i >= 0) ? ifactored : -ifactored;
+}
+
 template <class Container>
 void split2(const std::string& str, Container& cont, char delim = ' ')
 {
@@ -165,3 +180,5 @@ void chi2Cal(double dataArr[], double dataErrArr[], double fitArr[], int nbin, d
 		chi2Peason += (dataArr[i]-fitArr[i])*(dataArr[i]-fitArr[i])/fitArr[i];
 	}
 }
+
+

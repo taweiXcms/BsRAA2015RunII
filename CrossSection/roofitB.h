@@ -139,7 +139,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	model->plotOn(frame,Name(Form("sigF%d",_count)),Components(sig),Normalization(1.0,RooAbsReal::RelativeExpected),Precision(1e-6),DrawOption("F"),FillStyle(3002),FillColor(kOrange-3),LineStyle(7),LineColor(kOrange-3),LineWidth(4));
 	model->plotOn(frame,Name(Form("model%d",_count)),Normalization(1.0,RooAbsReal::RelativeExpected),Precision(1e-6),DrawOption("L"),LineColor(2),LineWidth(4));
 	//ds->plotOn(frame,Name(Form("ds%d",_count)),Binning(nbinsmasshisto),MarkerSize(1.55),MarkerStyle(20),LineColor(1),LineWidth(4));
-	frame->SetMaximum(h->GetBinContent(h->GetMaximumBin())*1.8);
+	//frame->SetMaximum(h->GetBinContent(h->GetMaximumBin())*1.8);
+	frame->SetMaximum((h->GetBinContent(h->GetMaximumBin())+h->GetBinError(h->GetMaximumBin()))*1.8);
 	frame->Draw();
 	h->Draw("same e");
     c->RedrawAxis();
@@ -199,7 +200,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     printf("chi2 Peason: %f\n",chi2Peason);
     printf("chi2 Baker & Cousins: %f\n",chi2BakerCousins);
 
-	TLegend *leg = new TLegend(0.525,0.46,0.85,0.75,NULL,"brNDC");
+	TLegend *leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
 	leg->SetTextFont(42);
@@ -229,18 +230,18 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texcms->SetNDC();
 	texcms->SetTextAlign(13);
 	texcms->SetTextFont(62);
-	texcms->SetTextSize(0.055);
+	texcms->SetTextSize(0.06);
 	texcms->SetLineWidth(2);
-	TLatex* texcmspre = new TLatex(0.21,0.825,"Preliminary");
-	texcmspre->SetNDC();
-	texcmspre->SetTextAlign(13);
-	texcmspre->SetTextFont(62);
-	texcmspre->SetTextSize(0.055);
-	texcmspre->SetLineWidth(2);
+    TLatex* texpre = new TLatex(0.21,0.825,"Preliminary");
+    texpre->SetNDC();
+    texpre->SetTextAlign(13);
+    texpre->SetTextFont(52);
+    texpre->SetTextSize(0.04);
+    texpre->SetLineWidth(2);
 	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
-	texB->SetTextFont(42);
-	texB->SetTextSize(0.055);
+	texB->SetTextFont(62);
+	texB->SetTextSize(0.07);
 	texB->SetLineWidth(2);
 	// preliminary setting
 
@@ -251,8 +252,16 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texCol->SetTextAlign(32);
 	texCol->SetTextSize(0.055);
 	texCol->SetTextFont(42);
-
-    TLatex* texChi = new TLatex(0.55,0.37, Form("#chi^{2}/nDOF: %.2f/%d = %.2f", chi2BakerCousins, nbinsmasshisto-(fitResult->floatParsFinal().getSize()), chi2BakerCousins/(nbinsmasshisto-(fitResult->floatParsFinal().getSize()))));
+	
+	int nDOF = nbinsmasshisto-(fitResult->floatParsFinal().getSize());
+	float nChi2 = chi2BakerCousins/(nbinsmasshisto-(fitResult->floatParsFinal().getSize()));
+	int nDigit_chi2BakerCousins = 2;
+	int nDigit_nChi2 = 2;
+	chi2BakerCousins = roundToNdigit(chi2BakerCousins);
+	nChi2 = roundToNdigit(nChi2);
+	nDigit_chi2BakerCousins = sigDigitAfterDecimal(chi2BakerCousins);
+	nDigit_nChi2 = sigDigitAfterDecimal(nChi2);
+    TLatex* texChi = new TLatex(0.55,0.50, Form("#chi^{2}/nDOF: %.*f/%d = %.*f", nDigit_chi2BakerCousins, chi2BakerCousins, nDOF, nDigit_nChi2, nChi2));
     texChi->SetNDC();
     texChi->SetTextAlign(12);
     texChi->SetTextSize(0.04);
@@ -270,14 +279,20 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	bkgd = bkgd*bkgIntegral->getVal();
 	Double_t SB = yield/bkgd;
 	Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
-	TLatex* texSig = new TLatex(0.55,0.42,Form("Significance = %.3f",Significance));
+	int nDigit_Significance = 3;
+	Significance = roundToNdigit(Significance);
+	nDigit_Significance = sigDigitAfterDecimal(Significance);
+	TLatex* texSig = new TLatex(0.55,0.54,Form("Significance = %.*f", nDigit_Significance, Significance));
 	cout<<"Significance = "<<Significance<<endl;
 	texSig->SetNDC();
 	texSig->SetTextFont(42);
 	texSig->SetTextSize(0.04);
 	texSig->SetLineWidth(2);
 
-    TLatex* texYield = new TLatex(0.55,0.30,Form("Yield = %.3f",yield));
+	int nDigit_yield = 3;
+	yield = roundToNdigit(yield);
+	nDigit_yield = sigDigitAfterDecimal(yield);
+    TLatex* texYield = new TLatex(0.55,0.44,Form("Yield = %.*f", nDigit_yield, yield));
     texYield->SetNDC();
     texYield->SetTextFont(42);
     texYield->SetTextSize(0.04);
@@ -290,12 +305,15 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	c->cd();
 	leg->Draw("same");
 	texcms->Draw();
-	texcmspre->Draw();
+	texpre->Draw();
 	texB->Draw();
 	texCol->Draw();
-    if(drawOpt == 1) texChi->Draw();
-	if(drawOpt == 1) texSig->Draw("SAME");
-    if(drawOpt == 1) texYield->Draw("SAME");
+    if(1) {
+    //if(drawOpt == 1) {
+		texChi->Draw();
+		texSig->Draw("SAME");
+		texYield->Draw("SAME");
+	}
 	outframe = frame;
     outputw->import(*model);
 	return fitResult;

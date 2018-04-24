@@ -226,7 +226,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	h->SetStats(0);
 	h->GetXaxis()->SetNdivisions(-50205);
 	//h->SetMaximum((h->GetBinContent(h->GetMaximumBin())+h->GetBinError(h->GetMaximumBin()))*1.4);
-	h->SetMaximum((h->GetBinContent(h->GetMaximumBin()))*1.8);
+	h->SetMaximum((h->GetBinContent(h->GetMaximumBin())+h->GetBinError(h->GetMaximumBin()))*1.8);
 	c->cd();
 	h->Draw("e");
 	if(npfit != "1"){
@@ -275,7 +275,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
     printf("chi2 Peason: %f\n",chi2Peason);
     printf("chi2 Baker & Cousins: %f\n",chi2BakerCousins);
 
-	TLegend *leg = new TLegend(0.525,0.46,0.85,0.75,NULL,"brNDC");
+	TLegend *leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
 	leg->SetTextFont(42);
@@ -307,20 +307,20 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->SetNDC();
 	texcms->SetTextAlign(13);
 	texcms->SetTextFont(62);
-	texcms->SetTextSize(0.055);
+	texcms->SetTextSize(0.06);
 	texcms->SetLineWidth(2);
 	texcms->Draw();
-	texcms = new TLatex(0.21,0.825,"Preliminary");
-	texcms->SetNDC();
-	texcms->SetTextAlign(13);
-	texcms->SetTextFont(62);
-	texcms->SetTextSize(0.055);
-	texcms->SetLineWidth(2);
-	texcms->Draw();
+    TLatex* texpre = new TLatex(0.21,0.825,"Preliminary");
+    texpre->SetNDC();
+    texpre->SetTextAlign(13);
+    texpre->SetTextFont(52);
+    texpre->SetTextSize(0.04);
+    texpre->SetLineWidth(2);
+    texpre->Draw();
 	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
-	texB->SetTextFont(42);
-	texB->SetTextSize(0.055);
+	texB->SetTextFont(62);
+	texB->SetTextSize(0.07);
 	texB->SetLineWidth(2);
 	texB->Draw();
 	// preliminary setting
@@ -334,39 +334,56 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texCol->SetTextFont(42);
 	texCol->Draw();
 
-	TLatex* texChi = new TLatex(0.55,0.37, Form("#chi^{2}/nDOF: %.2f/%d = %.2f", chi2BakerCousins, f->GetNDF(), chi2BakerCousins/f->GetNDF()));
+	int nDOF = f->GetNDF();
+    float nChi2 = chi2BakerCousins/f->GetNDF();
+    int nDigit_chi2BakerCousins = 2;
+    int nDigit_nChi2 = 2;
+    chi2BakerCousins = roundToNdigit(chi2BakerCousins);
+    nChi2 = roundToNdigit(nChi2);
+    nDigit_chi2BakerCousins = sigDigitAfterDecimal(chi2BakerCousins);
+    nDigit_nChi2 = sigDigitAfterDecimal(nChi2);
+    TLatex* texChi = new TLatex(0.55,0.50, Form("#chi^{2}/nDOF: %.*f/%d = %.*f", nDigit_chi2BakerCousins, chi2BakerCousins, nDOF, nDigit_nChi2, nChi2));
 	texChi->SetNDC();
 	texChi->SetTextAlign(12);
 	texChi->SetTextSize(0.04);
 	texChi->SetTextFont(42);
-	if(drawOpt == 1) texChi->Draw();
 
 	double width = 0.05;
 	double BmassH = BSUBS_MASS + width;
 	double BmassL = BSUBS_MASS - width;
 	Double_t bkgd = background->Integral(BmassL,BmassH)/binwidthmass;
+	cout<<"BG in signal region: "<<bkgd<<endl;
 	Double_t SB = yield/bkgd;
-	Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
-	TLatex* texSig = new TLatex(0.55,0.42,Form("Significance = %.3f",Significance));
+    Double_t Significance =  yield/TMath::Sqrt(bkgd+yield);
+    int nDigit_Significance = 3;
+    Significance = roundToNdigit(Significance);
+    nDigit_Significance = sigDigitAfterDecimal(Significance);
+    TLatex* texSig = new TLatex(0.55,0.54,Form("Significance = %.*f", nDigit_Significance, Significance));
+    cout<<"Significance = "<<Significance<<endl;
 	texSig->SetNDC();
 	texSig->SetTextFont(42);
 	texSig->SetTextSize(0.04);
 	texSig->SetLineWidth(2);
-	if(drawOpt == 1) texSig->Draw("SAME");
-	cout<<"BG in signal region: "<<bkgd<<endl;
-    cout<<"Significance = "<<Significance<<endl;
 
-	TLatex* texYield = new TLatex(0.55,0.30,Form("Yield = %.3f",yield));
+    int nDigit_yield = 3;
+    yield = roundToNdigit(yield);
+    nDigit_yield = sigDigitAfterDecimal(yield);
+    TLatex* texYield = new TLatex(0.55,0.44,Form("Yield = %.*f", nDigit_yield, yield));
 	texYield->SetNDC();
 	texYield->SetTextFont(42);
 	texYield->SetTextSize(0.04);
 	texYield->SetLineWidth(2);
-	if(drawOpt == 1) texYield->Draw("SAME");
 
 	TF1* t = (TF1*)h->GetFunction(Form("f%d",_count))->Clone();
 	h->GetFunction(Form("f%d",_count))->Delete();
 	t->Draw("same");
 	h->Draw("e same");
+    if(1) {
+    //if(drawOpt == 1) {
+        texChi->Draw();
+        texSig->Draw("SAME");
+        texYield->Draw("SAME");
+    }
 	f->Write();
 	h->Write();
 	hMCSignal->Write();
