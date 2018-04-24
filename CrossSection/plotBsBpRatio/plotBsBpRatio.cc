@@ -82,7 +82,7 @@ void plotBsBpRatio(){
     hRAAratio->SetMarkerStyle(33);
     hRAAratio->SetMarkerSize(2.2);
 
-	TLegend *legendSigma=new TLegend(0.55,0.70,0.92,0.92,"");
+	TLegend *legendSigma=new TLegend(0.52,0.73,0.92,0.88,"");
     legendSigma->SetBorderSize(0);
     legendSigma->SetLineColor(0);
     legendSigma->SetFillColor(0);
