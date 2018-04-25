@@ -17,7 +17,8 @@ using namespace std;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 void plotBsBpRatio(){
-	TFile* Bpf = new TFile("outputRAA_Bp.root");
+	//TFile* Bpf = new TFile("outputRAA_Bp.root");
+	TFile* Bpf = new TFile("rebinnedBpResult/outputRAA_Bp_rebinned.root");
 	TGraphAsymmErrors* BpgNucl = (TGraphAsymmErrors*)Bpf->Get("gNuclearModification");
 	TH1D* BphNucl = (TH1D*)Bpf->Get("hNuclearModification");
 	TFile* Bsf = new TFile("outputRAA_Bs.root");
@@ -37,15 +38,15 @@ void plotBsBpRatio(){
 		BsyStaErr[i] = BshNucl->GetBinError(i+1)/BsyVal[i];
 		BsySysErr[i] = BsgNucl->GetErrorYhigh(i)/BsyVal[i];	
 		raaRatio[i] = BsyVal[i]/BpyVal[i];
-//		raaRatioStaErr[i] = sqrt(BpyStaErr[i]/BpyVal[i]*BpyStaErr[i]/BpyVal[i] + BsyStaErr[i]/BsyVal[i]*BsyStaErr[i]/BsyVal[i])*raaRatio[i];
-//		raaRatioSysErr[i] = sqrt(BpySysErr[i]/BpyVal[i]*BpySysErr[i]/BpyVal[i] + BsySysErr[i]/BsyVal[i]*BsySysErr[i]/BsyVal[i])*raaRatio[i];
+		//raaRatioStaErr[i] = sqrt(BpyStaErr[i]/BpyVal[i]*BpyStaErr[i]/BpyVal[i] + BsyStaErr[i]/BsyVal[i]*BsyStaErr[i]/BsyVal[i])*raaRatio[i];
+		//raaRatioSysErr[i] = sqrt(BpySysErr[i]/BpyVal[i]*BpySysErr[i]/BpyVal[i] + BsySysErr[i]/BsyVal[i]*BsySysErr[i]/BsyVal[i])*raaRatio[i];
 		raaRatioStaErr[i] = sqrt(BpyStaErr[i]*BpyStaErr[i] + BsyStaErr[i]*BsyStaErr[i])*raaRatio[i];
 		raaRatioSysErr[i] = sqrt(BpySysErr[i]*BpySysErr[i] + BsySysErr[i]*BsySysErr[i])*raaRatio[i];
 	}
     TCanvas*canvasRAA=new TCanvas("canvasRAA","canvasRAA",600,600);
     canvasRAA->cd();
 
-    TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,6.5);
+    TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,7.5);
     hemptyEff->GetXaxis()->CenterTitle();
     hemptyEff->GetYaxis()->CenterTitle();
     hemptyEff->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
@@ -160,5 +161,8 @@ void plotBsBpRatio(){
 		cout<<"raaRatioSysErr(%): "<<raaRatioSysErr[i]/raaRatio[i]*100<<endl;
 		cout<<"raaRatioStaErr(absolute): "<<raaRatioStaErr[i]<<endl;
 		cout<<"raaRatioSysErr(absolute): "<<raaRatioSysErr[i]<<endl;
+		cout<<"p val (stat error): "<<calPval(raaRatio[i]-1,raaRatioStaErr[i])<<endl;
+		cout<<"p val (syst error): "<<calPval(raaRatio[i]-1,raaRatioSysErr[i])<<endl;
+		cout<<"p val (comb error): "<<calPval(raaRatio[i]-1,sqrt(raaRatioStaErr[i]*raaRatioStaErr[i]+raaRatioSysErr[i]*raaRatioSysErr[i]))<<endl;
 	}
 }

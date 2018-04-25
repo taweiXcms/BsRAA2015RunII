@@ -106,7 +106,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		printf("Sys corr: %f %f(%)\n",yrcor[i], yrcor[i]/raamean);
 		printf("Sys uncorr: %f %f(%)\n",yruncor[i], yruncor[i]/raamean);
 		double totsyst = sqrt( pow(hNuclearModification->GetBinError(i+1)/raamean,2) + pow(yrlow[0]/raamean,2) );
-		printf("Tot syst: %f(%)\n", totsyst);
+		printf("Tot uncert: %f(%)\n", totsyst);
 		double nsigma = (1-raamean)/(raamean*totsyst);
 		printf("N sigma: %f\n", nsigma);
 	}

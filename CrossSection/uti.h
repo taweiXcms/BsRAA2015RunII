@@ -37,6 +37,10 @@
 #include <TFitResult.h>
 using namespace std;
 
+float calPval(float diff, float error, float ndof=1){
+	return TMath::Prob(diff*diff/error/error,ndof);
+}
+
 template <class iNumber>
 int sigDigitAfterDecimal(iNumber i, int ndigit=2){
 	return (fabs(i)<pow(10,ndigit-1)) ?  -int(floor(log10(fabs(i))))+ndigit-1 : 0 ;
