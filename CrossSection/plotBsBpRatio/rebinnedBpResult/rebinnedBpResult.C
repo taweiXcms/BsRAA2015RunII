@@ -51,8 +51,10 @@ void rebinnedBpResult(){
 	cout<<"bin 0 ========="<<endl;
 	// bin 7-15
 	BpRaayVal[0] = ( BpXsecValPbPb[0] + BpXsecValPbPb[1] )/( BpXsecValpp[0] + BpXsecValpp[1] );
-	ppErrPer = ( BpXsecStaErrpp[0] + BpXsecStaErrpp[1] )/( BpXsecValpp[0] + BpXsecValpp[1] );
-	PbPbErrPer = ( BpXsecStaErrPbPb[0] + BpXsecStaErrPbPb[1] )/( BpXsecValPbPb[0] + BpXsecValPbPb[1] );
+	//ppErrPer = ( BpXsecStaErrpp[0] + BpXsecStaErrpp[1] )/( BpXsecValpp[0] + BpXsecValpp[1] );
+	//PbPbErrPer = ( BpXsecStaErrPbPb[0] + BpXsecStaErrPbPb[1] )/( BpXsecValPbPb[0] + BpXsecValPbPb[1] );
+	ppErrPer = sqrt( pow(BpXsecStaErrpp[0],2) + pow(BpXsecStaErrpp[1],2) )/( BpXsecValpp[0] + BpXsecValpp[1] );
+	PbPbErrPer = sqrt( pow(BpXsecStaErrPbPb[0],2) + pow(BpXsecStaErrPbPb[1],2) )/( BpXsecValPbPb[0] + BpXsecValPbPb[1] );
 	BpRaayStaErr[0] = sqrt(pow(ppErrPer,2) + pow(PbPbErrPer,2));
 	BpRaayStaErrAbs[0] = BpRaayVal[0]*BpRaayStaErr[0];
 	ppErrPer = ( BpXsecSysErrpp[0] + BpXsecSysErrpp[1] )/( BpXsecValpp[0] + BpXsecValpp[1] );
@@ -68,8 +70,10 @@ void rebinnedBpResult(){
 	cout<<"bin 1 ========="<<endl;
 	// bin 15-50
 	BpRaayVal[1] = ( BpXsecValPbPb[2] + BpXsecValPbPb[3] + BpXsecValPbPb[4] )/( BpXsecValpp[2] + BpXsecValpp[3] + BpXsecValpp[4] );
-	ppErrPer = ( BpXsecStaErrpp[2] + BpXsecStaErrpp[3] + BpXsecStaErrpp[4] )/( BpXsecValpp[2] + BpXsecValpp[3] + BpXsecValpp[4] );
-	PbPbErrPer = ( BpXsecStaErrPbPb[2] + BpXsecStaErrPbPb[3] + BpXsecStaErrPbPb[4] )/( BpXsecValPbPb[2] + BpXsecValPbPb[3] + BpXsecValPbPb[4] );
+	//ppErrPer = ( BpXsecStaErrpp[2] + BpXsecStaErrpp[3] + BpXsecStaErrpp[4] )/( BpXsecValpp[2] + BpXsecValpp[3] + BpXsecValpp[4] );
+	//PbPbErrPer = ( BpXsecStaErrPbPb[2] + BpXsecStaErrPbPb[3] + BpXsecStaErrPbPb[4] )/( BpXsecValPbPb[2] + BpXsecValPbPb[3] + BpXsecValPbPb[4] );
+	ppErrPer = sqrt( pow(BpXsecStaErrpp[2],2) + pow(BpXsecStaErrpp[3],2) + pow(BpXsecStaErrpp[4],2) )/( BpXsecValpp[2] + BpXsecValpp[3] + BpXsecValpp[4] );
+	PbPbErrPer = sqrt( pow(BpXsecStaErrPbPb[2],2) + pow(BpXsecStaErrPbPb[3],2) + pow(BpXsecStaErrPbPb[4],2) )/( BpXsecValPbPb[2] + BpXsecValPbPb[3] + BpXsecValPbPb[4] );
 	BpRaayStaErr[1] = sqrt(pow(ppErrPer,2) + pow(PbPbErrPer,2));
 	BpRaayStaErrAbs[1] = BpRaayVal[1]*BpRaayStaErr[1];
 	ppErrPer = ( BpXsecSysErrpp[2] + BpXsecSysErrpp[3] +BpXsecSysErrpp[4] )/( BpXsecValpp[2] + BpXsecValpp[3] + BpXsecValpp[4] );

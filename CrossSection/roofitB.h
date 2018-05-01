@@ -187,6 +187,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
         fh->SetBinError(i+1, sqrt(fitArr[i]));
     }
 	cout<<"frame->chiSquare: "<<frame->chiSquare(Form("model%d",_count),Form("ds%d",_count),0)<<endl;
+	//cout<<fitResult->floatParsFinal().getSize()<<endl;
 	//cout<<"chi2: "<<frame->chiSquare(Form("model%d",_count),Form("ds%d",_count),fitResult->floatParsFinal().getSize())<<endl;
 	//RooChi2Var chi2_lowstat("chi2_lowstat","chi2",*model,*dh);
 	//cout<<chi2_lowstat.getVal()<<endl;
