@@ -124,6 +124,7 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 			h->SetAxisRange(0,h->GetMaximum()*1.4*1.2,"Y");
 		}
 		if(fitOnSaved == 1){
+            //drawOpt = 1;
 			h = (TH1D*)inf->Get(Form("h%d",_count));
 			hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",_count));
 		}

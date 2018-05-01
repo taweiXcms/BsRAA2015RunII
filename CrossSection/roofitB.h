@@ -201,7 +201,10 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     printf("chi2 Peason: %f\n",chi2Peason);
     printf("chi2 Baker & Cousins: %f\n",chi2BakerCousins);
 
-	TLegend *leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
+	TLegend *leg = new TLegend(0.525,0.40,0.85,0.75,NULL,"brNDC"); 
+    if(drawOpt == 1) {
+		leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
+	}
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
 	leg->SetTextFont(42);
@@ -309,8 +312,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texpre->Draw();
 	texB->Draw();
 	texCol->Draw();
-    if(1) {
-    //if(drawOpt == 1) {
+    //if(1) {
+    if(drawOpt == 1) {
 		texChi->Draw();
 		texSig->Draw("SAME");
 		texYield->Draw("SAME");

@@ -275,7 +275,10 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
     printf("chi2 Peason: %f\n",chi2Peason);
     printf("chi2 Baker & Cousins: %f\n",chi2BakerCousins);
 
-	TLegend *leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
+    TLegend *leg = new TLegend(0.525,0.40,0.85,0.75,NULL,"brNDC");
+    if(drawOpt == 1) {
+        leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
+    }
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
 	leg->SetTextFont(42);
@@ -378,8 +381,8 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	h->GetFunction(Form("f%d",_count))->Delete();
 	t->Draw("same");
 	h->Draw("e same");
-    if(1) {
-    //if(drawOpt == 1) {
+    //if(1) {
+    if(drawOpt == 1) {
         texChi->Draw();
         texSig->Draw("SAME");
         texYield->Draw("SAME");
