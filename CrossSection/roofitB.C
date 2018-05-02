@@ -154,7 +154,7 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 			outputw->import(*dhMC);
 		}
 		if(fitOnSaved == 1){
-			//drawOpt = 1;
+			drawOpt = 1;
 			inputw = (RooWorkspace*)inf->Get("w");
 			ds = (RooDataSet*)inputw->data(Form("ds%d",_count));
 			dsMC = (RooDataSet*)inputw->data(Form("dsMC%d",_count));
