@@ -127,7 +127,7 @@ void plotBsBpRatio(){
     texB->SetTextFont(62);
     texB->SetTextSize(0.07);
     texB->SetLineWidth(2);
-    texB->Draw();
+    //texB->Draw();
 
     TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
     texY->SetNDC();
