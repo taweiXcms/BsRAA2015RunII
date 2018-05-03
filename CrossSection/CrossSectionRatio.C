@@ -18,7 +18,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	bool isPbPb=(bool)(usePbPb);
 
 	float tpadpos = 1-tpadr;
-	if(plotFONLL) tpadr = 1;
+	if(!plotFONLL) tpadr = 1;
 
 	TFile* file = new TFile(input.Data());  
 	TFile* fileeff = new TFile(efficiency.Data());
@@ -74,12 +74,12 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	TGraphAsymmErrors* gaeCrossSyst = new TGraphAsymmErrors(_nBins,xr,ycross,xrlow,xrhigh,ycrosssystlow,ycrosssysthigh);
 	gaeCrossSyst->SetName("gaeCrossSyst");
 	gaeCrossSyst->SetMarkerStyle(20);
-	gaeCrossSyst->SetMarkerSize(0.8);
+	gaeCrossSyst->SetMarkerSize(0.8/tpadr);
 
 	TGraphAsymmErrors* gaeRatioCrossFONLLstat = new TGraphAsymmErrors(_nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLstat,yratiocrossFONLLstat);
 	gaeRatioCrossFONLLstat->SetName("gaeRatioCrossFONLLstat");
 	gaeRatioCrossFONLLstat->SetMarkerStyle(20);
-	gaeRatioCrossFONLLstat->SetMarkerSize(0.8);
+	gaeRatioCrossFONLLstat->SetMarkerSize(0.8/tpadr);
 
 	TGraphAsymmErrors* gaeRatioCrossFONLLsyst= new TGraphAsymmErrors(_nBins,xr,yratiocrossFONLL,xrlow,xrhigh,yratiocrossFONLLsystlow,yratiocrossFONLLsysthigh);
 	gaeRatioCrossFONLLsyst->SetName("gaeRatioCrossFONLLsyst");
@@ -102,10 +102,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	cSigma->SetFillColor(0);
 	cSigma->SetBorderMode(0);
 	cSigma->SetBorderSize(2);
-	cSigma->SetLeftMargin(0.1451613);
-	cSigma->SetRightMargin(0.05443548);
-	cSigma->SetTopMargin(0.08474576*tpadr);
-	cSigma->SetBottomMargin(0.3*(1-tpadr));
+	cSigma->SetRightMargin(cRightMargin);
+	cSigma->SetLeftMargin(cLeftMargin);
+	cSigma->SetTopMargin(cTopMargin);
+	cSigma->SetBottomMargin(cBottomMargin);
 	cSigma->SetFrameBorderMode(0);
 	cSigma->SetFrameBorderMode(0);
 	cSigma->SetLogy();
@@ -114,9 +114,9 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	pSigma->SetFillColor(0);
 	pSigma->SetBorderMode(0);
 	pSigma->SetBorderSize(2);
-	pSigma->SetLeftMargin(0.1451613);
-	pSigma->SetRightMargin(0.05443548);
-	pSigma->SetTopMargin(0.08474576*tpadr);
+	pSigma->SetRightMargin(cRightMargin);
+	pSigma->SetLeftMargin(cLeftMargin);
+	pSigma->SetTopMargin(cTopMargin/tpadr);
 	pSigma->SetBottomMargin(0);
 	pSigma->SetLogy();
 	if(plotFONLL){
@@ -124,11 +124,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		pSigma->cd();
 	}
 
-	//Float_t yaxisMin=1.1,yaxisMax=1.e+9;//PAS
-	Float_t yaxisMin=1.e2,yaxisMax=1.e+7;//paper 20170224
-	if(isPbPb){
-		yaxisMin=1.e+2;
-	}
+	Float_t yaxisMin=5.e2,yaxisMax=1.e+7;
+	if(plotFONLL) yaxisMin=1.e+3;
 	TH2F* hemptySigma=new TH2F("hemptySigma","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,yaxisMin,yaxisMax);  
 	hemptySigma->GetXaxis()->CenterTitle();
 	hemptySigma->GetYaxis()->CenterTitle();
@@ -136,16 +133,15 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	if(isPbPb) hemptySigma->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
 	hemptySigma->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptySigma->GetXaxis()->SetTitleOffset(1.);
-	hemptySigma->GetYaxis()->SetTitleOffset(1./tpadr);
-	hemptySigma->GetXaxis()->SetTitleSize(0.12*tpadpos);
-	hemptySigma->GetYaxis()->SetTitleSize(0.06*tpadr);
+	hemptySigma->GetYaxis()->SetTitleOffset(1.4*tpadr);
+	hemptySigma->GetXaxis()->SetTitleSize(0.055/tpadr);
+	hemptySigma->GetYaxis()->SetTitleSize(0.055/tpadr);
 	hemptySigma->GetXaxis()->SetTitleFont(42);
 	hemptySigma->GetYaxis()->SetTitleFont(42);
 	hemptySigma->GetXaxis()->SetLabelFont(42);
 	hemptySigma->GetYaxis()->SetLabelFont(42);
-	hemptySigma->GetXaxis()->SetLabelSize(0.12*tpadpos);
-	hemptySigma->GetYaxis()->SetLabelSize(0.06*tpadr);  
-	hemptySigma->GetXaxis()->SetLabelOffset(0.005*tpadpos);
+	hemptySigma->GetXaxis()->SetLabelSize(0.048/tpadr);
+	hemptySigma->GetYaxis()->SetLabelSize(0.048/tpadr);  
 	hemptySigma->SetMaximum(2);
 	hemptySigma->SetMinimum(0.);
 	hemptySigma->Draw();
@@ -158,7 +154,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hPtSigma->SetLineColor(1);
 	hPtSigma->SetLineWidth(2);
 	hPtSigma->SetMarkerStyle(20);
-	hPtSigma->SetMarkerSize(1.2*tpadr);
+	hPtSigma->SetMarkerSize(1.2);
 	hPtSigma->Draw("epsame"); 
 	gaeCrossSyst->SetFillColor(1);
 	gaeCrossSyst->SetFillStyle(0); 
@@ -166,31 +162,32 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	gaeCrossSyst->SetLineColor(1);
 	gaeCrossSyst->Draw("5same");  
 
-	//TLatex* texCms = new TLatex(0.16,0.95, "#scale[1.25]{CMS}");
-	TLatex* texCms = new TLatex(0.18,1-(1-0.87)*tpadr, "CMS");
+	TLatex* texCms = new TLatex(0.21,1-(1-0.88)/tpadr, "CMS");
 	texCms->SetNDC();
 	texCms->SetTextAlign(13);
-	texCms->SetTextSize(0.08*tpadr);
+	texCms->SetTextSize(0.06/tpadr);
 	texCms->SetTextFont(62);
 	texCms->Draw();
 
-	//TLatex* texPrel = new TLatex(0.20,0.95, "#scale[1.25]Preliminary");
-	//TLatex* texPrel = new TLatex(0.30,0.89, "Preliminary");
 	TLatex* texPrel = new TLatex(0.18,1-(1-0.79)*tpadr, "Preliminary");
 	texPrel->SetNDC();
 	texPrel->SetTextAlign(13);
 	texPrel->SetTextSize(0.08*tpadr*2./3.);
 	texPrel->SetTextFont(52);
-	texPrel->Draw();
+//	texPrel->Draw();
 
-	TString text;
-	if (label=="PbPb") { text="351 #mub^{-1} (PbPb 5.02 TeV)";}
-	else {text="28.0 pb^{-1} (pp 5.02 TeV)";}
-	TLatex* texlumi = new TLatex(0.90,1-(1-0.936)*tpadr,text.Data());
+	TString text="28.0 pb^{-1} (pp 5.02 TeV)";
+	TLatex* texlumi = new TLatex(0.95,1-(1-0.94)/tpadr,text.Data());
+	if (addpbpb) texlumi = new TLatex(0.96,0.95,"28 pb^{-1} (pp) + 351 #mub^{-1} (PbPb) 5.02 TeV");
+	if (label=="PbPb") {
+		text="351 #mub^{-1} (PbPb 5.02 TeV)";
+		texlumi = new TLatex(0.945,1-(1-0.94)/tpadr,text.Data());
+	}
 	texlumi->SetNDC();
-	texlumi->SetTextAlign(31);
+	texlumi->SetTextAlign(32);
 	texlumi->SetTextFont(42);
-	texlumi->SetTextSize(0.050*tpadr);
+	texlumi->SetTextSize(0.055/tpadr);
+	if (addpbpb) texlumi->SetTextSize(0.05/tpadr);
 	texlumi->SetLineWidth(2);
 	texlumi->Draw();
 
@@ -208,39 +205,45 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texCent->SetTextSize(0.04);
 	//if(isPbPb) texCent->Draw();
 
-	TLatex* texY = new TLatex(0.53,1-(1-0.65)*tpadr,"|y| < 2.4");
+	TLatex* texY = new TLatex(0.53,1-(1-0.65)/tpadr,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
-	texY->SetTextSize(0.05*tpadr);
+	texY->SetTextSize(0.05/tpadr);
 	texY->SetLineWidth(2);
 	texY->Draw();
 
-	//TLatex* texB = new TLatex(0.77,0.82,"B^{#plus}+B^{#minus}");
-	//TLatex* texB = new TLatex(0.77,1-(1-0.82)*tpadr,"B^{#pm}");
-	//TLatex* texB = new TLatex(0.77,1-(1-0.82)*tpadr,"B^{0}_{s}");
-	TLatex* texB = new TLatex(0.82,1-(1-0.75)*tpadr,"B^{0}_{s}");
+	TLatex* texB = new TLatex(0.85,1-(1-0.82)/tpadr,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
-	texB->SetTextSize(0.09*tpadr);
+	texB->SetTextSize(0.07/tpadr);
 	texB->SetLineWidth(2);
 	texB->Draw();
 
-	TLatex* texGlobal = new TLatex(0.53,0.59,Form("Global uncert. %.1f%s",normalizationUncertaintyForPP(),texper.Data()));
-	if(isPbPb)  texGlobal = new TLatex(0.53,1-(1-0.59)*tpadr,Form("Global uncert. #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data()));
+	TLatex* texGlobal = new TLatex(0.53,1-(1-0.594)/tpadr,Form("Global uncertainty:"));
 	texGlobal->SetNDC();
 	texGlobal->SetTextFont(42);
-	texGlobal->SetTextSize(0.05*tpadr);
+	texGlobal->SetTextSize(0.05/tpadr);
 	texGlobal->SetLineWidth(2);
-	if(!addpbpb) texGlobal->Draw();
+	TString uncGlobal_pp = Form("pp: #pm%.1f%s",normalizationUncertaintyForPP(),texper.Data());
+    TString uncGlobal_PbPb = Form("PbPb: #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data());
+	TLatex* texGlobal_num = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_pp);
+	if(isPbPb) texGlobal_num = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_PbPb);
+	texGlobal_num->SetNDC();
+	texGlobal_num->SetTextFont(42);
+	texGlobal_num->SetTextSize(0.05/tpadr);
+	texGlobal_num->SetLineWidth(2);
 
-	TLegend* leg_CS = new TLegend(0.52,1-(1-0.70)*tpadr,0.85,1-(1-0.85)*tpadr);
+	TLegend* leg_CS = new TLegend(0.52,1-(1-0.70)/tpadr,0.85,1-(1-0.90)/tpadr);
 	leg_CS->SetBorderSize(0);
 	leg_CS->SetFillStyle(0);
-	leg_CS->SetTextSize(0.05*tpadr);
+	leg_CS->SetTextSize(0.055/tpadr);
+
 	if(!addpbpb){
 		leg_CS->AddEntry(hPtSigma,"Data","pf");
 		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL","f");//paper
 		leg_CS->Draw("same");
+		texGlobal->Draw();
+		texGlobal_num->Draw();
 	}
 	else{
 		TFile* filepbpb = new TFile("ROOTfiles/CrossSectionPbPb.root");
@@ -252,18 +255,17 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		hPtSigma_PbPb->SetLineWidth(2);
 		hPtSigma_PbPb->SetMarkerColor(2);
 		hPtSigma_PbPb->SetMarkerStyle(21);
-		hPtSigma_PbPb->SetMarkerSize(1.2*tpadr);
+		hPtSigma_PbPb->SetMarkerSize(1.2/tpadr);
 		hPtSigma_PbPb->Draw("epsame");
-		leg_CS->SetY2(1-(1-0.85)*tpadr);
+		leg_CS->SetY2(1-(1-0.90)/tpadr);
 		leg_CS->AddEntry(hPtSigma,"Data pp","pf");
 		leg_CS->AddEntry(hPtSigma_PbPb,"Data PbPb","pf");
 		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
 		leg_CS->Draw("same");
-		//hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
 		hemptySigma->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
-		texGlobal = new TLatex(0.53,0.594,Form("Global uncert."));
-		TLatex* texGlobal_pp = new TLatex(0.53,0.55,Form("pp: %.1f%s",normalizationUncertaintyForPP(),texper.Data()));
-		TLatex* texGlobal_PbPb = new TLatex(0.53,0.50,Form("PbPb: #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data()));
+		texGlobal = new TLatex(0.53,0.594,Form("Global uncertainty:"));
+		TLatex* texGlobal_pp = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_pp);
+		TLatex* texGlobal_PbPb = new TLatex(0.53,1-(1-0.48)/tpadr,uncGlobal_PbPb);
 		texGlobal->SetNDC();
 		texGlobal->SetTextFont(42);
 		texGlobal->SetTextSize(0.05*tpadr);
@@ -283,28 +285,26 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 
 	cSigma->cd();
 	TPad* pRatio = new TPad("pRatio","",0.,0.,1.,tpadpos);
-	pRatio->SetLeftMargin(0.1451613);
-	pRatio->SetRightMargin(0.05443548);
+	pRatio->SetRightMargin(cRightMargin);
+	pRatio->SetLeftMargin(cLeftMargin);
 	pRatio->SetTopMargin(0);
-	pRatio->SetBottomMargin(0.30);//0.25
+	pRatio->SetBottomMargin(cBottomMargin/(1-tpadr));//0.25
 
-	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.,3.1);//PAS
-	//TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.,2.1);//
 	TH2F* hemptyRatio=new TH2F("hemptyRatio","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,0.2,1.8);//paper
 	hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptyRatio->GetXaxis()->CenterTitle();
-	hemptyRatio->GetYaxis()->CenterTitle();
-	hemptyRatio->GetYaxis()->SetTitle("Data / FONLL");
+	//hemptyRatio->GetYaxis()->CenterTitle();
+	hemptyRatio->GetYaxis()->SetTitle("Data/FONLL");
 	hemptyRatio->GetXaxis()->SetTitleOffset(1.);
-	hemptyRatio->GetYaxis()->SetTitleOffset(0.5);
-	hemptyRatio->GetXaxis()->SetTitleSize(0.12);
-	hemptyRatio->GetYaxis()->SetTitleSize(0.12);
+	hemptyRatio->GetYaxis()->SetTitleOffset(1.4*(1-tpadr));
+	hemptyRatio->GetXaxis()->SetTitleSize(0.055/(1-tpadr));
+	hemptyRatio->GetYaxis()->SetTitleSize(0.055/(1-tpadr));
 	hemptyRatio->GetXaxis()->SetTitleFont(42);
 	hemptyRatio->GetYaxis()->SetTitleFont(42);
 	hemptyRatio->GetXaxis()->SetLabelFont(42);
 	hemptyRatio->GetYaxis()->SetLabelFont(42);
-	hemptyRatio->GetXaxis()->SetLabelSize(0.12);//0.1
-	hemptyRatio->GetYaxis()->SetLabelSize(0.12);//0.1  
+	hemptyRatio->GetXaxis()->SetLabelSize(0.048/(1-tpadr));
+	hemptyRatio->GetYaxis()->SetLabelSize(0.048/(1-tpadr));
 	hemptyRatio->GetYaxis()->SetNdivisions(505);
 	hemptyRatio->GetXaxis()->SetTickLength(0.03/tpadpos);
 
@@ -342,8 +342,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hemptyEff->GetYaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->SetTitle("#alpha x #epsilon_{reco} x #epsilon_{sel} ");
 	hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
-	hemptyEff->GetXaxis()->SetTitleOffset(0.9);
-	hemptyEff->GetYaxis()->SetTitleOffset(1.05);
+	hemptyEff->GetXaxis()->SetTitleOffset(1.);
+	hemptyEff->GetYaxis()->SetTitleOffset(1.4);
 	hemptyEff->GetXaxis()->SetTitleSize(0.045);
 	hemptyEff->GetYaxis()->SetTitleSize(0.045);
 	hemptyEff->GetXaxis()->SetTitleFont(42);

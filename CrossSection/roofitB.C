@@ -62,10 +62,10 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 
 	gStyle->SetTextSize(0.05);
 	gStyle->SetTextFont(42);
-	gStyle->SetPadRightMargin(0.043);
-	gStyle->SetPadLeftMargin(0.18);
-	gStyle->SetPadTopMargin(0.1);
-	gStyle->SetPadBottomMargin(0.145);
+	gStyle->SetPadRightMargin(cRightMargin);
+	gStyle->SetPadLeftMargin(cLeftMargin);
+	gStyle->SetPadTopMargin(cTopMargin);
+	gStyle->SetPadBottomMargin(cBottomMargin);
 	gStyle->SetTitleX(.0f);
 
 	TFile* inf = new TFile(inputdata.Data());

@@ -205,7 +205,8 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	Bkpi->SetFillColor(kGreen+4);
 	Bkpi->SetLineWidth(4);
 
-	h->SetXTitle("m_{B} (GeV/c^{2})");
+	//h->SetXTitle("m_{B} (GeV/c^{2})");
+    h->SetXTitle("m_{J/#psi(#mu#mu)#phi(KK)} (GeV/c^{2})");
 	h->SetYTitle("Events / (20 MeV/c^{2})");
 	h->GetXaxis()->CenterTitle();
 	h->GetYaxis()->CenterTitle();
@@ -319,7 +320,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.04);
     texpre->SetLineWidth(2);
-    texpre->Draw();
+//    texpre->Draw();
 	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);

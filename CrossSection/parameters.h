@@ -73,7 +73,12 @@ double sf_pp_PbPbBDT[2] = {50097.28/47324.82, 109065.05/107287.96, };
 double sf_pp_OldPbPbBDT[2] = {31508.43/29789.44, 100244.84/98565.04, };
 double sf_pp_Y[4] = {75549.42/74848.71, 78204.01/77269.31, 80739.83/77530.53, 72297.97/66717.44, };
 
+float cRightMargin = 0.043;
+float cLeftMargin = 0.18;
+float cTopMargin = 0.1;
+float cBottomMargin = 0.145;
 //Color_t BsBoxColor = kAzure+7;
 //Color_t BsPointColor = kAzure-1;
 Color_t BsBoxColor = kMagenta-3;
 Color_t BsPointColor = kMagenta+2;
+

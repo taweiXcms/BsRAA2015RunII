@@ -52,10 +52,10 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	gStyle->SetOptStat(0);
 	gStyle->SetEndErrorSize(0);
 	gStyle->SetMarkerStyle(20);
-	gStyle->SetPadRightMargin(0.03);//###0.020
-	gStyle->SetPadLeftMargin(0.12);
-	gStyle->SetPadTopMargin(0.075);
-	gStyle->SetPadBottomMargin(0.12);
+	gStyle->SetPadRightMargin(cRightMargin);
+	gStyle->SetPadLeftMargin(cLeftMargin);
+	gStyle->SetPadTopMargin(cTopMargin);
+	gStyle->SetPadBottomMargin(cBottomMargin);
 
 	TFile *fpp=new TFile(inputPP.Data());
 	TFile *fPbPb=new TFile(inputPbPb.Data());
@@ -136,15 +136,15 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	hemptyEff->GetYaxis()->SetTitle("R_{AA}");
 	hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptyEff->GetXaxis()->SetTitleOffset(1.0);
-	hemptyEff->GetYaxis()->SetTitleOffset(1.1);
-	hemptyEff->GetXaxis()->SetTitleSize(0.05);
-	hemptyEff->GetYaxis()->SetTitleSize(0.05);
+	hemptyEff->GetYaxis()->SetTitleOffset(1.4);
+	hemptyEff->GetXaxis()->SetTitleSize(0.055);
+	hemptyEff->GetYaxis()->SetTitleSize(0.055);
 	hemptyEff->GetXaxis()->SetTitleFont(42);
 	hemptyEff->GetYaxis()->SetTitleFont(42);
 	hemptyEff->GetXaxis()->SetLabelFont(42);
 	hemptyEff->GetYaxis()->SetLabelFont(42);
-	hemptyEff->GetXaxis()->SetLabelSize(0.04);
-	hemptyEff->GetYaxis()->SetLabelSize(0.04);  
+	hemptyEff->GetXaxis()->SetLabelSize(0.048);
+	hemptyEff->GetYaxis()->SetLabelSize(0.048);  
 	hemptyEff->SetMaximum(2);
 	hemptyEff->SetMinimum(0.);
 	hemptyEff->Draw();
@@ -181,10 +181,11 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	hNuclearModification->SetMarkerStyle(33);
 	hNuclearModification->SetMarkerSize(2.2);
 	
-	TLatex* texlumi = new TLatex(0.20,0.936,"28.0 pb^{-1} (pp 5.02 TeV) + 351 #mub^{-1} (PbPb 5.02 TeV)");
+	TLatex* texlumi = new TLatex(0.96,0.95,"28 pb^{-1} (pp) + 351 #mub^{-1} (PbPb) 5.02 TeV");
 	texlumi->SetNDC();
+    texlumi->SetTextAlign(32);
 	texlumi->SetTextFont(42);
-	texlumi->SetTextSize(0.038);
+	texlumi->SetTextSize(0.05);
 	texlumi->SetLineWidth(2);
 	texlumi->Draw();
 
@@ -195,21 +196,21 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	//tlatexeff2->SetTextSize(0.050);
 	//tlatexeff2->Draw();
 
-	TLatex* texB = new TLatex(0.81,0.56,"B^{0}_{s}");
+	TLatex* texB = new TLatex(0.75,0.56,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
-	texB->SetTextSize(0.08);
+	texB->SetTextSize(0.07);
 	texB->SetLineWidth(2);
 	texB->Draw();
 
-	TLatex *texY = new TLatex(0.81,0.51,"|y| < 2.4");
+	TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
-	texY->SetTextSize(0.04);
+	texY->SetTextSize(0.05);
 	texY->SetLineWidth(2);
 	texY->Draw();
 
-	TLatex* texcms = new TLatex(0.16,0.90,"CMS");
+	TLatex* texcms = new TLatex(0.21,0.88,"CMS");
 	texcms->SetNDC();
 	texcms->SetTextAlign(13);
 	texcms->SetTextFont(62);//61
@@ -224,11 +225,11 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texpre->SetTextFont(52);
 	texpre->SetTextSize(0.04);
 	texpre->SetLineWidth(2);
-	texpre->Draw();
+//	texpre->Draw();
 
-	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.92,"");
-	if(drawDRAA)legendSigma=new TLegend(0.40,0.66,0.81,0.92,"");
-	if(drawThm)legendSigma=new TLegend(0.14,0.65,0.49,0.85,"");
+	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
+	if(drawDRAA)legendSigma=new TLegend(0.40,0.66,0.81,0.88,"");
+	if(drawThm)legendSigma=new TLegend(0.14,0.65,0.49,0.81,"");
 	adjustLegend(legendSigma);
 
 	//TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hNuclearModification,"R_{AA} stat. unc.","pf");

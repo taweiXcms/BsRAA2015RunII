@@ -17,6 +17,16 @@ using namespace std;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 void plotBsBpRatio(){
+
+    gStyle->SetOptTitle(0);
+    gStyle->SetOptStat(0);
+    gStyle->SetEndErrorSize(0);
+    gStyle->SetMarkerStyle(20);
+    gStyle->SetPadRightMargin(cRightMargin);
+    gStyle->SetPadLeftMargin(cLeftMargin);
+    gStyle->SetPadTopMargin(cTopMargin);
+    gStyle->SetPadBottomMargin(cBottomMargin);
+
 	//TFile* Bpf = new TFile("outputRAA_Bp.root");
 	TFile* Bpf = new TFile("rebinnedBpResult/outputRAA_Bp_rebinned.root");
 	TGraphAsymmErrors* BpgNucl = (TGraphAsymmErrors*)Bpf->Get("gNuclearModification");
@@ -52,15 +62,15 @@ void plotBsBpRatio(){
     hemptyEff->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
     hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
     hemptyEff->GetXaxis()->SetTitleOffset(1.0);
-    hemptyEff->GetYaxis()->SetTitleOffset(1.1);
-    hemptyEff->GetXaxis()->SetTitleSize(0.05);
-    hemptyEff->GetYaxis()->SetTitleSize(0.05);
+    hemptyEff->GetYaxis()->SetTitleOffset(1.4);
+    hemptyEff->GetXaxis()->SetTitleSize(0.055);
+    hemptyEff->GetYaxis()->SetTitleSize(0.055);
     hemptyEff->GetXaxis()->SetTitleFont(42);
     hemptyEff->GetYaxis()->SetTitleFont(42);
     hemptyEff->GetXaxis()->SetLabelFont(42);
     hemptyEff->GetYaxis()->SetLabelFont(42);
-    hemptyEff->GetXaxis()->SetLabelSize(0.04);
-    hemptyEff->GetYaxis()->SetLabelSize(0.04);
+    hemptyEff->GetXaxis()->SetLabelSize(0.048);
+    hemptyEff->GetYaxis()->SetLabelSize(0.048);
     hemptyEff->Draw();
 
     TGraphAsymmErrors* gRAAratio = new TGraphAsymmErrors(_nBins,xVal,raaRatio,xErr,xErr,raaRatioSysErr,raaRatioSysErr);
@@ -104,29 +114,29 @@ void plotBsBpRatio(){
     line->SetLineWidth(2);
     line->Draw();
 
-    TLatex* texB = new TLatex(0.81,0.56,"B^{0}_{s}");
-    texB->SetNDC();
-    texB->SetTextFont(62);
-    texB->SetTextSize(0.08);
-    texB->SetLineWidth(2);
-    texB->Draw();
-
-    TLatex * texY = new TLatex(0.81,0.51,"|y| < 2.4");
-    texY->SetNDC();
-    texY->SetTextColor(1);
-    texY->SetTextFont(42);
-    texY->SetTextSize(0.04);
-    texY->SetLineWidth(2);
-    texY->Draw();
-
-    TLatex* texlumi = new TLatex(0.18,0.96,"28.0 pb^{-1} (pp 5.02 TeV) + 351 #mub^{-1} (PbPb 5.02 TeV)");
+    TLatex* texlumi = new TLatex(0.96,0.95,"28 pb^{-1} (pp) + 351 #mub^{-1} (PbPb) 5.02 TeV");
     texlumi->SetNDC();
+    texlumi->SetTextAlign(32);
     texlumi->SetTextFont(42);
-    texlumi->SetTextSize(0.038);
+    texlumi->SetTextSize(0.05);
     texlumi->SetLineWidth(2);
     texlumi->Draw();
 
-    TLatex* texcms = new TLatex(0.18,0.90,"CMS");
+    TLatex* texB = new TLatex(0.75,0.56,"B^{0}_{s}");
+    texB->SetNDC();
+    texB->SetTextFont(62);
+    texB->SetTextSize(0.07);
+    texB->SetLineWidth(2);
+    texB->Draw();
+
+    TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
+    texY->SetNDC();
+    texY->SetTextFont(42);
+    texY->SetTextSize(0.05);
+    texY->SetLineWidth(2);
+    texY->Draw();
+
+    TLatex* texcms = new TLatex(0.21,0.88,"CMS");
     texcms->SetNDC();
     texcms->SetTextAlign(13);
     texcms->SetTextFont(62);//61
@@ -134,13 +144,13 @@ void plotBsBpRatio(){
     texcms->SetLineWidth(2);
     texcms->Draw();
 
-    TLatex* texpre = new TLatex(0.18,0.84,"Preliminary");
+    TLatex* texpre = new TLatex(0.21,0.88,"Preliminary");
     texpre->SetNDC();
     texpre->SetTextAlign(13);
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.04);
     texpre->SetLineWidth(2);
-    texpre->Draw();
+    //texpre->Draw();
 
 	gRAAratio->Draw("5same");
 	hRAAratio->Draw("same p");
