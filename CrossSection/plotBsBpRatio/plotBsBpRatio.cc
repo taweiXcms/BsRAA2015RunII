@@ -106,7 +106,7 @@ void plotBsBpRatio(){
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
-	ent_B->SetTextSize(0.038);
+	ent_B->SetTextSize(0.07);
     legendSigma->Draw();
 
     TLine *line = new TLine(_ptBins[0]-10,1,_ptBins[_nBins]+10,1);
