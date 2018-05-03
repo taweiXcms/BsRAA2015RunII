@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Wed May  2 22:22:31 2018) by ROOT version6.02/13
+//=========  (Thu May  3 15:05:21 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -52,11 +52,6 @@ void canvasRAAPbPb_0_100_BpRAA()
 tex->SetNDC();
    tex->SetTextAlign(32);
    tex->SetTextFont(42);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.75,0.56,"B^{0}_{s}");
-tex->SetNDC();
-   tex->SetTextSize(0.07);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.75,0.5,"|y| < 2.4");
@@ -195,7 +190,7 @@ tex->SetNDC();
    
    TLegend *leg = new TLegend(0.5,0.66,0.95,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
-   leg->SetTextSize(0.04);
+   leg->SetTextSize(0.055);
    leg->SetLineColor(0);
    leg->SetLineStyle(1);
    leg->SetLineWidth(1);
@@ -214,7 +209,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(33);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
-   entry->SetTextSize(0.038);
+   entry->SetTextSize(0.07);
    entry=leg->AddEntry("","B^{+} R_{AA}","pf");
 
    ci = 928;
@@ -229,7 +224,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(21);
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
-   entry->SetTextSize(0.038);
+   entry->SetTextSize(0.07);
    leg->Draw();
    
    Double_t gNuclearModification_fx3002[2] = {

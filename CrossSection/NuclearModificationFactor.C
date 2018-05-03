@@ -201,7 +201,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texB->SetTextFont(62);
 	texB->SetTextSize(0.07);
 	texB->SetLineWidth(2);
-	texB->Draw();
+	//texB->Draw();
 
 	TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
 	texY->SetNDC();
@@ -336,7 +336,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		ent_B->SetTextFont(42);
 		ent_B->SetLineColor(4);
 		ent_B->SetMarkerColor(4);
-		ent_B->SetTextSize(0.038);
+		ent_B->SetTextSize(0.07);
 		if(onlyBs==1){
 			if(BSepSys){
 				ent_uncCor = legendSigma->AddEntry(gNuclearModification_Cor,"Correlated syst. uncert.","f");
@@ -386,7 +386,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		ent_BpRAA->SetTextFont(42);
 		ent_BpRAA->SetLineColor(4);
 		ent_BpRAA->SetMarkerColor(4);
-		ent_BpRAA->SetTextSize(0.038);
+		ent_BpRAA->SetTextSize(0.07);
 		otherSystnorm = new TBox(pti+TAABarWid*GlobSystPos[GlobSystPosCounter],1-systnormlo,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1+systnormhi);
 		GlobSystPosCounter++;
 		otherSystnorm->SetLineColor(kAzure+7);
@@ -579,5 +579,5 @@ void adjustLegend(TLegend* l){
 	l->SetFillColor(0);
 	l->SetFillStyle(1001);
 	l->SetTextFont(42);
-	l->SetTextSize(0.04);
+	l->SetTextSize(0.055);
 }
