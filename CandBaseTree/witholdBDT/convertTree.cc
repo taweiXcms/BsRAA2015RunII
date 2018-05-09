@@ -8,8 +8,13 @@ void convertTree(){
 // pp
 //	fname = "Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_20180223PbPbBDT";
 //	ispp = 1; isdata = 1;
-	fname = "Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT";
-	ispp = 1; isdata = 0;
+//	fname = "Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_20180223PbPbBDT";
+//	ispp = 1; isdata = 0;
+// pp
+//	fname = "Bntuple20180316_bPt0_BfinderData_pp_20180314_bPt0tkPt0MuAll_Bs_BDT7to50_BDT15to50_20180223MVA";
+//	ispp = 1; isdata = 1;
+//	fname = "Bntuple20180316_bPt0_BfinderMC_pp_BsToJpsiPhi_Pythia8_5p02_20180314_bPt0tkPt0MuAll_Bs_pthatweight_BDT7to50_BDT15to50_20180223MVA";
+//	ispp = 1; isdata = 0;
 // PbPb
 //  fname = "Bntuple20180316_bPt0_BfinderData_PbPb_20180314_bPt0tkPt0MuAll_Bs_HIOniaL1DoubleMu0_AllDatamerged_BDT7to50_BDT15to50_20180223MVA";
 //  ispp = 0; isdata = 1;
