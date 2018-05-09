@@ -3,6 +3,7 @@
 #include "TLegendEntry.h"
 #include "../Systematics/systematics.C"
 #include "theoryPrediction/drawTheory.h"
+#include "theoryPrediction/drawTheory_Bs.h"
 #include "theoryPrediction/B_RpA/DrawBRpAFONLL.h"
 #include "theoryPrediction/B_RpA/DrawBRpA.h"
 #include "theoryPrediction/ChargedHad/RpPb_Final_20161207.h"
@@ -17,12 +18,12 @@ bool BSepSys = 0;
 // better draw the following all together
 bool drawChHad = 0;
 bool drawDRAA = 0;
-bool drawBpRAA = 1;
+bool drawBpRAA = 0;
 bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 0;
+bool drawThm = 1;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -31,6 +32,7 @@ float *GlobSystPos;
 float GlobSystPosNormScale[6] = {0, 2, 4, 6, 8, 10};
 float GlobSystPosLogScale[6] = {0, 0.9, 2., 3.5, 5., 7};
 int GlobSystPosCounter = 0;
+float legendTextSize = 0.07;
 
 void adjustLegend(TLegend* l);
 void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", TString inputPbPb="ROOTfiles/CrossSectionPbPb.root",TString label="PbPb",TString outputfile="RAAfile.root", TString outplotf = "", int binOpt=0, Float_t centMin=0., Float_t centMax=100.)
@@ -42,10 +44,10 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	if(drawChHad){
 		pti = 0.5;
 		pte = 600.;
+		legendTextSize = 0.035;
 	}
 	if(drawThm){
-		pti = 5;
-		pte = 110.;
+		legendTextSize = 0.06;
 	}
 
 	gStyle->SetOptTitle(0);
@@ -130,7 +132,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 
 	//TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,1.55);  
 	TH2F* hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,2.5);  
-	if(drawBpRpA) hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,3);  
+	if(drawChHad) hemptyEff=new TH2F("hemptyEff","",50,pti,pte,10.,0,4);  
 	hemptyEff->GetXaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->CenterTitle();
 	hemptyEff->GetYaxis()->SetTitle("R_{AA}");
@@ -204,6 +206,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	//texB->Draw();
 
 	TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
+	if(drawDRAA) texY = new TLatex(0.22,0.4,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
 	texY->SetTextSize(0.05);
@@ -225,11 +228,11 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texpre->SetTextFont(52);
 	texpre->SetTextSize(0.04);
 	texpre->SetLineWidth(2);
-//	texpre->Draw();
+	//texpre->Draw();
 
 	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
-	if(drawDRAA)legendSigma=new TLegend(0.40,0.66,0.81,0.88,"");
-	if(drawThm)legendSigma=new TLegend(0.14,0.65,0.49,0.81,"");
+	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");
+	if(drawThm)legendSigma=new TLegend(0.4,0.6,0.95,0.88,"");
 	adjustLegend(legendSigma);
 
 	//TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hNuclearModification,"R_{AA} stat. unc.","pf");
@@ -253,15 +256,6 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texSystnorm->SetLineWidth(2);
 	//texSystnorm->Draw();
 
-	texSystnorm = new TLatex(0.23,0.66,"uncertainty");
-	if(drawDRAA) texSystnorm = new TLatex(0.22,0.66,"uncertainty");
-	texSystnorm->SetNDC();
-	texSystnorm->SetTextColor(1);
-	texSystnorm->SetTextFont(42);
-	texSystnorm->SetTextSize(0.035);
-	texSystnorm->SetLineWidth(2);
-	//texSystnorm->Draw();
-
 	Float_t systnormhi;
 	Float_t systnormlo;
 	Float_t systnorm;
@@ -278,7 +272,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		ent_ChHad->SetTextFont(42);
 		ent_ChHad->SetLineColor(4);
 		ent_ChHad->SetMarkerColor(4);
-		ent_ChHad->SetTextSize(0.038);
+		ent_ChHad->SetTextSize(legendTextSize);
 		systnorm = sqrt(0.089*0.089+0.023*0.023);
 		otherSystnorm = new TBox(TAABarWid*GlobSystPos[GlobSystPosCounter],1-systnorm,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1+systnorm); 
 		GlobSystPosCounter++;
@@ -299,7 +293,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		TLegendEntry *ent_Dhighpt = legendSigma->AddEntry(gDNuclearModification,"D^{0} |y| < 1.0","pf");
 		ent_Dhighpt->SetTextFont(42);
 		ent_Dhighpt->SetMarkerColor(4);
-		ent_Dhighpt->SetTextSize(0.038);
+		ent_Dhighpt->SetTextSize(legendTextSize);
 		systnormhi = normalizationUncertaintyForRAA(1)*1.e-2;
 		systnormlo = normalizationUncertaintyForRAA(0)*1.e-2;
 		otherSystnorm = new TBox(pti+TAABarWid*GlobSystPos[GlobSystPosCounter],1-systnormlo,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1+systnormhi);
@@ -331,32 +325,32 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		}
 		GlobSystPosCounter++;
 		//if(drawB) bSystnorm->Draw(); //Draw at the very end to avoid being covered by other stuff
-		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","pe");
+		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","p");
 		else ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","pf");
 		ent_B->SetTextFont(42);
 		ent_B->SetLineColor(4);
 		ent_B->SetMarkerColor(4);
-		ent_B->SetTextSize(0.07);
+		ent_B->SetTextSize(legendTextSize);
 		if(onlyBs==1){
 			if(BSepSys){
 				ent_uncCor = legendSigma->AddEntry(gNuclearModification_Cor,"Correlated syst. uncert.","f");
 				ent_uncCor->SetTextFont(42);
 				ent_uncCor->SetLineColor(4);
 				ent_uncCor->SetMarkerColor(4);
-				ent_uncCor->SetTextSize(0.03);
+				ent_uncCor->SetTextSize(0.06);
 
 				ent_uncUncor = legendSigma->AddEntry(gNuclearModification_UnCor,"Uncorrelated syst. uncert.","f");
 				ent_uncUncor->SetTextFont(42);
 				ent_uncUncor->SetLineColor(4);
 				ent_uncUncor->SetMarkerColor(4);
-				ent_uncUncor->SetTextSize(0.03);
+				ent_uncUncor->SetTextSize(0.06);
 			}
 			else{
 				ent_unc = legendSigma->AddEntry(gNuclearModification,"Syst. uncert.","f");
 				ent_unc->SetTextFont(42);
 				ent_unc->SetLineColor(4);
 				ent_unc->SetMarkerColor(4);
-				ent_unc->SetTextSize(0.03);
+				ent_unc->SetTextSize(0.06);
 			}
 			TBox* dummybox = new TBox();
 			dummybox->SetFillColor(16);
@@ -365,7 +359,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 			//ent_uncGlo = legendSigma->AddEntry(dummybox,"T_{AA} + L_{pp} uncert.","f");
 			if(onlyBs) ent_uncGlo = legendSigma->AddEntry(dummybox,"Global uncert.","f");
 			ent_uncGlo->SetTextFont(42);
-			ent_uncGlo->SetTextSize(0.03);
+			ent_uncGlo->SetTextSize(0.06);
 			//TMathText mt;
 			//mt.SetTextAlign(23);
 			//mt.SetTextSize(0.06);
@@ -386,7 +380,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		ent_BpRAA->SetTextFont(42);
 		ent_BpRAA->SetLineColor(4);
 		ent_BpRAA->SetMarkerColor(4);
-		ent_BpRAA->SetTextSize(0.07);
+		ent_BpRAA->SetTextSize(legendTextSize);
 		otherSystnorm = new TBox(pti+TAABarWid*GlobSystPos[GlobSystPosCounter],1-systnormlo,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1+systnormhi);
 		GlobSystPosCounter++;
 		otherSystnorm->SetLineColor(kAzure+7);
@@ -417,7 +411,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		gJpsiDummy->SetFillColorAlpha(kGray+2, 0.5);
 		gJpsiDummy->SetLineColor(0);
 		TLegendEntry *ent_ChHad = legendSigma->AddEntry(gJpsiDummy,"nonprompt J/#psi 1.6 < |y| < 2.4 (2.76 TeV)","pf");
-		ent_ChHad->SetTextSize(0.029);
+		ent_ChHad->SetTextSize(legendTextSize);
 		TGraphAsymmErrors* gJpsiDummy2 = new TGraphAsymmErrors();
 		gJpsiDummy2->SetFillColor(924);
 		gJpsiDummy2->SetMarkerColor(kGray+3);
@@ -427,7 +421,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		gJpsiDummy2->SetFillColorAlpha(kGray+2, 0.5);
 		gJpsiDummy2->SetLineColor(0);
 		TLegendEntry *ent_ChHad2 = legendSigma->AddEntry(gJpsiDummy2,"nonprompt J/#psi |y| < 2.4 (2.76 TeV)","pf");
-		ent_ChHad2->SetTextSize(0.029);
+		ent_ChHad2->SetTextSize(legendTextSize);
 		systnorm = 0.075;
 		otherSystnorm = new TBox(pti+TAABarWid*GlobSystPos[GlobSystPosCounter],0.9249388,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1.075061);
 		GlobSystPosCounter++;
@@ -443,39 +437,13 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	}
 
 	// Draw Theories
-	TLegend *legendThm=new TLegend(0.53,0.64,0.95,0.915,"");
 	if(drawThm){
-		adjustLegend(legendThm);
-		plotTheory();
+		plotTheory_Bs();
 		TGraphAsymmErrors* gThmDummy1 = new TGraphAsymmErrors();
-		TGraphAsymmErrors* gThmDummy2 = new TGraphAsymmErrors();
-		TGraphAsymmErrors* gThmDummy3 = new TGraphAsymmErrors();
-		TGraphAsymmErrors* gThmDummy4 = new TGraphAsymmErrors();
-		TGraphAsymmErrors* gThmDummy5 = new TGraphAsymmErrors();
-		gThmDummy1->SetLineColor(kOrange+8);
-		gThmDummy2->SetLineColor(kRed-4);
-		gThmDummy3->SetLineColor(0);
-		gThmDummy4->SetLineColor(0);
-		gThmDummy5->SetLineColor(0);
-		gThmDummy3->SetFillColorAlpha(kYellow+2,0.5);
-		gThmDummy4->SetFillColorAlpha(kViolet-8,0.5);
-		gThmDummy5->SetFillColorAlpha(kGreen-2,0.5);
+		gThmDummy1->SetLineColor(colorTAMU_Bs);
 		gThmDummy1->SetLineWidth(8.);
-		gThmDummy2->SetLineWidth(8.);
-		gThmDummy2->SetLineStyle(6);
-		gThmDummy3->SetFillStyle(3344);
-		gThmDummy4->SetFillStyle(3352);
-		gThmDummy5->SetFillStyle(3325);
-		TLegendEntry *ent_thm1 = legendThm->AddEntry(gThmDummy1,"TAMU","l");
-		TLegendEntry *ent_thm2 = legendThm->AddEntry(gThmDummy2,"Djordjevic","l");
-		TLegendEntry *ent_thm3 = legendThm->AddEntry(gThmDummy3,"CUJET3.0","f");
-		TLegendEntry *ent_thm4 = legendThm->AddEntry(gThmDummy4,"AdS/CFT HH D(p)","f");
-		TLegendEntry *ent_thm5 = legendThm->AddEntry(gThmDummy5,"AdS/CFT HH D=const","f");
-		ent_thm1->SetTextSize(0.038);
-		ent_thm2->SetTextSize(0.038);
-		ent_thm3->SetTextSize(0.038);
-		ent_thm4->SetTextSize(0.038);
-		ent_thm5->SetTextSize(0.038);
+		TLegendEntry *ent_thm1 = legendSigma->AddEntry(gThmDummy1,"TAMU","l");
+		ent_thm1->SetTextSize(legendTextSize);
 	}
 
 	legendSigma->Draw();
@@ -506,9 +474,6 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	} 
 	if(drawB){
 		hNuclearModification->Draw("same p");
-	}
-	if(drawThm) {
-		legendThm->Draw();
 	}
 	if(drawB){
 		hNuclearModification->Draw("same");
