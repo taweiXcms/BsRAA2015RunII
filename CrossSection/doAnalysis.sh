@@ -17,18 +17,18 @@ DOANALYSISPbPb_ROOFIT=0
 DOANALYSISPbPb_ROOFITONSAVED=0
 DOANALYSISPbPb_MCSTUDY=0
 DOANALYSISPbPb_CROSS=0
-DORAA=1
+DORAA=0
 DORAARATIO=0
 
 ### pt inclusive interval mass fit
 DOANALYSISPP_FIT_Inc=0
 DOANALYSISPP_FITONSAVED_Inc=0
 DOANALYSISPP_ROOFIT_Inc=0
-DOANALYSISPP_ROOFITONSAVED_Inc=0
+DOANALYSISPP_ROOFITONSAVED_Inc=1
 DOANALYSISPbPb_FIT_Inc=0
 DOANALYSISPbPb_FITONSAVED_Inc=0
 DOANALYSISPbPb_ROOFIT_Inc=0
-DOANALYSISPbPb_ROOFITONSAVED_Inc=0
+DOANALYSISPbPb_ROOFITONSAVED_Inc=1
 
 ### pp 3-bin result
 DOANALYSISPP_FONLL_750=0
@@ -277,48 +277,56 @@ cd -
 fi
 
 ### pt inclusive interval mass fit
+OUTPUTFILEPPSAVEHIST_Inc="ROOTfiles/hPtSpectrumSaveHistBplusPP_Inc.root"
+OUTPUTFILEPP_Inc="ROOTfiles/hPtSpectrumBplusPP_Inc.root"
+OUTPUTFILEPPSAVEHIST_ROOFIT_Inc="ROOTfiles/hPtSpectrumSaveHistBplusPP_roofit_Inc.root"
+OUTPUTFILEPP_ROOFIT_Inc="ROOTfiles/hPtSpectrumBplusPP_roofit_Inc.root"
+OUTPUTFILEPbPbSAVEHIST_Inc="ROOTfiles/hPtSpectrumSaveHistBplusPbPb_Inc.root"
+OUTPUTFILEPbPb_Inc="ROOTfiles/hPtSpectrumBplusPbPb_Inc.root"
+OUTPUTFILEPbPbSAVEHIST_ROOFIT_Inc="ROOTfiles/hPtSpectrumSaveHistBplusPbPb_roofit_Inc.root"
+OUTPUTFILEPbPb_ROOFIT_Inc="ROOTfiles/hPtSpectrumBplusPbPb_roofit_Inc.root"
 
 if [ $DOANALYSISPP_FIT_Inc -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "ppInc" "$OUTPUTFILEPPSAVEHIST" "plotFits/plotFits_Inc" "$NPFIT_PP" 0 "0" "100"
+./fitB.exe 0 0 "$INPUTDATAPPCANDWISE" "$INPUTMCPPCANDWISE" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "ppInc" "$OUTPUTFILEPPSAVEHIST_Inc" "plotFits/plotFits_Inc" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPP_FITONSAVED_Inc -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST" "$OUTPUTFILEPPSAVEHIST" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "ppInc" "$OUTPUTFILEPP" "plotFits/plotFitsOnSaved_Inc" "$NPFIT_PP" 0 "0" "100"
+./fitB.exe 0 1 "$OUTPUTFILEPPSAVEHIST_Inc" "$OUTPUTFILEPPSAVEHIST_Inc" "Bpt" "$TRGPP" "$CUTPP" "$SELGENPP" "$ISMCPP" 1 "$ISDOWEIGHTPP" "ppInc" "$OUTPUTFILEPP_Inc" "plotFits/plotFitsOnSaved_Inc" "$NPFIT_PP" 0 "0" "100"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPP_ROOFIT_Inc -eq 1 ]; then      
-root -b -q 'roofitB.C++('0','0','\"$INPUTDATAPPCANDWISE\"','\"$INPUTMCPPCANDWISE\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPP\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"ppInc\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT\"','\"plotFits/plotFits_roofit_Inc\"','\"$NPROOFIT_PP\"','0','0','100')'
+root -b -q 'roofitB.C++('0','0','\"$INPUTDATAPPCANDWISE\"','\"$INPUTMCPPCANDWISE\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPP\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"ppInc\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_Inc\"','\"plotFits/plotFits_roofit_Inc\"','\"$NPROOFIT_PP\"','0','0','100')'
 rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
 fi 
 
 if [ $DOANALYSISPP_ROOFITONSAVED_Inc -eq 1 ]; then      
-root -b -q 'roofitB.C++('0','1','\"$OUTPUTFILEPPSAVEHIST_ROOFIT\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPP\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"ppInc\"','\"$OUTPUTFILEPP_ROOFIT\"','\"plotFits/plotFitsOnSaved_roofit_Inc\"','\"$NPROOFIT_PP\"','0','0','100')'
+root -b -q 'roofitB.C++('0','1','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_Inc\"','\"$OUTPUTFILEPPSAVEHIST_ROOFIT_Inc\"','\"Bpt\"','\"$TRGPP\"','\"$CUTPP\"','\"$SELGENPP\"','$ISMCPP','1','$ISDOWEIGHTPP','\"ppInc\"','\"$OUTPUTFILEPP_ROOFIT_Inc\"','\"plotFits/plotFitsOnSaved_roofit_Inc\"','\"$NPROOFIT_PP\"','0','0','100')'
 rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
 fi 
 
 if [ $DOANALYSISPbPb_FIT_Inc -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 0 "$INPUTDATAPbPbCANDWISE" "$INPUTMCPbPbCANDWISE" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "PbPbInc" "$OUTPUTFILEPbPbSAVEHIST" "plotFits/plotFits_Inc" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 1 0 "$INPUTDATAPbPbCANDWISE" "$INPUTMCPbPbCANDWISE" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "PbPbInc" "$OUTPUTFILEPbPbSAVEHIST_Inc" "plotFits/plotFits_Inc" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPbPb_FITONSAVED_Inc -eq 1 ]; then      
 g++ fitB.C $(root-config --cflags --libs) -g -o fitB.exe 
-./fitB.exe 1 1 "$OUTPUTFILEPbPbSAVEHIST" "$OUTPUTFILEPbPbSAVEHIST" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "PbPbInc" "$OUTPUTFILEPbPb" "plotFits/plotFitsOnSaved_Inc" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
+./fitB.exe 1 1 "$OUTPUTFILEPbPbSAVEHIST_Inc" "$OUTPUTFILEPbPbSAVEHIST_Inc" "Bpt" "$TRGPbPb" "$CUTPbPb" "$SELGENPbPb" "$ISMCPbPb" 1 "$ISDOWEIGHTPbPb" "PbPbInc" "$OUTPUTFILEPbPb_Inc" "plotFits/plotFitsOnSaved_Inc" "$NPFIT_PbPb" 0 "$CENTPbPbMIN" "$CENTPbPbMAX"
 rm fitB.exe
 fi 
 
 if [ $DOANALYSISPbPb_ROOFIT_Inc -eq 1 ]; then      
-root -b -q 'roofitB.C++('1','0','\"$INPUTDATAPbPbCANDWISE\"','\"$INPUTMCPbPbCANDWISE\"','\"Bpt\"','\"$TRGPbPb\"','\"$CUTPbPb\"','\"$SELGENPbPb\"','$ISMCPbPb','1','$ISDOWEIGHTPbPb','\"PbPbInc\"','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT\"','\"plotFits/plotFits_roofit_Inc\"','\"$NPROOFIT_PbPb\"','0','$CENTPbPbMIN','$CENTPbPbMAX')'
+root -b -q 'roofitB.C++('1','0','\"$INPUTDATAPbPbCANDWISE\"','\"$INPUTMCPbPbCANDWISE\"','\"Bpt\"','\"$TRGPbPb\"','\"$CUTPbPb\"','\"$SELGENPbPb\"','$ISMCPbPb','1','$ISDOWEIGHTPbPb','\"PbPbInc\"','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT_Inc\"','\"plotFits/plotFits_roofit_Inc\"','\"$NPROOFIT_PbPb\"','0','$CENTPbPbMIN','$CENTPbPbMAX')'
 rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
 fi 
 
 if [ $DOANALYSISPbPb_ROOFITONSAVED_Inc -eq 1 ]; then      
-root -b -q 'roofitB.C++('1','1','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT\"','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT\"','\"Bpt\"','\"$TRGPbPb\"','\"$CUTPbPb\"','\"$SELGENPbPb\"','$ISMCPbPb','1','$ISDOWEIGHTPbPb','\"PbPbInc\"','\"$OUTPUTFILEPbPb_ROOFIT\"','\"plotFits/plotFitsOnSaved_roofit_Inc\"','\"$NPROOFIT_PbPb\"','0','$CENTPbPbMIN','$CENTPbPbMAX')'
+root -b -q 'roofitB.C++('1','1','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT_Inc\"','\"$OUTPUTFILEPbPbSAVEHIST_ROOFIT_Inc\"','\"Bpt\"','\"$TRGPbPb\"','\"$CUTPbPb\"','\"$SELGENPbPb\"','$ISMCPbPb','1','$ISDOWEIGHTPbPb','\"PbPbInc\"','\"$OUTPUTFILEPbPb_ROOFIT_Inc\"','\"plotFits/plotFitsOnSaved_roofit_Inc\"','\"$NPROOFIT_PbPb\"','0','$CENTPbPbMIN','$CENTPbPbMAX')'
 rm roofitB_C.d roofitB_C_ACLiC_dict_rdict.pcm roofitB_C.so
 fi 
 

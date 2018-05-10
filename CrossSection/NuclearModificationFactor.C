@@ -18,12 +18,12 @@ bool BSepSys = 0;
 // better draw the following all together
 bool drawChHad = 0;
 bool drawDRAA = 0;
-bool drawBpRAA = 0;
+bool drawBpRAA = 1;
 bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 1;
+bool drawThm = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -221,14 +221,13 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
-	//TLatex* texpre = new TLatex(0.30,0.895,"Preliminary");
-	TLatex* texpre = new TLatex(0.16,0.84,"Preliminary");
+	TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
 	texpre->SetNDC();
 	texpre->SetTextAlign(13);
 	texpre->SetTextFont(52);
-	texpre->SetTextSize(0.04);
+	texpre->SetTextSize(0.035);
 	texpre->SetLineWidth(2);
-	//texpre->Draw();
+	texpre->Draw();
 
 	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
 	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");

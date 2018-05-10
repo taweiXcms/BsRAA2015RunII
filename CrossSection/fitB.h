@@ -314,13 +314,13 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->SetTextSize(0.06);
 	texcms->SetLineWidth(2);
 	texcms->Draw();
-    TLatex* texpre = new TLatex(0.21,0.825,"Preliminary");
+    TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
     texpre->SetNDC();
     texpre->SetTextAlign(13);
     texpre->SetTextFont(52);
-    texpre->SetTextSize(0.04);
+    texpre->SetTextSize(0.035);
     texpre->SetLineWidth(2);
-//    texpre->Draw();
+    texpre->Draw();
 	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
