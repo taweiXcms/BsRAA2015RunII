@@ -23,7 +23,7 @@ bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 0;
+bool drawThm = 1;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -47,6 +47,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		legendTextSize = 0.035;
 	}
 	if(drawThm){
+        //pte = 110.;
 		legendTextSize = 0.06;
 	}
 
@@ -231,7 +232,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 
 	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
 	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");
-	if(drawThm)legendSigma=new TLegend(0.4,0.6,0.95,0.88,"");
+	if(drawThm)legendSigma=new TLegend(0.5,0.6,0.95,0.88,"");
 	adjustLegend(legendSigma);
 
 	//TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hNuclearModification,"R_{AA} stat. unc.","pf");
@@ -439,10 +440,18 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	if(drawThm){
 		plotTheory_Bs();
 		TGraphAsymmErrors* gThmDummy1 = new TGraphAsymmErrors();
+		TGraphAsymmErrors* gThmDummy2 = new TGraphAsymmErrors();
 		gThmDummy1->SetLineColor(colorTAMU_Bs);
+		gThmDummy2->SetLineColor(0);
+		gThmDummy2->SetFillColorAlpha(colorCUJET_Bs,0.5);
+		gThmDummy1->SetFillStyle(styleTAMU_Bs);
+		gThmDummy2->SetFillStyle(styleCUJET_Bs);
 		gThmDummy1->SetLineWidth(8.);
+		gThmDummy2->SetLineWidth(8.);
 		TLegendEntry *ent_thm1 = legendSigma->AddEntry(gThmDummy1,"TAMU","l");
+		TLegendEntry *ent_thm2 = legendSigma->AddEntry(gThmDummy2,"CUJET","f");
 		ent_thm1->SetTextSize(legendTextSize);
+		ent_thm2->SetTextSize(legendTextSize);
 	}
 
 	legendSigma->Draw();
@@ -535,13 +544,4 @@ int main(int argc, char *argv[])
 		std::cout << "Wrong number of inputs" << std::endl;
 		return 1;
 	}
-}
-
-void adjustLegend(TLegend* l){
-	l->SetBorderSize(0);
-	l->SetLineColor(0);
-	l->SetFillColor(0);
-	l->SetFillStyle(1001);
-	l->SetTextFont(42);
-	l->SetTextSize(0.055);
 }

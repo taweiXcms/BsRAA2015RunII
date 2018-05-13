@@ -1,6 +1,7 @@
 #include "../uti.h"
 #include "../parameters.h"
 #include "TLegendEntry.h"
+#include "../theoryPrediction/drawTheory_BsBpRatio.h"
 double xVal[100];
 double xErr[100];
 double BpyVal[100];
@@ -16,6 +17,8 @@ using namespace std;
 
 int _nBins = nBins;
 double *_ptBins = ptBins;
+float legendTextSize = 0.07;
+bool drawThm = 1;
 void plotBsBpRatio(){
 
     gStyle->SetOptTitle(0);
@@ -94,6 +97,7 @@ void plotBsBpRatio(){
     hRAAratio->SetMarkerSize(2.2);
 
 	TLegend *legendSigma=new TLegend(0.45,0.70,0.95,0.88,"");
+	if(drawThm) legendSigma=new TLegend(0.45,0.60,0.95,0.88,"");
     legendSigma->SetBorderSize(0);
     legendSigma->SetLineColor(0);
     legendSigma->SetFillColor(0);
@@ -107,7 +111,6 @@ void plotBsBpRatio(){
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
 	ent_B->SetTextSize(0.065);
-    legendSigma->Draw();
 
     TLine *line = new TLine(_ptBins[0]-10,1,_ptBins[_nBins]+10,1);
     line->SetLineStyle(2);
@@ -150,12 +153,31 @@ void plotBsBpRatio(){
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.035);
     texpre->SetLineWidth(2);
-    //texpre->Draw();
+    texpre->Draw();
 
+	TString AddOn = "";
+    if(drawThm){
+		plotTheory_BsBpRatio();
+        TGraphAsymmErrors* gThmDummy1 = new TGraphAsymmErrors();
+        TGraphAsymmErrors* gThmDummy2 = new TGraphAsymmErrors();
+        gThmDummy1->SetLineColor(colorTAMU_Bs);
+        gThmDummy2->SetLineColor(colorCUJET_Bs);
+        gThmDummy2->SetFillColorAlpha(colorCUJET_Bs,0.5);
+        gThmDummy1->SetFillStyle(styleTAMU_Bs);
+        gThmDummy2->SetFillStyle(styleCUJET_Bs);
+        gThmDummy1->SetLineWidth(8.);
+        gThmDummy2->SetLineWidth(8.);
+        TLegendEntry *ent_thm1 = legendSigma->AddEntry(gThmDummy1,"TAMU","l");
+        TLegendEntry *ent_thm2 = legendSigma->AddEntry(gThmDummy2,"CUJET","l");
+        ent_thm1->SetTextSize(legendTextSize);
+        ent_thm2->SetTextSize(legendTextSize);
+        AddOn = AddOn += "_ThmRAA";
+    }
+    legendSigma->Draw();
 	gRAAratio->Draw("5same");
 	hRAAratio->Draw("same p");
-	canvasRAA->SaveAs("BsBpRatio.pdf");
-	canvasRAA->SaveAs("BsBpRatio.png");
+	canvasRAA->SaveAs(Form("BsBpRatio%s.pdf",AddOn.Data()));
+	canvasRAA->SaveAs(Form("BsBpRatio%s.png",AddOn.Data()));
 
 	for(int i = 0; i < _nBins; i ++){
 		cout<<"=========="<<endl;
@@ -176,4 +198,5 @@ void plotBsBpRatio(){
 		cout<<"p val (syst error): "<<calPval(raaRatio[i]-1,raaRatioSysErr[i])<<endl;
 		cout<<"p val (comb error): "<<calPval(raaRatio[i]-1,sqrt(raaRatioStaErr[i]*raaRatioStaErr[i]+raaRatioSysErr[i]*raaRatioSysErr[i]))<<endl;
 	}
+	
 }

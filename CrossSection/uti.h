@@ -169,6 +169,15 @@ float findNpartAverage(int hiBinLow, int hiBinHigh) {
    return w;
 }
 
+void adjustLegend(TLegend* l){
+    l->SetBorderSize(0);
+    l->SetLineColor(0);
+    l->SetFillColor(0);
+    l->SetFillStyle(1001);
+    l->SetTextFont(42);
+    l->SetTextSize(0.055);
+}
+
 void chi2Cal(double dataArr[], double dataErrArr[], double fitArr[], int nbin, double& chi2Std, double& chi2Neyman, double& chi2Peason, double& chi2BakerCousins){
     for(int i = 0; i < nbin; i++){
 		if(dataErrArr[i] != 0){
