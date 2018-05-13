@@ -317,7 +317,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	leg->Draw("same");
 	texcms->Draw();
 	texpre->Draw();
-	texsup->Draw();
+	//texsup->Draw();
 	texB->Draw();
 	texCol->Draw();
     //if(1) {
