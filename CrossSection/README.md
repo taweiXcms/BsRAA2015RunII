@@ -17,8 +17,8 @@ plotRAA/canvasRAAPbPb_0_100_BpRAA.C
 plotBsBpRatio/BsBpRatio.C
 ```
 
-If you would like to run the original macro's that create these ``plot.C`` and ``plot.pdf``.
-Please follow below the setting
+If you would like to run the original macro that created these ``plot.C``'s and ``plot.pdf``'s.
+Please follow the below the
 =====
 Setting options ``doAnalysis.sh``.
 And run with
