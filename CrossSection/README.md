@@ -1,79 +1,99 @@
-Do
+To get paper figures 
+=====
+Setting options ``doAnalysis.sh``
+And run with
+```bash
  'source doAnalysis.sh'
-To run macros
+```
 
-Setting options in side doAnalysis.sh
-
+For figure 1-a and 2-a
+=====
+Set:
 ```bash
 DOANALYSISPP_ROOFITONSAVED = 1
 ```
-Will run
-```
+Which will run:
+```bach
 roofitB.C
 ```
-And gives paper figure 1-a and 2-a at
+Output:
 ```
 plotFits/plotFitsOnSaved_roofit/data_pp_1.pdf
 plotFits/plotFitsOnSaved_roofit/data_pp_2.pdf
 ```
 
+For figure 1-b and 2-b
+=====
+Set:
 ```bash
 DOANALYSISPbPb_ROOFITONSAVED = 1
 ```
-Will run
+Which will run:
 ```
 roofitB.C
 ```
-And gives paper figure 1-b and 2-b at
+Output:
 ```
 plotFits/plotFitsOnSaved_roofit/data_PbPb_1.pdf
 plotFits/plotFitsOnSaved_roofit/data_PbPb_2.pdf
 ```
 
+For figure 3
+=====
+Set:
 ```bash
 DOANALYSISPP_CROSS_750 = 1
 ```
-Will run
+Which will run:
 ```
 CrossSectionRatio.C
 ```
-And gives paper figure 3
+Output:
 ```
 plotCrossSection/plotCrossSection_750/canvasSigmaBplusRatiopp.pdf
 ```
 
+For figure 4-a
+=====
+Set:
 ```bash
 DOANALYSISPP_CROSS = 1
 ```
-Will run
+Which will run:
 ```
 CrossSectionRatio.C
 ```
-And give paper figure 4-a at
+Output:
 ```
 plotCrossSection/plotCrossSection/canvasSigmaBplusRatiopp_AddPbPb.pdf
 ```
 
+For figure 4-b
+=====
+Set:
 ```bash
 DORAA = 1
 ```
-Will run
+Which will run:
 ```
 NuclearModificationFactor.C
 ```
-And give paper figure 4-b at
+Output:
 ```
 plotRAA/canvasRAAPbPb_0_100_BpRAA.pdf
 ```
 
+For figure 5
+=====
+Set:
 ```bash
 DORAARATIO = 1
 ```
-Will run
+Which will run:
 ```bash
 plotBsBpRatio/plotBsBpRatio.cc
 ```
-And give paper figure 5 at
+Output:
 ```bash
 plotBsBpRatio/BsBpRatio.pdf
 ```
