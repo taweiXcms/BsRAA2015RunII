@@ -17,11 +17,9 @@ plotRAA/canvasRAAPbPb_0_100_BpRAA.C
 plotBsBpRatio/BsBpRatio.C
 ```
 
-If you would like to run the original macro that created these ``XXX.C``'s and ``XXX.pdf``'s.
-Please follow the below the
+If you would like to run the original macro that created these ``XXX.C``'s and ``XXX.pdf``'s. Please follow the below
 =====
-Setting options ``doAnalysis.sh``.
-And run with
+Set options as instructed below in ``doAnalysis.sh``. And run with:
 ```bash
  'source doAnalysis.sh'
 ```
