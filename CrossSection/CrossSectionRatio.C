@@ -174,7 +174,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texPrel->SetTextAlign(13);
 	texPrel->SetTextSize(0.035/tpadr);
 	texPrel->SetTextFont(52);
-	texPrel->Draw();
+	//texPrel->Draw();
 
 	TString text="28.0 pb^{-1} (pp 5.02 TeV)";
 	TLatex* texlumi = new TLatex(0.95,1-(1-0.94)/tpadr,text.Data());

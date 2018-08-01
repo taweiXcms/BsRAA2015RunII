@@ -18,7 +18,7 @@ using namespace std;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 float legendTextSize = 0.07;
-bool drawThm = 1;
+bool drawThm = 0;
 void plotBsBpRatio(){
 
     gStyle->SetOptTitle(0);
@@ -153,7 +153,7 @@ void plotBsBpRatio(){
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.035);
     texpre->SetLineWidth(2);
-    texpre->Draw();
+    //texpre->Draw();
 
 	TString AddOn = "";
     if(drawThm){
@@ -178,6 +178,7 @@ void plotBsBpRatio(){
 	hRAAratio->Draw("same p");
 	canvasRAA->SaveAs(Form("BsBpRatio%s.pdf",AddOn.Data()));
 	canvasRAA->SaveAs(Form("BsBpRatio%s.png",AddOn.Data()));
+	canvasRAA->SaveAs(Form("BsBpRatio%s.C",AddOn.Data()));
 
 	for(int i = 0; i < _nBins; i ++){
 		cout<<"=========="<<endl;

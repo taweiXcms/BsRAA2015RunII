@@ -205,8 +205,10 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 
         c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
         c->SaveAs(Form("%s%s/%s_%s_%d%s.png",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
+        c->SaveAs(Form("%s%s/%s_%s_%d%s.C",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
         cMC->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
         cMC->SaveAs(Form("%s%s/%s_%s_%d%s.png",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
+        cMC->SaveAs(Form("%s%s/%s_%s_%d%s.C",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
 
 	    TH1* h = dh->createHistogram("Bmass");
 	    h->GetEntries();

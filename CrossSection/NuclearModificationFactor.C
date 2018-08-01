@@ -23,7 +23,7 @@ bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 1;
+bool drawThm = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -228,7 +228,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texpre->SetTextFont(52);
 	texpre->SetTextSize(0.035);
 	texpre->SetLineWidth(2);
-	texpre->Draw();
+	//texpre->Draw();
 
 	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
 	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");

@@ -166,8 +166,10 @@ void fitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TString i
 
         c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
         c->SaveAs(Form("%s%s/%s_%s_%d%s.png",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
+        c->SaveAs(Form("%s%s/%s_%s_%d%s.C",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
         cMC->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
         cMC->SaveAs(Form("%s%s/%s_%s_%d%s.png",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
+        cMC->SaveAs(Form("%s%s/%s_%s_%d%s.C",outplotf.Data(),_prefix.Data(),"mc",_isPbPb.Data(),_count,_postfix.Data()));
 
         TCanvas* cpull= new TCanvas(Form("cpull%d",_count),"",600,600);
         cpull->cd();

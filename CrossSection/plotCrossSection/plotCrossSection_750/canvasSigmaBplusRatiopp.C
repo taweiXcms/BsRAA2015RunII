@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Wed May  9 17:16:57 2018) by ROOT version6.02/13
+//=========  (Wed Aug  1 01:57:21 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -200,12 +200,6 @@ void canvasSigmaBplusRatiopp()
 tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextSize(0.08571429);
-   tex->SetLineWidth(2);
-   tex->Draw();
-      tex = new TLatex(0.21,0.7571429,"Preliminary");
-tex->SetNDC();
-   tex->SetTextAlign(13);
-   tex->SetTextFont(52);
    tex->SetLineWidth(2);
    tex->Draw();
       tex = new TLatex(0.95,0.9142857,"28.0 pb^{-1} (pp 5.02 TeV)");
