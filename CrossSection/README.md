@@ -5,7 +5,7 @@ git clone -b MVA20180316 git@github.com:taweiXcms/BsRAA2015RunII.git
 cd BsRAA2015RunII/CrossSection
 ```
 
-The macro's, created with root lines: ``canvas->SaveAs("plot.C")``, for paper plots are in:
+The macro's, created with root lines: ``canvas->SaveAs("XXX.C")``, for paper plots are in:
 ```
 plotFits/plotFitsOnSaved_roofit/data_pp_1.C
 plotFits/plotFitsOnSaved_roofit/data_pp_2.C
@@ -17,7 +17,7 @@ plotRAA/canvasRAAPbPb_0_100_BpRAA.C
 plotBsBpRatio/BsBpRatio.C
 ```
 
-If you would like to run the original macro that created these ``plot.C``'s and ``plot.pdf``'s.
+If you would like to run the original macro that created these ``XXX.C``'s and ``XXX.pdf``'s.
 Please follow the below the
 =====
 Setting options ``doAnalysis.sh``.
