@@ -180,6 +180,7 @@ void plotBsBpRatio(){
 	canvasRAA->SaveAs(Form("BsBpRatio%s.png",AddOn.Data()));
 	canvasRAA->SaveAs(Form("BsBpRatio%s.C",AddOn.Data()));
 
+    float combinedchi2 = 0;
 	for(int i = 0; i < _nBins; i ++){
 		cout<<"=========="<<endl;
 		cout<<"xVal: "<<xVal[i]<<endl;
@@ -198,6 +199,12 @@ void plotBsBpRatio(){
 		cout<<"p val (stat error): "<<calPval(raaRatio[i]-1,raaRatioStaErr[i])<<endl;
 		cout<<"p val (syst error): "<<calPval(raaRatio[i]-1,raaRatioSysErr[i])<<endl;
 		cout<<"p val (comb error): "<<calPval(raaRatio[i]-1,sqrt(raaRatioStaErr[i]*raaRatioStaErr[i]+raaRatioSysErr[i]*raaRatioSysErr[i]))<<endl;
+		float chi2 = 0;
+		chi2 += (raaRatio[i]-1)*(raaRatio[i]-1)/(raaRatioStaErr[i]*raaRatioStaErr[i]+raaRatioSysErr[i]*raaRatioSysErr[i]);
+		cout<<"chi2 val: "<<chi2<<endl;
+		combinedchi2 += chi2;
 	}
+    cout<<"p val combined (comb error): "<<TMath::Prob(combinedchi2, _nBins)<<endl;
+    
 	
 }

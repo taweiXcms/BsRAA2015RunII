@@ -84,6 +84,7 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 	int variationTypes = exponentialBG+1;
 	for(int i=0;i<_nBins;i++)
 	{
+        drawOpt = 1;
 		h = (TH1D*)inf->Get(Form("h%d",i+1));
 		hMCSignal = (TH1D*)inf->Get(Form("hMCSignal%d",i+1));
 		h->SetBinErrorOption(TH1::kPoisson);
