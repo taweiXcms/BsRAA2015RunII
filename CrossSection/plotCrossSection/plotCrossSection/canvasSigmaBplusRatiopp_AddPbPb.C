@@ -11,9 +11,10 @@ void canvasSigmaBplusRatiopp_AddPbPb()
    cSigma->SetBorderMode(0);
    cSigma->SetBorderSize(2);
    cSigma->SetLogy();
-   cSigma->SetLeftMargin(0.18);
-   cSigma->SetRightMargin(0.043);
+   cSigma->SetLeftMargin(0.21);
+   cSigma->SetRightMargin(0.013);
    cSigma->SetBottomMargin(0.145);
+   cSigma->SetTopMargin(0.1);
    cSigma->SetFrameBorderMode(0);
    cSigma->SetFrameBorderMode(0);
    
@@ -33,12 +34,12 @@ void canvasSigmaBplusRatiopp_AddPbPb()
    hemptySigma1->GetXaxis()->SetLabelSize(0.048);
    hemptySigma1->GetXaxis()->SetTitleSize(0.055);
    hemptySigma1->GetXaxis()->SetTitleFont(42);
-   hemptySigma1->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
+   hemptySigma1->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} or #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}} ( pb GeV^{-1}c)");
    hemptySigma1->GetYaxis()->CenterTitle(true);
    hemptySigma1->GetYaxis()->SetLabelFont(42);
    hemptySigma1->GetYaxis()->SetLabelSize(0.048);
    hemptySigma1->GetYaxis()->SetTitleSize(0.055);
-   hemptySigma1->GetYaxis()->SetTitleOffset(1.4);
+   hemptySigma1->GetYaxis()->SetTitleOffset(1.6);
    hemptySigma1->GetYaxis()->SetTitleFont(42);
    hemptySigma1->GetZaxis()->SetLabelFont(42);
    hemptySigma1->GetZaxis()->SetLabelSize(0.035);
