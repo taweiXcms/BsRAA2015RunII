@@ -151,8 +151,8 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
-	if(funcOpt == decreaseWidth) f->FixParameter(12,relativeWidth-relativeWidthErr);
-	if(funcOpt == increaseWidth) f->FixParameter(12,relativeWidth+relativeWidthErr);
+	if(funcOpt == decreaseWidth) {f->FixParameter(12,relativeWidth-relativeWidthErr); cout<<"width change: "<<relativeWidthErr/relativeWidth<<endl;}
+	if(funcOpt == increaseWidth) {f->FixParameter(12,relativeWidth+relativeWidthErr);}
 	if(funcOpt == decreaseWidth || funcOpt == increaseWidth){
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
