@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp_AddPbPb()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Wed Aug  1 01:56:59 2018) by ROOT version6.02/13
+//=========  (Fri Aug  3 00:40:33 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -11,10 +11,9 @@ void canvasSigmaBplusRatiopp_AddPbPb()
    cSigma->SetBorderMode(0);
    cSigma->SetBorderSize(2);
    cSigma->SetLogy();
-   cSigma->SetLeftMargin(0.21);
-   cSigma->SetRightMargin(0.013);
+   cSigma->SetLeftMargin(0.18);
+   cSigma->SetRightMargin(0.043);
    cSigma->SetBottomMargin(0.145);
-   cSigma->SetTopMargin(0.1);
    cSigma->SetFrameBorderMode(0);
    cSigma->SetFrameBorderMode(0);
    
@@ -38,8 +37,8 @@ void canvasSigmaBplusRatiopp_AddPbPb()
    hemptySigma1->GetYaxis()->CenterTitle(true);
    hemptySigma1->GetYaxis()->SetLabelFont(42);
    hemptySigma1->GetYaxis()->SetLabelSize(0.048);
-   hemptySigma1->GetYaxis()->SetTitleSize(0.055);
-   hemptySigma1->GetYaxis()->SetTitleOffset(1.6);
+   hemptySigma1->GetYaxis()->SetTitleSize(0.045);
+   hemptySigma1->GetYaxis()->SetTitleOffset(1.7);
    hemptySigma1->GetYaxis()->SetTitleFont(42);
    hemptySigma1->GetZaxis()->SetLabelFont(42);
    hemptySigma1->GetZaxis()->SetLabelSize(0.035);

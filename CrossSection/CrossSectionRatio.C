@@ -263,6 +263,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
 		leg_CS->Draw("same");
 		hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} or #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}} ( pb GeV^{-1}c)");
+        hemptySigma->GetYaxis()->SetTitleSize(0.045/tpadr);
+        hemptySigma->GetYaxis()->SetTitleOffset(1.7*tpadr);
 		texGlobal = new TLatex(0.53,0.594,Form("Global uncertainty:"));
 		TLatex* texGlobal_pp = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_pp);
 		TLatex* texGlobal_PbPb = new TLatex(0.53,1-(1-0.48)/tpadr,uncGlobal_PbPb);
