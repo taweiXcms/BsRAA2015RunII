@@ -206,8 +206,8 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texB->SetLineWidth(2);
 	//texB->Draw();
 
-	TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
-	if(drawDRAA) texY = new TLatex(0.22,0.4,"|y| < 2.4");
+	TLatex *texY = new TLatex(0.21,0.79,"|y| < 2.4");
+	if(drawDRAA) texY = new TLatex(0.21,0.79,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
 	texY->SetTextSize(0.05);
@@ -230,7 +230,8 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texpre->SetLineWidth(2);
 	//texpre->Draw();
 
-	TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
+	//TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
+    TLegend *legendSigma=new TLegend(0.7,0.67,0.95,0.88);
 	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");
 	if(drawThm)legendSigma=new TLegend(0.5,0.6,0.95,0.88,"");
 	adjustLegend(legendSigma);
@@ -325,8 +326,8 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		}
 		GlobSystPosCounter++;
 		//if(drawB) bSystnorm->Draw(); //Draw at the very end to avoid being covered by other stuff
-		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","p");
-		else ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s} R_{AA}","pf");
+		if(onlyBs==1) ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s}","p");
+		else ent_B = legendSigma->AddEntry(gNuclearModification_UnCor,"B^{0}_{s}","pf");
 		ent_B->SetTextFont(42);
 		ent_B->SetLineColor(4);
 		ent_B->SetMarkerColor(4);
@@ -376,7 +377,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		gBpNuclearModification->SetMarkerStyle(21);
 		gBpNuclearModification->SetMarkerColor(kAzure-1);
 		gBpNuclearModification->SetLineColor(0);
-		TLegendEntry *ent_BpRAA = legendSigma->AddEntry(gBpNuclearModification,"B^{+} R_{AA}","pf");
+		TLegendEntry *ent_BpRAA = legendSigma->AddEntry(gBpNuclearModification,"B^{+}","pf");
 		ent_BpRAA->SetTextFont(42);
 		ent_BpRAA->SetLineColor(4);
 		ent_BpRAA->SetMarkerColor(4);

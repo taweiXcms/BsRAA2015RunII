@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp_AddPbPb()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Fri Aug  3 00:40:33 2018) by ROOT version6.02/13
+//=========  (Sun Sep 23 18:08:10 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -139,7 +139,7 @@ tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.65,"|y| < 2.4");
+      tex = new TLatex(0.21,0.78,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
@@ -235,7 +235,7 @@ tex->SetNDC();
    hPtSigma3->GetZaxis()->SetTitleFont(42);
    hPtSigma3->Draw("epsame");
    
-   TLegend *leg = new TLegend(0.52,0.7,0.85,0.9,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.52,0.65,0.89,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(1);
@@ -243,7 +243,7 @@ tex->SetNDC();
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(0);
-   TLegendEntry *entry=leg->AddEntry("hPtSigma","Data pp","pf");
+   TLegendEntry *entry=leg->AddEntry("hPtSigma","pp","pf");
    entry->SetFillStyle(1001);
    entry->SetLineColor(1);
    entry->SetLineWidth(2);
@@ -251,7 +251,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("hPtSigma","Data PbPb","pf");
+   entry=leg->AddEntry("hPtSigma","PbPb","pf");
    entry->SetFillStyle(1001);
    entry->SetLineColor(2);
    entry->SetLineWidth(2);
@@ -260,12 +260,12 @@ tex->SetNDC();
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
    leg->Draw();
-      tex = new TLatex(0.53,0.594,"Global uncertainty:");
+      tex = new TLatex(0.53,0.594,"Global uncertainty");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.54,"pp: #pm7.9%");
+      tex = new TLatex(0.53,0.54,"pp:     #pm7.9%");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);

@@ -129,13 +129,13 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	TH2F* hemptySigma=new TH2F("hemptySigma","",50,_ptBins[0]-5.,_ptBins[_nBins]+5.,10.,yaxisMin,yaxisMax);  
 	hemptySigma->GetXaxis()->CenterTitle();
 	hemptySigma->GetYaxis()->CenterTitle();
-	hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
+	hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} ( pb GeV^{-1}c)");
 	if(isPbPb) hemptySigma->GetYaxis()->SetTitle("#frac{1}{T_{AA}} #frac{dN}{dp_{T}} ( pb GeV^{-1}c)");
 	hemptySigma->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptySigma->GetXaxis()->SetTitleOffset(1.);
-	hemptySigma->GetYaxis()->SetTitleOffset(1.4*tpadr);
+	hemptySigma->GetYaxis()->SetTitleOffset(1.45*tpadr);
 	hemptySigma->GetXaxis()->SetTitleSize(0.055/tpadr);
-	hemptySigma->GetYaxis()->SetTitleSize(0.055/tpadr);
+	hemptySigma->GetYaxis()->SetTitleSize(0.050/tpadr);
 	hemptySigma->GetXaxis()->SetTitleFont(42);
 	hemptySigma->GetYaxis()->SetTitleFont(42);
 	hemptySigma->GetXaxis()->SetLabelFont(42);
@@ -205,7 +205,8 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texCent->SetTextSize(0.04);
 	//if(isPbPb) texCent->Draw();
 
-	TLatex* texY = new TLatex(0.53,1-(1-0.65)/tpadr,"|y| < 2.4");
+	//TLatex* texY = new TLatex(0.53,1-(1-0.65)/tpadr,"|y| < 2.4");
+	TLatex* texY = new TLatex(0.21,1-(1-0.78)/tpadr,"|y| < 2.4");
 	texY->SetNDC();
 	texY->SetTextFont(42);
 	texY->SetTextSize(0.05/tpadr);
@@ -219,13 +220,13 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texB->SetLineWidth(2);
 	texB->Draw();
 
-	TLatex* texGlobal = new TLatex(0.53,1-(1-0.594)/tpadr,Form("Global uncertainty:"));
+	TLatex* texGlobal = new TLatex(0.53,1-(1-0.594)/tpadr,Form("Global uncertainty"));
 	texGlobal->SetNDC();
 	texGlobal->SetTextFont(42);
 	texGlobal->SetTextSize(0.05/tpadr);
 	texGlobal->SetLineWidth(2);
-	TString uncGlobal_pp = Form("pp: #pm%.1f%s",normalizationUncertaintyForPP(),texper.Data());
-    TString uncGlobal_PbPb = Form("PbPb: #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data());
+	TString uncGlobal_pp = Form("#pm%.1f%s",normalizationUncertaintyForPP(),texper.Data());
+    TString uncGlobal_PbPb = Form("#plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data());
 	TLatex* texGlobal_num = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_pp);
 	if(isPbPb) texGlobal_num = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_PbPb);
 	texGlobal_num->SetNDC();
@@ -233,7 +234,7 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	texGlobal_num->SetTextSize(0.05/tpadr);
 	texGlobal_num->SetLineWidth(2);
 
-	TLegend* leg_CS = new TLegend(0.52,1-(1-0.70)/tpadr,0.85,1-(1-0.90)/tpadr);
+	TLegend* leg_CS = new TLegend(0.52,1-(1-0.65)/tpadr,0.89,1-(1-0.88)/tpadr);
 	leg_CS->SetBorderSize(0);
 	leg_CS->SetFillStyle(0);
 	leg_CS->SetTextSize(0.055/tpadr);
@@ -257,15 +258,17 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		hPtSigma_PbPb->SetMarkerStyle(21);
 		hPtSigma_PbPb->SetMarkerSize(1.2/tpadr);
 		hPtSigma_PbPb->Draw("epsame");
-		leg_CS->SetY2(1-(1-0.90)/tpadr);
-		leg_CS->AddEntry(hPtSigma,"Data pp","pf");
-		leg_CS->AddEntry(hPtSigma_PbPb,"Data PbPb","pf");
+		leg_CS->SetY2(1-(1-0.88)/tpadr);
+		leg_CS->AddEntry(hPtSigma,"pp","pf");
+		leg_CS->AddEntry(hPtSigma_PbPb,"PbPb","pf");
 		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
 		leg_CS->Draw("same");
 		hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} or #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}} ( pb GeV^{-1}c)");
         hemptySigma->GetYaxis()->SetTitleSize(0.045/tpadr);
         hemptySigma->GetYaxis()->SetTitleOffset(1.7*tpadr);
-		texGlobal = new TLatex(0.53,0.594,Form("Global uncertainty:"));
+		uncGlobal_pp = Form("pp:     #pm%.1f%s",normalizationUncertaintyForPP(),texper.Data());
+	    uncGlobal_PbPb = Form("PbPb: #plus%.1f, #minus%.1f%s",normalizationUncertaintyForPbPb(1),normalizationUncertaintyForPbPb(0),texper.Data());
+		texGlobal = new TLatex(0.53,0.594,Form("Global uncertainty"));
 		TLatex* texGlobal_pp = new TLatex(0.53,1-(1-0.54)/tpadr,uncGlobal_pp);
 		TLatex* texGlobal_PbPb = new TLatex(0.53,1-(1-0.48)/tpadr,uncGlobal_PbPb);
 		texGlobal->SetNDC();
@@ -296,8 +299,10 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 	hemptyRatio->GetXaxis()->SetTitle("p_{T} (GeV/c)");
 	hemptyRatio->GetXaxis()->CenterTitle();
 	//hemptyRatio->GetYaxis()->CenterTitle();
-	hemptyRatio->GetYaxis()->SetTitle("Data/FONLL");
+	//hemptyRatio->GetYaxis()->SetTitle("Data/FONLL");
+	hemptyRatio->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
 	hemptyRatio->GetXaxis()->SetTitleOffset(1.);
+	hemptyRatio->GetYaxis()->SetTitleOffset(1.2);
 	hemptyRatio->GetYaxis()->SetTitleOffset(1.4*(1-tpadr));
 	hemptyRatio->GetXaxis()->SetTitleSize(0.055/(1-tpadr));
 	hemptyRatio->GetYaxis()->SetTitleSize(0.055/(1-tpadr));

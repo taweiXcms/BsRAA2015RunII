@@ -62,7 +62,8 @@ void plotBsBpRatio(){
     TH2F* hemptyEff=new TH2F("hemptyEff","",50,_ptBins[0]-10,_ptBins[_nBins]+10,10.,0,7.5);
     hemptyEff->GetXaxis()->CenterTitle();
     hemptyEff->GetYaxis()->CenterTitle();
-    hemptyEff->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
+    //hemptyEff->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
+    hemptyEff->GetYaxis()->SetTitle("R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}");
     hemptyEff->GetXaxis()->SetTitle("p_{T} (GeV/c)");
     hemptyEff->GetXaxis()->SetTitleOffset(1.0);
     hemptyEff->GetYaxis()->SetTitleOffset(1.4);
@@ -96,8 +97,8 @@ void plotBsBpRatio(){
     hRAAratio->SetMarkerStyle(33);
     hRAAratio->SetMarkerSize(2.2);
 
-	TLegend *legendSigma=new TLegend(0.45,0.70,0.95,0.88,"");
-	if(drawThm) legendSigma=new TLegend(0.45,0.60,0.95,0.88,"");
+	TLegend *legendSigma=new TLegend(0.55,0.75,0.95,0.88,"");
+	if(drawThm) legendSigma=new TLegend(0.55,0.75,0.95,0.88,"");
     legendSigma->SetBorderSize(0);
     legendSigma->SetLineColor(0);
     legendSigma->SetFillColor(0);
@@ -106,7 +107,8 @@ void plotBsBpRatio(){
     legendSigma->SetTextSize(0.04);
 
 	TLegendEntry *ent_B;
-	ent_B = legendSigma->AddEntry(gRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","pf");
+	//ent_B = legendSigma->AddEntry(gRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","pf");
+	ent_B = legendSigma->AddEntry(gRAAratio,"R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","");
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
@@ -132,7 +134,7 @@ void plotBsBpRatio(){
     texB->SetLineWidth(2);
     //texB->Draw();
 
-    TLatex *texY = new TLatex(0.75,0.5,"|y| < 2.4");
+    TLatex *texY = new TLatex(0.21,0.79,"|y| < 2.4");
     texY->SetNDC();
     texY->SetTextFont(42);
     texY->SetTextSize(0.05);

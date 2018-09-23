@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Wed Aug  1 01:57:21 2018) by ROOT version6.02/13
+//=========  (Sun Sep 23 18:08:13 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -48,12 +48,12 @@ void canvasSigmaBplusRatiopp()
    hemptySigma1->GetXaxis()->SetLabelSize(0.06857143);
    hemptySigma1->GetXaxis()->SetTitleSize(0.07857143);
    hemptySigma1->GetXaxis()->SetTitleFont(42);
-   hemptySigma1->GetYaxis()->SetTitle("#frac{d#sigma}{dp_{T}} ( pb GeV^{-1}c)");
+   hemptySigma1->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} ( pb GeV^{-1}c)");
    hemptySigma1->GetYaxis()->CenterTitle(true);
    hemptySigma1->GetYaxis()->SetLabelFont(42);
    hemptySigma1->GetYaxis()->SetLabelSize(0.06857143);
-   hemptySigma1->GetYaxis()->SetTitleSize(0.07857143);
-   hemptySigma1->GetYaxis()->SetTitleOffset(0.98);
+   hemptySigma1->GetYaxis()->SetTitleSize(0.07142857);
+   hemptySigma1->GetYaxis()->SetTitleOffset(1.015);
    hemptySigma1->GetYaxis()->SetTitleFont(42);
    hemptySigma1->GetZaxis()->SetLabelFont(42);
    hemptySigma1->GetZaxis()->SetLabelSize(0.035);
@@ -209,7 +209,7 @@ tex->SetNDC();
    tex->SetTextSize(0.07857143);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.5,"|y| < 2.4");
+      tex = new TLatex(0.21,0.6857143,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetTextSize(0.07142857);
@@ -221,7 +221,7 @@ tex->SetNDC();
    tex->SetLineWidth(2);
    tex->Draw();
    
-   TLegend *leg = new TLegend(0.52,0.5714286,0.85,0.8571429,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.52,0.5,0.89,0.8285714,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.07857143);
    leg->SetLineColor(1);
@@ -252,13 +252,13 @@ tex->SetNDC();
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    leg->Draw();
-      tex = new TLatex(0.53,0.42,"Global uncertainty:");
+      tex = new TLatex(0.53,0.42,"Global uncertainty");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetTextSize(0.07142857);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.3428571,"pp: #pm7.9%");
+      tex = new TLatex(0.53,0.3428571,"#pm7.9%");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetTextSize(0.07142857);
@@ -295,7 +295,7 @@ tex->SetNDC();
    hemptyRatio3->GetXaxis()->SetTitleSize(0.1833333);
    hemptyRatio3->GetXaxis()->SetTickLength(0.09999999);
    hemptyRatio3->GetXaxis()->SetTitleFont(42);
-   hemptyRatio3->GetYaxis()->SetTitle("Data/FONLL");
+   hemptyRatio3->GetYaxis()->SetTitle("#frac{Data}{FONLL}");
    hemptyRatio3->GetYaxis()->SetNdivisions(505);
    hemptyRatio3->GetYaxis()->SetLabelFont(42);
    hemptyRatio3->GetYaxis()->SetLabelSize(0.16);

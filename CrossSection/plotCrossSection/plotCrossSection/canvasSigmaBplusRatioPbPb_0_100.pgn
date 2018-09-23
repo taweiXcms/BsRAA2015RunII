@@ -2,7 +2,7 @@
 %%Title: plotCrossSection/plotCrossSection/canvasSigmaBplusRatioPbPb_0_100.pgn ( A 4)
 %%Pages: (atend)
 %%Creator: ROOT Version 6.02/13
-%%CreationDate: Wed Aug  1 01:38:44 2018
+%%CreationDate: Sun Sep 23 17:31:24 2018
 %%Orientation: Landscape
 %%EndComments
 %%BeginProlog
@@ -81,7 +81,6 @@ newpath  gsave  90 r 0 -594 t  28 20 t .25 .25 scale  gsave
  gsave  2363 2268 0 0 C 257.695 1994.16 t 0 r /Helvetica findfont 103.078 sf 0 0 m (10) show NC gr  6 lw 1 1 1 c black 737 1431 m 68 Y s 737 1531 m 40 Y s 599 1515 m 122 X s 753 1515 m 123 X s 3 lw /w 38 def /w2 {w 2 div} def /w3 {w 3 div} def 737
  1515 m20 6 lw 1482 724 m 52 Y s 1482 807 m 33 Y s 876 792 m 590 X s 1498 792 m 590 X s 3 lw 1482 792 m20 6 lw 277 94 599 1462 bl 277 94 599 1462 bl 1212 57 876 761 bl 1212 57 876 761 bl
  gsave  2363 2268 0 0 C 495.567 1902.98 t 0 r /Helvetica-Bold findfont 126.865 sf 0 0 m (CMS) show NC gr 
- gsave  2363 2268 0 0 C 495.567 1827.65 t 0 r /Helvetica-Oblique findfont 75.3262 sf 0 0 m (Preliminary) show NC gr 
  gsave  2363 2268 0 0 C 1351.91 2089.31 t 0 r /Helvetica findfont 114.972 sf 0 0 m ( \(PbPb 5.02 TeV\)) show NC gr 
  gsave  2363 2268 0 0 C 1296.4 2140.85 t 0 r /Helvetica findfont 79.2908 sf 0 0 m (\2551) show NC gr 
  gsave  2363 2268 0 0 C 1232.97 2089.31 t 0 r /Helvetica findfont 114.972 sf 0 0 m (b) show NC gr 

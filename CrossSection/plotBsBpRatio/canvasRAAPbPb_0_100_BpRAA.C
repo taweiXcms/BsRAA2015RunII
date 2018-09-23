@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Fri Aug  3 02:04:06 2018) by ROOT version6.02/13
+//=========  (Sun Sep 23 17:29:12 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -54,7 +54,7 @@ tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.75,0.5,"|y| < 2.4");
+      tex = new TLatex(0.21,0.79,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
@@ -188,7 +188,7 @@ tex->SetNDC();
    box->SetLineColor(ci);
    box->Draw();
    
-   TLegend *leg = new TLegend(0.5,0.66,0.95,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.7,0.67,0.95,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(0);
@@ -196,7 +196,7 @@ tex->SetNDC();
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   TLegendEntry *entry=leg->AddEntry("gNuclearModification_UnCor","B^{0}_{s} R_{AA}","pf");
+   TLegendEntry *entry=leg->AddEntry("gNuclearModification_UnCor","B^{0}_{s}","pf");
 
    ci = 925;
    color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
@@ -210,7 +210,7 @@ tex->SetNDC();
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
    entry->SetTextSize(0.07);
-   entry=leg->AddEntry("","B^{+} R_{AA}","pf");
+   entry=leg->AddEntry("","B^{+}","pf");
 
    ci = 928;
    color = new TColor(ci, 0, 0.6, 1, " ", 0.5);

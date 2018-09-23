@@ -1,7 +1,7 @@
 void BsBpRatio()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Fri Aug  3 02:04:07 2018) by ROOT version6.02/13
+//=========  (Sun Sep 23 17:29:14 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -28,7 +28,7 @@ void BsBpRatio()
    hemptyEff1->GetXaxis()->SetLabelSize(0.048);
    hemptyEff1->GetXaxis()->SetTitleSize(0.055);
    hemptyEff1->GetXaxis()->SetTitleFont(42);
-   hemptyEff1->GetYaxis()->SetTitle("B^{0}_{s} R_{AA} / B^{+} R_{AA}");
+   hemptyEff1->GetYaxis()->SetTitle("R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}");
    hemptyEff1->GetYaxis()->CenterTitle(true);
    hemptyEff1->GetYaxis()->SetLabelFont(42);
    hemptyEff1->GetYaxis()->SetLabelOffset(0.007);
@@ -52,7 +52,7 @@ tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.75,0.5,"|y| < 2.4");
+      tex = new TLatex(0.21,0.79,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
@@ -64,7 +64,7 @@ tex->SetNDC();
    tex->SetLineWidth(2);
    tex->Draw();
    
-   TLegend *leg = new TLegend(0.45,0.7,0.95,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.55,0.75,0.95,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.04);
    leg->SetLineColor(0);
@@ -72,20 +72,13 @@ tex->SetNDC();
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   TLegendEntry *entry=leg->AddEntry("Graph","B^{0}_{s}/B^{+} R_{AA} ratio","pf");
-
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
-   ci = 924;
-   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
-   entry->SetFillColor(ci);
-   entry->SetFillStyle(1001);
+   TLegendEntry *entry=leg->AddEntry("Graph","R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","");
+   entry->SetLineColor(4);
    entry->SetLineStyle(1);
-
-   ci = TColor::GetColor("#990099");
-   entry->SetMarkerColor(ci);
-   entry->SetMarkerStyle(33);
-   entry->SetMarkerSize(2.2);
+   entry->SetLineWidth(1);
+   entry->SetMarkerColor(4);
+   entry->SetMarkerStyle(21);
+   entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    entry->SetTextSize(0.065);
    leg->Draw();
@@ -112,6 +105,8 @@ tex->SetNDC();
    grae->SetName("Graph0");
    grae->SetTitle("Graph");
 
+   Int_t ci;      // for color index setting
+   TColor *color; // for color definition with alpha
    ci = 924;
    color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
    grae->SetFillColor(ci);
