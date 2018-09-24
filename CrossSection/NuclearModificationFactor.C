@@ -23,7 +23,7 @@ bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 0;
+bool drawThm = 1;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -233,7 +233,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	//TLegend *legendSigma=new TLegend(0.50,0.66,0.95,0.88,"");
     TLegend *legendSigma=new TLegend(0.7,0.67,0.95,0.88);
 	if(drawDRAA)legendSigma=new TLegend(0.35,0.55,0.95,0.88,"");
-	if(drawThm)legendSigma=new TLegend(0.5,0.6,0.95,0.88,"");
+	if(drawThm)legendSigma=new TLegend(0.65,0.58,0.95,0.88,"");
 	adjustLegend(legendSigma);
 
 	//TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hNuclearModification,"R_{AA} stat. unc.","pf");

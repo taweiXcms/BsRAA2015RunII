@@ -18,7 +18,7 @@ using namespace std;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 float legendTextSize = 0.07;
-bool drawThm = 0;
+bool drawThm = 1;
 void plotBsBpRatio(){
 
     gStyle->SetOptTitle(0);
@@ -98,7 +98,7 @@ void plotBsBpRatio(){
     hRAAratio->SetMarkerSize(2.2);
 
 	TLegend *legendSigma=new TLegend(0.55,0.75,0.95,0.88,"");
-	if(drawThm) legendSigma=new TLegend(0.55,0.75,0.95,0.88,"");
+	if(drawThm) legendSigma=new TLegend(0.55,0.55,0.95,0.88,"");
     legendSigma->SetBorderSize(0);
     legendSigma->SetLineColor(0);
     legendSigma->SetFillColor(0);
@@ -108,7 +108,7 @@ void plotBsBpRatio(){
 
 	TLegendEntry *ent_B;
 	//ent_B = legendSigma->AddEntry(gRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","pf");
-	ent_B = legendSigma->AddEntry(gRAAratio,"R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","");
+	if(drawThm) ent_B = legendSigma->AddEntry(gRAAratio,"R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","pf");
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
