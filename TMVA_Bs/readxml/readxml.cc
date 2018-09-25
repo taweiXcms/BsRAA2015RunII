@@ -29,6 +29,40 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 	RAA = isPbPb?RAA:1.;
 	colsyst = isPbPb?"PbPb":"pp";
 
+
+    TLatex* texCol;
+    if(pbpb==0) texCol= new TLatex(0.95,0.94, Form("28.0 pb^{-1} (%s 5.02 TeV)","pp"));
+    else texCol= new TLatex(0.945,0.94, Form("351 #mub^{-1} (%s 5.02 TeV)","PbPb"));
+    texCol->SetNDC();
+    texCol->SetTextAlign(32);
+    texCol->SetTextSize(0.055);
+    texCol->SetTextFont(42);
+    TLatex* texpt;
+    texpt = new TLatex(0.21,0.79,Form("%.0f < p_{T} < %.0f GeV/c",ptmin,ptmax));
+    texpt->SetNDC();
+    texpt->SetTextFont(42);
+    texpt->SetTextSize(0.05);
+    texpt->SetLineWidth(2);
+    TLatex* texy;
+    texy = new TLatex(0.21,0.72,"|y| < 2.4");
+    texy->SetNDC();
+    texy->SetTextFont(42);
+    texy->SetTextSize(0.05);
+    texy->SetLineWidth(2);
+    TLatex* texcms;
+    texcms = new TLatex(0.21,0.88,"CMS");
+    texcms->SetNDC();
+    texcms->SetTextAlign(13);
+    texcms->SetTextFont(62);
+    texcms->SetTextSize(0.06);
+    texcms->SetLineWidth(2);
+    TLatex* texB;
+    texB = new TLatex(0.85,0.82,"B^{0}_{s}");
+    texB->SetNDC();
+    texB->SetTextFont(62);
+    texB->SetTextSize(0.07);
+    texB->SetLineWidth(2);
+
 	TLatex* texPar = new TLatex(0.18,0.93, Form("%s 5.02 TeV B_{s}",colsyst.Data()));
 	texPar->SetNDC();
 	texPar->SetTextAlign(12);
@@ -224,15 +258,20 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hempty->GetYaxis()->SetTitleFont(42);
 		hempty->GetXaxis()->SetLabelFont(42);
 		hempty->GetYaxis()->SetLabelFont(42);
-		hempty->GetXaxis()->SetLabelSize(0.035);
-		hempty->GetYaxis()->SetLabelSize(0.035);
+		hempty->GetXaxis()->SetLabelSize(0.048);
+		hempty->GetYaxis()->SetLabelSize(0.048);
 
 		TGraph* gsig = new TGraph(100,effS,effSig);
 		TCanvas* csig = new TCanvas("csig","",600,600);
 		csig->SetLogy();
 		hempty->Draw();
-		texPar->Draw();
-		texPtY->Draw();
+		//texPar->Draw();
+		//texPtY->Draw();
+    	texCol->Draw();
+    	texpt->Draw();
+    	texy->Draw();
+    	texcms->Draw();
+    	texB->Draw();
 		gsig->Draw("same*");
 
 		ceffSB->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_EffvsSig.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax));
@@ -294,7 +333,9 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		cout<<setiosflags(ios::left)<<setw(35)<<"cutval: "<<_cutval<<endl;
 		TCanvas* csig = new TCanvas("csig","",600,600);
 		csig->SetLogy();
-		TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.,_maxsigval*1.2);  
+		//TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0,_maxsigval*1.2);  
+		TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.9,10.0);  
+		if(pbpb) hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.1,5.0);  
 		hempty->GetXaxis()->CenterTitle();
 		hempty->GetYaxis()->CenterTitle();
 		hempty->GetXaxis()->SetTitle(MVAtype);
@@ -307,9 +348,10 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hempty->GetYaxis()->SetTitleFont(42);
 		hempty->GetXaxis()->SetLabelFont(42);
 		hempty->GetYaxis()->SetLabelFont(42);
-		hempty->GetXaxis()->SetLabelSize(0.035);
-		hempty->GetYaxis()->SetLabelSize(0.035);
+		hempty->GetXaxis()->SetLabelSize(0.048);
+		hempty->GetYaxis()->SetLabelSize(0.048);
 		hempty->Draw();
+
 	    TLine* line = new TLine(_cutval, 0., _cutval, 0);
 	    line->SetLineStyle(9);
    		line->SetLineWidth(6);
@@ -317,11 +359,18 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		line->SetY1(hempty->GetYaxis()->GetBinLowEdge(1));
 		line->SetY2(hempty->GetYaxis()->GetBinLowEdge(hempty->GetYaxis()->GetNbins()) + hempty->GetYaxis()->GetBinWidth(1));
 	    line->Draw();
-		texPar->Draw();
-		texPtY->Draw();
+		//texPar->Draw();
+		//texPtY->Draw();
+    	texCol->Draw();
+    	texpt->Draw();
+    	texy->Draw();
+    	texcms->Draw();
+    	texB->Draw();
+
 		TGraph* _gsig = new TGraph(th1_effS->GetNbinsX(),_cutval_arr,_sigval_arr);
 		_gsig->Draw("same *");
 		csig->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_Significance.pdf",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
+		csig->SaveAs(Form("plots/%s_%s_pT_%.0f_%.0f_varStage%d_Significance.png",MVAtype.Data(),colsyst.Data(),ptmin,ptmax,stage));
 
 		TCanvas* ceffSB = new TCanvas("ceffSB","",600,600);
         ceffSB->SetLogy();

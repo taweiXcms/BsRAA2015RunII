@@ -161,8 +161,8 @@ if [ $DOREADXML -eq 1 ]; then
 	    i=0
 	    while ((i<$nPT))
 	    do
-            root -b -q "calRatio.cc++("\"${inputMC}\"","\"${inputData}\"","${isPbPb[j]}","\"${MVA[k]}\"","${PTBIN[i]}","${PTBIN[i+1]}","${RAA[i]}","\"${COLSYST[j]}_pT_${PTBIN[i]}_${PTBIN[i+1]}.h\"")"
-            rm calRatio_cc.d calRatio_cc.so calRatio_cc_ACLiC_dict_rdict.pcm
+#            root -b -q "calRatio.cc++("\"${inputMC}\"","\"${inputData}\"","${isPbPb[j]}","\"${MVA[k]}\"","${PTBIN[i]}","${PTBIN[i+1]}","${RAA[i]}","\"${COLSYST[j]}_pT_${PTBIN[i]}_${PTBIN[i+1]}.h\"")"
+#            rm calRatio_cc.d calRatio_cc.so calRatio_cc_ACLiC_dict_rdict.pcm
 			cp ${COLSYST[j]}"_pT_"${PTBIN[i]}"_"${PTBIN[i+1]}".h" pred_temp.h
 	        k=0
 	        while ((k<$nMVA))
