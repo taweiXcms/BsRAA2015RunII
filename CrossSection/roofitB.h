@@ -20,7 +20,7 @@ using namespace std;
 
 #define BSUBS_MASS 5.36682
 
-bool drawSup = 0;
+bool drawSup = 1;
 
 void clean0 (TH1D* h);
 int    drawOpt=0;
@@ -216,7 +216,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     leg->AddEntry(h,"Data","pl");
 	leg->AddEntry(frame->findObject(Form("model%d",_count)),"Fit","l");
 	leg->AddEntry(frame->findObject(Form("sig%d",_count)),"Signal","f");
-	leg->AddEntry(frame->findObject(Form("bkg%d",_count)),"Combinatorial","l");
+	//leg->AddEntry(frame->findObject(Form("bkg%d",_count)),"Combinatorial","l");
+	leg->AddEntry(frame->findObject(Form("bkg%d",_count)),"Background","l");
 	if(npfit != "1") leg->AddEntry(frame->findObject(Form("peakbg%d",_count)),"B #rightarrow J/#psi X","f");
 
 	TLatex* texcms = new TLatex(0.21,0.88,"CMS");
