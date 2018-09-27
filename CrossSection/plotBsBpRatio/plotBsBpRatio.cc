@@ -18,7 +18,8 @@ using namespace std;
 int _nBins = nBins;
 double *_ptBins = ptBins;
 float legendTextSize = 0.07;
-bool drawThm = 1;
+bool drawThm = 0;
+bool drawSup = 1;
 void plotBsBpRatio(){
 
     gStyle->SetOptTitle(0);
@@ -149,13 +150,20 @@ void plotBsBpRatio(){
     texcms->SetLineWidth(2);
     texcms->Draw();
 
+    TLatex* texcent = new TLatex(0.62,0.18,"Cent. 0-100%");
+    texcent->SetNDC();
+    texcent->SetTextFont(42);
+    texcent->SetTextSize(0.05);
+    texcent->SetLineWidth(2);
+    texcent->Draw();
+
     TLatex* texsup = new TLatex(0.21,0.83,"Supplementary");
     texsup->SetNDC();
     texsup->SetTextAlign(13);
     texsup->SetTextFont(52);
     texsup->SetTextSize(0.05);
     texsup->SetLineWidth(2);
-    //texsup->Draw();
+    if(drawSup) texsup->Draw();
 
     TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
     texpre->SetNDC();

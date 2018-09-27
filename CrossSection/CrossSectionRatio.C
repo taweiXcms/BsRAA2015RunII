@@ -258,9 +258,11 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		hPtSigma_PbPb->SetMarkerStyle(21);
 		hPtSigma_PbPb->SetMarkerSize(1.2/tpadr);
 		hPtSigma_PbPb->Draw("epsame");
+		leg_CS->SetX1(0.42);
+		leg_CS->SetX2(0.80);
 		leg_CS->SetY2(1-(1-0.88)/tpadr);
 		leg_CS->AddEntry(hPtSigma,"pp","pf");
-		leg_CS->AddEntry(hPtSigma_PbPb,"PbPb","pf");
+		leg_CS->AddEntry(hPtSigma_PbPb,"PbPb Cent. 0-100%","pf");
 		if(plotFONLL) leg_CS->AddEntry(gaeBplusReference,"FONLL pp ref.","f");//PAS
 		leg_CS->Draw("same");
 		hemptySigma->GetYaxis()->SetTitle("#frac{d#sigma_{pp}}{dp_{T}} or #frac{1}{T_{AA}} #frac{dN_{PbPb}}{dp_{T}} ( pb GeV^{-1}c)");

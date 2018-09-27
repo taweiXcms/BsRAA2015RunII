@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatiopp_AddPbPb()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Sun Sep 23 18:08:10 2018) by ROOT version6.02/13
+//=========  (Thu Sep 27 11:45:20 2018) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -235,7 +235,7 @@ tex->SetNDC();
    hPtSigma3->GetZaxis()->SetTitleFont(42);
    hPtSigma3->Draw("epsame");
    
-   TLegend *leg = new TLegend(0.52,0.65,0.89,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.42,0.65,0.8,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(1);
@@ -251,7 +251,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("hPtSigma","PbPb","pf");
+   entry=leg->AddEntry("hPtSigma","PbPb Cent. 0-100%","pf");
    entry->SetFillStyle(1001);
    entry->SetLineColor(2);
    entry->SetLineWidth(2);

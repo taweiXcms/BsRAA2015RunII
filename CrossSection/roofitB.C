@@ -187,21 +187,32 @@ void roofitB(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TStrin
 		}
 
 	    TLatex* tex;
-	    tex = new TLatex(0.55,0.85,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
-		if(varExp=="abs(By)") tex = new TLatex(0.55,0.85,Form("%.1f < y < %.1f",_ptBins[i],_ptBins[i+1]));
+	    //tex = new TLatex(0.55,0.85,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
+		//if(varExp=="abs(By)") tex = new TLatex(0.55,0.85,Form("%.1f < y < %.1f",_ptBins[i],_ptBins[i+1]));
+	    tex = new TLatex(0.21,0.72,Form("%.0f < p_{T} < %.0f GeV/c",_ptBins[i],_ptBins[i+1]));
+		if(varExp=="abs(By)") tex = new TLatex(0.21,0.72,Form("%.1f < y < %.1f",_ptBins[i],_ptBins[i+1]));
 	    tex->SetNDC();
 	    tex->SetTextFont(42);
 	    tex->SetTextSize(0.045);
 	    tex->SetLineWidth(2);
 	    tex->Draw();
 	
-	    tex = new TLatex(0.75,0.80,"|y| < 2.4");
-		if(varExp=="abs(By)") tex = new TLatex(0.75,0.80,"15 < p_{T} < 50 GeV.c");
+	    //tex = new TLatex(0.75,0.80,"|y| < 2.4");
+		//if(varExp=="abs(By)") tex = new TLatex(0.75,0.80,"15 < p_{T} < 50 GeV.c");
+	    tex = new TLatex(0.21,0.66,"|y| < 2.4");
+		if(varExp=="abs(By)") tex = new TLatex(0.21,0.66,"15 < p_{T} < 50 GeV.c");
 	    tex->SetNDC();
 	    tex->SetTextFont(42);
 	    tex->SetTextSize(0.045);
 	    tex->SetLineWidth(2);
 	    tex->Draw();
+
+	    tex = new TLatex(0.21,0.60,"Cent. 0-100%");
+	    tex->SetNDC();
+	    tex->SetTextFont(42);
+	    tex->SetTextSize(0.045);
+	    tex->SetLineWidth(2);
+	    if(isPbPb) tex->Draw();
 
         c->SaveAs(Form("%s%s/%s_%s_%d%s.pdf",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));
         c->SaveAs(Form("%s%s/%s_%s_%d%s.png",outplotf.Data(),_prefix.Data(),_isMC.Data(),_isPbPb.Data(),_count,_postfix.Data()));

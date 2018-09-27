@@ -24,6 +24,7 @@ bool drawJpsi = 0;
 bool drawBpRpA = 0;
 
 bool drawThm = 1;
+bool drawSup = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
@@ -222,13 +223,20 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
+    TLatex* texcent = new TLatex(0.62,0.18,"Cent. 0-100%");
+    texcent->SetNDC();
+    texcent->SetTextFont(42);
+    texcent->SetTextSize(0.05);
+    texcent->SetLineWidth(2);
+    texcent->Draw();
+
     TLatex* texsup = new TLatex(0.35,0.877,"Supplementary");
     texsup->SetNDC();
     texsup->SetTextAlign(13);
     texsup->SetTextFont(52);
     texsup->SetTextSize(0.05);
     texsup->SetLineWidth(2);
-    //texsup->Draw();
+    if(drawSup) texsup->Draw();
 
 	TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
 	texpre->SetNDC();

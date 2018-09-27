@@ -20,6 +20,8 @@ using namespace std;
 
 #define BSUBS_MASS 5.36682
 
+bool drawSup = 0;
+
 void clean0 (TH1D* h);
 int    drawOpt=0;
 double _ErrCor=1;
@@ -202,9 +204,9 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     printf("chi2 Peason: %f\n",chi2Peason);
     printf("chi2 Baker & Cousins: %f\n",chi2BakerCousins);
 
-	TLegend *leg = new TLegend(0.525,0.40,0.85,0.75,NULL,"brNDC"); 
+	TLegend *leg = new TLegend(0.565,0.62,0.89,0.89,NULL,"brNDC"); 
     if(drawOpt == 1) {
-		leg = new TLegend(0.525,0.57,0.85,0.80,NULL,"brNDC");
+		leg = new TLegend(0.565,0.62,0.89,0.89,NULL,"brNDC");
 	}
 	leg->SetBorderSize(0);
 	leg->SetTextSize(0.055);
@@ -217,21 +219,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	leg->AddEntry(frame->findObject(Form("bkg%d",_count)),"Combinatorial","l");
 	if(npfit != "1") leg->AddEntry(frame->findObject(Form("peakbg%d",_count)),"B #rightarrow J/#psi X","f");
 
-	TLatex* texcms = new TLatex(0.22,0.87,"CMS");
-	texcms->SetNDC();
-	texcms->SetTextAlign(13);
-	texcms->SetTextFont(62);
-	texcms->SetTextSize(0.075);
-	texcms->SetLineWidth(2);
-	
-	TLatex* texB = new TLatex(0.225,0.74,"B^{0}_{s}");
-	texB->SetNDC();
-	texB->SetTextFont(42);
-	texB->SetTextSize(0.055);
-	texB->SetLineWidth(2);
-
-	// preliminary setting
-	texcms = new TLatex(0.21,0.88,"CMS");
+	TLatex* texcms = new TLatex(0.21,0.88,"CMS");
 	texcms->SetNDC();
 	texcms->SetTextAlign(13);
 	texcms->SetTextFont(62);
@@ -243,18 +231,18 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.035);
     texpre->SetLineWidth(2);
-    TLatex* texsup = new TLatex(0.21,0.83,"Supplementary");
+    TLatex* texsup = new TLatex(0.21,0.815,"Supplementary");
     texsup->SetNDC();
     texsup->SetTextAlign(13);
     texsup->SetTextFont(52);
     texsup->SetTextSize(0.05);
     texsup->SetLineWidth(2);
-	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
+	TLatex* texB = new TLatex(0.21,0.77,"B^{0}_{s}");
+	if(drawSup) texB = new TLatex(0.45,0.84,"B^{0}_{s}");
 	texB->SetNDC();
 	texB->SetTextFont(62);
-	texB->SetTextSize(0.07);
+	texB->SetTextSize(0.06);
 	texB->SetLineWidth(2);
-	// preliminary setting
 
 	TLatex* texCol;
 	if(collisionsystem=="pp"||collisionsystem=="PP"||collisionsystem=="ppInc") texCol= new TLatex(0.95,0.94, Form("28.0 pb^{-1} (%s 5.02 TeV)","pp"));
@@ -264,6 +252,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texCol->SetTextSize(0.055);
 	texCol->SetTextFont(42);
 	
+	float posit = 0.54;
 	int nDOF = nbinsmasshisto-(fitResult->floatParsFinal().getSize());
 	float nChi2 = chi2BakerCousins/(nbinsmasshisto-(fitResult->floatParsFinal().getSize()));
 	int nDigit_chi2BakerCousins = 2;
@@ -272,7 +261,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	nChi2 = roundToNdigit(nChi2);
 	nDigit_chi2BakerCousins = sigDigitAfterDecimal(chi2BakerCousins);
 	nDigit_nChi2 = sigDigitAfterDecimal(nChi2);
-    TLatex* texChi = new TLatex(0.55,0.50, Form("#chi^{2}/nDOF: %.*f/%d = %.*f", nDigit_chi2BakerCousins, chi2BakerCousins, nDOF, nDigit_nChi2, nChi2));
+    TLatex* texChi = new TLatex(0.58,posit, Form("#chi^{2}/nDOF: %.*f/%d = %.*f", nDigit_chi2BakerCousins, chi2BakerCousins, nDOF, nDigit_nChi2, nChi2));
     texChi->SetNDC();
     texChi->SetTextAlign(12);
     texChi->SetTextSize(0.04);
@@ -293,7 +282,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	int nDigit_Significance = 3;
 	Significance = roundToNdigit(Significance);
 	nDigit_Significance = sigDigitAfterDecimal(Significance);
-	TLatex* texSig = new TLatex(0.55,0.54,Form("Significance = %.*f", nDigit_Significance, Significance));
+	TLatex* texSig = new TLatex(0.58,posit+0.04,Form("Significance = %.*f", nDigit_Significance, Significance));
 	cout<<"Significance = "<<Significance<<endl;
 	texSig->SetNDC();
 	texSig->SetTextFont(42);
@@ -303,7 +292,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	int nDigit_yield = 3;
 	yield = roundToNdigit(yield);
 	nDigit_yield = sigDigitAfterDecimal(yield);
-    TLatex* texYield = new TLatex(0.55,0.44,Form("Yield = %.*f", nDigit_yield, yield));
+    TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f", nDigit_yield, yield));
     texYield->SetNDC();
     texYield->SetTextFont(42);
     texYield->SetTextSize(0.04);
@@ -316,8 +305,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	c->cd();
 	leg->Draw("same");
 	texcms->Draw();
-	//texpre->Draw();
-	texsup->Draw();
+	if(drawSup) texsup->Draw();
 	texB->Draw();
 	texCol->Draw();
     //if(1) {
