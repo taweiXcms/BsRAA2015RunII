@@ -56,6 +56,12 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     texcms->SetTextFont(62);
     texcms->SetTextSize(0.06);
     texcms->SetLineWidth(2);
+    TLatex* texpre = new TLatex(0.35,0.877,"Supplementary");
+    texpre->SetNDC();
+    texpre->SetTextAlign(13);
+    texpre->SetTextFont(52);
+    texpre->SetTextSize(0.05);
+    texpre->SetLineWidth(2);
     TLatex* texB;
     texB = new TLatex(0.85,0.82,"B^{0}_{s}");
     texB->SetNDC();
@@ -249,7 +255,8 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		hempty->GetXaxis()->CenterTitle();
 		hempty->GetYaxis()->CenterTitle();
 		hempty->GetXaxis()->SetTitle("Signal efficiency");
-		hempty->GetYaxis()->SetTitle("S/sqrt(S+B)");
+		//hempty->GetYaxis()->SetTitle("S/sqrt(S+B)");
+		hempty->GetYaxis()->SetTitle("#frac{S}{#sqrt{(S+B)}}");
 		hempty->GetXaxis()->SetTitleOffset(0.9);
 		hempty->GetYaxis()->SetTitleOffset(1.0);
 		hempty->GetXaxis()->SetTitleSize(0.05);
@@ -271,6 +278,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     	texpt->Draw();
     	texy->Draw();
     	texcms->Draw();
+    	texpre->Draw();
     	texB->Draw();
 		gsig->Draw("same*");
 
@@ -334,14 +342,15 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
 		TCanvas* csig = new TCanvas("csig","",600,600);
 		csig->SetLogy();
 		//TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0,_maxsigval*1.2);  
-		TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.9,10.0);  
-		if(pbpb) hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.2,_cutval_arr[_bins-1]+0.2,10,0.1,5.0);  
+		TH2F* hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.3,_cutval_arr[_bins-1]+0.2,10,0.9,10.0);  
+		if(pbpb) hempty = new TH2F("hempty","",50,_cutval_arr[0]-0.3,_cutval_arr[_bins-1]+0.2,10,0.1,5.0);  
 		hempty->GetXaxis()->CenterTitle();
 		hempty->GetYaxis()->CenterTitle();
 		hempty->GetXaxis()->SetTitle(MVAtype);
-		hempty->GetYaxis()->SetTitle("S/sqrt(S+B)");
+		//hempty->GetYaxis()->SetTitle("S/sqrt(S+B)");
+		hempty->GetYaxis()->SetTitle("#frac{S}{#sqrt{(S+B)}}");
 		hempty->GetXaxis()->SetTitleOffset(0.9);
-		hempty->GetYaxis()->SetTitleOffset(1.0);
+		hempty->GetYaxis()->SetTitleOffset(1.3);
 		hempty->GetXaxis()->SetTitleSize(0.05);
 		hempty->GetYaxis()->SetTitleSize(0.05);
 		hempty->GetXaxis()->SetTitleFont(42);
@@ -365,6 +374,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     	texpt->Draw();
     	texy->Draw();
     	texcms->Draw();
+    	texpre->Draw();
     	texB->Draw();
 
 		TGraph* _gsig = new TGraph(th1_effS->GetNbinsX(),_cutval_arr,_sigval_arr);
