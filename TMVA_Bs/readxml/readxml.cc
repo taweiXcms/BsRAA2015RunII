@@ -38,7 +38,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     texCol->SetTextSize(0.055);
     texCol->SetTextFont(42);
     TLatex* texpt;
-    texpt = new TLatex(0.21,0.79,Form("%.0f < p_{T} < %.0f GeV/c",ptmin,ptmax));
+    texpt = new TLatex(0.21,0.785,Form("%.0f < p_{T} < %.0f GeV/c",ptmin,ptmax));
     texpt->SetNDC();
     texpt->SetTextFont(42);
     texpt->SetTextSize(0.05);
@@ -49,6 +49,12 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     texy->SetTextFont(42);
     texy->SetTextSize(0.05);
     texy->SetLineWidth(2);
+    TLatex* texcent;
+    texcent = new TLatex(0.21,0.665,"Cent. 0-100%");
+    texcent->SetNDC();
+    texcent->SetTextFont(42);
+    texcent->SetTextSize(0.05);
+    texcent->SetLineWidth(2);
     TLatex* texcms;
     texcms = new TLatex(0.21,0.88,"CMS");
     texcms->SetNDC();
@@ -277,6 +283,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     	texCol->Draw();
     	texpt->Draw();
     	texy->Draw();
+		if(pbpb) texcent->Draw();
     	texcms->Draw();
     	texpre->Draw();
     	texB->Draw();
@@ -373,6 +380,7 @@ void readxml(Int_t pbpb=0, TString mva="BDT", int _stage=1, Float_t ptMin=7., Fl
     	texCol->Draw();
     	texpt->Draw();
     	texy->Draw();
+		if(pbpb) texcent->Draw();
     	texcms->Draw();
     	texpre->Draw();
     	texB->Draw();
