@@ -1,7 +1,7 @@
 void BsBpRatio()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Sun Sep 23 17:29:14 2018) by ROOT version6.02/13
+//=========  (Thu Sep 27 00:17:51 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -52,7 +52,7 @@ tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.21,0.79,"|y| < 2.4");
+      tex = new TLatex(0.21,0.74,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
@@ -61,6 +61,12 @@ tex->SetNDC();
 tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextSize(0.06);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.21,0.83,"Supplementary");
+tex->SetNDC();
+   tex->SetTextAlign(13);
+   tex->SetTextFont(52);
    tex->SetLineWidth(2);
    tex->Draw();
    
@@ -72,13 +78,20 @@ tex->SetNDC();
    leg->SetLineWidth(1);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   TLegendEntry *entry=leg->AddEntry("Graph","R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","");
-   entry->SetLineColor(4);
+   TLegendEntry *entry=leg->AddEntry("Graph","R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","pf");
+
+   Int_t ci;      // for color index setting
+   TColor *color; // for color definition with alpha
+   ci = 924;
+   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
+   entry->SetFillColor(ci);
+   entry->SetFillStyle(1001);
    entry->SetLineStyle(1);
-   entry->SetLineWidth(1);
-   entry->SetMarkerColor(4);
-   entry->SetMarkerStyle(21);
-   entry->SetMarkerSize(1);
+
+   ci = TColor::GetColor("#990099");
+   entry->SetMarkerColor(ci);
+   entry->SetMarkerStyle(33);
+   entry->SetMarkerSize(2.2);
    entry->SetTextFont(42);
    entry->SetTextSize(0.065);
    leg->Draw();
@@ -105,8 +118,6 @@ tex->SetNDC();
    grae->SetName("Graph0");
    grae->SetTitle("Graph");
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = 924;
    color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
    grae->SetFillColor(ci);

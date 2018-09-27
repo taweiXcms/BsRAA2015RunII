@@ -108,7 +108,7 @@ void plotBsBpRatio(){
 
 	TLegendEntry *ent_B;
 	//ent_B = legendSigma->AddEntry(gRAAratio,"B^{0}_{s}/B^{+} R_{AA} ratio","pf");
-	if(drawThm) ent_B = legendSigma->AddEntry(gRAAratio,"R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","pf");
+	ent_B = legendSigma->AddEntry(gRAAratio,"R_{AA}^{B^{0}_{s}} / R_{AA}^{B^{+}}","pf");
 	ent_B->SetTextFont(42);
 	ent_B->SetLineColor(4);
 	ent_B->SetMarkerColor(4);
@@ -134,7 +134,7 @@ void plotBsBpRatio(){
     texB->SetLineWidth(2);
     //texB->Draw();
 
-    TLatex *texY = new TLatex(0.21,0.79,"|y| < 2.4");
+    TLatex *texY = new TLatex(0.21,0.74,"|y| < 2.4");
     texY->SetNDC();
     texY->SetTextFont(42);
     texY->SetTextSize(0.05);
@@ -148,6 +148,14 @@ void plotBsBpRatio(){
     texcms->SetTextSize(0.06);
     texcms->SetLineWidth(2);
     texcms->Draw();
+
+    TLatex* texsup = new TLatex(0.21,0.83,"Supplementary");
+    texsup->SetNDC();
+    texsup->SetTextAlign(13);
+    texsup->SetTextFont(52);
+    texsup->SetTextSize(0.05);
+    texsup->SetLineWidth(2);
+    //texsup->Draw();
 
     TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
     texpre->SetNDC();

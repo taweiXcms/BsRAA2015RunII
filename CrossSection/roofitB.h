@@ -243,11 +243,11 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
     texpre->SetTextFont(52);
     texpre->SetTextSize(0.035);
     texpre->SetLineWidth(2);
-    TLatex* texsup = new TLatex(0.21,0.795,"Supplementary");
+    TLatex* texsup = new TLatex(0.21,0.83,"Supplementary");
     texsup->SetNDC();
     texsup->SetTextAlign(13);
     texsup->SetTextFont(52);
-    texsup->SetTextSize(0.035);
+    texsup->SetTextSize(0.05);
     texsup->SetLineWidth(2);
 	texB = new TLatex(0.225,0.68,"B^{0}_{s}");
 	texB->SetNDC();
@@ -317,7 +317,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	leg->Draw("same");
 	texcms->Draw();
 	//texpre->Draw();
-	//texsup->Draw();
+	texsup->Draw();
 	texB->Draw();
 	texCol->Draw();
     //if(1) {

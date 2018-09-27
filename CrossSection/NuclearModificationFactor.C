@@ -222,6 +222,14 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 	texcms->SetLineWidth(2);
 	texcms->Draw();
 
+    TLatex* texsup = new TLatex(0.35,0.877,"Supplementary");
+    texsup->SetNDC();
+    texsup->SetTextAlign(13);
+    texsup->SetTextFont(52);
+    texsup->SetTextSize(0.05);
+    texsup->SetLineWidth(2);
+    //texsup->Draw();
+
 	TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
 	texpre->SetNDC();
 	texpre->SetTextAlign(13);

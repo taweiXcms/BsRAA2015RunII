@@ -314,7 +314,8 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->SetTextSize(0.06);
 	texcms->SetLineWidth(2);
 	texcms->Draw();
-    TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
+    //TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
+    TLatex* texpre = new TLatex(0.21,0.83,"Supplementary");
     texpre->SetNDC();
     texpre->SetTextAlign(13);
     texpre->SetTextFont(52);

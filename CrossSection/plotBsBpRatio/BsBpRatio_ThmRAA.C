@@ -1,7 +1,7 @@
 void BsBpRatio_ThmRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Mon Sep 24 10:25:37 2018) by ROOT version6.02/13
+//=========  (Thu Sep 27 00:18:05 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -52,7 +52,7 @@ tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.21,0.79,"|y| < 2.4");
+      tex = new TLatex(0.21,0.74,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
