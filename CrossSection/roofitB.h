@@ -294,9 +294,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	yield = roundToNdigit(yield);
 	nDigit_yield = sigDigitAfterDecimal(yield);
 	int nDigit_yieldErr = 3;
-	yieldErr = roundToNdigit(yieldErr);
-	nDigit_yieldErr = sigDigitAfterDecimal(yieldErr);
-    //TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f", nDigit_yield, yield));
+	yieldErr = roundToNdigit(yieldErr, int(log10(yieldErr))+1+nDigit_yield);
+	nDigit_yieldErr = sigDigitAfterDecimal(yieldErr, int(log10(yieldErr))+1+nDigit_yield);
     TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f#pm%.*f", nDigit_yield, yield, nDigit_yieldErr, yieldErr));
     texYield->SetNDC();
     texYield->SetTextFont(42);
