@@ -20,7 +20,7 @@ using namespace std;
 
 #define BSUBS_MASS 5.36682
 
-bool drawSup = 1;
+bool drawSup = 0;
 
 void clean0 (TH1D* h);
 int    drawOpt=0;
@@ -253,7 +253,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texCol->SetTextSize(0.055);
 	texCol->SetTextFont(42);
 	
-	float posit = 0.54;
+	float posit = 0.58;
 	int nDOF = nbinsmasshisto-(fitResult->floatParsFinal().getSize());
 	float nChi2 = chi2BakerCousins/(nbinsmasshisto-(fitResult->floatParsFinal().getSize()));
 	int nDigit_chi2BakerCousins = 2;
@@ -283,7 +283,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	int nDigit_Significance = 3;
 	Significance = roundToNdigit(Significance);
 	nDigit_Significance = sigDigitAfterDecimal(Significance);
-	TLatex* texSig = new TLatex(0.58,posit+0.04,Form("Significance = %.*f", nDigit_Significance, Significance));
+	TLatex* texSig = new TLatex(0.58,posit-0.12,Form("Significance = %.*f", nDigit_Significance, Significance));
 	cout<<"Significance = "<<Significance<<endl;
 	texSig->SetNDC();
 	texSig->SetTextFont(42);
@@ -293,7 +293,11 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	int nDigit_yield = 3;
 	yield = roundToNdigit(yield);
 	nDigit_yield = sigDigitAfterDecimal(yield);
-    TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f", nDigit_yield, yield));
+	int nDigit_yieldErr = 3;
+	yieldErr = roundToNdigit(yieldErr);
+	nDigit_yieldErr = sigDigitAfterDecimal(yieldErr);
+    //TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f", nDigit_yield, yield));
+    TLatex* texYield = new TLatex(0.58,posit-0.06,Form("Yield = %.*f#pm%.*f", nDigit_yield, yield, nDigit_yieldErr, yieldErr));
     texYield->SetNDC();
     texYield->SetTextFont(42);
     texYield->SetTextSize(0.04);
@@ -311,8 +315,8 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	texCol->Draw();
     //if(1) {
     if(drawOpt == 1) {
+		//texSig->Draw("SAME");
 		texChi->Draw();
-		texSig->Draw("SAME");
 		texYield->Draw("SAME");
 	}
 	outframe = frame;
