@@ -1,7 +1,7 @@
 void BsBpRatio_ThmRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Sep 27 12:02:59 2018) by ROOT version6.02/13
+//=========  (Sun Sep 30 18:05:08 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptFit(1);
    gStyle->SetOptStat(0);
@@ -1594,7 +1594,7 @@ tex->SetNDC();
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    entry->SetTextSize(0.07);
-   entry=leg->AddEntry("","CUJET","l");
+   entry=leg->AddEntry("","CUJET3.0","l");
 
    ci = TColor::GetColor("#999900");
    entry->SetLineColor(ci);

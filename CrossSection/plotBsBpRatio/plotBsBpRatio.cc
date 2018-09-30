@@ -186,7 +186,7 @@ void plotBsBpRatio(){
         gThmDummy1->SetLineWidth(8.);
         gThmDummy2->SetLineWidth(8.);
         TLegendEntry *ent_thm1 = legendSigma->AddEntry(gThmDummy1,"TAMU","l");
-        TLegendEntry *ent_thm2 = legendSigma->AddEntry(gThmDummy2,"CUJET","l");
+        TLegendEntry *ent_thm2 = legendSigma->AddEntry(gThmDummy2,"CUJET3.0","l");
         ent_thm1->SetTextSize(legendTextSize);
         ent_thm2->SetTextSize(legendTextSize);
         AddOn = AddOn += "_ThmRAA";

@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Mon Sep 24 10:25:36 2018) by ROOT version6.02/13
+//=========  (Sun Sep 30 18:06:09 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -63,6 +63,17 @@ tex->SetNDC();
 tex->SetNDC();
    tex->SetTextAlign(13);
    tex->SetTextSize(0.06);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.62,0.18,"Cent. 0-100%");
+tex->SetNDC();
+   tex->SetTextFont(42);
+   tex->SetLineWidth(2);
+   tex->Draw();
+      tex = new TLatex(0.35,0.877,"Supplementary");
+tex->SetNDC();
+   tex->SetTextAlign(13);
+   tex->SetTextFont(52);
    tex->SetLineWidth(2);
    tex->Draw();
    
@@ -188,7 +199,7 @@ tex->SetNDC();
    box->SetLineColor(ci);
    box->Draw();
    
-   TLegend *leg = new TLegend(0.7,0.67,0.95,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.7,0.65,0.95,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(0);

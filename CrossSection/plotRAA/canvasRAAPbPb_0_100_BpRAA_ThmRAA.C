@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA_ThmRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Sep 27 11:57:33 2018) by ROOT version6.02/13
+//=========  (Sun Sep 30 18:02:41 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -1597,7 +1597,7 @@ tex->SetNDC();
    
    gre->Draw("3 ");
    
-   TLegend *leg = new TLegend(0.65,0.58,0.95,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.6,0.6,0.9,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(0);
@@ -1645,7 +1645,7 @@ tex->SetNDC();
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    entry->SetTextSize(0.06);
-   entry=leg->AddEntry("","CUJET","f");
+   entry=leg->AddEntry("","CUJET3.0","f");
 
    ci = 931;
    color = new TColor(ci, 0.6, 0.6, 0, " ", 0.5);
