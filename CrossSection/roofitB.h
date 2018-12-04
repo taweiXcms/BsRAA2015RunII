@@ -58,7 +58,7 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	RooPlot* frameMC = mass->frame(Title(""));
 	frameMC->SetTitle("");
 	//frameMC->SetXTitle("m_{B} (GeV/c^{2})");
-	frameMC->SetXTitle("m_{J/#psi(#mu#mu)#phi(KK)} (GeV/c^{2})");
+	frameMC->SetXTitle("m_{J/#psi(#mu#mu)#it{#phi}(KK)} (GeV/c^{2})");
 	frameMC->SetYTitle("Events / (20 MeV/c^{2})");
 	frameMC->GetXaxis()->CenterTitle();
 	frameMC->GetYaxis()->CenterTitle();
