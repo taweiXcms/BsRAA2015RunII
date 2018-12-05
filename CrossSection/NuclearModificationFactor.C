@@ -336,9 +336,11 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		bSystnorm->SetFillColor(16);
 		if(onlyBs!=1){
 			bSystnorm = new TBox(pti+TAABarWid*GlobSystPos[GlobSystPosCounter],1-systnormlo,pti+TAABarWid*GlobSystPos[GlobSystPosCounter+1],1+systnormhi);
-			bSystnorm->SetLineColor(BsBoxColor);
-			bSystnorm->SetFillColor(BsBoxColor);
-			bSystnorm->SetFillColorAlpha(BsBoxColor, 0.5);
+			//Color_t boxcolor = BsBoxColor
+			Color_t boxcolor = 14;
+			bSystnorm->SetLineColor(boxcolor);
+			bSystnorm->SetFillColor(boxcolor);
+			bSystnorm->SetFillColorAlpha(boxcolor, 0.5);
 		}
 		GlobSystPosCounter++;
 		//if(drawB) bSystnorm->Draw(); //Draw at the very end to avoid being covered by other stuff
@@ -403,7 +405,7 @@ void NuclearModificationFactor(TString inputPP="ROOTfiles/CrossSectionPP.root", 
 		otherSystnorm->SetLineColor(kAzure+7);
 		otherSystnorm->SetFillColor(kAzure+7);
 		otherSystnorm->SetFillColorAlpha(kAzure+7, 0.5);
-		otherSystnorm->Draw();
+		//otherSystnorm->Draw();
 	}
 
 	// Draw B+ RpA
