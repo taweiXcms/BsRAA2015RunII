@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA_ThmRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Sun Sep 30 18:02:41 2018) by ROOT version6.02/13
+//=========  (Wed Dec  5 12:54:16 2018) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -183,15 +183,6 @@ tex->SetNDC();
    hNuclearModification2_Bp2->GetZaxis()->SetTitleSize(0.035);
    hNuclearModification2_Bp2->GetZaxis()->SetTitleFont(42);
    hNuclearModification2_Bp2->Draw("same");
-   TBox *box = new TBox(4,0.9586116,6,1.045662);
-
-   ci = 929;
-   color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
-   box->SetFillColor(ci);
-
-   ci = TColor::GetColor("#0099ff");
-   box->SetLineColor(ci);
-   box->Draw();
    
    Double_t gTAMUB5TeV_fx1001[150] = {
    0.1,
@@ -1828,14 +1819,12 @@ tex->SetNDC();
    hNuclearModification5->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification5->GetZaxis()->SetTitleFont(42);
    hNuclearModification5->Draw("same");
-   box = new TBox(2,0.9586116,4,1.045662);
+   TBox *box = new TBox(2,0.9586116,4,1.045662);
 
    ci = 927;
-   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
+   color = new TColor(ci, 0.5, 0.5, 0.5, " ", 0.5);
    box->SetFillColor(ci);
-
-   ci = TColor::GetColor("#cc33cc");
-   box->SetLineColor(ci);
+   box->SetLineColor(14);
    box->Draw();
    
    TH2F *hemptyEff_copy6 = new TH2F("hemptyEff_copy6","",50,2,55,10,0,2.5);

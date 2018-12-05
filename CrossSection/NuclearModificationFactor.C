@@ -23,8 +23,8 @@ bool drawJpsi = 0;
 
 bool drawBpRpA = 0;
 
-bool drawThm = 0;
-bool drawSup = 1;
+bool drawThm = 1;
+bool drawSup = 0;
 
 int onlyBs = drawB + drawBpRAA + drawChHad + drawDRAA + drawJpsi + drawBpRpA;
 
