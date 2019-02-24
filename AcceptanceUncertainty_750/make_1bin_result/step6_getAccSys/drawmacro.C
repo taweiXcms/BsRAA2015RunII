@@ -162,11 +162,12 @@ void drawmacro(bool ispp=1){
 		p21->SetX2NDC(0.90);
 		p21->SetY2NDC(0.60);
 		p21->SetTextColor(kBlue);
-		TLegend* leg1 = new TLegend(0.15,0.80,0.48,0.93);
+		TLegend* leg1 = new TLegend(0.15,0.70,0.48,0.93);
 		leg1->AddEntry(hpullf11pt[i],"p_{T} variation with gaussian","l");
 		leg1->AddEntry(hpullf21pt[i],"y variation with gaussian","l");
 		leg1->SetFillColor(0);
 		leg1->SetBorderSize(0);
+		leg1->SetTextSize(0);
 //		TCanvas* c1=new TCanvas("c1","");
 		hpullf11pt[i]->Draw("");
 		hpullf21pt[i]->Draw("same");
@@ -232,31 +233,36 @@ void drawmacro(bool ispp=1){
 		hf11pt[i]->SetLineColor(kRed+2);
 		hf21pt[i]->SetLineColor(kBlue);
 
-		hf11pt[i]->Draw();
-		gPad->Update();
-		TPaveStats* p11 = (TPaveStats*)hf11pt[i]->FindObject("stats");
-		p11->SetX1NDC(0.70);
-		p11->SetY1NDC(0.75);
-		p11->SetX2NDC(0.90);
-		p11->SetY2NDC(0.90);
-		p11->SetTextColor(kRed+2);
+		gStyle->SetOptStat(0);
+//		hf11pt[i]->Draw();
+//		gPad->Update();
+//		TPaveStats* p11 = (TPaveStats*)hf11pt[i]->FindObject("stats");
+//		p11->SetX1NDC(0.70);
+//		p11->SetY1NDC(0.75);
+//		p11->SetX2NDC(0.90);
+//		p11->SetY2NDC(0.90);
+//		p11->SetTextColor(kRed+2);
+//
+//		hf21pt[i]->Draw();
+//		gPad->Update();
+//		TPaveStats* p21 = (TPaveStats*)hf21pt[i]->FindObject("stats");
+//		p21->SetX1NDC(0.70);
+//		p21->SetY1NDC(0.45);
+//		p21->SetX2NDC(0.90);
+//		p21->SetY2NDC(0.60);
+//		p21->SetTextColor(kBlue);
 
-		hf21pt[i]->Draw();
-		gPad->Update();
-		TPaveStats* p21 = (TPaveStats*)hf21pt[i]->FindObject("stats");
-		p21->SetX1NDC(0.70);
-		p21->SetY1NDC(0.45);
-		p21->SetX2NDC(0.90);
-		p21->SetY2NDC(0.60);
-		p21->SetTextColor(kBlue);
-
-		TLegend* leg1 = new TLegend(0.15,0.80,0.48,0.93);
-		leg1->AddEntry(hf11pt[i],"p_{T} variation with gaussian","l");
-		leg1->AddEntry(hf21pt[i],"y variation with gaussian","l");
-		leg1->SetFillColor(0);
-		leg1->SetBorderSize(0);
+        TLegend* leg1 = new TLegend(0.15,0.82,0.48,0.95);
+        leg1->AddEntry(hf11pt[i],"p_{T} variation with gaussian","l");
+        leg1->AddEntry(hf21pt[i],"y variation with gaussian","l");
+        leg1->SetFillColor(0);
+        leg1->SetBorderSize(0);
+        leg1->SetTextSize(0.045);
+        leg1->SetTextFont(42);
+        leg1->SetFillStyle(0);
 
 		TLine* ptline = new TLine(avghpt[i],0,avghpt[i],1.2*maxuser);
+		ptline->SetLineWidth(4);
 
 //		TCanvas* c1=new TCanvas("c1","");
 		float mean = (hf11pt[i]->GetMean()+hf21pt[i]->GetMean())/2;
@@ -266,12 +272,28 @@ void drawmacro(bool ispp=1){
 		TH1D* hempty = new TH1D("","",10,loedge,hiedge);
 		hempty->SetMaximum(hf11pt[i]->GetMaximum()*1.2);
 		hempty->SetStats(0);
-		hempty->SetNdivisions(1010);
+		hempty->SetNdivisions(505);
 		hempty->Draw();
+	    hempty->GetXaxis()->CenterTitle();
+	    hempty->GetYaxis()->CenterTitle();
+	    hempty->GetYaxis()->SetTitle("Entries");
+	    hempty->GetXaxis()->SetTitle("Acceptance");
+	    hempty->GetXaxis()->SetTitleOffset(0.9);
+	    hempty->GetYaxis()->SetTitleOffset(1.3);
+	    hempty->GetXaxis()->SetTitleSize(0.05);
+	    hempty->GetYaxis()->SetTitleSize(0.05);
+	    hempty->GetXaxis()->SetTitleFont(42);
+	    hempty->GetYaxis()->SetTitleFont(42);
+	    hempty->GetXaxis()->SetLabelFont(42);
+	    hempty->GetYaxis()->SetLabelFont(42);
+	    hempty->GetXaxis()->SetLabelSize(0.035);
+	    hempty->GetYaxis()->SetLabelSize(0.035);
 		hf11pt[i]->Draw("same");
 		hf21pt[i]->Draw("same");
-		p11->Draw("same");
-		p21->Draw("same");
+		hf11pt[i]->SetLineWidth(4);
+		hf21pt[i]->SetLineWidth(4);
+//		p11->Draw("same");
+//		p21->Draw("same");
 		leg1->Draw("same");
 		ptline->Draw("same");
 		c1->SaveAs(Form("Bs_accvar_ptdep_%i_%s.pdf",i,label.c_str()));
@@ -297,28 +319,31 @@ void drawmacro(bool ispp=1){
 		hf21y[i]->SetLineColor(kBlue);
 		hf11y[i]->Draw();
 
-		gPad->Update();
-		TPaveStats* p11 = (TPaveStats*)hf11y[i]->FindObject("stats");
-		p11->SetX1NDC(0.70);
-		p11->SetY1NDC(0.75);
-		p11->SetX2NDC(0.90);
-		p11->SetY2NDC(0.90);
-		p11->SetTextColor(kRed+2);
+//		gPad->Update();
+//		TPaveStats* p11 = (TPaveStats*)hf11y[i]->FindObject("stats");
+//		p11->SetX1NDC(0.70);
+//		p11->SetY1NDC(0.75);
+//		p11->SetX2NDC(0.90);
+//		p11->SetY2NDC(0.90);
+//		p11->SetTextColor(kRed+2);
+//
+//		hf21y[i]->Draw();
+//		gPad->Update();
+//		TPaveStats* p21 = (TPaveStats*)hf21y[i]->FindObject("stats");
+//		p21->SetX1NDC(0.70);
+//		p21->SetY1NDC(0.45);
+//		p21->SetX2NDC(0.90);
+//		p21->SetY2NDC(0.60);
+//		p21->SetTextColor(kBlue);
 
-		hf21y[i]->Draw();
-		gPad->Update();
-		TPaveStats* p21 = (TPaveStats*)hf21y[i]->FindObject("stats");
-		p21->SetX1NDC(0.70);
-		p21->SetY1NDC(0.45);
-		p21->SetX2NDC(0.90);
-		p21->SetY2NDC(0.60);
-		p21->SetTextColor(kBlue);
-
-		TLegend* leg1 = new TLegend(0.15,0.80,0.48,0.93);
-		leg1->AddEntry(hf11y[i],"p_{T} variation with gaussian","l");
-		leg1->AddEntry(hf21y[i],"y variation with gaussian","l");
-		leg1->SetFillColor(0);
-		leg1->SetBorderSize(0);
+        TLegend* leg1 = new TLegend(0.15,0.82,0.48,0.95);
+        leg1->AddEntry(hf11pt[i],"p_{T} variation with gaussian","l");
+        leg1->AddEntry(hf21pt[i],"y variation with gaussian","l");
+        leg1->SetFillColor(0);
+        leg1->SetBorderSize(0);
+        leg1->SetTextSize(0.045);
+        leg1->SetTextFont(42);
+        leg1->SetFillStyle(0);
 
 		TLine* yline = new TLine(avghy[i],0,avghy[i],1.2*maxuser);
 
@@ -330,16 +355,34 @@ void drawmacro(bool ispp=1){
 		TH1D* hempty = new TH1D("","",10,loedge,hiedge);
 		hempty->SetMaximum(hf11y[i]->GetMaximum()*1.2);
 		hempty->SetStats(0);
-		hempty->SetNdivisions(1010);
+		hempty->SetNdivisions(505);
 		hempty->Draw();
+	    hempty->GetXaxis()->CenterTitle();
+	    hempty->GetYaxis()->CenterTitle();
+	    hempty->GetYaxis()->SetTitle("Entries");
+	    hempty->GetXaxis()->SetTitle("Acceptance");
+	    hempty->GetXaxis()->SetTitleOffset(0.9);
+	    hempty->GetYaxis()->SetTitleOffset(1.3);
+	    hempty->GetXaxis()->SetTitleSize(0.05);
+	    hempty->GetYaxis()->SetTitleSize(0.05);
+	    hempty->GetXaxis()->SetTitleFont(42);
+	    hempty->GetYaxis()->SetTitleFont(42);
+	    hempty->GetXaxis()->SetLabelFont(42);
+	    hempty->GetYaxis()->SetLabelFont(42);
+	    hempty->GetXaxis()->SetLabelSize(0.035);
+	    hempty->GetYaxis()->SetLabelSize(0.035);
 		hf11y[i]->Draw("same");
 		hf21y[i]->Draw("same");
-		p11->Draw("same");
-		p21->Draw("same");
+        hf11y[i]->SetLineWidth(4);
+        hf21y[i]->SetLineWidth(4);
+//		p11->Draw("same");
+//		p21->Draw("same");
 		leg1->Draw("same");
 		yline->Draw("same");
 		c1->SaveAs(Form("Bs_accvar_ydep_%i_%s.pdf",i,label.c_str()));
 	}
+
+	gStyle->SetOptStat(1110);
 
 	/// plot the distribution of fit function parameters generated in step3
 	for(int i=0;i<tr11->GetEntries();i++){

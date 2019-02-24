@@ -10,6 +10,7 @@
 #include <TCanvas.h>
 #include <TLegend.h>
 #include <TPaveText.h>
+#include <TStyle.h>
 
 // set pt bins (same for analysis binning)
 const int nBins = 4;
@@ -21,6 +22,7 @@ const int nBinsy = 4;
 string label;
 
 void FakeInput_Bs(bool ispp=1){
+    gStyle->SetOptFit(0);
 
 	if(ispp) label = "pp";
 	else label = "PbPb";
@@ -126,6 +128,19 @@ void FakeInput_Bs(bool ispp=1){
 	pt11->AddText("B_{s}");
 
 	hPtMC->GetYaxis()->SetTitle("Proportion of uncorrected B_{s} dN/dp_{T} (Data/MC)");
+	hPtMC->GetXaxis()->SetTitle("p_{T}");
+    hPtMC->GetXaxis()->CenterTitle();
+    hPtMC->GetYaxis()->CenterTitle();
+    hPtMC->GetXaxis()->SetTitleOffset(0.9);
+    hPtMC->GetYaxis()->SetTitleOffset(1.1);
+    hPtMC->GetXaxis()->SetTitleSize(0.05);
+    hPtMC->GetYaxis()->SetTitleSize(0.045);
+    hPtMC->GetXaxis()->SetTitleFont(42);
+    hPtMC->GetYaxis()->SetTitleFont(42);
+    hPtMC->GetXaxis()->SetLabelFont(42);
+    hPtMC->GetYaxis()->SetLabelFont(42);
+    hPtMC->GetXaxis()->SetLabelSize(0.035);
+    hPtMC->GetYaxis()->SetLabelSize(0.035);
 	hPtMC->SetMinimum(0);
 	hPtMC->SetMaximum(0);
 	hPtMC->SetFillColor(kPink+6);
@@ -150,6 +165,19 @@ void FakeInput_Bs(bool ispp=1){
 	hReweightDataOverMC_Pt->SetLineWidth(1.0);
 	hReweightDataOverMC_Pt->SetLineColor(kBlack);
 	hReweightDataOverMC_Pt->GetYaxis()->SetTitle("Ratio of uncorrected B_{s} dN/dp_{T} (Data/MC)");
+	hReweightDataOverMC_Pt->GetXaxis()->SetTitle("p_{T}");
+    hReweightDataOverMC_Pt->GetXaxis()->CenterTitle();
+    hReweightDataOverMC_Pt->GetYaxis()->CenterTitle();
+    hReweightDataOverMC_Pt->GetXaxis()->SetTitleOffset(0.9);
+    hReweightDataOverMC_Pt->GetYaxis()->SetTitleOffset(1.1);
+    hReweightDataOverMC_Pt->GetXaxis()->SetTitleSize(0.05);
+    hReweightDataOverMC_Pt->GetYaxis()->SetTitleSize(0.05);
+    hReweightDataOverMC_Pt->GetXaxis()->SetTitleFont(42);
+    hReweightDataOverMC_Pt->GetYaxis()->SetTitleFont(42);
+    hReweightDataOverMC_Pt->GetXaxis()->SetLabelFont(42);
+    hReweightDataOverMC_Pt->GetYaxis()->SetLabelFont(42);
+    hReweightDataOverMC_Pt->GetXaxis()->SetLabelSize(0.035);
+    hReweightDataOverMC_Pt->GetYaxis()->SetLabelSize(0.035);
 
 	fRfitft_Bspt->SetLineColor(kRed);
 	fRfitft_Bspt->SetLineWidth(2.0);
@@ -182,6 +210,19 @@ void FakeInput_Bs(bool ispp=1){
 	pt11->AddText("B_{s}");
 
 	hyMC->GetYaxis()->SetTitle("Proportion of uncorrected B_{s} dN/dy_{CM} (Data/MC)");
+	hyMC->GetXaxis()->SetTitle("y_{CM}");
+    hyMC->GetXaxis()->CenterTitle();
+    hyMC->GetYaxis()->CenterTitle();
+    hyMC->GetXaxis()->SetTitleOffset(0.9);
+    hyMC->GetYaxis()->SetTitleOffset(1.1);
+    hyMC->GetXaxis()->SetTitleSize(0.05);
+    hyMC->GetYaxis()->SetTitleSize(0.045);
+    hyMC->GetXaxis()->SetTitleFont(42);
+    hyMC->GetYaxis()->SetTitleFont(42);
+    hyMC->GetXaxis()->SetLabelFont(42);
+    hyMC->GetYaxis()->SetLabelFont(42);
+    hyMC->GetXaxis()->SetLabelSize(0.035);
+    hyMC->GetYaxis()->SetLabelSize(0.035);
 	hyMC->SetMinimum(0);
 	hyMC->SetMaximum(0);
 	hyMC->SetFillColor(kPink+6);
@@ -212,6 +253,19 @@ void FakeInput_Bs(bool ispp=1){
 	hReweightDataOverMC_y->SetLineWidth(1.0);
 	hReweightDataOverMC_y->SetLineColor(kBlack);
 	hReweightDataOverMC_y->GetYaxis()->SetTitle("Ratio of uncorrected B^{s} dN/dy_{CM} (Data/MC)");
+	hReweightDataOverMC_y->GetXaxis()->SetTitle("y_{CM}");
+    hReweightDataOverMC_y->GetXaxis()->CenterTitle();
+    hReweightDataOverMC_y->GetYaxis()->CenterTitle();
+    hReweightDataOverMC_y->GetXaxis()->SetTitleOffset(0.9);
+    hReweightDataOverMC_y->GetYaxis()->SetTitleOffset(1.1);
+    hReweightDataOverMC_y->GetXaxis()->SetTitleSize(0.05);
+    hReweightDataOverMC_y->GetYaxis()->SetTitleSize(0.05);
+    hReweightDataOverMC_y->GetXaxis()->SetTitleFont(42);
+    hReweightDataOverMC_y->GetYaxis()->SetTitleFont(42);
+    hReweightDataOverMC_y->GetXaxis()->SetLabelFont(42);
+    hReweightDataOverMC_y->GetYaxis()->SetLabelFont(42);
+    hReweightDataOverMC_y->GetXaxis()->SetLabelSize(0.035);
+    hReweightDataOverMC_y->GetYaxis()->SetLabelSize(0.035);
 
 	fRfitft_Bsy->SetLineColor(kRed);
 	fRfitft_Bsy->SetLineWidth(2.0);
