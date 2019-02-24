@@ -39,18 +39,76 @@ void weightPbPbvertex(){
 	hpzMC->Scale(1./hpzMC->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
 	hpzData->Scale(1./hpzData->Integral(hpzMC->FindBin(-15.),hpzMC->FindBin(15)));
 
-	TCanvas*cRatioVtx=new TCanvas("cRatioVtx","cRatioVtx",500,500);
+	gStyle->SetOptStat(0);
+	gStyle->SetOptFit(0);
+
+	TCanvas*cRatioVtx=new TCanvas("cRatioVtx","cRatioVtx",1000,500);
 	cRatioVtx->Divide(2,1);
 	cRatioVtx->cd(1);
+	hpzMC->SetTitle("");
+	hpzMC->SetMaximum(hpzMC->GetMaximum()*1.5);
 	hpzMC->SetLineColor(2);
 	hpzMC->SetMarkerColor(2);
+    hpzMC->GetYaxis()->SetTitle("Normalized entries");
+    hpzMC->GetXaxis()->SetTitle("PVz");
+    hpzMC->GetXaxis()->CenterTitle();
+    hpzMC->GetYaxis()->CenterTitle();
+    hpzMC->GetXaxis()->SetTitleOffset(0.9);
+    hpzMC->GetYaxis()->SetTitleOffset(1.4);
+    hpzMC->GetXaxis()->SetTitleSize(0.05);
+    hpzMC->GetYaxis()->SetTitleSize(0.05);
+    hpzMC->GetXaxis()->SetTitleFont(42);
+    hpzMC->GetYaxis()->SetTitleFont(42);
+    hpzMC->GetXaxis()->SetLabelFont(42);
+    hpzMC->GetYaxis()->SetLabelFont(42);
+    hpzMC->GetXaxis()->SetLabelSize(0.035);
+    hpzMC->GetYaxis()->SetLabelSize(0.035);
 	hpzMC->Draw();
 	hpzData->Draw("same");
+
+    TLegend *legendSigma=new TLegend(0.55,0.72,0.9,0.93,"");
+    legendSigma->SetBorderSize(0);
+    legendSigma->SetLineColor(0);
+    legendSigma->SetFillColor(0);
+    legendSigma->SetFillStyle(1001);
+    legendSigma->SetTextFont(50);
+    legendSigma->SetTextSize(0.045);
+
+    TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hpzMC,"Monte Carlo","pf");
+    ent_SigmaPP->SetTextFont(42);
+    ent_SigmaPP->SetLineColor(2);
+    ent_SigmaPP->SetMarkerColor(2);
+    ent_SigmaPP->SetTextSize(0.05);
+
+    TLegendEntry *ent_Sigmapp=legendSigma->AddEntry(hpzData,"Data","f");
+    ent_Sigmapp->SetTextFont(42);
+    ent_Sigmapp->SetLineColor(1);
+    ent_Sigmapp->SetMarkerColor(1);
+    ent_Sigmapp->SetTextSize(0.05);
+
+    legendSigma->Draw();
+
 	cRatioVtx->cd(2);
 	TH1D*hRatio=(TH1D*)hpzData->Clone("hRatio");
 	hRatio->Divide(hpzMC);
+	hRatio->SetTitle("");
+	hRatio->SetMaximum(4);
+	hRatio->SetMinimum(0);
+    hRatio->GetYaxis()->SetTitle("Ratio Data/MC");
+    hRatio->GetXaxis()->SetTitle("PVz");
+    hRatio->GetXaxis()->CenterTitle();
+    hRatio->GetYaxis()->CenterTitle();
+    hRatio->GetXaxis()->SetTitleOffset(0.9);
+    hRatio->GetYaxis()->SetTitleOffset(1.4);
+    hRatio->GetXaxis()->SetTitleSize(0.05);
+    hRatio->GetYaxis()->SetTitleSize(0.05);
+    hRatio->GetXaxis()->SetTitleFont(42);
+    hRatio->GetYaxis()->SetTitleFont(42);
+    hRatio->GetXaxis()->SetLabelFont(42);
+    hRatio->GetYaxis()->SetLabelFont(42);
+    hRatio->GetXaxis()->SetLabelSize(0.035);
+    hRatio->GetYaxis()->SetLabelSize(0.035);
 	hRatio->Draw();
-    cRatioVtx->SaveAs("plotReweight/PVzWeightPbPb.pdf");
 
 	TF1 *myfit = new TF1("myfit","[0]+[1]*x+x*x*[2]+x*x*x*[3]+x*x*x*x*[4]", -15, 15);  
 	hRatio->Fit("myfit","","",-15,15);
@@ -62,6 +120,7 @@ void weightPbPbvertex(){
     printf("#########################\n");
     printf("(%f + %f*PVz + %f*PVz*PVz + %f*PVz*PVz*PVz + %f*PVz*PVz*PVz*PVz)\n", par0, par1, par2, par3, par4);
     printf("#########################\n");
+    cRatioVtx->SaveAs("plotReweight/PVzWeightPbPb.pdf");
 }
 
 void weightPbPbFONLLpthat(int minfit=2,int maxfit=100){
@@ -228,10 +287,10 @@ void weightPbPbCentrality(){
 	TH2F* hempty1=new TH2F("hempty1","",50,0.,200.,10,0,0.05);  
 	hempty1->GetXaxis()->CenterTitle();
 	hempty1->GetYaxis()->CenterTitle();
-	hempty1->GetYaxis()->SetTitle("Entries");
+	hempty1->GetYaxis()->SetTitle("Normalized entries");
 	hempty1->GetXaxis()->SetTitle("Centrality (HiBin)");
 	hempty1->GetXaxis()->SetTitleOffset(0.9);
-	hempty1->GetYaxis()->SetTitleOffset(1.3);
+	hempty1->GetYaxis()->SetTitleOffset(1.5);
 	hempty1->GetXaxis()->SetTitleSize(0.05);
 	hempty1->GetYaxis()->SetTitleSize(0.05);
 	hempty1->GetXaxis()->SetTitleFont(42);
@@ -257,25 +316,26 @@ void weightPbPbCentrality(){
 	hempty2->GetXaxis()->SetLabelSize(0.035);
 	hempty2->GetYaxis()->SetLabelSize(0.035);  
 
-	TLegend *legendSigma=new TLegend(0.5100806,0.5168644,0.8084677,0.6605932,"");
+	//TLegend *legendSigma=new TLegend(0.5100806,0.5168644,0.8084677,0.6605932,"");
+	TLegend *legendSigma=new TLegend(0.55,0.60,0.9,0.85,"");
 	legendSigma->SetBorderSize(0);
 	legendSigma->SetLineColor(0);
 	legendSigma->SetFillColor(0);
 	legendSigma->SetFillStyle(1001);
-	legendSigma->SetTextFont(42);
+	legendSigma->SetTextFont(50);
 	legendSigma->SetTextSize(0.045);
 
-	TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hCenMC,"Monte Carlo.","pf");
+	TLegendEntry *ent_SigmaPP=legendSigma->AddEntry(hCenMC,"Monte Carlo","pf");
 	ent_SigmaPP->SetTextFont(42);
 	ent_SigmaPP->SetLineColor(2);
 	ent_SigmaPP->SetMarkerColor(2);
-	ent_SigmaPP->SetTextSize(0.03);
+	ent_SigmaPP->SetTextSize(0.05);
 
 	TLegendEntry *ent_Sigmapp=legendSigma->AddEntry(hCenData,"Data","f");
 	ent_Sigmapp->SetTextFont(42);
 	ent_Sigmapp->SetLineColor(1);
 	ent_Sigmapp->SetMarkerColor(1);
-	ent_Sigmapp->SetTextSize(0.03);
+	ent_Sigmapp->SetTextSize(0.05);
 
 	TCanvas*canvas=new TCanvas("canvas","canvas",1000,500);
 	canvas->Divide(2,1);
@@ -338,7 +398,7 @@ void weightPbPbCentrality(){
 	canvas->SaveAs("plotReweight/CentralityWeight.pdf");
 }
 void weightMCPbPb(){
-//	weightPbPbvertex();
-	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
+	weightPbPbvertex();
+//	weightPbPbFONLLpthat(ptBinsReweight[0],ptBinsReweight[nBinsReweight]);
 //	weightPbPbCentrality();
 }

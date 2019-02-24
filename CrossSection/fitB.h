@@ -151,7 +151,13 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
 	h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
-	if(funcOpt == decreaseWidth) {f->FixParameter(12,relativeWidth-relativeWidthErr); cout<<"width change: "<<relativeWidthErr/relativeWidth<<endl;}
+	if(funcOpt == decreaseWidth) {f->FixParameter(12,relativeWidth-relativeWidthErr); 
+		cout<<"a value: "<<relativeWidth<<endl;
+		cout<<"a error: "<<relativeWidthErr<<endl;
+		cout<<"a error/value: "<<relativeWidthErr/relativeWidth<<endl;
+		cout<<"a*width1: "<<relativeWidthErr*(f->GetParameter(2))<<endl;
+		cout<<"a*width2: "<<relativeWidthErr*(f->GetParameter(8))<<endl;
+	}
 	if(funcOpt == increaseWidth) {f->FixParameter(12,relativeWidth+relativeWidthErr);}
 	if(funcOpt == decreaseWidth || funcOpt == increaseWidth){
 		h->Fit(Form("f%d",_count),"L q","",minhisto,maxhisto);
@@ -316,6 +322,7 @@ TF1 *fit(T* c, TCanvas* cMC, TH1D* h, TH1D* hMCSignal, Double_t ptmin, Double_t 
 	texcms->Draw();
     //TLatex* texpre = new TLatex(0.21,0.83,"Preliminary");
     TLatex* texpre = new TLatex(0.21,0.83,"Supplementary");
+    //TLatex* texpre = new TLatex(0.21,0.83,"Internal");
     texpre->SetNDC();
     texpre->SetTextAlign(13);
     texpre->SetTextFont(52);

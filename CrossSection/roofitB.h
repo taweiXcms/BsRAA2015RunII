@@ -312,9 +312,9 @@ RooFitResult *fit(TCanvas* c, TCanvas* cMC, RooDataSet* ds, RooDataSet* dsMC, Ro
 	if(drawSup) texsup->Draw();
 	texB->Draw();
 	texCol->Draw();
-    //if(1) {
+//    if(1) {
     if(drawOpt == 1) {
-		//texSig->Draw("SAME");
+		texSig->Draw("SAME");
 		texChi->Draw();
 		texYield->Draw("SAME");
 	}

@@ -1,0 +1,27 @@
+pp 7~15
+a value: 0.237742
+a error: 0.0031813
+a error/value: 0.0133813
+a*width1: 3.32651e-05
+a*width2: 9.92196e-05
+
+pp 15~50
+a value: -0.383085
+a error: 0.00142225
+a error/value: -0.00371262
+a*width1: 2.89748e-05
+a*width2: 8.99969e-05
+a value: -0.19471
+
+PbPb 7~15
+a error: 0.00716601
+a error/value: -0.0368034
+a*width1: 0.000109628
+a*width2: 0.000285429
+a value: -0.365498
+
+PbPb 15~50
+a error: 0.0031829
+a error/value: -0.00870839
+a*width1: 6.12121e-05
+a*width2: 0.000169042

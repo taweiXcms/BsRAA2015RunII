@@ -91,7 +91,8 @@ void fitPDFSyst(int usePbPb = 0, int fitOnSaved = 0, TString inputdata = "", TSt
 
 		float yVar[variationTypes];
 
-		for(int fopt=0; fopt<variationTypes; fopt++){
+//		for(int fopt=0; fopt<variationTypes; fopt++){
+		for(int fopt=3; fopt<5; fopt++){
 			//_count++;
 			_count = i*variationTypes+fopt+1;
 			TCanvas* c= new TCanvas(Form("c%d_%d",_count),"",600,750);
