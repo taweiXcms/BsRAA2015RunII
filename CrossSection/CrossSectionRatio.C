@@ -56,12 +56,16 @@ void CrossSectionRatio(TString inputFONLL="ROOTfiles/output_inclusiveDd0meson_5T
 		else  systematic=0.01*systematicsPbPb(xr[i],1,centMin,centMax,0.,0,binOpt);     
 		
 		printf("bin: %d\n", i);
+		printf("bin mid: %f\n", xr[i]);
 		printf("xsec value: %f\n", ycross[i]);
 		printf("stat err: %f\n", ycrossstat[i]/ycross[i]);
         printf("sys  err: %f\n", systematic);
 
 		ycrosssysthigh[i]= hPtSigma->GetBinContent(i+1)*systematic;
 		ycrosssystlow[i]= hPtSigma->GetBinContent(i+1)*systematic;
+        printf("stat: %f\n", ycrossstat[i]);
+        printf("sys high: %f\n", ycrosssysthigh[i]);
+        printf("sys low: %f\n", ycrosssystlow[i]);
 		yratiocrossFONLL[i] = ycross[i]/yFONLL[i];
 		yratiocrossFONLLstat[i] = ycrossstat[i]/yFONLL[i];
 		yratiocrossFONLLsysthigh[i] = ycrosssysthigh[i]/yFONLL[i];

@@ -1,7 +1,7 @@
 void canvasRAAPbPb_0_100_BpRAA_ThmRAA()
 {
 //=========Macro generated from canvas: canvasRAA/canvasRAA
-//=========  (Thu Sep 27 12:04:25 2018) by ROOT version6.02/13
+//=========  (Sat Jun 29 20:54:21 2019) by ROOT version6.02/13
    TCanvas *canvasRAA = new TCanvas("canvasRAA", "canvasRAA",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -183,15 +183,6 @@ tex->SetNDC();
    hNuclearModification2_Bp2->GetZaxis()->SetTitleSize(0.035);
    hNuclearModification2_Bp2->GetZaxis()->SetTitleFont(42);
    hNuclearModification2_Bp2->Draw("same");
-   TBox *box = new TBox(4,0.9586116,6,1.045662);
-
-   ci = 929;
-   color = new TColor(ci, 0, 0.6, 1, " ", 0.5);
-   box->SetFillColor(ci);
-
-   ci = TColor::GetColor("#0099ff");
-   box->SetLineColor(ci);
-   box->Draw();
    
    Double_t gTAMUB5TeV_fx1001[150] = {
    0.1,
@@ -1597,7 +1588,7 @@ tex->SetNDC();
    
    gre->Draw("3 ");
    
-   TLegend *leg = new TLegend(0.65,0.58,0.95,0.88,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.6,0.6,0.9,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(0);
@@ -1645,7 +1636,7 @@ tex->SetNDC();
    entry->SetMarkerSize(1);
    entry->SetTextFont(42);
    entry->SetTextSize(0.06);
-   entry=leg->AddEntry("","CUJET","f");
+   entry=leg->AddEntry("","CUJET3.0","f");
 
    ci = 931;
    color = new TColor(ci, 0.6, 0.6, 0, " ", 0.5);
@@ -1828,14 +1819,12 @@ tex->SetNDC();
    hNuclearModification5->GetZaxis()->SetTitleSize(0.06);
    hNuclearModification5->GetZaxis()->SetTitleFont(42);
    hNuclearModification5->Draw("same");
-   box = new TBox(2,0.9586116,4,1.045662);
+   TBox *box = new TBox(2,0.9586116,4,1.045662);
 
    ci = 927;
-   color = new TColor(ci, 0.8, 0.2, 0.8, " ", 0.5);
+   color = new TColor(ci, 0.5, 0.5, 0.5, " ", 0.5);
    box->SetFillColor(ci);
-
-   ci = TColor::GetColor("#cc33cc");
-   box->SetLineColor(ci);
+   box->SetLineColor(14);
    box->Draw();
    
    TH2F *hemptyEff_copy6 = new TH2F("hemptyEff_copy6","",50,2,55,10,0,2.5);

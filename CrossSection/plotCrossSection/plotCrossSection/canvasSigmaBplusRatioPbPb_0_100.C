@@ -1,7 +1,7 @@
 void canvasSigmaBplusRatioPbPb_0_100()
 {
 //=========Macro generated from canvas: cSigma/
-//=========  (Sun Sep 23 17:31:24 2018) by ROOT version6.02/13
+//=========  (Sat Jun 29 20:11:16 2019) by ROOT version6.02/13
    TCanvas *cSigma = new TCanvas("cSigma", "",0,0,600,600);
    gStyle->SetOptStat(0);
    gStyle->SetOptTitle(0);
@@ -37,8 +37,8 @@ void canvasSigmaBplusRatioPbPb_0_100()
    hemptySigma1->GetYaxis()->CenterTitle(true);
    hemptySigma1->GetYaxis()->SetLabelFont(42);
    hemptySigma1->GetYaxis()->SetLabelSize(0.048);
-   hemptySigma1->GetYaxis()->SetTitleSize(0.055);
-   hemptySigma1->GetYaxis()->SetTitleOffset(1.4);
+   hemptySigma1->GetYaxis()->SetTitleSize(0.05);
+   hemptySigma1->GetYaxis()->SetTitleOffset(1.45);
    hemptySigma1->GetYaxis()->SetTitleFont(42);
    hemptySigma1->GetZaxis()->SetLabelFont(42);
    hemptySigma1->GetZaxis()->SetLabelSize(0.035);
@@ -140,7 +140,7 @@ tex->SetNDC();
    tex->SetTextSize(0.055);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.65,"|y| < 2.4");
+      tex = new TLatex(0.21,0.78,"|y| < 2.4");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
@@ -151,7 +151,7 @@ tex->SetNDC();
    tex->SetLineWidth(2);
    tex->Draw();
    
-   TLegend *leg = new TLegend(0.52,0.7,0.85,0.9,NULL,"brNDC");
+   TLegend *leg = new TLegend(0.52,0.65,0.89,0.88,NULL,"brNDC");
    leg->SetBorderSize(0);
    leg->SetTextSize(0.055);
    leg->SetLineColor(1);
@@ -168,12 +168,12 @@ tex->SetNDC();
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
    leg->Draw();
-      tex = new TLatex(0.53,0.594,"Global uncertainty:");
+      tex = new TLatex(0.53,0.594,"Global uncertainty");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
    tex->Draw();
-      tex = new TLatex(0.53,0.54,"PbPb: #plus8.3, #minus8.5%");
+      tex = new TLatex(0.53,0.54,"#plus8.3, #minus8.5%");
 tex->SetNDC();
    tex->SetTextFont(42);
    tex->SetLineWidth(2);
